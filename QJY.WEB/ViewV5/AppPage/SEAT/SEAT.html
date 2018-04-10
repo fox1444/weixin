@@ -1,0 +1,527 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>普通页面</title>
+    <!-- Bootstrap -->
+    <link href="/ViewV5/CSS/bootstrap3.3.5/css/bootstrap.css" rel="stylesheet">
+    <link href="/ViewV5/CSS/BootOver.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.css" rel="stylesheet">
+    <link href="/ViewV5/JS/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; /*元素不能被选中*/
+        }
+
+        .lev1 {
+            /*//  margin-left: 10px;*/
+        }
+
+        .lev2 {
+            padding-left: 40px;
+        }
+
+        .list-group .lev2:first-child {
+            padding-left: 40px;
+            border-top: 1px solid #ddd !important;
+        }
+
+
+        .media-left {
+            padding-right: 5px;
+        }
+
+        .media-body {
+            padding-top: 5px;
+        }
+
+        .media-heading {
+            margin-top: 8px;
+        }
+
+        .list-group-item:hover {
+            background-color: #3085DB;
+        }
+
+
+        .isel {
+            top: 0;
+            right: 0;
+            color: darkgoldenrod;
+            font-size: 16px;
+        }
+
+        .pCard {
+            min-width: 100px;
+            max-width: 300px;
+            text-align: center;
+            margin: 5px 3px;
+        }
+
+        .pHead {
+            margin: 4px;
+            border-radius: 3px;
+            float: left;
+            height: 45px;
+            width: 45px;
+        }
+
+
+        .pName {
+            padding: 15px 0 0 0;
+            position: relative;
+            display: inline-block;
+            font-weight: normal;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+        }
+
+        .pCard:hover {
+            border-color: #66c9f3;
+            box-shadow: 0 0px 10px #66c9f3;
+            cursor: pointer;
+        }
+
+        .pWidthLength {
+            display: inline-block;
+            margin: 4px 3px;
+        }
+
+            .pWidthLength input {
+                padding-left: 3px;
+                padding-right: 3px;
+                width: 45px;
+                display: inline-block;
+            }
+
+        .pCardSelect {
+            border-color: #66c9f3;
+            box-shadow: 0 0px 10px #66c9f3;
+            cursor: pointer;
+        }
+
+        .pStatus {
+            color: #1288c5;
+            font-size: 12px;
+        }
+
+        .pCard:hover .badge {
+            visibility: visible;
+        }
+
+        .panel-body .badge {
+            position: absolute;
+            top: -5px;
+            right: -6px;
+            background-color: red;
+            padding-left: 5px;
+            padding-right: 5px;
+            visibility: collapse;
+        }
+
+        .panel-body .usersel {
+            position: absolute;
+            top: -5px;
+            right: -6px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .ztree * {
+            font-size: 15px;
+        }
+
+        .room-width-index {
+        }
+
+            .room-width-index li {
+                padding: 3px 5px;
+                margin: 0;
+            }
+
+        .room-length-index li {
+            border: solid 1px #ccc;
+            display: inline-block;
+            padding: 3px 0px;
+            margin-right: 4px;
+            line-height: 15px;
+            width: 37px;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .room-block-hold {
+            overflow: scroll;
+            width: 600px;
+            height: 410px;
+        }
+
+        .chairmen-wrapper {
+            position: relative;
+        }
+
+        .room-chairmen {
+            border: solid 1px #ccc;
+            margin: 3px 10px 3px 5px;
+            padding: 3px 10px 3px 10px;
+            line-height: 20px;
+            background: #ccc;
+            font-size: 120%;
+            width: 97%;
+            text-align: center;
+        }
+
+            .room-chairmen:after {
+                content: "主席台";
+                float: right;
+            }
+
+            .room-chairmen:before {
+                content: "主席台";
+                float: left;
+            }
+
+        .room-block {
+        }
+
+        .seat_info {
+            display: block;
+            height: 15px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body ms-controller="UserSelect">
+    <div class="container-fluid " style="margin: 10px" id="dvContent">
+        <div style="width: 600px; position: absolute;">
+            <!--<ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">组织机构</a></li>
+                <li role="presentation"><a href="#rolepanel" aria-controls="rolepanel" role="tab" data-toggle="tab">所有角色</a></li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active fade in" id="home" style="padding-top: 20px">
+                    <ul id="tree" class="ztree"></ul>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="rolepanel">
+                    <ul id="treeRole" class="ztree"></ul>
+                </div>
+            </div>-->
+            <div class="room-block-hold">
+                <div class="chairmen-wrapper">
+                    <div class="room-chairmen">
+                        主席台
+                    </div>
+                </div>
+                <div class="room-block">
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin:0 0 0 611px;">
+            <div class="formtitle" style="margin-bottom: 5px">
+                <span>已选人员</span>
+                <!--<input type="button" value="保存自定义分组" class="btn btn-sm btn-success pull-right" ms-if="SelUsers.size()>0" data-toggle="modal" data-target="#UserGroupModal" />-->
+            </div>
+            <div class="panel-body" style="padding: 0; max-height: 410px; overflow: auto">
+                <div ms-repeat-seluser="SelUsers" style="min-width: 80px">
+                    <div class="pCard">
+                        <!--<span class="badge" ms-click="DelSelUser(seluser)">X</span>-->
+                        <div class="pName" style="padding-top: 5px">
+                            {{seluser.UserRealName}}
+                        </div>
+                    </div>
+                    <div class="pWidthLength">
+                        <input class="form-control length-val" type="text" />-<input class="form-control width-val" type="text" />
+                        <input class="" type="text" style="display:none;" ms-duplex="seluser.ID" />
+                    </div>
+                </div>
+            </div>
+            <!--<div class="formtitle" style="margin-bottom: 5px;"><span>{{selBM}}({{QueryUsers.size()}})<font ms-if="isSignle=='N'"><i class="fa fa-square  isel selall" ms-click="SelUserAll(this)" style="margin-left:10px"></i>全选</font></span></div>
+            <div class="panel-body" style="padding: 0; min-height: 40px">
+                <div class="pCard float-shadow" ms-repeat-user="QueryUsers" ms-click="SelUser(user,this)" style="padding-right: 10px; min-width: 80px">
+                    <span class="usersel"><i class="fa isel fa-check-square " ms-if="user.issel"></i></span>
+                    <div class="pName" style="padding-top: 5px">{{user.UserRealName}}</div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/ViewV5/JS/jquery-1.11.2.min.js"></script>
+    <script src="/ViewV5/CSS/bootstrap3.3.5/js/bootstrap.js"></script>
+    <script src="/ViewV5/JS/avalon1.47.js"></script>
+    <script src="/ViewV5/JS/SZHLCommon.js?jsver=20171215"></script>
+    <script src="/ViewV5/JS/zTree_v3/js/jquery.ztree.core-3.5.js"></script>
+    <script src="/ViewV5/JS/zTree_v3/js/jquery.ztree.excheck-3.5.js"></script>
+    <script src="/ViewV5/web/js/layer/layer.js"></script>
+    <script>
+        var zNodes = null;
+        var zTreeObj = null;
+        var zNodesRole = null;
+        var zTreeObjRole = null;
+        var model = avalon.define({
+            $id: "UserSelect",
+            isSignle: ComFunJS.getQueryString("issignle") ? ComFunJS.getQueryString("issignle") : "N",
+            checkval: top.$("body").data("checkvalue") ? top.$("body").data("checkvalue") : "",
+            hyid: top.$("body").data("hyid") ? top.$("body").data("hyid") : "",
+            roomwidth: top.$("body").data("roomwidth") ? top.$("body").data("roomwidth") : "10",
+            roomlength: top.$("body").data("roomlength") ? top.$("body").data("roomlength") : "10",
+            roomuserData: top.$("body").data("roomuserData") ? top.$("body").data("roomuserData") : "",
+            roomblockwidth: "",
+            isAll: ComFunJS.getQueryString("isall"), //是否加载所有人，N:根据当前用户所在部门加载，Y:加载所有人员
+            selBM: "",//已选择部门
+            SelUsers: [],//已选择用户
+            QueryUsers: [],//查询用户结果
+            render: function () {
+            },
+            getUserTree: function () {
+                var setting = {
+                    data: {
+                        simpleData: {
+                            enable: true,
+                            idKey: "id",
+                            pIdKey: "pId",
+                            rootPId: 0
+                        }
+                    },
+                    view: {
+                        showLine: false
+                    },
+                    callback: {
+
+                    }
+                };
+                $.getJSON("/API/VIEWAPI.ashx", { "Action": "XTGL_GETALLBMUSERLISTNEW", P1: model.isAll }, function (msg) {
+                    zTreeObj = $.fn.zTree.init($("#tree"), setting, eval(msg.Result));
+                    node = zTreeObj.getNodeByParam("pId", 0, null);
+                    if (node) {
+                        zTreeObj.selectNode(node);
+                        model.selBM = node.name;
+                        $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETYUSERBYCODE', { P1: node.id }, function (resultData) {
+                            if (resultData.ErrorMsg == "") {
+                                resultData.Result.forEach(function (el) {
+                                    el.issel = false;
+                                    $.each(model.checkval.split(','), function (i, n) {
+                                        if (n == el.UserName) {
+                                            el.issel = true;
+                                            model.SelUsers.push(el);
+                                        }
+                                    });
+                                })
+                                model.QueryUsers = resultData.Result;
+                            }
+                        })
+                    }
+                });
+            },
+            SaveUserGroup: function () {
+                var UserNames = "";
+                model.SelUsers.forEach(function (item) {
+                    UserNames += item.UserName + ",";
+                })
+                $.post("/API/VIEWAPI.ashx", { Action: "XTGL_ADDUSERGROUP", P1: model.GroupName, P2: UserNames.substring(0, UserNames.length - 1), "DataType": "USERGROUP" }, function (jsonresult) {
+                    if ($.trim(jsonresult.ErrorMsg) == "") {
+                        model.UserGroupData.push(jsonresult.Result);
+                        $('#UserGroupModal').modal('hide');
+                        top.ComFunJS.winsuccess("操作成功");
+                    }
+                })
+            },
+            GetUserList: function (item, dom) {
+                zTreeObjRole.cancelSelectedNode();
+                zTreeObj.cancelSelectedNode();
+                $(".usergroup  li a").removeClass("curSelectedNode");
+                $(dom).find("a").addClass("curSelectedNode");
+                $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETUSERLISTBYGROUP', { P1: item.ID }, function (resultData) {
+                    resultData.Result.forEach(function (el) {
+                        el.issel = false;
+                        model.SelUsers.$model.forEach(function (user) {
+                            if (el.UserName == user.UserName) {
+                                el.issel = true;
+                            }
+                        })
+                    })
+                    model.QueryUsers = resultData.Result;
+
+                })
+            },
+            DelUserGroup: function (item, event) {
+                if (event.stopPropagation) {
+                    event.stopPropagation();
+                }
+                top.ComFunJS.winconfirm("确认要删除分组“" + item.DataContent + "”吗？", function () {
+                    $.post("/API/VIEWAPI.ashx", { Action: "XTGL_DELUSERGROUP", P1: item.ID }, function (jsonresult) {
+                        if ($.trim(jsonresult.ErrorMsg) == "") {
+                            model.UserGroupData.remove(item);
+                            top.ComFunJS.winsuccess("删除成功");
+                        }
+                    })
+                })
+            },
+            LoadRoom: function () {
+                var holdseats = JSON.parse(model.roomuserData);
+
+                if (model.roomwidth && model.roomlength) {
+                    var rw = parseInt(model.roomwidth);
+                    var rl = parseInt(model.roomlength);
+                    var tmp = '';
+                    tmp += '<ul class="room-width-index">';
+                    for (let l = 1; l <= rl; l++) {
+
+                        tmp += '<li>';
+                        tmp += '<ul class="room-length-index">';
+                        for (let w = 1; w <= rw; w++) {
+                            tmp += '<li class="seat_' + l + '_' + w + '"  >';
+                            tmp += '<span>' + l + '-' + w + '</span>';
+                            tmp += '<span class="seat_info "></span>';
+                            tmp += '<span class="seat_info_userid" style="display:none"></span>';
+                            tmp += '</li>';
+
+                        }
+                        tmp += '</ul>';
+                        tmp += '</li>';
+
+                    }
+                    tmp += '</ul>';
+                    $('.room-block').html(tmp);
+                    var wpx = (model.roomwidth * 42) + 'px';
+                    $('.room-block').css('width', wpx);
+                    $('.chairmen-wrapper').css('width', wpx);
+                }
+                
+               
+            },
+            LoadSelectZcb: function () {
+
+                var holdseats = JSON.parse(model.roomuserData);
+                holdseats.forEach(function (v, i) {
+                    $(".pWidthLength").each(function (index, obj) {
+                        var _sid = $(obj).children("input").eq(2).val();                      
+                        if (v.userid == _sid) {
+                            $(obj).children("input").eq(0).val(v.xcode);
+                            $(obj).children("input").eq(1).val(v.ycode);
+                            return;
+                        }
+                    })
+                });
+            }, //同时绑定输入框
+            widthRecord: "",
+            lengthRecord: "",
+            InputBlur: function () {
+                $('.pWidthLength input').on({
+                    focus: function () {
+                        model.lengthRecord = $(this).parent().children("input").eq(0).val();
+                        model.widthRecord = $(this).parent().children("input").eq(1).val();
+                    },
+                    blur: function () {
+                        model.BindInputData(this);
+                    }
+                })
+            },
+            BindInputData: function (obj) {
+                var sel_name = $(obj).parent().parent().children(".pCard").children(".pName").html();
+                var length_p = $(obj).parent().children("input").eq(0).val();
+                var width_p = $(obj).parent().children("input").eq(1).val();
+                var sel_id = $(obj).parent().children("input").eq(2).val();
+
+                if (length_p != '' && width_p != '') {
+                    var currentseat = $('.seat_' + length_p + '_' + width_p).children('span').eq(1);
+                    if (currentseat.length > 0) {
+                        var currentseatid = currentseat.parent().children("span").eq(2).html();
+
+                        //座位有人的判断
+                        if (currentseatid != '' && currentseatid != sel_id) {
+                            alert("该座位上已经有人");
+                            $(obj).val('');
+                            $(obj).parent().children("input").eq(0).val(model.lengthRecord);
+                            $(obj).parent().children("input").eq(1).val(model.widthRecord);
+                            return;
+                        }
+                        //$('.seat_' + length_p + '_' + width_p).css("background", "pink");
+                        //currentseat.html(sel_name);
+
+                        //重新加载所有座位
+                        model.ReBindInputData();
+                    }
+                    else {
+                        //没有该座位"
+                        $(obj).val('');
+                        $(obj).parent().children("input").eq(0).val(model.lengthRecord);
+                        $(obj).parent().children("input").eq(1).val(model.widthRecord);
+                    }
+                }
+                else {
+                    //输入不完整时
+                    model.ReBindInputData();
+                }
+            },
+            ReBindInputData: function () {
+
+                //清除之前的座位
+                $('.seat_info').each(function (index, obj) {
+                    $(obj).html('');
+                    $(obj).parent().children("span").eq(2).html('');
+                    $(obj).parent().css("background", "");
+                });
+                $(".pWidthLength").each(function (index, obj) {
+
+                    var _lp = $(obj).children("input").eq(0).val();
+                    var _wp = $(obj).children("input").eq(1).val();
+                    var _sid = $(obj).children("input").eq(2).val();
+                    var _sname = $(obj).parent().children(".pCard").children(".pName").html();
+
+                    var _cs = $('.seat_' + _lp + '_' + _wp).children('span').eq(1);
+                    var _csid = $('.seat_' + _lp + '_' + _wp).children('span').eq(2);
+                    if (_cs.length > 0) {
+                        _cs.html(_sname);
+                        _csid.html(_sid);
+                        $('.seat_' + _lp + '_' + _wp).css("background", "pink");
+                    }
+                });
+            }
+        });
+
+        function getZCB() {
+            var zcb = [];
+            $(".pWidthLength").each(function (index, obj) {
+
+                var _lp = $(obj).children("input").eq(0).val();
+                var _wp = $(obj).children("input").eq(1).val();
+                var _sid = $(obj).children("input").eq(2).val();
+                var _sname = $(obj).parent().children(".pCard").children(".pName").html();
+
+                if (_lp.length > 0 && _wp.length > 0) {
+                    var elezcb = { 'userid': _sid, 'userrealname': _sname, 'xcode': _lp, 'ycode': _wp };
+                    zcb.push(elezcb);
+                }
+            });
+            return zcb;
+
+        }
+
+
+        avalon.ready(function () {
+            model.getUserTree();
+            model.LoadRoom();
+            setTimeout("model.LoadSelectZcb()", 800);
+            setTimeout("model.ReBindInputData()", 1200);
+            setTimeout("model.InputBlur()", 1500);
+
+        });
+
+    </script>
+</body>
+</html>
