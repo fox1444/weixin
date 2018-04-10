@@ -482,37 +482,38 @@ namespace QJY.API
                     //        }
                     //    }
                     ////}
-                    string userName = row[0].ToString().Trim().Replace("  ", "").Replace("   ", "").Replace("  ", "").Replace(" ", "");
-                    int _BranchCode = int.Parse(row["BranchCode"].ToString());
-                    JH_Auth_User userModel = new JH_Auth_UserB().GetEntity(d => d.UserRealName == userName && d.BranchCode == _BranchCode && d.ComId == UserInfo.User.ComId);
-                    if (userModel != null)
+                    try
                     {
-                        //JH_Auth_User userNew = new JH_Auth_User();
-                        //userNew.BranchCode = int.Parse(row["BranchCode"].ToString());
-                        //userNew.ComId = UserInfo.User.ComId;
-                        //userNew.IsUse = "Y";
-                        //userNew.mailbox = row[3].ToString();
-                        userModel.mobphone = row[3].ToString();
-                        //userNew.RoomCode = row[7].ToString();
-                        //userModel.Sex = row[1].ToString();
-                        userModel.telphone = row[2].ToString();
-                        userModel.UserGW = row[1].ToString();
-                        //userModel.UserName = row[2].ToString();
-                        //userModel.UserRealName = row[0].ToString();
-                        //userNew.zhiwu = row[5].ToString() == "" ? "员工" : row[5].ToString();
-                        //userNew.UserPass = CommonHelp.GetMD5(P2);
-                        //userNew.CRDate = DateTime.Now;
-                        //userNew.CRUser = UserInfo.User.UserName;
-
-                        //if (!string.IsNullOrEmpty(row[8].ToString()))
-                        //{
-                        //    int orderNum = 0;
-                        //    int.TryParse(row[8].ToString(), out orderNum);
-                        //    userModel.UserOrder = orderNum;
-
-                        //}
-                        try
+                        string userName = row[0].ToString().Trim().Replace("  ", "").Replace("   ", "").Replace("  ", "").Replace(" ", "");
+                        int _BranchCode = int.Parse(row["BranchCode"].ToString());
+                        JH_Auth_User userModel = new JH_Auth_UserB().GetEntity(d => d.UserRealName == userName && d.BranchCode == _BranchCode && d.ComId == UserInfo.User.ComId);
+                        if (userModel != null)
                         {
+                            //JH_Auth_User userNew = new JH_Auth_User();
+                            //userNew.BranchCode = int.Parse(row["BranchCode"].ToString());
+                            //userNew.ComId = UserInfo.User.ComId;
+                            //userNew.IsUse = "Y";
+                            //userNew.mailbox = row[3].ToString();
+                            userModel.mobphone = row[3].ToString();
+                            //userNew.RoomCode = row[7].ToString();
+                            //userModel.Sex = row[1].ToString();
+                            userModel.telphone = row[2].ToString();
+                            userModel.UserGW = row[1].ToString();
+                            //userModel.UserName = row[2].ToString();
+                            //userModel.UserRealName = row[0].ToString();
+                            //userNew.zhiwu = row[5].ToString() == "" ? "员工" : row[5].ToString();
+                            //userNew.UserPass = CommonHelp.GetMD5(P2);
+                            //userNew.CRDate = DateTime.Now;
+                            //userNew.CRUser = UserInfo.User.UserName;
+
+                            //if (!string.IsNullOrEmpty(row[8].ToString()))
+                            //{
+                            //    int orderNum = 0;
+                            //    int.TryParse(row[8].ToString(), out orderNum);
+                            //    userModel.UserOrder = orderNum;
+
+                            //}
+
                             //msg.ErrorMsg = "";
                             //if (string.IsNullOrEmpty(userNew.UserName))
                             //{
@@ -568,12 +569,14 @@ namespace QJY.API
                             j++;
                             //}
                         }
-                        catch (Exception ex)
-                        {
-                            //userMsg += "第" + rowIndex + "行" + msg.ErrorMsg + "<br/>";
-                        }
-
                     }
+                    catch (Exception ex)
+                    {
+                        new JH_Auth_LogB().InsertLog("11111", "上传到" + j, "", "123", "", 0, "1111");
+                        //userMsg += "第" + rowIndex + "行" + msg.ErrorMsg + "<br/>";
+                    }
+
+
                     //else
                     //{
 
