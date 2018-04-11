@@ -1712,7 +1712,7 @@ var ComFunJS = {
     initsetajax: function (isload) { /// 配置AJAX
         $(document).on('ajaxStart', function () {
             if (!isload) {
-                ComFunJS.showload()
+                ComFunJS.showload();
             }
         })
         $(document).on('ajaxSuccess', function (e, jqXHR, s, data) {
@@ -1727,8 +1727,8 @@ var ComFunJS = {
                     ComFunJS.winwarning("未登录或登录已过期");
                 }
                 else if (data.ErrorMsg != "") {
-                    //ComFunJS.winwarning(data.ErrorMsg);
-                    alert(data.ErrorMsg + Model.Result);
+                    ComFunJS.winwarning(data.ErrorMsg);
+                    //alert(data.ErrorMsg + Model.Result);
                 }
             } catch (e) {
                 ComFunJS.closeAll()
@@ -1738,8 +1738,8 @@ var ComFunJS = {
             ComFunJS.closeAll()
         })
         $(document).on('ajaxError', function (event, xhr, options, exc) {
-            //ComFunJS.winwarning("请求失败！");
-            alert(data.ErrorMsg + Model.Result);
+            ComFunJS.winwarning("请求失败！");
+            //alert(data.ErrorMsg + Model.Result);
         })
     },
 }
