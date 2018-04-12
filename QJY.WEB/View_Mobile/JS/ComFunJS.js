@@ -1010,7 +1010,8 @@ var ComFunJS = {
             html += '<div class="" ms-if="!ComFunJS.isPic(file.FileExtendName)"><span>' + ele.Name + "</span>";
 
 
-            html += '<a href="/Tools/DownFile.aspx?fileId=' + ele.ID + '&szhlcode=' + ComFunJS.getCookie('szhlcode') + '"  class="down-icon">';
+            //html += '<a href="/Tools/DownFile.aspx?fileId=' + ele.ID + '&szhlcode=' + ComFunJS.getCookie('szhlcode') + '"  class="down-icon">';
+            html += '<a href="/Upload/files/' + ele.Name + '.doc"  class="down-icon">';
             //html += '<img class="" onclick="javascript:ComFunJS.getfile(\'' + ele.YLUrl + '\')" src="/ViewV5/images/qywd/' + ele.FileExtendName + '.png"/>';
             //html += '<span  onclick="javascript:ComFunJS.getfile(\'' + ele.YLUrl + '\')" ></span>';
             html += '</a>';
