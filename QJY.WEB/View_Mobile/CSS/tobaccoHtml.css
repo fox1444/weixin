@@ -110,10 +110,10 @@ body, html {
 }
 
     .input_block .phonenumber {
-        color: #8cd800;
+
         background-color: #000;
-        opacity: 0.35;
-        filter: alpha(opacity=35);
+        opacity: 0.45;
+        filter: alpha(opacity=45);
         font-size: 90%;
         font-size: 150%;
         font-weight: bold;
@@ -255,7 +255,6 @@ body, html {
 }
 
 .arrow-up, .back-away, .arrow-down {
-    color: #8cd800;
     background-color: #000;
     opacity: 0.35;
     filter: alpha(opacity=35);
@@ -328,6 +327,11 @@ body, html {
 
         .hy_filelist li span {
             text-decoration: underline;
+            white-space: nowrap;
+            display: block;
+            width: 90%;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .hy_filelist li a {
@@ -341,6 +345,8 @@ body, html {
             font-weight: normal;
             color: #fff;
             float: right;
+            display:block;
+            margin-top:-40px;
         }
 
 .list_parent_node {

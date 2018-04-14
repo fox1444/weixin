@@ -9,6 +9,10 @@ using System.Web.Security;
 using System.Web.SessionState;
 using QJY.API;
 using System.Text;
+using System.Threading.Tasks;
+using Senparc.Weixin.MP;
+using Senparc.Weixin.Containers;
+using Senparc.Weixin.MP.Containers;
 
 namespace QJY.WEB
 {
@@ -18,37 +22,73 @@ namespace QJY.WEB
         protected void Application_Start(object sender, EventArgs e)
         {
             System.Timers.Timer t = new System.Timers.Timer();
-            t.Interval = 3 * 1000;
+            t.Interval = 60 * 1000;
             t.Elapsed += new System.Timers.ElapsedEventHandler(TimerNow);
             t.AutoReset = true;
             t.Enabled = true;
             t.Start();
 
+
         }
+
+        public static async Task<string> TryGetAccessTokenAsync(string appId, string appSecret, bool getNewToken = false)
+        {
+            if (!AccessTokenContainer.CheckRegistered(appId) || getNewToken)
+            {
+                AccessTokenContainer.Register(appId, appSecret);
+            }           
+            return await AccessTokenContainer.GetAccessTokenAsync(appId, getNewToken);
+        }
+
         public void TimerNow(object source, System.Timers.ElapsedEventArgs e)
         {
-            string path = Environment.CurrentDirectory;
+            new JH_Auth_LogB().InsertLog("Application_Start", "启动时运行", "Global.asax", "System", "System", 0, "");
             try
             {
-                Random rd = new Random();
-                string strUrl = CommonHelp.GetConfig("APITX") + "&r=" + rd.Next();
-                HttpWebResponse ResponseDataXS = CommonHelp.CreateHttpResponse(strUrl, null, 0, "", null, "GET");
-                string Returndata = new StreamReader(ResponseDataXS.GetResponseStream(), Encoding.UTF8).ReadToEnd();
+                //Task<string> task1 = new Task<string>(() =>
+                //  TryGetAccessTokenAsync("wx1b5c7dbfe9a3555d", "c37f667f8026820e34ff0a6a19e4033d", false).Result
+                //);
 
+                //task1.Start();
+                JH_Auth_UserB.UserInfo UserInfo = new JH_Auth_UserB.UserInfo();
+                WXFWHelp bm = new WXFWHelp(UserInfo.QYinfo);
+
+                string acc = bm.GetToken();
+                if (acc.Length > 0)
+                {
+                    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为" + acc, "Global.asax", "System", "System", 0, "");
+                }
+                else
+                {
+                    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为空", "Global.asax", "System", "System", 0, "");
+                }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-
-                CommonHelp.WriteLOG(ex.Message.ToString());
-
+                new JH_Auth_LogB().InsertLog("Application_Start", "更新Access错误" + ex.ToString(), "Global.asax", "System", "System", 0, "");
             }
+            //string path = Environment.CurrentDirectory;
+            //try
+            //{
+            //    Random rd = new Random();
+            //    string strUrl = CommonHelp.GetConfig("APITX") + "&r=" + rd.Next();
+            //    HttpWebResponse ResponseDataXS = CommonHelp.CreateHttpResponse(strUrl, null, 0, "", null, "GET");
+            //    string Returndata = new StreamReader(ResponseDataXS.GetResponseStream(), Encoding.UTF8).ReadToEnd();
+
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    CommonHelp.WriteLOG(ex.Message.ToString());
+
+            //}
         }
         protected void Session_Start(object sender, EventArgs e)
         {
 
         }
 
-     
+
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
@@ -69,14 +109,16 @@ namespace QJY.WEB
         {
             // 在应用程序关闭时运行的代码 
             //解决应用池回收问题 
-            System.Threading.Thread.Sleep(5000);
-            Random rd = new Random();
-            string strUrl = CommonHelp.GetConfig("APITX") + "&r=" + rd.Next();
-            HttpWebResponse ResponseDataXS = CommonHelp.CreateHttpResponse(strUrl, null, 0, "", null, "GET");
-            string Returndata = new StreamReader(ResponseDataXS.GetResponseStream(), Encoding.UTF8).ReadToEnd();
+            //System.Threading.Thread.Sleep(5000);
+            //Random rd = new Random();
+            //string strUrl = CommonHelp.GetConfig("APITX") + "&r=" + rd.Next();
+            //HttpWebResponse ResponseDataXS = CommonHelp.CreateHttpResponse(strUrl, null, 0, "", null, "GET");
+            //string Returndata = new StreamReader(ResponseDataXS.GetResponseStream(), Encoding.UTF8).ReadToEnd();
+
+            new JH_Auth_LogB().InsertLog("Application_End", "关闭时运行", "Global.asax", "System", "System", 0, "");
         }
 
 
-    
+
     }
 }
