@@ -5,6 +5,17 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="QJY_SaaSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APPConfig">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConfigName" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="ConfigValue" Type="varchar(max)" />
+          <Property Name="Content" Type="varchar(max)" />
+          <Property Name="CRDate" Type="datetime" />
+          <Property Name="CRUser" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="FT_File">
           <Key>
             <PropertyRef Name="ID" />
@@ -1606,6 +1617,7 @@
           <Property Name="TaskRole" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityContainer Name="QJY_SaaSModelStoreContainer">
+          <EntitySet Name="APPConfig" EntityType="Self.APPConfig" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FT_File" EntityType="Self.FT_File" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FT_File_Downhistory" EntityType="Self.FT_File_Downhistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FT_File_Share" EntityType="Self.FT_File_Share" Schema="dbo" store:Type="Tables" />
@@ -1768,6 +1780,7 @@
           <EntitySet Name="SZHL_YCGL" EntityType="QJY_SaaSModel.SZHL_YCGL" />
           <EntitySet Name="SZHL_YCGL_CAR" EntityType="QJY_SaaSModel.SZHL_YCGL_CAR" />
           <EntitySet Name="SZHL_DRAFT" EntityType="QJY_SaaSModel.SZHL_DRAFT" />
+          <EntitySet Name="APPConfigs" EntityType="QJY_SaaSModel.APPConfig" />
         </EntityContainer>
         <EntityType Name="FT_File">
           <Key>
@@ -3368,6 +3381,17 @@
           <Property Name="CRTime" Type="DateTime" Precision="3" />
           <Property Name="ExtData" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DataID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="APPConfig">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConfigName" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ConfigValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Precision="3" />
+          <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5050,6 +5074,18 @@
                 <ScalarProperty Name="FormCode" ColumnName="FormCode" />
                 <ScalarProperty Name="ComId" ColumnName="ComId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPConfigs">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.APPConfig">
+              <MappingFragment StoreEntitySet="APPConfig">
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ConfigValue" ColumnName="ConfigValue" />
+                <ScalarProperty Name="ConfigName" ColumnName="ConfigName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -17,9 +17,6 @@ namespace QJY.API
     //用户表
     public class JH_Auth_UserB : BaseEFDao<JH_Auth_User>
     {
-
-
-
         public class UserInfo
         {
             public JH_Auth_User User;
@@ -356,7 +353,6 @@ namespace QJY.API
         }
     }
 
-
     //部门表
     public class JH_Auth_BranchB : BaseEFDao<JH_Auth_Branch>
     {
@@ -685,10 +681,6 @@ namespace QJY.API
         }
     }
 
-
-
-
-
     //角色表
     public class JH_Auth_RoleB : BaseEFDao<JH_Auth_Role>
     {
@@ -750,8 +742,6 @@ namespace QJY.API
 
     }
 
-
-
     //用户角色表
     public class JH_Auth_UserRoleB : BaseEFDao<JH_Auth_UserRole>
     {
@@ -791,11 +781,6 @@ namespace QJY.API
         }
 
     }
-
-
-
-
-
 
     public class JH_Auth_ZiDianB : BaseEFDao<JH_Auth_ZiDian>
     {
@@ -847,10 +832,6 @@ namespace QJY.API
         }
     }
 
-
-
-
-
     public class JH_Auth_LogB : BaseEFDao<JH_Auth_Log>
     {
 
@@ -875,7 +856,6 @@ namespace QJY.API
 
     }
 
-
     public class JH_Auth_VersionB : BaseEFDao<JH_Auth_Version>
     {
         public DataTable GetLastVer(string strUserCode)
@@ -892,7 +872,6 @@ namespace QJY.API
             this.Update(Model);
         }
     }
-
 
     public class JH_Auth_QYB : BaseEFDao<JH_Auth_QY>
     {
@@ -930,10 +909,12 @@ namespace QJY.API
         }
 
     }
+
     public class JH_Auth_UserCustomDataB : BaseEFDao<JH_Auth_UserCustomData>
     {
 
     }
+
     public class JH_Auth_RoleFunB : BaseEFDao<JH_Auth_RoleFun>
     { }
 
@@ -1557,7 +1538,6 @@ namespace QJY.API
     {
     }
     #endregion
-
 
     #region 扩展字段
     public class JH_Auth_ExtendModeB : BaseEFDao<JH_Auth_ExtendMode>

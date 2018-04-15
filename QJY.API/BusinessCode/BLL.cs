@@ -425,6 +425,9 @@ namespace QJY.API
     public class SZHL_HYGLB : BaseEFDao<SZHL_HYGL>
     {
     }
+    public class APPConfigB : BaseEFDao<APPConfig>
+    {
+    }
     public class SZHL_HYGL_ROOMB : BaseEFDao<SZHL_HYGL_ROOM>
     {
     }

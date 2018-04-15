@@ -83,6 +83,7 @@
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_YCGL" Width="1.5" PointX="15.375" PointY="29.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_YCGL_CAR" Width="1.5" PointX="29.375" PointY="17.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_DRAFT" Width="1.5" PointX="21.375" PointY="29.75" />
+        <EntityTypeShape EntityType="QJY_SaaSModel.APPConfig" Width="1.5" PointX="29.375" PointY="23.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

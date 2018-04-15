@@ -188,6 +188,8 @@ public partial class QJY_SaaSEntities : DbContext
 
     public virtual DbSet<SZHL_DRAFT> SZHL_DRAFT { get; set; }
 
+    public virtual DbSet<APPConfig> APPConfigs { get; set; }
+
 }
 
 }

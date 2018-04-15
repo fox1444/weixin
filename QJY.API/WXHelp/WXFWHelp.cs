@@ -11,29 +11,71 @@ using Senparc.Weixin.MP.Entities;
 using Senparc.Weixin.MP.CommonAPIs;
 using QJY.Data;
 using Senparc.Weixin.MP.Containers;
+using System.Web;
+using Senparc.Weixin.MP.AdvancedAPIs.User;
+using Senparc.Weixin.MP.AdvancedAPIs.OAuth;
+using Senparc.Weixin.MP.AdvancedAPIs;
 
 namespace QJY.API
 {
     public class WXFWHelp
     {
-        public JH_Auth_QY Qyinfo = null;
 
-        public WXFWHelp(JH_Auth_QY QY)
+        string szhlcode = HttpContext.Current.Request.Cookies["szhlcode"].Value.ToString();
+
+        public WXFWHelp()
         {
-            //获取企业信息
-            Qyinfo = QY;
         }
-        public string GetToken(string appID = "")
+
+        public string GetToken()
+        {
+            AccessTokenResult r = CommonApi.GetToken(CommonHelp.AppConfig("AppId"), CommonHelp.AppConfig("AppSecret"), "client_credential");
+            string _username = CommonHelp.GetUserNameByszhlcode();
+
+            string accesstoken = r.access_token;
+            if (accesstoken.Trim().Length > 0)
+            {
+                CommonHelp.UpdateAppConfig("AccessToken", accesstoken);
+                new JH_Auth_LogB().InsertLog("WXFWHelper", "更新AccessToken为" + accesstoken, "WXFWHelper", _username, _username, 0, "");
+            }
+            return accesstoken;
+        }
+
+        public string GetTokenAsync(string appID = "" , bool getNewToken = false)
         {
             //AccessTokenResult r = CommonApi.GetToken(Qyinfo.corpId, Qyinfo.corpSecret, "client_credential");
 
-
+            string _username = CommonHelp.GetUserNameByszhlcode();
             var task1 = new Task<string>(() => 
-            AccessTokenContainer.TryGetAccessTokenAsync("wx1b5c7dbfe9a3555d", "c37f667f8026820e34ff0a6a19e4033d", false).Result
+            AccessTokenContainer.TryGetAccessTokenAsync(CommonHelp.AppConfig("AppId"), CommonHelp.AppConfig("AppSecret"), getNewToken).Result
             );
 
             task1.Start();
-            return task1.Result;
+
+            string accesstoken = task1.Result;
+            if (accesstoken.Trim().Length>0)
+            {
+                CommonHelp.UpdateAppConfig("AccessToken", accesstoken);
+                new JH_Auth_LogB().InsertLog("WXFWHelper", "更新AccessToken为" + accesstoken, "WXFWHelper", _username, _username, 0, "");
+            }
+            return accesstoken;
         }
+
+        public static UserInfoJson GetWXUserInfo(string _code)
+        {
+            try
+            {
+                OAuthAccessTokenResult _accresstoken = OAuthApi.GetAccessToken(CommonHelp.AppConfig("AppId"), CommonHelp.AppConfig("AppSecret"), _code);
+                UserInfoJson u = UserApi.Info(CommonHelp.GetAccessToken(), _accresstoken.openid);
+                return u;
+            }
+            catch
+            {
+
+            }
+
+            return null;
+        }
+
     }
 }

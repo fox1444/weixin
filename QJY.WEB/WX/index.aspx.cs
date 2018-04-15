@@ -17,11 +17,10 @@ namespace QJY.WEB.WX
         protected void Page_Load(object sender, EventArgs e)
         {
             Response.Write(szhlcode + "<br/>");
-            JH_Auth_UserB.UserInfo UserInfo = new JH_Auth_UserB().GetUserInfo(szhlcode);
-            WXFWHelp bm = new WXFWHelp(UserInfo.QYinfo);
-
+          
+            WXFWHelp bm = new WXFWHelp();
             //CommonHelp.WriteLOG("aasad");
-            //Response.Write(bm.GetToken());
+            Response.Write(bm.GetToken());
             //Response.Write( HttpContext.Current.Request.MapPath("/"));
         }
 

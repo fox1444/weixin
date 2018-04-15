@@ -197,6 +197,7 @@
     <Content Include="ToolS\umeditor122\umeditor.js" />
     <Content Include="ToolS\umeditor122\umeditor.min.js" />
     <Content Include="ToolS\YZMCode.aspx" />
+    <Content Include="ViewV5\AppPage\FSGL\LSXXLIST.html" />
     <Content Include="ViewV5\AppPage\HYGL\HYGL.html" />
     <Content Include="ViewV5\AppPage\HYGL\HYGLINDEX.html" />
     <Content Include="ViewV5\AppPage\HYGL\HYGLLIST.html" />
@@ -214,6 +215,7 @@
     <Content Include="ViewV5\AppPage\YCGL\YCGLLIST.html" />
     <Content Include="ViewV5\AppPage\YCGL\YCGLVIEW.html" />
     <Content Include="ViewV5\APP_WARN.html" />
+    <Content Include="ViewV5\CSS\font_icon.css" />
     <Content Include="ViewV5\images\qrcode.png" />
     <Content Include="ViewV5\JS\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -239,7 +241,9 @@
     <Content Include="View_Mobile\UI\HyDetail.html" />
     <Content Include="View_Mobile\UI\UI_Login.html" />
     <Content Include="View_Mobile\UI\UI_YCGL_LIST.html" />
+    <Content Include="WX\default.aspx" />
     <Content Include="WX\index.aspx" />
+    <Content Include="WX\FSlist.html" />
     <Content Include="WX\WeiXin.aspx" />
     <Content Include="WZWeb\CSS\bootstrap.css" />
     <Content Include="WZWeb\CSS\dialog.css" />
@@ -1564,6 +1568,13 @@
     </Compile>
     <Compile Include="ToolS\YZMCode.aspx.designer.cs">
       <DependentUpon>YZMCode.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WX\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WX\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
     </Compile>
     <Compile Include="WX\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>

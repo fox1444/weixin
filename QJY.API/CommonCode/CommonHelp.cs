@@ -640,11 +640,74 @@ namespace QJY.API
             return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(content, "md5");
         }
 
+        public static string Getszhlcode()
+        {
+            string _szhlcode = "";
+            if (HttpContext.Current.Request.Cookies["szhlcode"] != null)
+                _szhlcode = HttpContext.Current.Request.Cookies["szhlcode"].Value.ToString();
+            return _szhlcode;
+        }
+        public static string GetUserNameByszhlcode()
+        {
+            string _username = "System";
+            string _szhlcode = Getszhlcode();
+            if (_szhlcode.Trim().Length > 0)
+            {
+                var UserInfo = new JH_Auth_UserB().GetUserByPCCode(_szhlcode);
+                if (UserInfo != null)
+                {
+                    _username = UserInfo.UserName;
+                }
+            }
+            return _username;
+        }
 
-
-        public static string GetConfig(string strKey,string strDefault="")
+        public static string GetConfig(string strKey, string strDefault = "")
         {
             return ConfigurationManager.AppSettings[strKey] ?? strDefault;
+        }       
+
+        /// <summary>
+        /// 获取数据库配置
+        /// </summary>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        public static string AppConfig(string ConfigName)
+        {
+            APPConfig model = new APPConfigB().GetEntity(d => d.ConfigName == ConfigName);
+            if (model != null)
+                return model.ConfigValue;
+            else
+                return "";
+        }
+        public static void UpdateAppConfig(string ConfigName, string ConfigValue)
+        {
+            string _username = GetUserNameByszhlcode();
+            APPConfig model = new APPConfigB().GetEntity(d => d.ConfigName == ConfigName);
+            if (model != null)
+            {
+                model.ConfigValue = ConfigValue;
+                model.CRDate = DateTime.Now;
+                model.CRUser = _username;
+                new APPConfigB().Update(model);
+            }
+            else
+            {
+                model.ConfigName = ConfigName;
+                model.ConfigValue = ConfigValue;
+                model.CRDate = DateTime.Now;
+                model.CRUser= _username;
+                new APPConfigB().Insert(model);
+            }
+        }
+
+        public static string GetAccessToken()
+        {
+            APPConfig model = new APPConfigB().GetEntity(d => d.ConfigName == "AccessToken");
+            if (model != null)
+                return model.ConfigValue;
+            else
+                return "";
         }
 
         /// <summary>
@@ -812,9 +875,9 @@ namespace QJY.API
             }
             catch (Exception)
             {
-                
+
             }
-         
+
 
         }
         /// <summary>
@@ -1032,7 +1095,7 @@ namespace QJY.API
             string ipAddr = "";
             try
             {
-                HttpRequest Request = context.Request;   
+                HttpRequest Request = context.Request;
                 // 如果使用代理，获取真实IP  
                 if (Request.ServerVariables["HTTP_X_FORWARDED_FOR"] != "")
                     ipAddr = Request.ServerVariables["REMOTE_ADDR"];
@@ -1040,7 +1103,7 @@ namespace QJY.API
                     ipAddr = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
                 if (ipAddr == null || ipAddr == "")
                     ipAddr = Request.UserHostAddress;
-                return ipAddr;  
+                return ipAddr;
 
             }
             catch (Exception ex)
@@ -1105,7 +1168,7 @@ namespace QJY.API
                     getkeys = context.Request.Form.Keys[i];
                     if (!CommonHelp.ProcessSqlStr(context.Request.Form[getkeys], 1))
                     {
-                        if (context.Request.Form[getkeys].ToString().Length>20)
+                        if (context.Request.Form[getkeys].ToString().Length > 20)
                         {
                             strCheckString = context.Request.Form[getkeys].ToString();
 
