@@ -13,10 +13,9 @@ namespace QJY.WEB.WX
 {
     public partial class index : System.Web.UI.Page
     {
-        string szhlcode = HttpContext.Current.Request.Cookies["szhlcode"].Value.ToString();
         protected void Page_Load(object sender, EventArgs e)
         {
-            Response.Write(szhlcode + "<br/>");
+            
           
             WXFWHelp bm = new WXFWHelp();
             //CommonHelp.WriteLOG("aasad");

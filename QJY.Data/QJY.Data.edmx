@@ -502,6 +502,8 @@
           <Property Name="weixinCard" Type="varchar" MaxLength="255" />
           <Property Name="IsShowYD" Type="int" />
           <Property Name="Files" Type="varchar" MaxLength="50" />
+          <Property Name="IsWX" Type="int" />
+          <Property Name="WXopenid" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="JH_Auth_User_Center">
           <Key>
@@ -1487,6 +1489,29 @@
           <Property Name="SeatNum" Type="varchar" MaxLength="50" />
           <Property Name="Remark" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="WX_User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Openid" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nickname" Type="varchar" MaxLength="100" />
+          <Property Name="Sex" Type="varchar" MaxLength="50" />
+          <Property Name="Province" Type="varchar" MaxLength="50" />
+          <Property Name="City" Type="varchar" MaxLength="50" />
+          <Property Name="Country" Type="varchar" MaxLength="50" />
+          <Property Name="HeadImgUrl" Type="varchar(max)" />
+          <Property Name="Privilege" Type="varchar(max)" />
+          <Property Name="Unionid" Type="varchar" MaxLength="1000" />
+          <Property Name="Code" Type="varchar" MaxLength="1000" />
+          <Property Name="Access_token" Type="varchar" MaxLength="1000" />
+          <Property Name="Expires_in" Type="int" />
+          <Property Name="Refresh_token" Type="varchar" MaxLength="1000" />
+          <Property Name="Scope" Type="varchar" MaxLength="1000" />
+          <Property Name="CRDate" Type="datetime" />
+          <Property Name="LastLoginDate" Type="datetime" />
+          <Property Name="AuthUserID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Yan_WF_ChiTask">
           <Key>
             <PropertyRef Name="ID" />
@@ -1690,6 +1715,7 @@
           <EntitySet Name="SZHL_XZ_JL" EntityType="Self.SZHL_XZ_JL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_YCGL" EntityType="Self.SZHL_YCGL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_YCGL_CAR" EntityType="Self.SZHL_YCGL_CAR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_User" EntityType="Self.WX_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Yan_WF_ChiTask" EntityType="Self.Yan_WF_ChiTask" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Yan_WF_DaiLi" EntityType="Self.Yan_WF_DaiLi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Yan_WF_PD" EntityType="Self.Yan_WF_PD" Schema="dbo" store:Type="Tables" />
@@ -1781,6 +1807,7 @@
           <EntitySet Name="SZHL_YCGL_CAR" EntityType="QJY_SaaSModel.SZHL_YCGL_CAR" />
           <EntitySet Name="SZHL_DRAFT" EntityType="QJY_SaaSModel.SZHL_DRAFT" />
           <EntitySet Name="APPConfigs" EntityType="QJY_SaaSModel.APPConfig" />
+          <EntitySet Name="WX_User" EntityType="QJY_SaaSModel.WX_User" />
         </EntityContainer>
         <EntityType Name="FT_File">
           <Key>
@@ -2249,6 +2276,8 @@
           <Property Name="weixinCard" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="IsShowYD" Type="Int32" />
           <Property Name="Files" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsWX" Type="Int32" />
+          <Property Name="WXopenid" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="JH_Auth_User_Center">
           <Key>
@@ -3393,6 +3422,29 @@
           <Property Name="CRDate" Type="DateTime" Precision="3" />
           <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="WX_User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Openid" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nickname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Sex" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HeadImgUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Privilege" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Unionid" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Access_token" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Expires_in" Type="Int32" />
+          <Property Name="Refresh_token" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Scope" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Precision="3" />
+          <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+          <Property Name="AuthUserID" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3826,6 +3878,8 @@
           <EntitySetMapping Name="JH_Auth_User">
             <EntityTypeMapping TypeName="QJY_SaaSModel.JH_Auth_User">
               <MappingFragment StoreEntitySet="JH_Auth_User">
+                <ScalarProperty Name="WXopenid" ColumnName="WXopenid" />
+                <ScalarProperty Name="IsWX" ColumnName="IsWX" />
                 <ScalarProperty Name="Files" ColumnName="Files" />
                 <ScalarProperty Name="IsShowYD" ColumnName="IsShowYD" />
                 <ScalarProperty Name="weixinCard" ColumnName="weixinCard" />
@@ -5086,6 +5140,30 @@
                 <ScalarProperty Name="ConfigValue" ColumnName="ConfigValue" />
                 <ScalarProperty Name="ConfigName" ColumnName="ConfigName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_User">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.WX_User">
+              <MappingFragment StoreEntitySet="WX_User">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="AuthUserID" ColumnName="AuthUserID" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="Scope" ColumnName="Scope" />
+                <ScalarProperty Name="Refresh_token" ColumnName="Refresh_token" />
+                <ScalarProperty Name="Expires_in" ColumnName="Expires_in" />
+                <ScalarProperty Name="Access_token" ColumnName="Access_token" />
+                <ScalarProperty Name="Unionid" ColumnName="Unionid" />
+                <ScalarProperty Name="Privilege" ColumnName="Privilege" />
+                <ScalarProperty Name="HeadImgUrl" ColumnName="HeadImgUrl" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+                <ScalarProperty Name="Openid" ColumnName="Openid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

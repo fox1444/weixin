@@ -640,12 +640,37 @@ namespace QJY.API
             return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(content, "md5");
         }
 
+        public static string GetQueryString(string QueryName)
+        {
+            string tmp = "";
+            if (HttpContext.Current.Request.QueryString[QueryName] != null)
+                tmp = HttpContext.Current.Request.QueryString[QueryName].ToString();
+            return tmp;
+        }
+        public static void SetCookie(string key, string value)
+        {
+            if (HttpContext.Current.Request.Cookies[key] != null)
+            {
+                HttpContext.Current.Request.Cookies[key].Value = value;
+            }
+            else
+            {
+                HttpCookie cookie = new HttpCookie(key);
+                cookie.Value = value;
+                HttpContext.Current.Response.SetCookie(cookie);
+            }
+        }
+
+        public static string GetCookieString(string key)
+        {
+            string tmp = "";
+            if (HttpContext.Current.Request.Cookies[key] != null)
+                tmp = HttpContext.Current.Request.Cookies[key].Value.ToString();
+            return tmp;
+        }
         public static string Getszhlcode()
         {
-            string _szhlcode = "";
-            if (HttpContext.Current.Request.Cookies["szhlcode"] != null)
-                _szhlcode = HttpContext.Current.Request.Cookies["szhlcode"].Value.ToString();
-            return _szhlcode;
+            return GetCookieString("szhlcode");
         }
         public static string GetUserNameByszhlcode()
         {
@@ -665,7 +690,7 @@ namespace QJY.API
         public static string GetConfig(string strKey, string strDefault = "")
         {
             return ConfigurationManager.AppSettings[strKey] ?? strDefault;
-        }       
+        }
 
         /// <summary>
         /// 获取数据库配置
@@ -696,7 +721,7 @@ namespace QJY.API
                 model.ConfigName = ConfigName;
                 model.ConfigValue = ConfigValue;
                 model.CRDate = DateTime.Now;
-                model.CRUser= _username;
+                model.CRUser = _username;
                 new APPConfigB().Insert(model);
             }
         }
