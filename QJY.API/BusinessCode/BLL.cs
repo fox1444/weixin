@@ -428,6 +428,9 @@ namespace QJY.API
     public class APPConfigB : BaseEFDao<APPConfig>
     {
     }
+    public class WX_UserB : BaseEFDao<WX_User>
+    {
+    }
     public class SZHL_HYGL_ROOMB : BaseEFDao<SZHL_HYGL_ROOM>
     {
     }
