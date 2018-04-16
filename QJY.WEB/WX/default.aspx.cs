@@ -25,29 +25,30 @@ namespace QJY.WEB.WX
             //Response.Write(szhlcode + "<br/>");
             //Response.Write( HttpContext.Current.Request.MapPath("/"));
 
-            UserInfoJson u = WXFWHelp.GetWXUserInfo(code);
-
-            JH_Auth_User userInfo = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.openid && d.IsWX == 1);
-            if (userInfo != null)
+            if (szhlcode != "")
             {
-                if (string.IsNullOrEmpty(userInfo.pccode))
+
+            }
+            else
+            {
+                UserInfoJson u = WXFWHelp.GetWXUserInfo(code);
+
+                JH_Auth_User userInfo = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.openid && d.IsWX == 1);
+                if (userInfo != null)
                 {
-                    userInfo.pccode = CommonHelp.CreatePCCode(userInfo);
+                    DateTime expires = DateTime.Now.AddDays(3);
+                    CommonHelp.SetCookie("szhlcode", userInfo.pccode, expires);
+                    CommonHelp.SetCookie("username", userInfo.UserName, expires);
                 }
-                CommonHelp.SetCookie("szhlcode", userInfo.pccode);
             }
+            Response.Redirect("/WX/me.html");
+            //OpenIdResultJson urs = UserApi.Get(CommonHelp.AppConfig("AccessToken"), "");
 
-
-            OpenIdResultJson urs = UserApi.Get(CommonHelp.AppConfig("AccessToken"), "");
-
-            foreach (var i in urs.data.openid)
-            {
-                UserInfoJson openu = WXFWHelp.GetUserInfoByOpenidWithUpdateLocal(i);
-                Response.Write("<img src=\"" + openu.headimgurl + "\"/>" + openu.nickname + " <br/>");
-            }
-            //UserInfoJson u = UserApi.Info(CommonHelp.GetAccessToken(), "oQ_Ip07jF1mv5LhEY0n2T5fguS18");
-            //Response.Write(u.nickname + "<br/>" + u.sex + "<br/>" + u.province + "<br/>" + u.openid + "<br/>");
-            //Response.Write("<img src=\"" + u.headimgurl + "\"/>");
+            //foreach (var i in urs.data.openid)
+            //{
+            //    UserInfoJson openu = WXFWHelp.GetUserInfoByOpenidWithUpdateLocal(i);
+            //    Response.Write("<img src=\"" + openu.headimgurl + "\"/>" + openu.nickname + " <br/>");
+            //}
 
         }
 

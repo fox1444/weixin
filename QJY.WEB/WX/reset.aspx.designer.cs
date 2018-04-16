@@ -10,7 +10,7 @@
 namespace QJY.WEB.WX {
     
     
-    public partial class index {
+    public partial class reset {
         
         /// <summary>
         /// form1 控件。

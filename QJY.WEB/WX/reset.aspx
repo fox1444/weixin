@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="QJY.WEB.WX.index" Async="true" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="reset.aspx.cs" Inherits="QJY.WEB.WX.reset" Async="true" %>
 
 <!DOCTYPE html>
 

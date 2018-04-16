@@ -40,7 +40,7 @@ namespace QJY.API
             return accesstoken;
         }
 
-        public string GetTokenAsync(string appID = "", bool getNewToken = false)
+        public string GetTokenAsync(bool getNewToken = false)
         {
             //AccessTokenResult r = CommonApi.GetToken(Qyinfo.corpId, Qyinfo.corpSecret, "client_credential");
 
@@ -67,7 +67,8 @@ namespace QJY.API
             try
             {
                 OAuthAccessTokenResult _accresstoken = OAuthApi.GetAccessToken(CommonHelp.AppConfig("AppId"), CommonHelp.AppConfig("AppSecret"), _code);
-                return GetUserInfoByOpenidWithUpdateLocal(_accresstoken.openid);
+                //return GetUserInfoByOpenidWithUpdateLocal(_accresstoken.openid);
+                return GetUserInfoByOpenidWithUpdateLocal(_accresstoken.openid, _accresstoken, _code);
             }
             catch
             {
@@ -89,6 +90,17 @@ namespace QJY.API
             if (u != null && u.errmsg == null)//有用户信息返回
             {
                 UpdateLocalUserInfo(u);
+                return u;
+            }
+            return u;
+        }
+
+        public static UserInfoJson GetUserInfoByOpenidWithUpdateLocal(string openid, OAuthAccessTokenResult _accresstoken, string _code)
+        {
+            UserInfoJson u = GetUserInfoByOpenid(openid);
+            if (u != null && u.errmsg == null)//有用户信息返回
+            {
+                UpdateLocalUserInfo(u, _accresstoken, _code);
                 return u;
             }
             return u;
@@ -159,6 +171,7 @@ namespace QJY.API
                 //新用户名随机生成
                 localuser.UserRealName = u.nickname;
                 localuser.UserPass = CommonHelp.GetMD5("a123456");
+                localuser.pccode= EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
                 localuser.ComId = 10334;
                 localuser.Sex = u.sex == 1 ? "男" : (u.sex == 2 ? "女" : "未知");
                 localuser.BranchCode = 0;

@@ -22,6 +22,8 @@ namespace QJY.API
             public JH_Auth_User User;
             public JH_Auth_QY QYinfo;
             public JH_Auth_Branch BranchInfo;
+            //微信信息
+            public WX_User WXUserInfo;
             public string UserRoleCode;
         }
         public UserInfo GetUserInfo(string strSZHLCode)
@@ -31,6 +33,7 @@ namespace QJY.API
             UserInfo.User = new JH_Auth_UserB().GetUserByPCCode(strSZHLCode);
             UserInfo.UserRoleCode = new JH_Auth_UserRoleB().GetRoleCodeByUserName(UserInfo.User.UserName, UserInfo.User.ComId.Value);
             UserInfo.QYinfo = new JH_Auth_QYB().GetEntity(d => d.ComId == UserInfo.User.ComId.Value);
+            UserInfo.WXUserInfo = new WX_UserB().GetEntity(d => d.Openid == UserInfo.User.WXopenid);
             UserInfo.BranchInfo = new JH_Auth_BranchB().GetBMByDeptCode(UserInfo.QYinfo.ComId, UserInfo.User.BranchCode);
             return UserInfo;
         }
@@ -41,6 +44,7 @@ namespace QJY.API
             UserInfo.User = User;
             UserInfo.UserRoleCode = new JH_Auth_UserRoleB().GetRoleCodeByUserName(UserInfo.User.UserName, UserInfo.User.ComId.Value);
             UserInfo.QYinfo = new JH_Auth_QYB().GetEntity(d => d.ComId == UserInfo.User.ComId.Value);
+            UserInfo.WXUserInfo = new WX_UserB().GetEntity(d => d.Openid == UserInfo.User.WXopenid);
             UserInfo.BranchInfo = new JH_Auth_BranchB().GetBMByDeptCode(UserInfo.QYinfo.ComId, UserInfo.User.BranchCode);
             return UserInfo;
         }

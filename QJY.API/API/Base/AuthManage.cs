@@ -1242,10 +1242,18 @@ namespace QJY.API
             msg.Result = UserInfo;
         }
 
+        public void UPDATEMOBPHONE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string strSql = string.Format("UPDATE JH_Auth_User SET mobphone='{0}' WHERE ID={1} ", P2, P1);
+            new JH_Auth_UserB().ExsSql(strSql);
+        }
 
-
-
-
+        public void UPDATEMOBWEIXINCARD(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string strSql = string.Format("UPDATE JH_Auth_User SET weixinCard='{0}' WHERE ID={1} ", P2, P1);
+            new JH_Auth_UserB().ExsSql(strSql);
+        }
+        
         #endregion
 
         #region excel转换为table

@@ -179,7 +179,8 @@
             msgdata: [],
             toglemenu: function () {
                 model.isshowmenu = !model.isshowmenu
-            }, isRead: 0,
+            },
+            isRead: 0,
             GetReadMsgList: function () {
                 model.isRead = (model.isRead == 0 ? 1 : 0);
                 model.page = 1;
@@ -242,7 +243,8 @@
                     }
                 })
             },
-            KJFSData: [], GetKJFSModel: function () {
+            KJFSData: [],
+            GetKJFSModel: function () {
                 $.getJSON('/API/VIEWAPI.ashx?Action=INIT_GETINDEXMENU', { P1: "APPINDEX" }, function (resultData) {
                     if (resultData.ErrorMsg == "") {
                         model.KJFSData = resultData.Result1;
@@ -262,6 +264,10 @@
                     model.contentcode = "TEMP_INDEX_WORK";
                 }
             })
+
+            //var pn = ComFunJS.getCookie("szhlcode");
+            //var uma = ComFunJS.getCookie("username");
+            //alert(pn + '<br/>' + uma);
             $.getJSON("/API/VIEWAPI.ashx?action=XTGL_WXINIT&r=" + Math.random(), { }, function (r) {
                 //el.loading("hide");
                 if (r.ErrorMsg == "") {

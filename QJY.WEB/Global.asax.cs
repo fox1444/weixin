@@ -22,7 +22,7 @@ namespace QJY.WEB
         protected void Application_Start(object sender, EventArgs e)
         {
             System.Timers.Timer t = new System.Timers.Timer();
-            t.Interval = (35 * 60 * 1000);
+            t.Interval = (CommonHelp.AppConfigInt("AccessTokenExpireTime") * 60 * 1000);
             t.Elapsed += new System.Timers.ElapsedEventHandler(TimerNow);
             t.AutoReset = true;
             t.Enabled = true;
@@ -42,17 +42,16 @@ namespace QJY.WEB
 
                 //task1.Start();
                 //JH_Auth_UserB.UserInfo UserInfo = new JH_Auth_UserB.UserInfo();
-                //WXFWHelp bm = new WXFWHelp(UserInfo.QYinfo);
+                WXFWHelp bm = new WXFWHelp();
 
-                //string acc = bm.GetToken("", true);
-                //if (acc.Length > 0)
-                //{
-                //    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为" + acc, "Global.asax", "System", "System", 0, "");
-                //}
-                //else
-                //{
-                //    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为空", "Global.asax", "System", "System", 0, "");
-                //}
+                string acc = bm.GetTokenAsync(true);
+                if (acc.Length > 0)
+                {
+                }
+                else
+                {
+                    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为空", "Global.asax", "System", "System", 0, "");
+                }
             }
             catch (Exception ex)
             {

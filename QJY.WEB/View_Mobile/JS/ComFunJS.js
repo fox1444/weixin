@@ -353,6 +353,9 @@ var ComFunJS = {
                 }
             }
         })
+
+        var t = $("#ar_comment").val();
+        $("#ar_comment").val("").focus().val(t); //获取焦点并移到最后Weiler
     },//编辑框
     showAnswer: function (height, callback) {
         var height = height | "360";

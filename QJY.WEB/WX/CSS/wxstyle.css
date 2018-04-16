@@ -1,0 +1,40 @@
+﻿
+@font-face {
+    font-family: "icomoon";
+    src: url('../css/fonts/icomoon.eot'); /* IE9*/
+    src: url('../css/fonts/icomoon.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../css/fonts/icomoon.woff') format('woff'), /* chrome, firefox */
+    url('../css/fonts/icomoon.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    url('../css/fonts/icomoon.svg') format('svg'); /* iOS 4.1- */
+}
+
+body {
+}
+
+/*我的*/ 
+.list-group-title {
+    color: #777 !important;
+    font-size: 0.75rem !important;
+    padding: 0.75rem !important;
+}
+
+.item-title, .item-inner {
+    font-size: 0.75rem !important;
+    -webkit-box-flex: 1;
+    padding: 0.35rem 0.75rem 0.35rem 0 !important;
+}
+
+.ms-controller, [ms-controller] {
+    display: none;
+}
+
+.img-icon img {
+    width: 50px;
+    border-radius: 25px;
+}
+.edit-icon::after {
+    content:"\e905";
+    font-family:icomoon;
+    font-size:0.8em;
+    color:#777;
+}

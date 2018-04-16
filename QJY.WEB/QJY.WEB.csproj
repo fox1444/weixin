@@ -224,7 +224,10 @@
       <DependentUpon>WFJS.js</DependentUpon>
     </Content>
     <Content Include="View_Mobile\CSS\login.css" />
+    <Content Include="View_Mobile\CSS\sm.css" />
+    <Content Include="View_Mobile\CSS\sm.min.css" />
     <Content Include="View_Mobile\CSS\tobaccoHtml.css" />
+    <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="View_Mobile\Images\arrow.png" />
     <Content Include="View_Mobile\Images\tobacco-logo.png" />
     <Content Include="View_Mobile\Images\tobacco-logo2.jpg" />
@@ -241,8 +244,11 @@
     <Content Include="View_Mobile\UI\HyDetail.html" />
     <Content Include="View_Mobile\UI\UI_Login.html" />
     <Content Include="View_Mobile\UI\UI_YCGL_LIST.html" />
+    <Content Include="WX\CSS\fonts\icomoon.svg" />
+    <Content Include="WX\CSS\wxstyle.css" />
     <Content Include="WX\default.aspx" />
-    <Content Include="WX\index.aspx" />
+    <Content Include="WX\Me.html" />
+    <Content Include="WX\reset.aspx" />
     <Content Include="WX\FSlist.html" />
     <Content Include="WX\WeiXin.aspx" />
     <Content Include="WZWeb\CSS\bootstrap.css" />
@@ -1522,6 +1528,9 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="WX\CSS\fonts\icomoon.eot" />
+    <Content Include="WX\CSS\fonts\icomoon.ttf" />
+    <Content Include="WX\CSS\fonts\icomoon.woff" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\HtmlModule.cs" />
@@ -1576,12 +1585,12 @@
     <Compile Include="WX\default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WX\index.aspx.cs">
-      <DependentUpon>index.aspx</DependentUpon>
+    <Compile Include="WX\reset.aspx.cs">
+      <DependentUpon>reset.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WX\index.aspx.designer.cs">
-      <DependentUpon>index.aspx</DependentUpon>
+    <Compile Include="WX\reset.aspx.designer.cs">
+      <DependentUpon>reset.aspx</DependentUpon>
     </Compile>
     <Compile Include="WX\WeiXin.aspx.cs">
       <DependentUpon>WeiXin.aspx</DependentUpon>
@@ -1635,6 +1644,10 @@
     <Content Include="ToolS\umeditor122\net\getContent.ashx" />
     <Content Include="ToolS\umeditor122\net\imageUp.ashx" />
     <Content Include="ToolS\UploadTX.ashx" />
+    <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

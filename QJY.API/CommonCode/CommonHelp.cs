@@ -643,29 +643,45 @@ namespace QJY.API
         public static string GetQueryString(string QueryName)
         {
             string tmp = "";
-            if (HttpContext.Current.Request.QueryString[QueryName] != null)
+            try
+            {
                 tmp = HttpContext.Current.Request.QueryString[QueryName].ToString();
+            }
+            catch
+            {
+
+            }
             return tmp;
         }
-        public static void SetCookie(string key, string value)
+        public static void SetCookie(string key, string value )
         {
-            if (HttpContext.Current.Request.Cookies[key] != null)
-            {
-                HttpContext.Current.Request.Cookies[key].Value = value;
-            }
-            else
-            {
-                HttpCookie cookie = new HttpCookie(key);
-                cookie.Value = value;
-                HttpContext.Current.Response.SetCookie(cookie);
-            }
+            HttpContext.Current.Response.Cookies.Remove(key);
+            HttpCookie cookie = new HttpCookie(key);
+            cookie.Value = value;
+            HttpContext.Current.Response.SetCookie(cookie);
+        }
+
+        public static void SetCookie(string key, string value, DateTime expires)
+        {
+            HttpContext.Current.Response.Cookies.Remove(key);
+            HttpCookie cookie = new HttpCookie(key);
+            cookie.Value = value;
+            cookie.Expires = expires;
+            HttpContext.Current.Response.SetCookie(cookie);
+
         }
 
         public static string GetCookieString(string key)
         {
             string tmp = "";
-            if (HttpContext.Current.Request.Cookies[key] != null)
+            try
+            {
                 tmp = HttpContext.Current.Request.Cookies[key].Value.ToString();
+            }
+            catch
+            {
+
+            }
             return tmp;
         }
         public static string Getszhlcode()
@@ -704,6 +720,25 @@ namespace QJY.API
                 return model.ConfigValue;
             else
                 return "";
+        }
+
+        public static int AppConfigInt(string ConfigName)
+        {
+            APPConfig model = new APPConfigB().GetEntity(d => d.ConfigName == ConfigName);
+            try
+            {
+                if (model != null)
+                {
+                    return int.Parse(model.ConfigValue);
+                }
+
+                else
+                    return 0;
+            }
+            catch
+            {
+                return 0;
+            }
         }
         public static void UpdateAppConfig(string ConfigName, string ConfigValue)
         {
