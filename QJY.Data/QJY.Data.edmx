@@ -1489,6 +1489,17 @@
           <Property Name="SeatNum" Type="varchar" MaxLength="50" />
           <Property Name="Remark" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="WX_Group">
+          <Key>
+            <PropertyRef Name="GroupCode" />
+          </Key>
+          <Property Name="GroupCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="varchar" MaxLength="400" Nullable="false" />
+          <Property Name="Content" Type="varchar(max)" />
+          <Property Name="CRUser" Type="varchar" MaxLength="50" />
+          <Property Name="CRDate" Type="datetime" />
+          <Property Name="IsDel" Type="int" />
+        </EntityType>
         <EntityType Name="WX_User">
           <Key>
             <PropertyRef Name="ID" />
@@ -1511,6 +1522,18 @@
           <Property Name="CRDate" Type="datetime" />
           <Property Name="LastLoginDate" Type="datetime" />
           <Property Name="AuthUserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WX_UserGroup">
+          <Key>
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="GroupCode" />
+          </Key>
+          <Property Name="ComId" Type="int" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="GroupCode" Type="int" Nullable="false" />
+          <Property Name="Memo" Type="varchar(max)" />
+          <Property Name="CRDate" Type="datetime" />
+          <Property Name="InvitationUser" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Yan_WF_ChiTask">
           <Key>
@@ -1715,7 +1738,9 @@
           <EntitySet Name="SZHL_XZ_JL" EntityType="Self.SZHL_XZ_JL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_YCGL" EntityType="Self.SZHL_YCGL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_YCGL_CAR" EntityType="Self.SZHL_YCGL_CAR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_Group" EntityType="Self.WX_Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_User" EntityType="Self.WX_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_UserGroup" EntityType="Self.WX_UserGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Yan_WF_ChiTask" EntityType="Self.Yan_WF_ChiTask" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Yan_WF_DaiLi" EntityType="Self.Yan_WF_DaiLi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Yan_WF_PD" EntityType="Self.Yan_WF_PD" Schema="dbo" store:Type="Tables" />
@@ -1808,6 +1833,8 @@
           <EntitySet Name="SZHL_DRAFT" EntityType="QJY_SaaSModel.SZHL_DRAFT" />
           <EntitySet Name="APPConfigs" EntityType="QJY_SaaSModel.APPConfig" />
           <EntitySet Name="WX_User" EntityType="QJY_SaaSModel.WX_User" />
+          <EntitySet Name="WX_Group" EntityType="QJY_SaaSModel.WX_Group" />
+          <EntitySet Name="WX_UserGroup" EntityType="QJY_SaaSModel.WX_UserGroup" />
         </EntityContainer>
         <EntityType Name="FT_File">
           <Key>
@@ -3444,6 +3471,29 @@
           <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
           <Property Name="AuthUserID" Type="Int32" Nullable="false" />
           <Property Name="Code" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="WX_Group">
+          <Key>
+            <PropertyRef Name="GroupCode" />
+          </Key>
+          <Property Name="GroupCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDel" Type="Int32" />
+        </EntityType>
+        <EntityType Name="WX_UserGroup">
+          <Key>
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="GroupCode" />
+          </Key>
+          <Property Name="ComId" Type="Int32" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GroupCode" Type="Int32" Nullable="false" />
+          <Property Name="Memo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Precision="3" />
+          <Property Name="InvitationUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5167,6 +5217,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="WX_Group">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.WX_Group">
+              <MappingFragment StoreEntitySet="WX_Group">
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_UserGroup">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.WX_UserGroup">
+              <MappingFragment StoreEntitySet="WX_UserGroup">
+                <ScalarProperty Name="InvitationUser" ColumnName="InvitationUser" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -5182,7 +5256,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
       </DesignerInfoPropertySet>

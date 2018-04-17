@@ -85,6 +85,8 @@
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_DRAFT" Width="1.5" PointX="21.375" PointY="29.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.APPConfig" Width="1.5" PointX="29.375" PointY="23.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.WX_User" Width="1.5" PointX="23.375" PointY="29.75" />
+        <EntityTypeShape EntityType="QJY_SaaSModel.WX_Group" Width="1.5" PointX="7.375" PointY="19.75" />
+        <EntityTypeShape EntityType="QJY_SaaSModel.WX_UserGroup" Width="1.5" PointX="25.375" PointY="29.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

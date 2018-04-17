@@ -43,7 +43,7 @@ namespace QJY.API
         public string GetTokenAsync(bool getNewToken = false)
         {
             //AccessTokenResult r = CommonApi.GetToken(Qyinfo.corpId, Qyinfo.corpSecret, "client_credential");
-
+            string strIp = CommonHelp.getIP(HttpContext.Current);
             string _username = CommonHelp.GetUserNameByszhlcode();
             var task1 = new Task<string>(() =>
             AccessTokenContainer.TryGetAccessTokenAsync(CommonHelp.AppConfig("AppId"), CommonHelp.AppConfig("AppSecret"), getNewToken).Result
@@ -55,7 +55,7 @@ namespace QJY.API
             if (accesstoken.Trim().Length > 0)
             {
                 CommonHelp.UpdateAppConfig("AccessToken", accesstoken);
-                new JH_Auth_LogB().InsertLog("WXFWHelper", "更新AccessToken为" + accesstoken, "WXFWHelper", _username, _username, 0, "");
+                new JH_Auth_LogB().InsertLog("WXFWHelper", "更新AccessToken为" + accesstoken, "WXFWHelper", _username, _username, 0, strIp);
             }
             return accesstoken;
         }
@@ -182,6 +182,12 @@ namespace QJY.API
                 localuser.IsWX = 1;
                 localuser.WXopenid = u.openid;
                 new JH_Auth_UserB().Insert(localuser);
+            }
+            else
+            {
+                //localuser.pccode = EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+                localuser.logindate = DateTime.Now;
+                new JH_Auth_UserB().Update(localuser);//更新logindate  pccode不能更新
             }
         }
     }

@@ -1315,8 +1315,8 @@ $(function () {
                     return;
                 }
                 if (data.ErrorMsg) {
-                    //top.ComFunJS.winwarning(data.ErrorMsg);
-                    alert(data.ErrorMsg+'22222');
+                    top.ComFunJS.winwarning(data.ErrorMsg);
+                   
                     return;
                 }
                 fn.success(data, textStatus);
@@ -1325,15 +1325,14 @@ $(function () {
             beforeSend: function (XHR) {
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //top.ComFunJS.winwarning(errorThrown)
-                alert(errorThrown+'111111');
+                top.ComFunJS.winwarning(errorThrown)                
             },
             complete: function (XHR, TS) {
 
             }
         });
     };
-    //ComFunJS.initsetajax(true);//初始化数据
+    ComFunJS.initsetajax(true);//初始化数据
 
 })
 

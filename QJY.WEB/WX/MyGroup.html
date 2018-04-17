@@ -6,13 +6,14 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>我</title>
+    <title>我的小组</title>
     <link rel="stylesheet" href="/View_Mobile/css/sm.min.css">
     <link rel="stylesheet" href="/WX/CSS/wxstyle.css">
     <style>
+
     </style>
 </head>
-<body ms-controller="Me">
+<body ms-controller="Mygroup">
     <div class="page page-current " id="pageindex1">
         <div class="content native-scroll">
             <div class="list-block contacts-block" style="margin:0px;">
@@ -90,7 +91,7 @@
         <div class="footer-nav">
             <ul>
                 <li>
-                    <span ms-on-click="gopage(1)" class="nav-group ">
+                    <span ms-on-click="gopage(1)" class="nav-group active">
                         小组
                     </span>
                 </li>
@@ -100,7 +101,7 @@
                     </span>
                 </li>
                 <li>
-                    <span ms-on-click="gopage(3)" class="nav-me active">
+                    <span ms-on-click="gopage(3)"  class="nav-me" >
                         我
                     </span>
                 </li>
@@ -115,7 +116,7 @@
 
     <script>
         var model = avalon.define({
-            $id: "Me",
+            $id: "Mygroup",
             userData: {},
             inittemp: function () {
                 //var pn = ComFunJS.getCookie("szhlcode");
@@ -147,7 +148,7 @@
                     })
 
                 }, false, { type: "微信号", content: e.weixinCard });
-            },
+            } ,
             gopage: function (k) {
                 if (k == 1)
                     window.location = "mygroup.html";

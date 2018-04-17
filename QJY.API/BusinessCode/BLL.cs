@@ -431,6 +431,12 @@ namespace QJY.API
     public class WX_UserB : BaseEFDao<WX_User>
     {
     }
+    public class WX_GroupB : BaseEFDao<WX_Group>
+    {
+    }
+    public class WX_UserGroupB : BaseEFDao<WX_UserGroup>
+    {
+    }
     public class SZHL_HYGL_ROOMB : BaseEFDao<SZHL_HYGL_ROOM>
     {
     }

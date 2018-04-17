@@ -33,6 +33,7 @@ namespace QJY.WEB
 
         public void TimerNow(object source, System.Timers.ElapsedEventArgs e)
         {
+            string strIp = CommonHelp.getIP(HttpContext.Current);
             new JH_Auth_LogB().InsertLog("Application_Start", "启动时运行", "Global.asax", "System", "System", 0, "");
             try
             {
@@ -50,12 +51,12 @@ namespace QJY.WEB
                 }
                 else
                 {
-                    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为空", "Global.asax", "System", "System", 0, "");
+                    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为空", "Global.asax", "System", "System", 0, strIp);
                 }
             }
             catch (Exception ex)
             {
-                new JH_Auth_LogB().InsertLog("Application_Start", "更新Access错误" + ex.ToString(), "Global.asax", "System", "System", 0, "");
+                new JH_Auth_LogB().InsertLog("Application_Start", "更新Access错误" + ex.ToString(), "Global.asax", "System", "System", 0, strIp);
             }
             //string path = Environment.CurrentDirectory;
             //try
@@ -110,7 +111,26 @@ namespace QJY.WEB
             //WXFWHelp bm = new WXFWHelp(UserInfo.QYinfo);
 
             //string acc = bm.GetToken("", true);
-            new JH_Auth_LogB().InsertLog("Application_End", "关闭时运行", "Global.asax", "System", "System", 0, "");
+            string strIp = CommonHelp.getIP(HttpContext.Current);
+            new JH_Auth_LogB().InsertLog("Application_End", "关闭时运行", "Global.asax", "System", "System", 0, strIp);
+
+            try
+            {
+                WXFWHelp bm = new WXFWHelp();
+
+                string acc = bm.GetTokenAsync(true);
+                if (acc.Length > 0)
+                {
+                }
+                else
+                {
+                    new JH_Auth_LogB().InsertLog("Application_End", "更新Access为空", "Global.asax", "System", "System", 0, strIp);
+                }
+            }
+            catch (Exception ex)
+            {
+                new JH_Auth_LogB().InsertLog("Application_End", "更新Access错误" + ex.ToString(), "Global.asax", "System", "System", 0, strIp);
+            }
         }
 
 
