@@ -92,19 +92,19 @@ namespace QJY.WEB
                                 TimeSpan ts = new TimeSpan(UserInfo.User.logindate.Value.Ticks).Subtract(new TimeSpan(DateTime.Now.Ticks)).Duration();
                                 if (UserInfo != null)
                                 {
-                                    if (ts.TotalMinutes > intTimeOut)  // 超过五分钟了,超时了哦;
-                                    {
-                                        UserInfo.User.pccode = "";
-                                        new JH_Auth_UserB().Update(UserInfo.User);//清除PCCode
-                                        Model.ErrorMsg = "WXTIMEOUT";
-                                    }
-                                    else
-                                    {
+                                    //if (ts.TotalMinutes > intTimeOut)  // 超过五分钟了,超时了哦;
+                                    //{
+                                    //    UserInfo.User.pccode = "";
+                                    //    new JH_Auth_UserB().Update(UserInfo.User);//清除PCCode
+                                    //    Model.ErrorMsg = "WXTIMEOUT";
+                                    //}
+                                    //else
+                                    //{
                                         Model.Action = Model.Action.Substring(acs[0].Length + 1);
                                         container.ProcessRequest(context, ref Model, P1.TrimEnd(), P2.TrimEnd(), UserInfo);
                                         new JH_Auth_LogB().InsertLog(Model.Action, "调用接口", context.Request.Url.AbsoluteUri, UserInfo.User.UserName, UserInfo.User.UserRealName, UserInfo.QYinfo.ComId, strIP);
                                         new JH_Auth_UserB().UpdateloginDate(UserInfo.User.ComId.Value, UserInfo.User.UserName);//更新用户最近的操作时间
-                                    }
+                                    //}
 
                                 }
                                 else

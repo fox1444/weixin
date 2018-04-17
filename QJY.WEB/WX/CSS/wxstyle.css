@@ -9,9 +9,10 @@
 }
 
 body {
+    font-size: 0.75rem;
 }
 
-/*我的*/ 
+/*我的*/
 .list-group-title {
     color: #777 !important;
     font-size: 0.75rem !important;
@@ -32,9 +33,63 @@ body {
     width: 50px;
     border-radius: 25px;
 }
+
 .edit-icon::after {
-    content:"\e905";
-    font-family:icomoon;
-    font-size:0.8em;
-    color:#777;
+    content: "\e905";
+    font-family: icomoon;
+    font-size: 0.8rem;
+    color: #777;
 }
+
+.footer-nav {
+    background: #fff;
+    border-top: solid 1px #e1e1e1;
+    padding:0px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+    .footer-nav ul {
+        width: 100%;
+        -webkit-padding-start: 0;
+        margin:0.2rem 0 0rem 0;
+    }
+        .footer-nav ul li {
+            list-style: none;
+            display: inline-block;
+            text-align: center;
+            width: 32%;
+            padding: 0;
+            margin: 0;
+            font-family: icomoon;
+            font-size: 0.6rem;
+            color: #777;
+            line-height: 0.7rem;
+        }
+
+    .footer-nav .nav-group::before {
+        content: "\e96d";
+        display: block;
+        font-size: 1rem;
+        line-height: 1.2rem;
+    }
+
+    .footer-nav .nav-search::before {
+        content: "\e986";
+        display: block;
+        font-size: 1rem;
+        line-height: 1.2rem;
+    }
+
+    .footer-nav .nav-me::before {
+        content: "\e9e7";
+        display: block;
+        font-size: 1rem;
+        line-height: 1.2rem;
+    }
+
+    .footer-nav ul li .active {
+        color: green;
+    }

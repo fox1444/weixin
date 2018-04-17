@@ -1244,16 +1244,21 @@ namespace QJY.API
 
         public void UPDATEMOBPHONE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            string strSql = string.Format("UPDATE JH_Auth_User SET mobphone='{0}' WHERE ID={1} ", P2, P1);
+            string strSql = string.Format("UPDATE JH_Auth_User SET mobphone='{0}' WHERE ID={1} ", P2, UserInfo.User.ID);
             new JH_Auth_UserB().ExsSql(strSql);
         }
 
         public void UPDATEMOBWEIXINCARD(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            string strSql = string.Format("UPDATE JH_Auth_User SET weixinCard='{0}' WHERE ID={1} ", P2, P1);
+            string strSql = string.Format("UPDATE JH_Auth_User SET weixinCard='{0}' WHERE ID={1} ", P2, UserInfo.User.ID);
             new JH_Auth_UserB().ExsSql(strSql);
         }
-        
+
+        public void UPDATEUSERDETAIL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string strSql = string.Format("UPDATE JH_Auth_User SET {0}='{1}' WHERE ID={2} ", P1, P2, UserInfo.User.ID);
+            new JH_Auth_UserB().ExsSql(strSql);
+        }
         #endregion
 
         #region excel转换为table

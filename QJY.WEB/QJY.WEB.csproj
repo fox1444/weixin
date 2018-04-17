@@ -247,6 +247,7 @@
     <Content Include="WX\CSS\fonts\icomoon.svg" />
     <Content Include="WX\CSS\wxstyle.css" />
     <Content Include="WX\default.aspx" />
+    <Content Include="WX\MyGroup.html" />
     <Content Include="WX\Me.html" />
     <Content Include="WX\reset.aspx" />
     <Content Include="WX\FSlist.html" />

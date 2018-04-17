@@ -105,5 +105,7 @@ namespace QJY.Data
         public virtual DbSet<SZHL_DRAFT> SZHL_DRAFT { get; set; }
         public virtual DbSet<APPConfig> APPConfigs { get; set; }
         public virtual DbSet<WX_User> WX_User { get; set; }
+        public virtual DbSet<WX_Group> WX_Group { get; set; }
+        public virtual DbSet<WX_UserGroup> WX_UserGroup { get; set; }
     }
 }

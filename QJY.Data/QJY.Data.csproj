@@ -288,7 +288,13 @@
     <Compile Include="SZHL_YCGL_CAR.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>
+    <Compile Include="WX_Group.cs">
+      <DependentUpon>QJY.tt</DependentUpon>
+    </Compile>
     <Compile Include="WX_User.cs">
+      <DependentUpon>QJY.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WX_UserGroup.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>
     <Compile Include="Yan_WF_ChiTask.cs">
