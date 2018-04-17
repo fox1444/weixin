@@ -236,6 +236,7 @@
     <Content Include="View_Mobile\UI\HyDetail_start.html" />
     <Content Include="View_Mobile\UI\HyDetail_step.html" />
     <Content Include="View_Mobile\JS\avalon1.47.js" />
+    <Content Include="View_Mobile\UI\TEMP\MODEL\MWXGROUP.html" />
     <Content Include="View_Mobile\UI\UI_CAR_INFO.html" />
     <Content Include="View_Mobile\UI\UI_CAR_LIST.html" />
     <Content Include="View_Mobile\UI\UI_HYGL_LIST.html" />
@@ -247,6 +248,10 @@
     <Content Include="WX\CSS\fonts\icomoon.svg" />
     <Content Include="WX\CSS\wxstyle.css" />
     <Content Include="WX\default.aspx" />
+    <Content Include="WX\images\plus-serch.png" />
+    <Content Include="WX\images\plus-zhankai.png" />
+    <Content Include="WX\images\plus-zhedie.png" />
+    <Content Include="WX\MyGroup - 复制.html" />
     <Content Include="WX\MyGroup.html" />
     <Content Include="WX\Me.html" />
     <Content Include="WX\reset.aspx" />

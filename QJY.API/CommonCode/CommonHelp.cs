@@ -653,7 +653,7 @@ namespace QJY.API
             }
             return tmp;
         }
-        public static void SetCookie(string key, string value )
+        public static void SetCookie(string key, string value)
         {
             HttpContext.Current.Response.Cookies.Remove(key);
             HttpCookie cookie = new HttpCookie(key);
@@ -1157,10 +1157,10 @@ namespace QJY.API
             {
                 HttpRequest Request = context.Request;
                 // 如果使用代理，获取真实IP  
-                if (Request.ServerVariables["HTTP_X_FORWARDED_FOR"] != "")
-                    ipAddr = Request.ServerVariables["REMOTE_ADDR"];
-                else
+                if (Request.ServerVariables["HTTP_X_FORWARDED_FOR"] != null && Request.ServerVariables["HTTP_X_FORWARDED_FOR"] != "")
                     ipAddr = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                else
+                    ipAddr = Request.ServerVariables["REMOTE_ADDR"];
                 if (ipAddr == null || ipAddr == "")
                     ipAddr = Request.UserHostAddress;
                 return ipAddr;

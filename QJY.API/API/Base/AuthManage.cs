@@ -48,7 +48,6 @@ namespace QJY.API
         }
         #endregion
 
-
         #region 部门管理
 
 
@@ -588,7 +587,6 @@ namespace QJY.API
         }
         #endregion
 
-
         #region 角色管理
         public void EDITROLE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
@@ -737,7 +735,6 @@ namespace QJY.API
         }
 
         #endregion
-
 
         #region 数据权限接口
 
@@ -998,7 +995,6 @@ namespace QJY.API
                 }
             }
         }
-
         public void GETUSERBYPHONENUMBER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             //如果获取当前用户信息，直接返回，否则按用户名查找
@@ -2405,7 +2401,6 @@ namespace QJY.API
             msg.Result = role;
         }
         #endregion
-
 
         #region 获取已发送短信数及容量使用情况
         public void GETDXANDSPACE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)

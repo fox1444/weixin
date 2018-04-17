@@ -74,6 +74,19 @@
                         <li>
                             <div class="item-content">
                                 <div class="item-inner">
+                                    <div class="item-title">姓名</div>
+                                    <div>
+                                        <span class="edit-icon" ms-click="updateUserRealName(userData.User)">
+                                            {{userData.User.UserRealName}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
                                     <div class="item-title">手机号</div>
                                     <div>
                                         <span class="edit-icon" ms-click="updatephone(userData.User)">
@@ -125,8 +138,8 @@
                         model.userData = r.Result;
                     }
                 })
-            },
-            updatephone: function (e) {//记录
+            },          
+            updatephone: function (e) {
                 ComFunJS.showCommentNew(function (result) {
                     $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_UPDATEUSERDETAIL&r=' + Math.random(), { "P1": "mobphone", "P2": result.comment }, function (resultData) {
                         if (resultData.ErrorMsg == "") {
@@ -137,7 +150,18 @@
 
                 }, false, { type: "手机号码", content: e.mobphone });
             },
-            updateweixinCard: function (e) {//记录
+            updateUserRealName: function (e) {
+                ComFunJS.showCommentNew(function (result) {
+                    $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_UPDATEUSERDETAIL&r=' + Math.random(), { "P1": "UserRealName", "P2": result.comment }, function (resultData) {
+                        if (resultData.ErrorMsg == "") {
+                            e.UserRealName = result.comment;
+                            top.ComFunJS.winsuccess("保存成功！！");
+                        }
+                    })
+
+                }, false, { type: "姓名", content: e.UserRealName });
+            },
+            updateweixinCard: function (e) {
                 ComFunJS.showCommentNew(function (result) {
                     $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_UPDATEUSERDETAIL&r=' + Math.random(), { "P1": "weixinCard", "P2": result.comment }, function (resultData) {
                         if (resultData.ErrorMsg == "") {

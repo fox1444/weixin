@@ -16,18 +16,27 @@ body {
 .list-group-title {
     color: #777 !important;
     font-size: 0.75rem !important;
-    padding: 0.75rem !important;
+    padding: 0.45rem 0.75rem !important;
 }
-
+    .list-group-title .add-new {
+        position: absolute;
+        right: 0.75rem;
+        top: 0.25rem;
+        font-size: 1rem;
+    }
 .item-title, .item-inner {
     font-size: 0.75rem !important;
     -webkit-box-flex: 1;
     padding: 0.35rem 0.75rem 0.35rem 0 !important;
 }
+    .item-title .light{
+        font-size:0.7rem;
+        color:#ccc;
+    }
 
-.ms-controller, [ms-controller] {
-    display: none;
-}
+    .ms-controller, [ms-controller] {
+        display: none;
+    }
 
 .img-icon img {
     width: 50px;

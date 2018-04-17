@@ -66,7 +66,7 @@ namespace QJY.API
 
             container.RegisterType<IWsService, HYGLManage>("HYGL".ToUpper());//会议管理
 
-
+            container.RegisterType<IWsService, WXGLManage>("WXGL".ToUpper());//微信功能管理
 
             return container;
         }

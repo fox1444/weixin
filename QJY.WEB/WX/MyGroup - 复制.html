@@ -10,40 +10,30 @@
     <link rel="stylesheet" href="/View_Mobile/css/sm.min.css">
     <link rel="stylesheet" href="/WX/CSS/wxstyle.css">
     <style>
-        .right-panel {
-            bottom: 3rem;
-        }
+
     </style>
 </head>
 <body ms-controller="Mygroup">
-
     <div class="page page-current " id="pageindex1">
         <div class="content native-scroll">
             <div class="list-block contacts-block" style="margin:0px;">
                 <div class="list-group">
                     <ul>
-                        <li class="list-group-title">
-                            我的小组
-                            <div class="add-new">
-                                <a class="mod-li-icon" ms-click="addGROUP()">+</a>
-                            </div>
-                        </li>
-                        <li ms-repeat-el="ctData">
+                        <li class="list-group-title"></li>
+                        <li>
                             <div class="item-content">
                                 <div class="item-inner">
-                                    <div class="item-title" ms-click="vieww(el)">{{el.GroupName}}
-                                        <div class="light">
-                                            {{el.UserRealName}}创建
-                                        </div>
+                                    <div class="item-title">头像</div>
+                                    <div class="img-icon">
+                                        <img ms-attr-src="{{userData.WXUserInfo.HeadImgUrl}}" />
                                     </div>
                                 </div>
                             </div>
-                        </li>
+                        </li>                  
                     </ul>
                 </div>
             </div>
         </div>
-
         <div class="footer-nav">
             <ul>
                 <li>
@@ -57,13 +47,12 @@
                     </span>
                 </li>
                 <li>
-                    <span ms-on-click="gopage(3)" class="nav-me">
+                    <span ms-on-click="gopage(3)"  class="nav-me" >
                         我
                     </span>
                 </li>
             </ul>
         </div>
-
     </div>
     <script src="/View_Mobile/JS/layer/layer.m.js"></script>
     <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
@@ -74,25 +63,38 @@
     <script>
         var model = avalon.define({
             $id: "Mygroup",
-            ctData: [],
-            groupData: {},
+            userData: {},
             inittemp: function () {
                 //var pn = ComFunJS.getCookie("szhlcode");
                 //alert(pn);
-                $.getJSON("/API/VIEWAPI.ashx?Action=WXGL_GETGROUPLIST&r=" + Math.random(), {}, function (r) {
+                $.getJSON("/API/VIEWAPI.ashx?Action=XTGL_GETUSERINFO", {}, function (r) {
                     if (r.ErrorMsg == "") {
-                        model.groupData = r.Result;
-                        model.ctData.pushArray(r.Result);
-
+                        model.userData = r.Result;
                     }
                 })
             },
-            vieww: function (el) {
-                window.location = "/View_Mobile/UI/BASE/APP_MOBIL_WF.html?FormCode=WXGROUP&GroupCode=" + el.GroupCode + "&r=" + Math.random();
+            updatephone: function (e) {//记录
+                ComFunJS.showCommentNew(function (result) {
+                    $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_UPDATEUSERDETAIL&r=' + Math.random(), { "P1": "mobphone", "P2": result.comment }, function (resultData) {
+                        if (resultData.ErrorMsg == "") {
+                            e.mobphone = result.comment;
+                            top.ComFunJS.winsuccess("保存成功！！");
+                        }
+                    })
+
+                }, false, { type: "手机号码", content: e.mobphone });
             },
-            addGROUP: function (el) {
-                window.location = "/View_Mobile/UI/BASE/APP_MOBIL_WF.html?FormCode=WXGROUP&r=" + Math.random();
-            },
+            updateweixinCard: function (e) {//记录
+                ComFunJS.showCommentNew(function (result) {
+                    $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_UPDATEUSERDETAIL&r=' + Math.random(), { "P1": "weixinCard", "P2": result.comment }, function (resultData) {
+                        if (resultData.ErrorMsg == "") {
+                            e.weixinCard = result.comment;
+                            top.ComFunJS.winsuccess("保存成功！！");
+                        }
+                    })
+
+                }, false, { type: "微信号", content: e.weixinCard });
+            } ,
             gopage: function (k) {
                 if (k == 1)
                     window.location = "mygroup.html";
