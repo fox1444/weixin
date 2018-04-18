@@ -62,7 +62,7 @@ namespace QJY.API
 
 
         //从公众号中进入获取用户信息并更新数据库中账号
-        public static UserInfoJson GetWXUserInfo(string _code)
+        public static WX_User GetWXUserInfo(string _code)
         {
             try
             {
@@ -83,35 +83,20 @@ namespace QJY.API
             return UserApi.Info(CommonHelp.GetAccessToken(), openid);
         }
 
-        //直接更新本地数据库中账号
-        public static UserInfoJson GetUserInfoByOpenidWithUpdateLocal(string openid)
+        //直接更新本地数据库中账号      
+        public static WX_User GetUserInfoByOpenidWithUpdateLocal(string openid, OAuthAccessTokenResult _accresstoken, string _code)
         {
             UserInfoJson u = GetUserInfoByOpenid(openid);
+            WX_User wxuser = new WX_User();
             if (u != null && u.errmsg == null)//有用户信息返回
             {
-                UpdateLocalUserInfo(u);
-                return u;
+                wxuser = new WX_UserB().GetEntity(d => d.Openid == u.openid);
+                return UpdateLocalUserInfo(u, _accresstoken, _code);
             }
-            return u;
+            return wxuser;
         }
 
-        public static UserInfoJson GetUserInfoByOpenidWithUpdateLocal(string openid, OAuthAccessTokenResult _accresstoken, string _code)
-        {
-            UserInfoJson u = GetUserInfoByOpenid(openid);
-            if (u != null && u.errmsg == null)//有用户信息返回
-            {
-                UpdateLocalUserInfo(u, _accresstoken, _code);
-                return u;
-            }
-            return u;
-        }
-
-        public static void UpdateLocalUserInfo(UserInfoJson u)
-        {
-            UpdateLocalUserInfo(u, null, "");
-        }
-
-        public static void UpdateLocalUserInfo(UserInfoJson u, OAuthAccessTokenResult _accresstoken, string _code)
+        public static WX_User UpdateLocalUserInfo(UserInfoJson u, OAuthAccessTokenResult _accresstoken, string _code)
         {
             string _accesstokenstr = "";
             int _expires_in = 0;
@@ -161,34 +146,34 @@ namespace QJY.API
                 wxuser.LastLoginDate = DateTime.Now;
                 new WX_UserB().Update(wxuser);
             }
+            return wxuser;
+            //JH_Auth_User localuser = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.openid && d.IsWX == 1);
+            //if (localuser == null)
+            //{
+            //    localuser = new JH_Auth_User();
 
-            JH_Auth_User localuser = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.openid && d.IsWX == 1);
-            if (localuser == null)
-            {
-                localuser = new JH_Auth_User();
-
-                localuser.UserName = "wx" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 16);
-                //新用户名随机生成
-                localuser.UserRealName = u.nickname;
-                localuser.UserPass = CommonHelp.GetMD5("a123456");
-                localuser.pccode= EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
-                localuser.ComId = 10334;
-                localuser.Sex = u.sex == 1 ? "男" : (u.sex == 2 ? "女" : "未知");
-                localuser.BranchCode = 0;
-                localuser.CRDate = DateTime.Now;
-                localuser.CRUser = "administrator";
-                localuser.logindate = DateTime.Now;
-                localuser.IsUse = "Y";
-                localuser.IsWX = 1;
-                localuser.WXopenid = u.openid;
-                new JH_Auth_UserB().Insert(localuser);
-            }
-            else
-            {
-                //localuser.pccode = EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
-                localuser.logindate = DateTime.Now;
-                new JH_Auth_UserB().Update(localuser);//更新logindate  pccode不能更新
-            }
+            //    localuser.UserName = "wx" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 16);
+            //    //新用户名随机生成
+            //    localuser.UserRealName = u.nickname;
+            //    localuser.UserPass = CommonHelp.GetMD5("a123456");
+            //    localuser.pccode= EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+            //    localuser.ComId = 10334;
+            //    localuser.Sex = u.sex == 1 ? "男" : (u.sex == 2 ? "女" : "未知");
+            //    localuser.BranchCode = 0;
+            //    localuser.CRDate = DateTime.Now;
+            //    localuser.CRUser = "administrator";
+            //    localuser.logindate = DateTime.Now;
+            //    localuser.IsUse = "Y";
+            //    localuser.IsWX = 1;
+            //    localuser.WXopenid = u.openid;
+            //    new JH_Auth_UserB().Insert(localuser);
+            //}
+            //else
+            //{
+            //    //localuser.pccode = EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+            //    localuser.logindate = DateTime.Now;
+            //    new JH_Auth_UserB().Update(localuser);//更新logindate  pccode不能更新
+            //}
         }
     }
 }

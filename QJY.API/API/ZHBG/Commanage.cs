@@ -168,8 +168,6 @@ namespace QJY.API
             }
         }
 
-
-
         public void REGISTERYSOLD(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
 

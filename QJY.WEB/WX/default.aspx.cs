@@ -25,23 +25,27 @@ namespace QJY.WEB.WX
             //Response.Write(szhlcode + "<br/>");
             //Response.Write( HttpContext.Current.Request.MapPath("/"));
 
-            if (szhlcode != "")
-            {
-
-            }
-            else
-            {
-                UserInfoJson u = WXFWHelp.GetWXUserInfo(code);
-
-                JH_Auth_User userInfo = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.openid && d.IsWX == 1);
+            //if (szhlcode != "")
+            //{
+                
+            //}
+            //else
+            //{
+                WX_User u = WXFWHelp.GetWXUserInfo(code);
+                DateTime expires = DateTime.Now.AddDays(3);
+                JH_Auth_User userInfo = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.Openid && d.IsWX == 1);
                 if (userInfo != null)
-                {
-                    DateTime expires = DateTime.Now.AddDays(3);
+                {                    
                     CommonHelp.SetCookie("szhlcode", userInfo.pccode, expires);
                     CommonHelp.SetCookie("username", userInfo.UserName, expires);
                 }
-            }
-            Response.Redirect("/WX/me.html");
+                else
+                {
+                    CommonHelp.SetCookie("openid", u.Openid, expires);
+                    Response.Redirect("/WX/BindPhone.html");
+                }
+            //}
+            Response.Redirect("/WX/index.html");
             //OpenIdResultJson urs = UserApi.Get(CommonHelp.AppConfig("AccessToken"), "");
 
             //foreach (var i in urs.data.openid)

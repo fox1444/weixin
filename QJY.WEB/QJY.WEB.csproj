@@ -251,9 +251,10 @@
     <Content Include="WX\images\plus-serch.png" />
     <Content Include="WX\images\plus-zhankai.png" />
     <Content Include="WX\images\plus-zhedie.png" />
+    <Content Include="WX\BindPhone.html" />
+    <Content Include="WX\index.html" />
     <Content Include="WX\MyGroup.html" />
     <Content Include="WX\Me.html" />
-    <Content Include="WX\reset.aspx" />
     <Content Include="WX\FSlist.html" />
     <Content Include="WX\WeiXin.aspx" />
     <Content Include="WZWeb\CSS\bootstrap.css" />
@@ -1589,13 +1590,6 @@
     </Compile>
     <Compile Include="WX\default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WX\reset.aspx.cs">
-      <DependentUpon>reset.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WX\reset.aspx.designer.cs">
-      <DependentUpon>reset.aspx</DependentUpon>
     </Compile>
     <Compile Include="WX\WeiXin.aspx.cs">
       <DependentUpon>WeiXin.aspx</DependentUpon>
