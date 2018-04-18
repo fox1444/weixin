@@ -251,7 +251,6 @@
     <Content Include="WX\images\plus-serch.png" />
     <Content Include="WX\images\plus-zhankai.png" />
     <Content Include="WX\images\plus-zhedie.png" />
-    <Content Include="WX\MyGroup - 复制.html" />
     <Content Include="WX\MyGroup.html" />
     <Content Include="WX\Me.html" />
     <Content Include="WX\reset.aspx" />
