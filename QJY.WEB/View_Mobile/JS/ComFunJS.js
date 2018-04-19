@@ -144,7 +144,7 @@ var urlData = [];
 })(window.jQuery || window.Zepto, window);
 
 var ComFunJS = {
-    yuming: "http://www.lgosoft.com",
+    yuming: "http://www.lstobacco.com",
     seelp: function (numberMillis) {
         var now = new Date();
         var exitTime = now.getTime() + numberMillis;
@@ -1729,6 +1729,9 @@ var ComFunJS = {
                 }
                 if (data.ErrorMsg == "NOSESSIONCODE" || data.ErrorMsg == "WXTIMEOUT") {
                     ComFunJS.winwarning("未登录或登录已过期");
+                    var pagehistory = window.location.href;
+                    ComFunJS.setCookieMinute("pagehistory", pagehistory, 10);
+                    window.location.href = '/wx/default.aspx?commit=reauthrise';
                 }
                 else if (data.ErrorMsg != "") {
                     ComFunJS.winwarning(data.ErrorMsg);

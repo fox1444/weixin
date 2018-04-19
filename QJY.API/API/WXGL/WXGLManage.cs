@@ -73,6 +73,24 @@ namespace QJY.API
             msg.Result1 = total;
         }
 
+        public void GETMYGROUPTEAM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            //我的自律小组名称
+            JH_Auth_ExtendData ext = new JH_Auth_ExtendDataB().GetEntity(d => d.DataID == UserInfo.User.ID && d.ExtendModeID == 2);
+           
+
+            string viewname = "select U.* , wu.nickName, ext.ExtendDataValue as XiaoZu, case ext2.ExtendDataValue when '是' then 1 else 0 end as IsZuZhang from " +
+                "JH_Auth_User U LEFT JOIN WX_User wu on u.WxOpenid = wu.openid Left JOIN  JH_Auth_ExtendData ext on U.Id = ext.dataID and ext.ExtendModeID = 2 " +
+                " Left JOIN  JH_Auth_ExtendData ext2 on U.Id = ext2.dataID and ext2.ExtendModeID = 4 " +
+                "where ext.ExtendDataValue = '"+ ext.ExtendDataValue + "'order by IsZuZhang desc, u.UserRealName asc";
+
+            string strWhere = " ext.ExtendDataValue='" + ext.ExtendDataValue + "' ";
+            // DataTable dt = new JH_Auth_UserB().GetDataPager(viewname, " U.* , wu.nickName, ext.ExtendDataValue as XiaoZu, ext2.ExtendDataValue as IsZuZhang ", 999999, 1, " u.UserRealName asc ", strWhere, ref recordCount);
+            DataTable dt = new JH_Auth_UserB().GetDTByCommand(viewname);
+
+            msg.Result = dt;
+            msg.Result1 = ext.ExtendDataValue;
+        }
         public void BINDPHONE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             JH_Auth_User j = JsonConvert.DeserializeObject<JH_Auth_User>(P1);
@@ -143,7 +161,7 @@ namespace QJY.API
 
                         CommonHelp.SetCookie("szhlcode", localuser.pccode, expires);
                         CommonHelp.SetCookie("username", localuser.UserName, expires);
-                 
+
                     }
                     else
                     {

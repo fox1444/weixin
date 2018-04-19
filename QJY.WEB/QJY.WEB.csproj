@@ -252,7 +252,9 @@
     <Content Include="WX\images\plus-zhankai.png" />
     <Content Include="WX\images\plus-zhedie.png" />
     <Content Include="WX\BindPhone.html" />
+    <Content Include="WX\home.html" />
     <Content Include="WX\index.html" />
+    <Content Include="WX\JS\WxControl.js" />
     <Content Include="WX\MyGroup.html" />
     <Content Include="WX\Me.html" />
     <Content Include="WX\FSlist.html" />
@@ -1537,6 +1539,8 @@
     <Content Include="WX\CSS\fonts\icomoon.eot" />
     <Content Include="WX\CSS\fonts\icomoon.ttf" />
     <Content Include="WX\CSS\fonts\icomoon.woff" />
+    <Content Include="WX\images\1111.xlsx" />
+    <Content Include="WX\images\会理自律小组现场会组员名单20180418--%282%29.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\HtmlModule.cs" />

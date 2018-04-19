@@ -81,12 +81,12 @@
                 <div class="card" ms-repeat-el="xxList" style="margin-bottom: 20px;padding:.4rem;box-shadow: 1px 1px 4px 0 #888;">
                     <div class="card-content" ms-if="el.Item.size()==1" style="margin-top: 5px;margin-bottom:5px">
                         {{el.XXTitle}}
-                        <br/>
+                        <br />
                         <span style="font-size: .5rem;color: gray;">{{el.FBTime|date("yy年MM月dd HH:mm")}}</span>
                     </div>
                     <div ms-repeat-item="el.Item">
                         <div valign="bottom" class="card-header color-white no-border no-padding" ms-on-tap="viewwxx(item)" ms-if="$index==0">
-                            <img class="card-cover" ms-attr-src="{{ComFunJS.getfile(item.ImageIds?item.ImageIds.split(',')[0]:'')}}" alt="" style="max-height:500px;">
+                            <img class="card-cover" ms-if="item.ImageIds!=''" ms-attr-src="{{ComFunJS.getfile(item.ImageIds?item.ImageIds.split(',')[0]:'')}}" alt="" style="max-height:500px;" />
                             <span class="ititle" ms-if="el.Item.size()!=1">{{el.XXTitle}}</span>
                         </div>
                     </div>
@@ -134,8 +134,9 @@
     <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.5.8/js/sm-extend.min.js' charset='utf-8'></script>
     <script src="/View_Mobile/JS/avalon.mobile.min.js"></script>
     <script src="/View_Mobile/JS/ComFunJS.js?jsver=20160425"></script>
+    <script src="/wx/JS/WxControl.js"></script>
     <script>
-       
+
 
         var strId = ComFunJS.getQueryString("id");
         if (!strId) { strId = "0" }
@@ -145,7 +146,7 @@
             xxList: [],
             loading: false,
             page: 1,
-            pagecount:8,
+            pagecount: 8,
             Name: ComFunJS.getQueryString("name"),
             vieww: function (el) {
                 window.location = "UI_XXFB_LIST.html?id=" + el.Id + "&name=" + el.name + "&r=" + Math.random();
@@ -161,7 +162,7 @@
                     if (r.ErrorMsg == "") {
                         model.xxList.pushArray(r.Result);
 
-                        //判断是否加载完毕 
+                        //判断是否加载完毕
                         if (r.Result.length < model.pagecount) {
                             // 加载完毕，则注销无限加载事件，以防不必要的加载
                             $.detachInfiniteScroll($('.infinite-scroll'));
@@ -169,12 +170,12 @@
                             $('.infinite-scroll-preloader').remove();
                             return;
                         }
-                       
+
                         $.refreshScroller();
                         model.page += 1;
                     }
 
-                    
+
                 })
 
             },

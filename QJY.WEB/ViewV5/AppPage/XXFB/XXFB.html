@@ -58,10 +58,10 @@
                     top.ComFunJS.winwarning("请选择定时时间");
                     return false;
                 }
-                if (!tempmodel.modelData.JSUser) {
-                    top.ComFunJS.winwarning("请选择接收人");
-                    return;
-                }
+                //if (!tempmodel.modelData.JSUser) {
+                //    top.ComFunJS.winwarning("请选择接收人");
+                //    return;
+                //}
                 pmodel.SaveData(this, false);
             })
             $footbar.find(".btnfb").click(function () {
@@ -69,10 +69,10 @@
                     top.ComFunJS.winwarning("请选择定时时间");
                     return false;
                 }
-                if (!tempmodel.modelData.JSUser) {
-                    top.ComFunJS.winwarning("请选择接收人");
-                    return;
-                }
+                //if (!tempmodel.modelData.JSUser) {
+                //    top.ComFunJS.winwarning("请选择接收人");
+                //    return;
+                //}
                 pmodel.SaveData(this, false);
             })
             $footbar.find(".btnyl").click(function () {
@@ -282,7 +282,7 @@
             </div>
         </div>
         <div class="form-group" style="margin-bottom:0">
-            <label class="col-xs-2 control-label"><i>*</i>消息接收人员</label>
+            <label class="col-xs-2 control-label">消息接收人员</label>
             <div class="col-xs-9">
                 <input type="text" value="" class="form-control  szhl_getPeoples" ms-attr-usertype="isAnyUser==1?'XXFB':''" ms-attr-typeid="modelData.XXFBType" ms-duplex="modelData.JSUser" id="qygg2" />
             </div>

@@ -80,7 +80,14 @@
                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?ACTION=WXGL_BINDPHONE&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (r) {
 
                     if (r.ErrorMsg == '') {
-                        window.location.href = "/WX/index.html?r=" + Math.random();
+                        var pagehistory = ComFunJS.getCookie("pagehistory");
+                        if (pagehistory != '') {
+                            window.location.href = pagehistory;
+                        }
+                        else {
+                            window.location.href = "/WX/index.html?r=" + Math.random();
+                        }
+
                     }
 
                 });

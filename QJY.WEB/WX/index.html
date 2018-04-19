@@ -9,6 +9,14 @@
     <title>小组之家</title>
     <link rel="stylesheet" href="/View_Mobile/css/sm.min.css">
     <link rel="stylesheet" href="/WX/CSS/wxstyle.css">
+    <script>
+
+        window.addEventListener('pageshow', function (e) {
+            if (e.persisted) {
+                window.location.reload()
+            }
+        })
+    </script>
     <style>
     </style>
 </head>
@@ -124,7 +132,7 @@
                     <div ms-on-click="showsubpage(this)">
                         小组之家
                         <ul class="sub-nav">
-                            <li ms-on-click="gopage(1)">
+                            <li ms-on-click="gopage('/WX/home.html')">
                                 会议室
                             </li>
                             <li ms-on-click="gopage(2)">
@@ -132,9 +140,6 @@
                             </li>
                             <li ms-on-click="gopage(2)">
                                 活动室
-                            </li>
-                            <li ms-on-click="gopage(2)">
-                                数据分析
                             </li>
                         </ul>
                     </div>
@@ -147,7 +152,7 @@
     <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.5.8/js/sm.min.js' charset='utf-8'></script>
     <script src="/View_Mobile/JS/ComFunJS.js?jsver=20160425"></script>
     <script src="/View_Mobile/JS/avalon.min.js"></script>
-
+    <script src="/wx/JS/WxControl.js"></script>
     <script>
         var model = avalon.define({
             $id: "Me",
@@ -195,7 +200,7 @@
                 }, false, { type: "微信号", content: e.weixinCard });
             },
             showsubpage: function (t) {
-              
+
                 if ($(t).children(".sub-nav").css("display") == "block") {
                     $(".sub-nav").hide();
                 }
