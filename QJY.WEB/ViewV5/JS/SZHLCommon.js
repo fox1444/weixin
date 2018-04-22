@@ -1,5 +1,5 @@
 ﻿var ComFunJS = new Object({
-    yuming: "http://www.lstobacco.com",
+    yuming: "http://www.lgosoft.com",
     isIE: function () {
         if (!!window.ActiveXObject || "ActiveXObject" in window)
             return true;

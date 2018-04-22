@@ -253,11 +253,12 @@
     <Content Include="WX\images\plus-zhedie.png" />
     <Content Include="WX\BindPhone.html" />
     <Content Include="WX\home.html" />
-    <Content Include="WX\index.html" />
+    <Content Include="WX\index_不用.html" />
     <Content Include="WX\JS\WxControl.js" />
     <Content Include="WX\MyGroup.html" />
     <Content Include="WX\Me.html" />
     <Content Include="WX\FSlist.html" />
+    <Content Include="WX\NewProduct.html" />
     <Content Include="WX\WeiXin.aspx" />
     <Content Include="WZWeb\CSS\bootstrap.css" />
     <Content Include="WZWeb\CSS\dialog.css" />

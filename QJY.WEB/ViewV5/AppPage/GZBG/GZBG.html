@@ -131,7 +131,8 @@
             $.post("/API/VIEWAPI.ashx?ACTION=GZBG_ADDGZBG", { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
                 return callback.call(this, result);
             });
-        }, SaveZiDian: function () {    //添加新的工作报告类型
+        },
+        SaveZiDian: function () {    //添加新的工作报告类型
             tempmodel.ZiDianData.TypeName = tempmodel.zditem.TypeName;
             tempmodel.ZiDianData.Remark1 = tempmodel.zditem.Remark1;
             if (!tempmodel.ZiDianData.TypeName) {

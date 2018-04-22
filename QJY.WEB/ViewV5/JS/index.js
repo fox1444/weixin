@@ -258,7 +258,7 @@
             event.stopPropagation();
         }
         if (code == "QYTX" || code == "DXGL") {
-            ComFunJS.winviewform("/View/Base/APP_ADD_WF.html?FormCode=" + code, Name, "1000");
+            ComFunJS.winviewform("/View/Base/APP_ADD_WF.html?FormCode=" + code + "&r=" + Math.random(), Name, "1000");
         }
         else {
             if (!ID) {
@@ -267,7 +267,7 @@
             if (pcode == "CRM") {
                 code = pcode + "_" + code;
             }
-            ComFunJS.winviewform("/ViewV5/AppPage/APP_ADD_WF.html?FormCode=" + code + "&ID=" + ID, Name, "1000");
+            ComFunJS.winviewform("/ViewV5/AppPage/APP_ADD_WF.html?FormCode=" + code + "&ID=" + ID + "&r=" + Math.random(), Name, "1000");
 
         }
     },//添加表格
@@ -275,7 +275,7 @@
         if (event) {
             event.stopPropagation();
         }
-        ComFunJS.winviewform("/ViewV5/AppPage/SEAT/SEAT_2.html?id=" + ID, Name, "1000");
+        ComFunJS.winviewform("/ViewV5/AppPage/SEAT/SEAT_2.html?id=" + ID + "&r=" + Math.random(), Name, "1000");
 
     },//Weiler
 

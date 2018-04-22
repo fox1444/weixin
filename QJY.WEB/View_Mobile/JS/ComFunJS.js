@@ -144,7 +144,7 @@ var urlData = [];
 })(window.jQuery || window.Zepto, window);
 
 var ComFunJS = {
-    yuming: "http://www.lstobacco.com",
+    yuming: "http://www.lgosoft.com",
     seelp: function (numberMillis) {
         var now = new Date();
         var exitTime = now.getTime() + numberMillis;
@@ -1013,8 +1013,8 @@ var ComFunJS = {
             html += '<div class="" ms-if="!ComFunJS.isPic(file.FileExtendName)"><span>' + ele.Name + "</span>";
 
 
-            //html += '<a href="/Tools/DownFile.aspx?fileId=' + ele.ID + '&szhlcode=' + ComFunJS.getCookie('szhlcode') + '"  class="down-icon">';
-            html += '<a href="/Upload/files/' + ele.Name + '.doc"  class="down-icon">';
+            html += '<a href="' + ComFunJS.yuming + '/Tools/DownFile.aspx?fileId=' + ele.ID + '&szhlcode=' + ComFunJS.getCookie('szhlcode') + '"  class="down-icon">';
+            //html += '<a href="/Upload/files/' + ele.Name + '.doc"  class="down-icon">';
             //html += '<img class="" onclick="javascript:ComFunJS.getfile(\'' + ele.YLUrl + '\')" src="/ViewV5/images/qywd/' + ele.FileExtendName + '.png"/>';
             //html += '<span  onclick="javascript:ComFunJS.getfile(\'' + ele.YLUrl + '\')" ></span>';
             html += '</a>';
@@ -1391,10 +1391,10 @@ var ComFunJS = {
                 $(str.split(',')).each(function (inx, el) {
 
                     if (ele.UserName == el && ele.BranchCode == branchcode) {
-                        username += '<div class="list_child_node"><span class="child_title">' + ele.UserRealName+'</span>';
+                        username += '<div class="list_child_node"><span class="child_title">' + ele.UserRealName + '</span>';
                         username += '<span class="child_ext" >';
                         if (ele.DeptRoot == "-1") {
-                            username += ele.zhiwu;
+                            username += ele.zhiwu.replace('领导班子','');
                         }
                         username += ele.UserGW + '</span></div> ';
                     }

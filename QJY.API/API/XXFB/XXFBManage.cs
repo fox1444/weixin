@@ -75,7 +75,7 @@ namespace QJY.API
             }
             if (P2 != "")
             {
-                strWhere += string.Format(" and ( xxtype.Id={0} or TypePath like '{1}%') ", P2.Split('-').LastOrDefault(), P2);
+                strWhere += string.Format(" and ( xxtype.Id={0} or TypePath like '%{1}%') ", P2.Split('-').LastOrDefault(), P2);
             }
             int recordCount = 0;
             DataTable dt = new SZHL_XXFBB().GetDataPager("SZHL_XXFB inner join SZHL_XXFBType xxtype on XXFBType=xxtype.ID", " SZHL_XXFB.*,xxtype.TypeName", pagecount, page, "SHstatus asc,IsSend asc, FBTime desc", strWhere, ref recordCount);
@@ -285,8 +285,10 @@ namespace QJY.API
         //获取所有子项列表
         public void GETXXFBUSERCHILDREN(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
+            //string strSql = string.Format(@"SELECT  DISTINCT type.* from SZHL_XXFBType type  inner join SZHL_XXFB  xxfb on type.ID=xxfb.XXFBType 
+            //                                where xxfb.ComId={0} and ','+xxfb.JSUser+',' LIKE '%,{1},%'", UserInfo.User.ComId, UserInfo.User.UserName);
             string strSql = string.Format(@"SELECT  DISTINCT type.* from SZHL_XXFBType type  inner join SZHL_XXFB  xxfb on type.ID=xxfb.XXFBType 
-                                            where xxfb.ComId={0} and ','+xxfb.JSUser+',' LIKE '%,{1},%'", UserInfo.User.ComId, UserInfo.User.UserName);
+                                            where xxfb.ComId={0} ", UserInfo.User.ComId);
             DataTable dt = new SZHL_XXFBB().GetDTByCommand(strSql);
             if (dt.Rows.Count > 0)
             {

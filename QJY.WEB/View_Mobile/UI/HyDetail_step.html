@@ -46,7 +46,7 @@
                 {{modelData.HYFW|html}}
             </div>
         </div>
-        <div class="hy_menu">
+        <div class="hy_menu" style="padding-bottom:20px;">
             <div class="title">
                 <span><strong>&nbsp;日程安排&nbsp;</strong></span>
             </div>
@@ -75,7 +75,7 @@
                     <div class="room-block">
                     </div>
                 </div>
-
+                <div style="text-align:center;">请左右滑动查找您的座位</div>
             </div>
         </div>
         <div class="hy_menu" style="padding-bottom:70px;">
@@ -181,7 +181,7 @@
 
                 if (Expirytime && Expirytime != "" && Expirytime != undefined && Expirytime != null) {
                     var expirytime_diff = new Date() - new Date(Expirytime);
-                    if (expirytime_diff / (60 * 1000) > (24 * 60 * 30)) {//全体用户信息每几分钟自动更新
+                    if (expirytime_diff / (60 * 1000) > 1) {//全体用户信息每几分钟自动更新
                         tempmodel.LoadAllUser();
                     }
                 }

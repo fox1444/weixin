@@ -1222,7 +1222,7 @@ namespace QJY.API
 
         public void WXINITALLUSER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            DataTable dtUsers = new JH_Auth_UserB().GetDTByCommand(" SELECT u.UserName,u.UserRealName,u.mobphone, u.UserGW, u.zhiwu,b.DeptName, b.DeptRoot, u.BranchCode FROM JH_Auth_User u left join JH_Auth_Branch b on u.BranchCode = b.DeptCode order by b.DeptShort DESC");
+            DataTable dtUsers = new JH_Auth_UserB().GetDTByCommand(" SELECT u.UserName,u.UserRealName,u.mobphone, u.UserGW, u.zhiwu,b.DeptName, b.DeptRoot, u.BranchCode FROM JH_Auth_User u left join JH_Auth_Branch b on u.BranchCode = b.DeptCode order by b.DeptShort DESC, u.UserOrder, u.UserRealName");
             //获取选择用户需要的HTML和转化用户名需要的json数据
             msg.Result = dtUsers;
 
@@ -1980,7 +1980,7 @@ namespace QJY.API
             int Id = int.Parse(P1);
             JH_Auth_UserCustomData customData = new JH_Auth_UserCustomDataB().GetEntity(d => d.ID == Id);
             string[] usernames = customData.DataContent1.Split(',');
-            msg.Result = new JH_Auth_UserB().GetEntities(d => usernames.Contains(d.UserName) && d.ComId == UserInfo.User.ComId);
+            msg.Result = new JH_Auth_UserB().GetEntities(d => usernames.Contains(d.UserName) && d.ComId == UserInfo.User.ComId).OrderBy(o => o.UserRealName);
 
         }
         //删除用户自定义分组 ，短信模板

@@ -39,30 +39,30 @@ namespace QJY.WEB.WX
             //授权返回
             if (code.Length > 0)
             {
-                //if (szhlcode != "")
-                //{
-
-                //}
-                //else
-                //{
-                WX_User u = WXFWHelp.GetWXUserInfo(code);
-                DateTime expires = DateTime.Now.AddDays(3);
-                JH_Auth_User userInfo = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.Openid && d.IsWX == 1);
-                if (userInfo != null)
+                if (szhlcode != "")
                 {
-                    CommonHelp.SetCookie("szhlcode", userInfo.pccode, expires);
-                    CommonHelp.SetCookie("username", userInfo.UserName, expires);
+
                 }
                 else
                 {
-                    CommonHelp.SetCookie("openid", u.Openid, expires);
-                    Response.Redirect("/WX/BindPhone.html");
+                    WX_User u = WXFWHelp.GetWXUserInfo(code);
+                    DateTime expires = DateTime.Now.AddMinutes(60);
+                    JH_Auth_User userInfo = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.Openid && d.IsWX == 1);
+                    if (userInfo != null)
+                    {
+                        CommonHelp.SetCookie("szhlcode", userInfo.pccode, expires);
+                        CommonHelp.SetCookie("username", userInfo.UserName, expires);
+                    }
+                    else
+                    {
+                        CommonHelp.SetCookie("openid", u.Openid, expires);
+                        Response.Redirect("/WX/BindPhone.html");
+                    }
                 }
-                //}
             }
             string redirect_uri = CommonHelp.GetCookieString("pagehistory");
             if (redirect_uri.Trim().Length > 0)
-            {               
+            {
                 Response.Redirect(HttpUtility.UrlDecode(redirect_uri));
             }
             else

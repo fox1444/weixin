@@ -109,15 +109,15 @@ namespace QJY.API
                 msg.ErrorMsg = "手机号不能为空";
                 return;
             }
-            if (string.IsNullOrWhiteSpace(j.weixinCard))
-            {
-                msg.ErrorMsg = "微信号不能为空";
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(j.weixinCard))
+            //{
+            //    msg.ErrorMsg = "微信号不能为空";
+            //    return;
+            //}
             string _openid = CommonHelp.GetCookieString("openid");
             WX_User u = new WX_UserB().GetEntity(d => d.Openid == _openid);
             msg.Result = u;
-            DateTime expires = DateTime.Now.AddDays(3);
+            DateTime expires = DateTime.Now.AddMinutes(60);
             if (u != null)
             {
                 JH_Auth_User localuser = new JH_Auth_UserB().GetEntity(d => d.mobphone == j.mobphone);
@@ -155,7 +155,7 @@ namespace QJY.API
                         localuser.WXopenid = _openid;
                         localuser.IsWX = 1;
                         localuser.weixinCard = j.weixinCard;
-                        //localuser.pccode = EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+                        localuser.pccode = EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
                         localuser.logindate = DateTime.Now;
                         new JH_Auth_UserB().Update(localuser);//更新logindate  pccode不能更新
 

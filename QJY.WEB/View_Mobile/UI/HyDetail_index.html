@@ -116,7 +116,7 @@
                         if (resultData.Result[0]) {
                             tempmodel.phonebackData = resultData.Result[0];
                             //查询有结果返回
-                            ComFunJS.setCookieMinute("input_phonenumber", tempmodel.phonenumber, 10);
+                            ComFunJS.setCookieMinute("input_phonenumber", tempmodel.phonenumber, 60);
 
                             var pn = ComFunJS.getCookie("input_phonenumber");
                             if (pn && pn != null && pn != undefined && pn != '') {
