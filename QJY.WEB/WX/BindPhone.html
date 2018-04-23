@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title></title>
+    <title>绑定信息</title>
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.5.8/css/sm.min.css">
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.5.8/css/sm-extend.min.css">
     <link rel="stylesheet" type="text/css" href="/View_Mobile/CSS/animate.css">
@@ -19,10 +19,21 @@
             border-top: none !important;
             border-bottom: none !important;
         }
+        .weui_cell_hd, .weui_cell_hd .weui_input, .btnSucc {
+            font-size: 0.9rem !important;
+        }
+        .button
+        {
+            width:90%;
+        }
+            .button.button-fill {
+                line-height: 2rem;
+                height: 2rem;
+            }
     </style>
 </head>
 <body ms-controller="BindPhone">
-    <div class="page page-current" style="background: #fff;" id="pageindex1">
+    <div class="page page-current" style="background: #fff; " id="pageindex1">
         <div class="content">
             <div style="background:#fbf9fe;border-bottom: 1px solid #D9D9D9;">
                 <div>
@@ -53,8 +64,7 @@
                     </div>-->
                 </div>
             </div>
-        </div>
-        <div class="table bar bar-tab" style="z-index: 20;">
+            <br />
             <button class="button button-fill btnSucc" style="font-size: .9rem; margin:0 auto; background-color: #49d2ad" ms-click="SaveData()">
                 <!--<i class="fa fa-plus"></i>-->
                 保存
@@ -81,11 +91,11 @@
 
                     if (r.ErrorMsg == '') {
                         var pagehistory = ComFunJS.getCookie("pagehistory");
-                        if (pagehistory != '') {
+                        if (pagehistory != '' && !pagehistory && pagehistory != null) {
                             window.location.href = pagehistory;
                         }
                         else {
-                            window.location.href = "/WX/index.html?r=" + Math.random();
+                            window.location.href = "/WX/home.html?r=" + Math.random();
                         }
 
                     }
@@ -93,7 +103,7 @@
                 });
             },
             Complate: function () {
-                window.location.href = "/WX/MyGroup.html?r=" + Math.random();
+                window.location.href = "/WX/home.html?r=" + Math.random();
             }
         });//# sourceURL=MHYGL.js;
 

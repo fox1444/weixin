@@ -45,12 +45,16 @@
                                     <div class="item-title">
                                         {{el.UserRealName}}
                                         <div class="light">
-                                            {{el.mobphone}}
+                             
+                                            <span><a ms-attr-href="tel:{{el.mobphone}}" external><i class="fa  fa-mobile-phone"></i>{{el.mobphone}}</a></span>
                                         </div>
                                     </div>
                                     <div>
+                                        <span class="" ms-if="el.UserGW">
+                                            {{el.UserGW}}
+                                        </span>
                                         <span class="" ms-if="el.IsZuZhang">
-                                           组长
+                                            组长
                                         </span>
                                     </div>
                                 </div>

@@ -16,7 +16,7 @@
             Sex: "", weixinCard: "", NickName: "", JobNum: "", QQ: "", IDCard: "", Nationality: "",
             Nation: "", HomeAddress: "", GSPhone: "", EntryDate: "", DepartureDate: "", Birthday: "",
             Marriage: "", Children: "", JJLXR: "", JJLXRDH: "", Hire: "", ZZTime: "", ContractSTime: "",
-            ContractETime: "", SocialInsurance: "", GJJID: "", BankCard: "", BankName: "", "Files": ""
+            ContractETime: "", SocialInsurance: "", GJJID: "", BankCard: "", BankName: "", "Files": "", "ZiLvXiaoZu":"", "IsZuZhang":"", JianDuXiaoZu:""
         },
         inittemp: function (strId) {
             $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETROLE', { "P1": branchNo }, function (resultData) {
@@ -141,7 +141,6 @@
                             <input type="password" class="form-control" autocomplete="off" ms-duplex="UserData.UserPass" placeholder="请输入用户密码" />
                         </div>
                     </li>
-
                     <li class="add-item add-width  fl-right">
                         <label class="add-item-label">是否可用</label>
                         <div class="add-ic">
@@ -163,7 +162,6 @@
                             <input type="text" class="form-control" ms-duplex="UserData.mailbox" maxlength="50" id="Email" placeholder="请输入邮箱" />
                         </div>
                     </li>
-
                     <li class="add-item add-width  fl-left">
                         <label class="add-item-label">序号</label>
                         <div class="add-ic">
@@ -192,6 +190,27 @@
                         <label class="add-item-label">附件</label>
                         <div class="add-ic">
                             <input type="text" ms-duplex="UserData.Files" class="szhl_Upload form-control" />
+                        </div>
+                    </li>
+                    <li class="add-item add-width fl-left">
+                        <label class="add-item-label">自律小组</label>
+                        <div class="add-ic">
+                            <input  type="text" class="form-control" ms-duplex="UserData.ZiLvXiaoZu" placeholder="请输入自律小组名称" />
+                        </div>
+                    </li>
+                    <li class="add-item add-width  fl-right">
+                        <label class="add-item-label">是否是组长</label>
+                        <div class="add-ic">
+                            <select id="IsZuZhang" class="form-control" ms-duplex="UserData.IsZuZhang">
+                                <option value="1" ms-attr-selected="UserData.IsZuZhang=='1'?'selected':''">是</option>
+                                <option value="0" ms-attr-selected="UserData.IsZuZhang=='0'?'selected':''">否</option>
+                            </select>
+                        </div>
+                    </li>    
+                    <li class="add-item add-widthall">
+                        <label class="add-item-label">监督小组</label>
+                        <div class="add-ic">
+                            <textarea ms-duplex="UserData.JianDuXiaoZu" rows="4" id="JianDuXiaoZu" maxlength="400" class="form-control" placeholder="请输入监督小组名称以;隔开"></textarea>
                         </div>
                     </li>
                 </ul>

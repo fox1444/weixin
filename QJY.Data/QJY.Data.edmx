@@ -504,6 +504,9 @@
           <Property Name="Files" Type="varchar" MaxLength="50" />
           <Property Name="IsWX" Type="int" />
           <Property Name="WXopenid" Type="varchar" MaxLength="100" />
+          <Property Name="ZiLvXiaoZu" Type="varchar" MaxLength="400" />
+          <Property Name="IsZuZhang" Type="int" />
+          <Property Name="JianDuXiaoZu" Type="varchar" MaxLength="4000" />
         </EntityType>
         <EntityType Name="JH_Auth_User_Center">
           <Key>
@@ -1330,7 +1333,7 @@
           <Property Name="intProcessStanceid" Type="int" />
           <Property Name="XXFBType" Type="int" />
           <Property Name="MsgType" Type="int" />
-          <Property Name="JSUser" Type="varchar" MaxLength="5000" />
+          <Property Name="JSUser" Type="varchar(max)" />
           <Property Name="ComId" Type="int" />
           <Property Name="IsSecret" Type="varchar" MaxLength="100" />
           <Property Name="FBTime" Type="datetime" />
@@ -2305,6 +2308,9 @@
           <Property Name="Files" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IsWX" Type="Int32" />
           <Property Name="WXopenid" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ZiLvXiaoZu" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="IsZuZhang" Type="Int32" />
+          <Property Name="JianDuXiaoZu" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="JH_Auth_User_Center">
           <Key>
@@ -2882,7 +2888,7 @@
           <Property Name="intProcessStanceid" Type="Int32" />
           <Property Name="XXFBType" Type="Int32" />
           <Property Name="MsgType" Type="Int32" />
-          <Property Name="JSUser" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="JSUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ComId" Type="Int32" />
           <Property Name="IsSecret" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="FBTime" Type="DateTime" Precision="3" />
@@ -3928,6 +3934,9 @@
           <EntitySetMapping Name="JH_Auth_User">
             <EntityTypeMapping TypeName="QJY_SaaSModel.JH_Auth_User">
               <MappingFragment StoreEntitySet="JH_Auth_User">
+                <ScalarProperty Name="JianDuXiaoZu" ColumnName="JianDuXiaoZu" />
+                <ScalarProperty Name="IsZuZhang" ColumnName="IsZuZhang" />
+                <ScalarProperty Name="ZiLvXiaoZu" ColumnName="ZiLvXiaoZu" />
                 <ScalarProperty Name="WXopenid" ColumnName="WXopenid" />
                 <ScalarProperty Name="IsWX" ColumnName="IsWX" />
                 <ScalarProperty Name="Files" ColumnName="Files" />

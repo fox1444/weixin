@@ -39,12 +39,12 @@ namespace QJY.WEB.WX
             //授权返回
             if (code.Length > 0)
             {
-                if (szhlcode != "")
-                {
+                //if (szhlcode != "")
+                //{
 
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     WX_User u = WXFWHelp.GetWXUserInfo(code);
                     DateTime expires = DateTime.Now.AddMinutes(60);
                     JH_Auth_User userInfo = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.Openid && d.IsWX == 1);
@@ -58,7 +58,7 @@ namespace QJY.WEB.WX
                         CommonHelp.SetCookie("openid", u.Openid, expires);
                         Response.Redirect("/WX/BindPhone.html");
                     }
-                }
+                //}
             }
             string redirect_uri = CommonHelp.GetCookieString("pagehistory");
             if (redirect_uri.Trim().Length > 0)

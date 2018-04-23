@@ -76,20 +76,18 @@ namespace QJY.API
         public void GETMYGROUPTEAM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             //我的自律小组名称
-            JH_Auth_ExtendData ext = new JH_Auth_ExtendDataB().GetEntity(d => d.DataID == UserInfo.User.ID && d.ExtendModeID == 2);
-           
+            JH_Auth_User ext = new JH_Auth_UserB().GetEntity(d => d.ID == UserInfo.User.ID);
 
-            string viewname = "select U.* , wu.nickName, ext.ExtendDataValue as XiaoZu, case ext2.ExtendDataValue when '是' then 1 else 0 end as IsZuZhang from " +
-                "JH_Auth_User U LEFT JOIN WX_User wu on u.WxOpenid = wu.openid Left JOIN  JH_Auth_ExtendData ext on U.Id = ext.dataID and ext.ExtendModeID = 2 " +
-                " Left JOIN  JH_Auth_ExtendData ext2 on U.Id = ext2.dataID and ext2.ExtendModeID = 4 " +
-                "where ext.ExtendDataValue = '"+ ext.ExtendDataValue + "'order by IsZuZhang desc, u.UserRealName asc";
+            string viewname = "select U.* , wu.nickName from JH_Auth_User U LEFT JOIN WX_User wu on u.WxOpenid = wu.openid  " +
+                "where u.ZiLvXiaoZu = '" + ext.ZiLvXiaoZu + "' "+
+                "or  ('" + ext.ZiLvXiaoZu + "' like (select REPLACE(REPLACE(REPLACE(REPLACE(Items,' ',''),CHAR(10) ,''),CHAR(13),''),'/n','') from dbo.Split(u.jianduxiaozu,';') where items='" + ext.ZiLvXiaoZu + "'))" +
+                " order by u.UserOrder, u.IsZuZhang desc, u.UserRealName asc";
 
-            string strWhere = " ext.ExtendDataValue='" + ext.ExtendDataValue + "' ";
             // DataTable dt = new JH_Auth_UserB().GetDataPager(viewname, " U.* , wu.nickName, ext.ExtendDataValue as XiaoZu, ext2.ExtendDataValue as IsZuZhang ", 999999, 1, " u.UserRealName asc ", strWhere, ref recordCount);
             DataTable dt = new JH_Auth_UserB().GetDTByCommand(viewname);
 
             msg.Result = dt;
-            msg.Result1 = ext.ExtendDataValue;
+            msg.Result1 = ext.ZiLvXiaoZu;
         }
         public void BINDPHONE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
@@ -152,6 +150,8 @@ namespace QJY.API
                 {
                     if (localuser.UserRealName == j.UserRealName)
                     {
+                        new JH_Auth_UserB().ExsSql("update JH_Auth_User set WXopenid='', IsWX=0  where WXopenid='" + _openid + "'");//清除以前绑定的用户
+
                         localuser.WXopenid = _openid;
                         localuser.IsWX = 1;
                         localuser.weixinCard = j.weixinCard;
