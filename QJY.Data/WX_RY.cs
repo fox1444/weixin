@@ -12,17 +12,15 @@ namespace QJY.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class JH_Auth_WXPJ
+    public partial class WX_RY
     {
         public int ID { get; set; }
-        public string TJID { get; set; }
-        public string TJSecret { get; set; }
-        public string Token { get; set; }
-        public string EncodingAESKey { get; set; }
-        public string Ticket { get; set; }
-        public string Remark { get; set; }
-        public Nullable<System.DateTime> CreateTime { get; set; }
-        public string TJName { get; set; }
-        public string TJStatus { get; set; }
+        public string RY_title { get; set; }
+        public string RY_description { get; set; }
+        public string Img_path { get; set; }
+        public string CRUser { get; set; }
+        public Nullable<System.DateTime> CRDate { get; set; }
+        public string JSUser { get; set; }
+        public string ZiLvXiaoZu { get; set; }
     }
 }

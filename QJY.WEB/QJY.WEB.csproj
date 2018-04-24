@@ -245,6 +245,7 @@
     <Content Include="View_Mobile\UI\HyDetail.html" />
     <Content Include="View_Mobile\UI\UI_Login.html" />
     <Content Include="View_Mobile\UI\UI_YCGL_LIST.html" />
+    <Content Include="WX\RY_Add.html" />
     <Content Include="WX\CSS\fonts\icomoon.svg" />
     <Content Include="WX\CSS\wxstyle.css" />
     <Content Include="WX\default.aspx" />
@@ -259,6 +260,10 @@
     <Content Include="WX\Me.html" />
     <Content Include="WX\FSlist.html" />
     <Content Include="WX\NewProduct.html" />
+    <Content Include="WX\HD_List.html" />
+    <Content Include="WX\HD_Info.html" />
+    <Content Include="WX\RY_List.html" />
+    <Content Include="WX\RY_Info.html" />
     <Content Include="WX\WeiXin.aspx" />
     <Content Include="WZWeb\CSS\bootstrap.css" />
     <Content Include="WZWeb\CSS\dialog.css" />

@@ -291,6 +291,12 @@
     <Compile Include="WX_Group.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>
+    <Compile Include="WX_HD.cs">
+      <DependentUpon>QJY.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WX_RY.cs">
+      <DependentUpon>QJY.tt</DependentUpon>
+    </Compile>
     <Compile Include="WX_User.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>
