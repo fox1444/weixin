@@ -659,6 +659,18 @@
           <Property Name="CRUser" Type="varchar" MaxLength="50" />
           <Property Name="CRDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Content" Type="varchar(max)" />
+          <Property Name="CRUser" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CRUserRealName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CRDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="GroupName" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="SZHL_CCXJ">
           <Key>
             <PropertyRef Name="ID" />
@@ -1508,9 +1520,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="HD_title" Type="varchar" MaxLength="400" />
-          <Property Name="HD_description" Type="varchar(max)" />
-          <Property Name="Img_path" Type="varchar(max)" />
+          <Property Name="Title" Type="varchar" MaxLength="400" />
+          <Property Name="Content" Type="varchar(max)" />
+          <Property Name="Imgpath" Type="varchar(max)" />
           <Property Name="CRUser" Type="varchar" MaxLength="100" />
           <Property Name="CRDate" Type="datetime" />
           <Property Name="JSUser" Type="varchar(max)" />
@@ -1521,9 +1533,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RY_title" Type="varchar" MaxLength="400" />
-          <Property Name="RY_description" Type="varchar(max)" />
-          <Property Name="Img_path" Type="varchar(max)" />
+          <Property Name="Title" Type="varchar" MaxLength="400" />
+          <Property Name="Content" Type="varchar(max)" />
+          <Property Name="Imgpath" Type="varchar(max)" />
           <Property Name="CRUser" Type="varchar" MaxLength="100" />
           <Property Name="CRDate" Type="datetime" />
           <Property Name="JSUser" Type="varchar(max)" />
@@ -1728,6 +1740,7 @@
           <EntitySet Name="JH_Auth_XTDT" EntityType="Self.JH_Auth_XTDT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JH_Auth_YYLog" EntityType="Self.JH_Auth_YYLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JH_Auth_ZiDian" EntityType="Self.JH_Auth_ZiDian" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_CCXJ" EntityType="Self.SZHL_CCXJ" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_CRM_CONTACT" EntityType="Self.SZHL_CRM_CONTACT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_CRM_CPGL" EntityType="Self.SZHL_CRM_CPGL" Schema="dbo" store:Type="Tables" />
@@ -1868,6 +1881,7 @@
           <EntitySet Name="WX_UserGroup" EntityType="QJY_SaaSModel.WX_UserGroup" />
           <EntitySet Name="WX_RY" EntityType="QJY_SaaSModel.WX_RY" />
           <EntitySet Name="WX_HD" EntityType="QJY_SaaSModel.WX_HD" />
+          <EntitySet Name="Messages" EntityType="QJY_SaaSModel.Message" />
         </EntityContainer>
         <EntityType Name="FT_File">
           <Key>
@@ -3535,10 +3549,10 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="RY_title" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="RY_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Img_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Imgpath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CRUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CRDate" Type="DateTime" Precision="3" />
           <Property Name="JSUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -3549,13 +3563,25 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HD_title" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="HD_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Img_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Imgpath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CRUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CRDate" Type="DateTime" Precision="3" />
           <Property Name="JSUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ZiLvXiaoZu" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRUser" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRUserRealName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5313,9 +5339,9 @@
                 <ScalarProperty Name="JSUser" ColumnName="JSUser" />
                 <ScalarProperty Name="CRDate" ColumnName="CRDate" />
                 <ScalarProperty Name="CRUser" ColumnName="CRUser" />
-                <ScalarProperty Name="Img_path" ColumnName="Img_path" />
-                <ScalarProperty Name="RY_description" ColumnName="RY_description" />
-                <ScalarProperty Name="RY_title" ColumnName="RY_title" />
+                <ScalarProperty Name="Imgpath" ColumnName="Imgpath" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -5327,9 +5353,22 @@
                 <ScalarProperty Name="JSUser" ColumnName="JSUser" />
                 <ScalarProperty Name="CRDate" ColumnName="CRDate" />
                 <ScalarProperty Name="CRUser" ColumnName="CRUser" />
-                <ScalarProperty Name="Img_path" ColumnName="Img_path" />
-                <ScalarProperty Name="HD_description" ColumnName="HD_description" />
-                <ScalarProperty Name="HD_title" ColumnName="HD_title" />
+                <ScalarProperty Name="Imgpath" ColumnName="Imgpath" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUserRealName" ColumnName="CRUserRealName" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -37,6 +37,10 @@
             plData: [],
             plcount: 0,
             TypeName: "",
+            IsEdit: "",
+            viewadd: function () {
+                window.location = "Ry_add.html?r=" + Math.random();
+            },
             pl: function () {
                 $(".ui-list").toggle();
                 $(".ui-footer").toggle();
@@ -97,6 +101,7 @@
                 $.getJSON('/API/VIEWAPI.ashx?Action=WXGL_GETHUODONGMODEL&r=' + Math.random(), { P1: strId }, function (resultData) {
                     if (resultData.ErrorMsg == "") {
                         rwinfo.modelData = resultData.Result;
+                        rwinfo.IsEdit = resultData.Result1;
                     }
                     else {
                         window.location.replace("UI_Error.html?msg=信息不存在或已删除");
@@ -713,7 +718,7 @@
     <div id="page-content" class="page-content">
         <div id="img-content">
             <div class="header">
-                <h1 id="activity-name" style="border-bottom: 1px dotted #ccc; overflow: hidden; word-wrap: break-word; word-break: break-all;">{{modelData.HD_title}}</h1>
+                <h1 id="activity-name" style="border-bottom: 1px dotted #ccc; overflow: hidden; word-wrap: break-word; word-break: break-all;">{{modelData.Title}}</h1>
                 <p class="activity-info">
                     <span></span>
                     <em id="post-date" class="activity-meta no-extra" style="font-style: normal">{{modelData.CRDate}}</em>
@@ -722,34 +727,33 @@
                 </p>
             </div>
             <div id="details" class="text" style="overflow: hidden; word-wrap: break-word; word-break: break-all;">
-                {{modelData.HD_description|html}}
+                {{modelData.Content|html}}
+            </div>
+            <a class="" ms-click="viewedit(modelData.ID)" ms-if="model.IsEdit=='1'">编辑</a>
+            <!--<ul class="ui-list">
+        <li class="ui-border-t" ms-repeat-el="fjData" style="padding: 5px; font-size: 14px; border: 1px solid #C8CACD;">
+
+            <div style="padding-right: 10px">
+                <img ms-on-click="fdtp(this)" class="mall_pcp" style="height: 40px; width: 40px" ms-if="ComFunJS.xstp(el.FileExtendName)" ms-attr-src="{{ComFunJS.getfile(el.ID)}}" />
+                <img ms-on-tap="viewwxx(el)" style="height: 40px; width: 40px" ms-if="!ComFunJS.xstp(el.FileExtendName)" ms-attr-src="../Images/qywd/{{el.FileExtendName}}.png" onerror="javascript: this.src = '/View_Mobile/Images/qywd/file.png'" />
+            </div>
+            <div class="ui-list-info" ms-on-tap="viewwxx(el)" style="padding: 0;">
+                <h4 class="ui-nowrap">{{el.Name}}.{{el.FileExtendName}}</h4>
+                <p class="ui-nowrap">{{Math.round(el.FileSize/1024)}}kb</p>
+            </div>
+            <div>
+                <a ms-attr-href="{{ComFunJS.getfile(el.ID)}}" class="external">
+                    <img style="height: 20px; width: 20px; float: right; padding: 10px;" src="../Images/down.png" />
+                </a>
             </div>
 
-            <!--<ul class="ui-list">
-                <li class="ui-border-t" ms-repeat-el="fjData" style="padding: 5px; font-size: 14px; border: 1px solid #C8CACD;">
-
-                    <div style="padding-right: 10px">
-                        <img ms-on-click="fdtp(this)" class="mall_pcp" style="height: 40px; width: 40px" ms-if="ComFunJS.xstp(el.FileExtendName)" ms-attr-src="{{ComFunJS.getfile(el.ID)}}" />
-                        <img ms-on-tap="viewwxx(el)" style="height: 40px; width: 40px" ms-if="!ComFunJS.xstp(el.FileExtendName)" ms-attr-src="../Images/qywd/{{el.FileExtendName}}.png" onerror="javascript: this.src = '/View_Mobile/Images/qywd/file.png'" />
-                    </div>
-                    <div class="ui-list-info" ms-on-tap="viewwxx(el)" style="padding: 0;">
-                        <h4 class="ui-nowrap">{{el.Name}}.{{el.FileExtendName}}</h4>
-                        <p class="ui-nowrap">{{Math.round(el.FileSize/1024)}}kb</p>
-                    </div>
-                    <div>
-                        <a ms-attr-href="{{ComFunJS.getfile(el.ID)}}" class="external">
-                            <img style="height: 20px; width: 20px; float: right; padding: 10px;" src="../Images/down.png" />
-                        </a>
-                    </div>
-
-                </li>
-            </ul>-->
-
+        </li>
+    </ul>-->
             <!--<p class="page-toolbar" style="padding-bottom: 25px;">
-                <em class="activity-meta" style="font-style: normal; margin-left: 0"><a ms-click="yy()">已阅({{ydcount}})</a></em> &nbsp;&nbsp;
-                <em class="activity-meta" style="font-style: normal; margin-left: 0"><a ms-click="wy()">未阅({{wydcount}})</a></em>&nbsp;&nbsp;
-                <em class="activity-meta" style="font-style: normal; margin-left: 0" ms-if="ztData.isPL=='1'"><a ms-click="pl()">评论({{plcount}})</a></em>
-            </p>-->
+        <em class="activity-meta" style="font-style: normal; margin-left: 0"><a ms-click="yy()">已阅({{ydcount}})</a></em> &nbsp;&nbsp;
+        <em class="activity-meta" style="font-style: normal; margin-left: 0"><a ms-click="wy()">未阅({{wydcount}})</a></em>&nbsp;&nbsp;
+        <em class="activity-meta" style="font-style: normal; margin-left: 0" ms-if="ztData.isPL=='1'"><a ms-click="pl()">评论({{plcount}})</a></em>
+    </p>-->
         </div>
     </div>
     <div class="ui-form ui-border-t" style="padding-bottom: 44px; background: #f8f7f5;">

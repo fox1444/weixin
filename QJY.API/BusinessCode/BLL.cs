@@ -431,7 +431,9 @@ namespace QJY.API
     public class WX_UserB : BaseEFDao<WX_User>
     {
     }
-
+    public class MessageB : BaseEFDao<Message>
+    {
+    }
     public class WX_RYB : BaseEFDao<WX_RY>
     {
     }

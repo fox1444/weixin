@@ -54,23 +54,30 @@
         .card-footer, .card-header {
         min-height:0;
         }
+        .button-add{
+            float:right;
+            margin-top:0.5rem;
+        }
+            .button-add .icon {
+                font-size: 1.6rem;
+            }
     </style>
 </head>
 <body ms-controller="RYList">
     <div class="page page-current" id="pageindex1">
         <header class="bar bar-nav" ms-if="Name">
-            <a class="button button-link button-nav pull-left back">
+            <a class="button button-link button-nav pull-left back" ms-on-click="gohome()">
                 <span class="icon icon-left"></span>
             </a>
             <h1 class="title">{{Name}}</h1>
-            <a ms-attr-href="RY_Add.html" ms-if="model.IsZuZhang">+</a>
+            <a class="button-add" ms-click="viewadd()" ms-if="model.IsZuZhang"><span class="icon">+</span></a>
         </header>
 
         <div class="content infinite-scroll infinite-scroll-bottom" data-distance="50">
             <div class="list-container">
                 <div class="card" ms-repeat-el="ryList" style="margin-bottom: 20px;padding:.4rem;box-shadow: 1px 1px 4px 0 #888;">
                     <div class="card-content" style="margin-top: 5px;margin-bottom:5px">
-                        <div style="font-size: 0.8rem;">{{el.RY_title}}</div>
+                        <div style="font-size: 0.8rem;">{{el.Title}}</div>
                         <div style="font-size: .65rem;color: gray;">{{el.ZiLvXiaoZu}}</div>
                         <div style="font-size: .5rem;color: gray;">{{el.CRDate|date("yy年MM月dd HH:mm")}}</div>
                     </div>
@@ -107,7 +114,13 @@
             page: 1,
             pagecount: 8,
             Name: "荣誉室",
-            IsZuZhang:"",
+            IsZuZhang: "",
+            gohome: function () {
+                window.location = "/WX/home.html?r=" + Math.random();
+            },
+            viewadd: function () {
+                window.location = "Ry_add.html?r=" + Math.random();
+            },
             viewwxx: function (id) {
                 window.location = "Ry_info.html?id=" + id + "&r=" + Math.random();
             },

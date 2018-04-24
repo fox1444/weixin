@@ -173,21 +173,20 @@ namespace QJY.API
                 return;
             }
         }
-
-        public void ADDRYMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        public void ADDRYMODELWX(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            WX_RY model = JsonConvert.DeserializeObject<WX_RY>(P1);
+            WX_RY model = JsonConvert.DeserializeObject<WX_RY>(P2);
             if (model == null)
             {
                 msg.ErrorMsg = "添加失败";
                 return;
             }
-            if (string.IsNullOrWhiteSpace(model.RY_title))
+            if (string.IsNullOrWhiteSpace(model.Title))
             {
                 msg.ErrorMsg = "标题不能为空";
                 return;
             }
-            if (string.IsNullOrWhiteSpace(model.RY_description))
+            if (string.IsNullOrWhiteSpace(model.Content))
             {
                 msg.ErrorMsg = "内容不能为空";
                 return;
@@ -203,7 +202,7 @@ namespace QJY.API
             {
                 new WX_RYB().Update(model);
             }
-           
+
         }
         public void GETRYLIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
@@ -217,15 +216,61 @@ namespace QJY.API
             msg.Result1 = total;
             msg.Result2 = UserInfo.User.IsZuZhang;
         }
-
         public void GETRYMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int Id = int.Parse(P1);
 
             WX_RY model = new WX_RYB().GetEntity(p => p.ID == Id);
             msg.Result = model;
+            if (UserInfo.User.UserName == model.CRUser)
+                msg.Result1 = 1;
+            else
+                msg.Result1 = 0;
         }
+        public void DELRYMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            WX_RY model = new WX_RYB().GetEntity(p => p.ID == Id);
+            if (UserInfo.User.UserName == model.CRUser)
+            {
+                new WX_RYB().Delete(model);
+            }
+            else
+            {
+                msg.ErrorMsg = "您没有权限删除";
+            }
+        }
+        public void ADDHUODONGMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            WX_HD model = JsonConvert.DeserializeObject<WX_HD>(P2);
+            if (model == null)
+            {
+                msg.ErrorMsg = "添加失败";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(model.Title))
+            {
+                msg.ErrorMsg = "标题不能为空";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(model.Content))
+            {
+                msg.ErrorMsg = "内容不能为空";
+                return;
+            }
+            if (model.ID == 0)
+            {
+                model.CRDate = DateTime.Now;
+                model.CRUser = UserInfo.User.UserName;
+                model.ZiLvXiaoZu = UserInfo.User.ZiLvXiaoZu;
+                new WX_HDB().Insert(model);
+            }
+            else
+            {
+                new WX_HDB().Update(model);
+            }
 
+        }
         public void GETHUODONGLIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             DataTable dt = new DataTable();
@@ -238,13 +283,59 @@ namespace QJY.API
             msg.Result1 = total;
 
         }
-
         public void GETHUODONGMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int Id = int.Parse(P1);
 
             WX_HD model = new WX_HDB().GetEntity(p => p.ID == Id);
             msg.Result = model;
+            if (UserInfo.User.UserName == model.CRUser)
+                msg.Result1 = 1;
+            else
+                msg.Result1 = 0;
         }
+
+        public void GETMESSAGEHISTORY(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            DataTable dt = new DataTable();
+            int total = 0;
+            int page = 0;
+            int pagecount = 50;
+            int.TryParse(context.Request.QueryString["p"] ?? "1", out page);
+            int.TryParse(context.Request.QueryString["pagecount"] ?? "8", out pagecount);//页数
+            string whestr = "GroupName='" + P1 + "'" + " and id in (select top 100 id from[Message] where groupname = '" + P1 + "' order by CRDate desc )";
+            dt = new WX_GroupB().GetDataPager("MESSAGE ", " * ", 99999, page, " CRDate", whestr, ref total);
+
+            msg.Result = dt;
+            msg.Result1 = total;
+        }
+
+        public void INSERTMESSAGE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+
+            if (string.IsNullOrWhiteSpace(P1))
+            {
+                msg.ErrorMsg = "内容不能为空";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(P2))
+            {
+                msg.ErrorMsg = "小组不存在";
+                return;
+            }
+            Message model = new Message();
+            if (model.ID == 0)
+            {
+                model.Content = P1;
+                model.CRDate = DateTime.Now;
+                model.CRUser = UserInfo.User.UserName;
+                model.CRUserRealName = UserInfo.User.UserRealName;
+                model.GroupName = P2;
+                model.Status = 0;
+                new MessageB().Insert(model);
+            }
+            msg.Result = model;
+        }
+
     }
 }

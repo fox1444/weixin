@@ -30,6 +30,14 @@
         .list-group ul{
             margin-top:2rem;
         }
+        .chartbox::after {
+            content: "\e96d";
+            display: block;
+            font-family: icomoon;
+            float: right;
+            font-size: 1rem;
+            line-height: 1.2rem;
+        }
     </style>
 </head>
 <body ms-controller="Home">
@@ -37,7 +45,7 @@
         <div class="content native-scroll">
             <div class="list-block contacts-block" style="margin:0px;">
                 <div class="list-group">
-                    <div class="list-group-title">{{model.xzName}}</div>
+                    <div class="list-group-title">{{model.xzName}}<span class="chartbox" ms-click="gochart(model.xzName)"></span></div>
                     <ul>
                         <li ms-repeat-el="xzList">
                             <div class="item-content">
@@ -45,7 +53,6 @@
                                     <div class="item-title">
                                         {{el.UserRealName}}
                                         <div class="light">
-                             
                                             <span><a ms-attr-href="tel:{{el.mobphone}}" external><i class="fa  fa-mobile-phone"></i>{{el.mobphone}}</a></span>
                                         </div>
                                     </div>
@@ -115,6 +122,9 @@
             userData: {},
             xzList: [],
             xzName: "",
+            gochart: function (g) {
+                window.location = "/WX/Message/box.html?g=" + g;
+            },
             inittemp: function () {
                 //var pn = ComFunJS.getCookie("szhlcode");
                 //alert(pn);
