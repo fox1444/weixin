@@ -50,7 +50,6 @@ namespace QJY.API
             }
             msg.Result = GP;
         }
-
         public void GETGROUPMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int _GroupCode = int.Parse(P1);
@@ -58,7 +57,6 @@ namespace QJY.API
 
             msg.Result = GP;
         }
-
         public void GETGROUPLIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             DataTable dt = new DataTable();
@@ -72,14 +70,13 @@ namespace QJY.API
             msg.Result = dt;
             msg.Result1 = total;
         }
-
         public void GETMYGROUPTEAM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             //我的自律小组名称
             JH_Auth_User ext = new JH_Auth_UserB().GetEntity(d => d.ID == UserInfo.User.ID);
 
             string viewname = "select U.* , wu.nickName from JH_Auth_User U LEFT JOIN WX_User wu on u.WxOpenid = wu.openid  " +
-                "where u.ZiLvXiaoZu = '" + ext.ZiLvXiaoZu + "' "+
+                "where u.ZiLvXiaoZu = '" + ext.ZiLvXiaoZu + "' " +
                 "or  ('" + ext.ZiLvXiaoZu + "' like (select REPLACE(REPLACE(REPLACE(REPLACE(Items,' ',''),CHAR(10) ,''),CHAR(13),''),'/n','') from dbo.Split(u.jianduxiaozu,';') where items='" + ext.ZiLvXiaoZu + "'))" +
                 " order by u.UserOrder, u.IsZuZhang desc, u.UserRealName asc";
 
@@ -175,6 +172,79 @@ namespace QJY.API
                 msg.ErrorMsg = "登录异常";
                 return;
             }
+        }
+
+        public void ADDRYMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            WX_RY model = JsonConvert.DeserializeObject<WX_RY>(P1);
+            if (model == null)
+            {
+                msg.ErrorMsg = "添加失败";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(model.RY_title))
+            {
+                msg.ErrorMsg = "标题不能为空";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(model.RY_description))
+            {
+                msg.ErrorMsg = "内容不能为空";
+                return;
+            }
+            if (model.ID == 0)
+            {
+                model.CRDate = DateTime.Now;
+                model.CRUser = UserInfo.User.UserName;
+                model.ZiLvXiaoZu = UserInfo.User.ZiLvXiaoZu;
+                new WX_RYB().Insert(model);
+            }
+            else
+            {
+                new WX_RYB().Update(model);
+            }
+           
+        }
+        public void GETRYLIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            DataTable dt = new DataTable();
+            int total = 0;
+            string whestr = " ZiLvXiaoZu='" + UserInfo.User.ZiLvXiaoZu + "' " +
+                "or  ZiLvXiaoZu in (select REPLACE(REPLACE(REPLACE(REPLACE(Items,' ',''),CHAR(10) ,''),CHAR(13),''),'/n','') from dbo.Split('" + UserInfo.User.JianDuXiaoZu + "',';'))";
+            dt = new WX_GroupB().GetDataPager("WX_RY ", " * ", 99999, 1, " CRDate desc", whestr, ref total);
+
+            msg.Result = dt;
+            msg.Result1 = total;
+            msg.Result2 = UserInfo.User.IsZuZhang;
+        }
+
+        public void GETRYMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+
+            WX_RY model = new WX_RYB().GetEntity(p => p.ID == Id);
+            msg.Result = model;
+        }
+
+        public void GETHUODONGLIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            DataTable dt = new DataTable();
+            int total = 0;
+            string whestr = " ZiLvXiaoZu='" + UserInfo.User.ZiLvXiaoZu + "' " +
+                "or  ZiLvXiaoZu in (select REPLACE(REPLACE(REPLACE(REPLACE(Items,' ',''),CHAR(10) ,''),CHAR(13),''),'/n','') from dbo.Split('" + UserInfo.User.JianDuXiaoZu + "',';'))";
+            dt = new WX_GroupB().GetDataPager("WX_HD ", " * ", 99999, 1, " CRDate desc", whestr, ref total);
+
+            msg.Result = dt;
+            msg.Result1 = total;
+
+        }
+
+        public void GETHUODONGMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+
+            WX_HD model = new WX_HDB().GetEntity(p => p.ID == Id);
+            msg.Result = model;
         }
     }
 }

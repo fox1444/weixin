@@ -80,10 +80,10 @@ body {
             width: 32%;
             margin: 0;
             font-family: icomoon;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             color: #777;
             line-height: 1rem;
-            padding: 0.65rem 0 0.65rem 0;
+            padding: 0.65rem 0 0.7rem 0;
             border-right: solid 1px #e1e1e1;
             position:relative;
         }
@@ -94,7 +94,7 @@ body {
 
     .footer-nav-group .sub-nav {
         position: absolute;
-        bottom: 2.35rem;
+        bottom: 2.4rem;
         margin: 0 auto;
         display:none;
     }
@@ -102,7 +102,7 @@ body {
             display: block;
             border: solid 1px #e1e1e1 !important;
             border-bottom: none !important;
-            width: 80%;
+            width: 90%;
             margin:0 auto;
             background:#fff;
         }

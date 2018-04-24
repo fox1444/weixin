@@ -56,6 +56,19 @@ namespace QJY.API
             {
                 CommonHelp.UpdateAppConfig("AccessToken", accesstoken);
                 new JH_Auth_LogB().InsertLog("WXFWHelper", "更新AccessToken为" + accesstoken, "WXFWHelper", _username, _username, 0, strIp);
+
+                JsApiTicketResult jsapi_ticket = CommonApi.GetTicketByAccessToken(accesstoken);
+                if (jsapi_ticket != null)
+                {
+                    if (jsapi_ticket.ticket.Length > 0)
+                    {
+                        DateTime expires = DateTime.Now.AddSeconds(jsapi_ticket.expires_in);
+                        CommonHelp.UpdateAppConfig("jsapi_ticket", jsapi_ticket.ticket);
+                        CommonHelp.SetCookie("jsapi_ticket", jsapi_ticket.ticket, expires);
+                        new JH_Auth_LogB().InsertLog("WXFWHelper", "更新jsapi_ticket为" + jsapi_ticket.ticket, "WXFWHelper", _username, _username, 0, strIp);
+
+                    }
+                }
             }
             return accesstoken;
         }

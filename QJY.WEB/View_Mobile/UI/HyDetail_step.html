@@ -181,7 +181,7 @@
 
                 if (Expirytime && Expirytime != "" && Expirytime != undefined && Expirytime != null) {
                     var expirytime_diff = new Date() - new Date(Expirytime);
-                    if (expirytime_diff / (60 * 1000) > (60*24*3)) {//全体用户信息每几分钟自动更新
+                    if (expirytime_diff / (60 * 1000) > 1) {//全体用户信息每几分钟自动更新
                         tempmodel.LoadAllUser();
                     }
                 }

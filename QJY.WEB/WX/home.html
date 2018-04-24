@@ -53,9 +53,9 @@
                                         <span class="" ms-if="el.UserGW">
                                             {{el.UserGW}}
                                         </span>
-                                        <span class="" ms-if="el.IsZuZhang">
+                                        <!--<span class="" ms-if="el.IsZuZhang">
                                             组长
-                                        </span>
+                                        </span>-->
                                     </div>
                                 </div>
                             </div>
@@ -91,10 +91,10 @@
                             <li ms-on-click="gopage('/WX/home.html')">
                                 会议室
                             </li>
-                            <li ms-on-click="gopage(2)">
+                            <li ms-on-click="gopage('/WX/Ry_list.html?r='+ Math.random())">
                                 荣誉室
                             </li>
-                            <li ms-on-click="gopage(2)">
+                            <li ms-on-click="gopage('/WX/hd_list.html?r='+ Math.random())">
                                 活动室
                             </li>
                         </ul>

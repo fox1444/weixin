@@ -1503,6 +1503,32 @@
           <Property Name="CRDate" Type="datetime" />
           <Property Name="IsDel" Type="int" />
         </EntityType>
+        <EntityType Name="WX_HD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HD_title" Type="varchar" MaxLength="400" />
+          <Property Name="HD_description" Type="varchar(max)" />
+          <Property Name="Img_path" Type="varchar(max)" />
+          <Property Name="CRUser" Type="varchar" MaxLength="100" />
+          <Property Name="CRDate" Type="datetime" />
+          <Property Name="JSUser" Type="varchar(max)" />
+          <Property Name="ZiLvXiaoZu" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="WX_RY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RY_title" Type="varchar" MaxLength="400" />
+          <Property Name="RY_description" Type="varchar(max)" />
+          <Property Name="Img_path" Type="varchar(max)" />
+          <Property Name="CRUser" Type="varchar" MaxLength="100" />
+          <Property Name="CRDate" Type="datetime" />
+          <Property Name="JSUser" Type="varchar(max)" />
+          <Property Name="ZiLvXiaoZu" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="WX_User">
           <Key>
             <PropertyRef Name="ID" />
@@ -1742,6 +1768,8 @@
           <EntitySet Name="SZHL_YCGL" EntityType="Self.SZHL_YCGL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_YCGL_CAR" EntityType="Self.SZHL_YCGL_CAR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_Group" EntityType="Self.WX_Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_HD" EntityType="Self.WX_HD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_RY" EntityType="Self.WX_RY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_User" EntityType="Self.WX_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_UserGroup" EntityType="Self.WX_UserGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Yan_WF_ChiTask" EntityType="Self.Yan_WF_ChiTask" Schema="dbo" store:Type="Tables" />
@@ -1838,6 +1866,8 @@
           <EntitySet Name="WX_User" EntityType="QJY_SaaSModel.WX_User" />
           <EntitySet Name="WX_Group" EntityType="QJY_SaaSModel.WX_Group" />
           <EntitySet Name="WX_UserGroup" EntityType="QJY_SaaSModel.WX_UserGroup" />
+          <EntitySet Name="WX_RY" EntityType="QJY_SaaSModel.WX_RY" />
+          <EntitySet Name="WX_HD" EntityType="QJY_SaaSModel.WX_HD" />
         </EntityContainer>
         <EntityType Name="FT_File">
           <Key>
@@ -3500,6 +3530,32 @@
           <Property Name="Memo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CRDate" Type="DateTime" Precision="3" />
           <Property Name="InvitationUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="WX_RY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="RY_title" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="RY_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Img_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Precision="3" />
+          <Property Name="JSUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ZiLvXiaoZu" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="WX_HD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HD_title" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="HD_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Img_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Precision="3" />
+          <Property Name="JSUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ZiLvXiaoZu" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5247,6 +5303,34 @@
                 <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_RY">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.WX_RY">
+              <MappingFragment StoreEntitySet="WX_RY">
+                <ScalarProperty Name="ZiLvXiaoZu" ColumnName="ZiLvXiaoZu" />
+                <ScalarProperty Name="JSUser" ColumnName="JSUser" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="Img_path" ColumnName="Img_path" />
+                <ScalarProperty Name="RY_description" ColumnName="RY_description" />
+                <ScalarProperty Name="RY_title" ColumnName="RY_title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_HD">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.WX_HD">
+              <MappingFragment StoreEntitySet="WX_HD">
+                <ScalarProperty Name="ZiLvXiaoZu" ColumnName="ZiLvXiaoZu" />
+                <ScalarProperty Name="JSUser" ColumnName="JSUser" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="Img_path" ColumnName="Img_path" />
+                <ScalarProperty Name="HD_description" ColumnName="HD_description" />
+                <ScalarProperty Name="HD_title" ColumnName="HD_title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
