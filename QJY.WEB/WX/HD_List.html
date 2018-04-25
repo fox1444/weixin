@@ -45,25 +45,37 @@
             position: relative;
             z-index: 1;
         }
-        .list-block .item-inner:after{
-            height:0;
+
+        .list-block .item-inner:after {
+            height: 0;
         }
-                .hav:hover{
-                background: #eeeeee;
+
+        .hav:hover {
+            background: #eeeeee;
         }
+
         .card-footer, .card-header {
-        min-height:0;
+            min-height: 0;
         }
+
+        .button-add {
+            float: right;
+            margin-top: 0.5rem;
+        }
+
+            .button-add .icon {
+                font-size: 1.6rem;
+            }
     </style>
 </head>
 <body ms-controller="HDList">
     <div class="page page-current" id="pageindex1">
         <header class="bar bar-nav" ms-if="Name">
-            <a class="button button-link button-nav pull-left back">
-                <span class="icon icon-left"></span>
+            <a class="button button-link button-nav pull-left" ms-click="gohome()">
+                <span class="icon icon-left" ms-click="gohome()"></span>
             </a>
             <h1 class="title">{{Name}}</h1>
-            <a class="button-add" ms-click="viewadd()" ms-if="model.IsZuZhang"><span class="icon">+</span></a>
+            <a class="button-add" ms-click="viewadd()" ms-if="model.IsZuZhang=='1'"><span class="icon">+</span></a>
         </header>
 
         <div class="content infinite-scroll infinite-scroll-bottom" data-distance="50">
@@ -107,6 +119,7 @@
             page: 1,
             pagecount: 8,
             Name: "活动室",
+            IsZuZhang: "",
             viewadd: function () {
                 window.location = "hd_add.html?r=" + Math.random();
             },
@@ -120,7 +133,7 @@
                     model.loading = false;
                     if (r.ErrorMsg == "") {
                         model.hdList.pushArray(r.Result);
-
+                        model.IsZuZhang = r.Result2;
                         //判断是否加载完毕
                         if (r.Result.length < model.pagecount) {
                             // 加载完毕，则注销无限加载事件，以防不必要的加载

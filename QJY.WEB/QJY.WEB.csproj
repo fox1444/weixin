@@ -232,7 +232,6 @@
     <Content Include="View_Mobile\Images\tobacco-logo.png" />
     <Content Include="View_Mobile\Images\tobacco-logo2.jpg" />
     <Content Include="View_Mobile\Images\wrap-bg.jpg" />
-    <Content Include="View_Mobile\JS\ComFunJS2.js" />
     <Content Include="View_Mobile\UI\HyDetail_index.html" />
     <Content Include="View_Mobile\UI\HyDetail_start.html" />
     <Content Include="View_Mobile\UI\HyDetail_step.html" />
@@ -247,6 +246,7 @@
     <Content Include="View_Mobile\UI\UI_Login.html" />
     <Content Include="View_Mobile\UI\UI_YCGL_LIST.html" />
     <Content Include="WX\HD_Add.html" />
+    <Content Include="WX\Group_member.html" />
     <Content Include="WX\JS\chart.js" />
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\bin\LitJSON.dll" />
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\demo.aspx" />
@@ -466,6 +466,7 @@
     <Content Include="WX\HD_Info.html" />
     <Content Include="WX\RY_List.html" />
     <Content Include="WX\RY_Info.html" />
+    <Content Include="WX\UploadImg.aspx" />
     <Content Include="WX\WeiXin.aspx" />
     <Content Include="WZWeb\CSS\bootstrap.css" />
     <Content Include="WZWeb\CSS\dialog.css" />
@@ -1805,6 +1806,13 @@
     <Compile Include="WX\default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WX\UploadImg.aspx.cs">
+      <DependentUpon>UploadImg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WX\UploadImg.aspx.designer.cs">
+      <DependentUpon>UploadImg.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WX\WeiXin.aspx.cs">
       <DependentUpon>WeiXin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1869,6 +1877,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="uploadfile\" />
     <Folder Include="ViewV5\fileupload\" />
     <Folder Include="ViewV5\upload\" />
     <Folder Include="WX\JS\kindeditor-4.1.4\attached\" />

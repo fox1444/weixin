@@ -7,16 +7,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>小组之家</title>
+    <link href="/View_Mobile/Frozenui1.3/css/frozen.css?ver=20171228" rel="stylesheet" />
     <link rel="stylesheet" href="/View_Mobile/css/sm.min.css">
     <link rel="stylesheet" href="/WX/CSS/wxstyle.css">
-    <script>
-
-        window.addEventListener('pageshow', function (e) {
-            if (e.persisted) {
-                window.location.reload()
-            }
-        })
-    </script>
     <style>
         .content {
             padding-bottom: 2rem;
@@ -25,10 +18,14 @@
         .list-group-title {
             position: fixed !important;
             top: 0;
-            width:100%;
+            width: 100%;
         }
-        .list-group ul{
-            margin-top:2rem;
+
+        .list-group ul {
+            margin-top: 2rem;
+        }
+        .item-inner {
+            border-bottom: solid 1px #ccc;
         }
         .chartbox::after {
             content: "\e96d";
@@ -43,7 +40,21 @@
 <body ms-controller="Home">
     <div class="page page-current " id="pageindex1">
         <div class="content native-scroll">
-            <div class="list-block contacts-block" style="margin:0px;">
+            <div class="list-block contacts-block" style="margin:0px;" ms-if="model.jianduGroups.length>0">
+                <div class="list-group">
+                    <div class="item-content" ms-repeat-el="jianduGroups">
+                        <div class="item-inner">
+                            <div class="item-title" ms-click="gogroup(el.XiaoZu)">{{el.XiaoZu}}</div>
+                            <div class="img-icon">
+                                <span class="chartbox" ms-click="gochart(el.XiaoZu)"></span>
+                            </div>
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+
+            <div class="list-block contacts-block" style="margin:0px;" ms-if="model.xzName!=''">
                 <div class="list-group">
                     <div class="list-group-title">{{model.xzName}}<span class="chartbox" ms-click="gochart(model.xzName)"></span></div>
                     <ul>
@@ -120,8 +131,12 @@
         var model = avalon.define({
             $id: "Home",
             userData: {},
+            jianduGroups: { "XiaoZu": "" },
             xzList: [],
             xzName: "",
+            gogroup: function (g) {
+                window.location = "/WX/group_member.html?g=" + g;
+            },
             gochart: function (g) {
                 window.location = "/WX/Message/box.html?g=" + g;
             },
@@ -131,6 +146,13 @@
                 $.getJSON("/API/VIEWAPI.ashx?Action=XTGL_GETUSERINFO", {}, function (r) {
                     if (r.ErrorMsg == "") {
                         model.userData = r.Result;
+                    }
+                })
+
+                $.getJSON("/API/VIEWAPI.ashx?Action=WXGL_GETMYJIANDUGROUPTEAM&r=" + Math.random(), {}, function (r) {
+                    model.loading = false;
+                    if (r.ErrorMsg == "") {
+                        model.jianduGroups = r.Result;
                     }
                 })
 
@@ -206,6 +228,12 @@
 
         avalon.ready(function () {
             model.inittemp();
+        })
+
+        window.addEventListener('pageshow', function (e) {
+            if (e.persisted) {
+                window.location.reload()
+            }
         })
     </script>
 </body>

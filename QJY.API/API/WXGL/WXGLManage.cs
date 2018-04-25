@@ -76,9 +76,9 @@ namespace QJY.API
             JH_Auth_User ext = new JH_Auth_UserB().GetEntity(d => d.ID == UserInfo.User.ID);
 
             string viewname = "select U.* , wu.nickName from JH_Auth_User U LEFT JOIN WX_User wu on u.WxOpenid = wu.openid  " +
-                "where u.ZiLvXiaoZu = '" + ext.ZiLvXiaoZu + "' " +
-                "or  ('" + ext.ZiLvXiaoZu + "' like (select REPLACE(REPLACE(REPLACE(REPLACE(Items,' ',''),CHAR(10) ,''),CHAR(13),''),'/n','') from dbo.Split(u.jianduxiaozu,';') where items='" + ext.ZiLvXiaoZu + "'))" +
-                " order by u.UserOrder, u.IsZuZhang desc, u.UserRealName asc";
+                "where u.ZiLvXiaoZu is not null and u.ZiLvXiaoZu <> '' and  u.ZiLvXiaoZu = '" + ext.ZiLvXiaoZu + "' "
+                + "or  ('" + ext.ZiLvXiaoZu + "' like (select Items from dbo.Split(REPLACE(u.jianduxiaozu,' ',''),';') where items='" + ext.ZiLvXiaoZu + "'))" 
+                + " order by u.UserOrder, u.IsZuZhang desc, u.UserRealName asc";
 
             // DataTable dt = new JH_Auth_UserB().GetDataPager(viewname, " U.* , wu.nickName, ext.ExtendDataValue as XiaoZu, ext2.ExtendDataValue as IsZuZhang ", 999999, 1, " u.UserRealName asc ", strWhere, ref recordCount);
             DataTable dt = new JH_Auth_UserB().GetDTByCommand(viewname);
@@ -86,6 +86,36 @@ namespace QJY.API
             msg.Result = dt;
             msg.Result1 = ext.ZiLvXiaoZu;
         }
+
+        public void GETGROUPTEAMBYCODE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            P1 = P1.Trim();
+            //JH_Auth_User ext = new JH_Auth_UserB().GetEntity(d => d.ID == UserInfo.User.ID);
+            string viewname = "select U.* , wu.nickName from JH_Auth_User U LEFT JOIN WX_User wu on u.WxOpenid = wu.openid  " +
+                "where u.ZiLvXiaoZu is not null and u.ZiLvXiaoZu <> '' and  u.ZiLvXiaoZu = '" + P1 + "' "
+                + "or  ('" + P1 + "' like (select Items from dbo.Split(REPLACE(u.jianduxiaozu,' ',''),';') where items='" + P1 + "'))"
+                + " order by u.UserOrder, u.IsZuZhang desc, u.UserRealName asc";
+
+            // DataTable dt = new JH_Auth_UserB().GetDataPager(viewname, " U.* , wu.nickName, ext.ExtendDataValue as XiaoZu, ext2.ExtendDataValue as IsZuZhang ", 999999, 1, " u.UserRealName asc ", strWhere, ref recordCount);
+            DataTable dt = new JH_Auth_UserB().GetDTByCommand(viewname);
+
+            msg.Result = dt;
+        }
+
+        
+        public void GETMYJIANDUGROUPTEAM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            //我的自律小组名称
+            JH_Auth_User ext = new JH_Auth_UserB().GetEntity(d => d.ID == UserInfo.User.ID);
+
+            string viewname = "select Items as XiaoZu from dbo.Split(REPLACE('" + ext.JianDuXiaoZu + "',' ',''),';') ";
+
+            DataTable dt = new JH_Auth_UserB().GetDTByCommand(viewname);
+
+            msg.Result = dt;
+            msg.Result1 = ext.ZiLvXiaoZu;
+        }
+
         public void BINDPHONE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             JH_Auth_User j = JsonConvert.DeserializeObject<JH_Auth_User>(P1);
@@ -209,7 +239,7 @@ namespace QJY.API
             DataTable dt = new DataTable();
             int total = 0;
             string whestr = " ZiLvXiaoZu='" + UserInfo.User.ZiLvXiaoZu + "' " +
-                "or  ZiLvXiaoZu in (select REPLACE(REPLACE(REPLACE(REPLACE(Items,' ',''),CHAR(10) ,''),CHAR(13),''),'/n','') from dbo.Split('" + UserInfo.User.JianDuXiaoZu + "',';'))";
+                "or  ZiLvXiaoZu in (select Items from dbo.Split(REPLACE('" + UserInfo.User.JianDuXiaoZu + "',' ',''),';'))";
             dt = new WX_GroupB().GetDataPager("WX_RY ", " * ", 99999, 1, " CRDate desc", whestr, ref total);
 
             msg.Result = dt;
@@ -240,6 +270,7 @@ namespace QJY.API
                 msg.ErrorMsg = "您没有权限删除";
             }
         }
+        
         public void ADDHUODONGMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             WX_HD model = JsonConvert.DeserializeObject<WX_HD>(P2);
@@ -276,11 +307,12 @@ namespace QJY.API
             DataTable dt = new DataTable();
             int total = 0;
             string whestr = " ZiLvXiaoZu='" + UserInfo.User.ZiLvXiaoZu + "' " +
-                "or  ZiLvXiaoZu in (select REPLACE(REPLACE(REPLACE(REPLACE(Items,' ',''),CHAR(10) ,''),CHAR(13),''),'/n','') from dbo.Split('" + UserInfo.User.JianDuXiaoZu + "',';'))";
+                "or  ZiLvXiaoZu in (select Items from dbo.Split(REPLACE('" + UserInfo.User.JianDuXiaoZu + "',' ',''),';'))";
             dt = new WX_GroupB().GetDataPager("WX_HD ", " * ", 99999, 1, " CRDate desc", whestr, ref total);
 
             msg.Result = dt;
             msg.Result1 = total;
+            msg.Result2 = UserInfo.User.IsZuZhang;
 
         }
         public void GETHUODONGMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
@@ -336,6 +368,18 @@ namespace QJY.API
             }
             msg.Result = model;
         }
-
+        public void DELHUODONGMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            WX_HD model = new WX_HDB().GetEntity(p => p.ID == Id);
+            if (UserInfo.User.UserName == model.CRUser)
+            {
+                new WX_HDB().Delete(model);
+            }
+            else
+            {
+                msg.ErrorMsg = "您没有权限删除";
+            }
+        }
     }
 }

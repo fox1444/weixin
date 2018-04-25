@@ -21,7 +21,6 @@
         }
 
         .weui_cell_hd, .weui_cell_hd .weui_input, .btnSucc {
-            font-size: 0.9rem !important;
         }
 
         .button {
@@ -72,24 +71,47 @@
     <script src="/View_Mobile/JS/raty/jquery.raty.js?v=1.3"></script>
     <script src="/View_Mobile/js/ComFunJS.js"></script>
     <script>
+        var strId = ComFunJS.getQueryString("id");
         var tempmodel = avalon.define({
             $id: "huodong",
+
             ColumnData: [],
             name: "添加活动信息",
-            inittemp: function (strId) {
+            IsEdit: "",
+            modelData: { "Title": "", "Content": "" },
+            inittemp: function () {
 
             },//初始化
-            modelData: { "Title": "", "Content": "" },
+
             SaveData: function () {
 
                 $.getJSON("/API/VIEWAPI.ashx?ACTION=WXGL_ADDHUODONGMODEL&r=" + Math.random(), { P2: JSON.stringify(tempmodel.modelData.$model) }, function (r) {
                     if (r.ErrorMsg == '') {
-                        window.location.href = "/WX/hd_list.html?r=" + Math.random();
+                        window.location = "/WX/hd_list.html?r=" + Math.random();
+
                     }
 
                 });
             }
         });
+        avalon.ready(function () {
+            if (strId) {
+                //编辑加载数据
+                $.getJSON('/API/VIEWAPI.ashx?Action=WXGL_GETHUODONGMODEL', { P1: strId }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        tempmodel.modelData = resultData.Result;
+                        tempmodel.IsEdit = resultData.Result1;
+                    }
+                    if (tempmodel.IsEdit != "1") {
+                        ComFunJS.winwarning("您没有权限修改");
+                        window.location = "/WX/hd_info.html?id=" + strId + "&r=" + Math.random();
+                    }
+                })
 
+            }
+            else {
+
+            }
+        })
     </script>
 </body>
