@@ -16,143 +16,6 @@
     <script src="/View_Mobile/JS/fs_gallery.js"></script>
     <script src="/View_Mobile/JS/layer/layer.m.js"></script>
 
-    <script>
-        //document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-        //    //隐藏右上角按钮
-        //    WeixinJSBridge.call('hideOptionMenu');
-        //});
-        var strId = ComFunJS.getQueryString("ID");
-        var fheight = 0;
-
-        var rwinfo = avalon.define({
-            $id: "hdinfo",
-            modelData: {},
-            ztData: {},
-            ydData: [],
-            ydcount: 0,
-            wydData: [],
-            wydcount: 0,
-            fjData: [],
-            fjcount: 0,
-            plData: [],
-            plcount: 0,
-            TypeName: "",
-            IsEdit: "",
-            viewadd: function () {
-                window.location = "Ry_add.html?r=" + Math.random();
-            },
-            pl: function () {
-                $(".ui-list").toggle();
-                $(".ui-footer").toggle();
-            },
-            yy: function () {
-                if (rwinfo.ydData.size() > 0) {
-                    var html = '<div class=" ui-label-list" style="overflow-y: auto;margin-top:10px;max-height:' + (fheight - 150) + 'px">';
-                    $(rwinfo.ydData).each(function (index, ele) {
-                        html = html + '<label class="ui-label" style="position: relative; width: auto;padding: 0 5px;margin: 0 5px 5px 0;">' + ComFunJS.convuser(ele) + '</label>';
-                    })
-                    html = html + '</div>';
-
-                    $.dialog({
-                        title: '已阅人员',
-                        content: html,
-                        button: ["确认"]
-                    });
-                    $(".ui-dialog-ft").find("button").click(function () {
-                        $(".ui-dialog").remove();
-                    });
-                }
-            },
-            wy: function () {
-                if (rwinfo.wydData.size() > 0) {
-                    var html = '<div class=" ui-label-list" style="overflow-y: auto;margin-top:10px;max-height:' + (fheight - 150) + 'px">';
-                    $(rwinfo.wydData).each(function (index, ele) {
-                        html = html + '<label class="ui-label" style="position: relative; width: auto;padding: 0 5px;margin: 0 5px 5px 0;">' + ComFunJS.convuser(ele) + '</label>';
-                    })
-
-                    html = html + '</div>';
-
-                    $.dialog({
-                        title: '未阅人员',
-                        content: html,
-                        button: ["确认"]
-                    });
-                    $(".ui-dialog-ft").find("button").click(function () {
-                        $(".ui-dialog").remove();
-                    });
-                }
-            },
-            fdtp: function (obj) {
-                if (!$(".fs_gallery").html()) {
-                    $('.mall_pcp').fsgallery();
-                    $(obj).trigger("click");
-                }
-            },
-            viewwxx: function (el) {
-                if (el.YLUrl) {
-                    window.location = el.YLUrl;
-                }
-            }
-        });
-        avalon.ready(function () {
-            //获取页面高度
-            fheight = document.documentElement.clientHeight;
-            if (strId != null) {
-                $.getJSON('/API/VIEWAPI.ashx?Action=WXGL_GETHUODONGMODEL&r=' + Math.random(), { P1: strId }, function (resultData) {
-                    if (resultData.ErrorMsg == "") {
-                        rwinfo.modelData = resultData.Result;
-                        rwinfo.IsEdit = resultData.Result1;
-                    }
-                    else {
-                        window.location.replace("UI_Error.html?msg=信息不存在或已删除");
-                    }
-                })
-            }
-        })
-
-        $(".ui-btn").click(function () {
-            if ($("#content").val() == null || $("#content").val() == "") {
-                $.tips({
-                    content: "请输入评论内容",
-                    stayTime: 2000,
-                    type: "warn"
-                })
-                return;
-            }
-
-
-            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_ADDCOMENT&r=' + Math.random(), { "P1": $("#content").val(), "MsgType": "XXFB", "MsgLYID": strId }, function (resultData) {
-                if (resultData.ErrorMsg == "") {
-                    rwinfo.plData.push(resultData.Result);
-                    rwinfo.plcount = rwinfo.plcount + 1;
-                    var el = $.tips({
-                        content: "评论成功！！",
-                        stayTime: 2000,
-                        type: "success"
-                    })
-                    $("#content").val("");
-                }
-                else {
-                    var el = $.tips({
-                        content: "评论失败！！",
-                        stayTime: 2000,
-                        type: "warn"
-                    })
-                }
-            })
-
-        });
-
-
-        function setwatermark() {
-            var curuser = ComFunJS.convuser(ComFunJS.getCookie("username"));
-            if (curuser && model.modelData.IsSecret.toLowerCase() == "true") {
-                watermark({ watermark_txt: curuser, watermark_y: $(".header").height() + 20, watermark_page_width: $("#details").width(), watermark_page_height: $("#details").height() });
-
-            }
-        }
-    </script>
-
     <style>
         .vote_box {
             position: relative;
@@ -729,31 +592,34 @@
             <div id="details" class="text" style="overflow: hidden; word-wrap: break-word; word-break: break-all;">
                 {{modelData.Content|html}}
             </div>
-            <a class="" ms-click="viewedit(modelData.ID)" ms-if="model.IsEdit=='1'">编辑</a>
+            <div style="margin:10px 0 0 0">
+                <a class="" ms-click="viewedit(modelData.ID)" ms-if="model.IsEdit=='1'">编辑</a>
+                <a class="" style="float:right;color:red;" ms-click="viewdel(modelData.ID)" ms-if="IsEdit=='1'">删除</a>
+            </div>
             <!--<ul class="ui-list">
-        <li class="ui-border-t" ms-repeat-el="fjData" style="padding: 5px; font-size: 14px; border: 1px solid #C8CACD;">
+                <li class="ui-border-t" ms-repeat-el="fjData" style="padding: 5px; font-size: 14px; border: 1px solid #C8CACD;">
 
-            <div style="padding-right: 10px">
-                <img ms-on-click="fdtp(this)" class="mall_pcp" style="height: 40px; width: 40px" ms-if="ComFunJS.xstp(el.FileExtendName)" ms-attr-src="{{ComFunJS.getfile(el.ID)}}" />
-                <img ms-on-tap="viewwxx(el)" style="height: 40px; width: 40px" ms-if="!ComFunJS.xstp(el.FileExtendName)" ms-attr-src="../Images/qywd/{{el.FileExtendName}}.png" onerror="javascript: this.src = '/View_Mobile/Images/qywd/file.png'" />
-            </div>
-            <div class="ui-list-info" ms-on-tap="viewwxx(el)" style="padding: 0;">
-                <h4 class="ui-nowrap">{{el.Name}}.{{el.FileExtendName}}</h4>
-                <p class="ui-nowrap">{{Math.round(el.FileSize/1024)}}kb</p>
-            </div>
-            <div>
-                <a ms-attr-href="{{ComFunJS.getfile(el.ID)}}" class="external">
-                    <img style="height: 20px; width: 20px; float: right; padding: 10px;" src="../Images/down.png" />
-                </a>
-            </div>
+                    <div style="padding-right: 10px">
+                        <img ms-on-click="fdtp(this)" class="mall_pcp" style="height: 40px; width: 40px" ms-if="ComFunJS.xstp(el.FileExtendName)" ms-attr-src="{{ComFunJS.getfile(el.ID)}}" />
+                        <img ms-on-tap="viewwxx(el)" style="height: 40px; width: 40px" ms-if="!ComFunJS.xstp(el.FileExtendName)" ms-attr-src="../Images/qywd/{{el.FileExtendName}}.png" onerror="javascript: this.src = '/View_Mobile/Images/qywd/file.png'" />
+                    </div>
+                    <div class="ui-list-info" ms-on-tap="viewwxx(el)" style="padding: 0;">
+                        <h4 class="ui-nowrap">{{el.Name}}.{{el.FileExtendName}}</h4>
+                        <p class="ui-nowrap">{{Math.round(el.FileSize/1024)}}kb</p>
+                    </div>
+                    <div>
+                        <a ms-attr-href="{{ComFunJS.getfile(el.ID)}}" class="external">
+                            <img style="height: 20px; width: 20px; float: right; padding: 10px;" src="../Images/down.png" />
+                        </a>
+                    </div>
 
-        </li>
-    </ul>-->
+                </li>
+            </ul>-->
             <!--<p class="page-toolbar" style="padding-bottom: 25px;">
-        <em class="activity-meta" style="font-style: normal; margin-left: 0"><a ms-click="yy()">已阅({{ydcount}})</a></em> &nbsp;&nbsp;
-        <em class="activity-meta" style="font-style: normal; margin-left: 0"><a ms-click="wy()">未阅({{wydcount}})</a></em>&nbsp;&nbsp;
-        <em class="activity-meta" style="font-style: normal; margin-left: 0" ms-if="ztData.isPL=='1'"><a ms-click="pl()">评论({{plcount}})</a></em>
-    </p>-->
+                <em class="activity-meta" style="font-style: normal; margin-left: 0"><a ms-click="yy()">已阅({{ydcount}})</a></em> &nbsp;&nbsp;
+                <em class="activity-meta" style="font-style: normal; margin-left: 0"><a ms-click="wy()">未阅({{wydcount}})</a></em>&nbsp;&nbsp;
+                <em class="activity-meta" style="font-style: normal; margin-left: 0" ms-if="ztData.isPL=='1'"><a ms-click="pl()">评论({{plcount}})</a></em>
+            </p>-->
         </div>
     </div>
     <div class="ui-form ui-border-t" style="padding-bottom: 44px; background: #f8f7f5;">
@@ -782,6 +648,159 @@
             <button class="ui-btn">评论</button>
         </section>
     </div>
+    <script>
+        //document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        //    //隐藏右上角按钮
+        //    WeixinJSBridge.call('hideOptionMenu');
+        //});
+        var strId = ComFunJS.getQueryString("ID");
+        var fheight = 0;
+
+        var rwinfo = avalon.define({
+            $id: "hdinfo",
+            modelData: {},
+            ztData: {},
+            ydData: [],
+            ydcount: 0,
+            wydData: [],
+            wydcount: 0,
+            fjData: [],
+            fjcount: 0,
+            plData: [],
+            plcount: 0,
+            TypeName: "",
+            IsEdit: "",
+            viewedit: function (id) {
+                window.location = "hd_add.html?id=" + id + "&r=" + Math.random();
+            },
+            viewback: function (id) {
+                window.location = "hd_list.html?r=" + Math.random();
+            },
+            viewdel: function () {
+                if (strId != null) {
+                    ComFunJS.confirm("确认要删除吗？", function () {
+                        $.getJSON('/API/VIEWAPI.ashx?Action=WXGL_DELHUODONGMODEL&r=' + Math.random(), { P1: strId }, function (resultData) {
+                            if (resultData.ErrorMsg == "") {
+                                window.location = "/WX/hd_list.html?r=" + Math.random();
+                            }
+                            else {
+                                ComFunJS.winwarning(resultData.ErrorMsg);
+                            }
+                        })
+                    })
+                }
+            },
+            pl: function () {
+                $(".ui-list").toggle();
+                $(".ui-footer").toggle();
+            },
+            yy: function () {
+                if (rwinfo.ydData.size() > 0) {
+                    var html = '<div class=" ui-label-list" style="overflow-y: auto;margin-top:10px;max-height:' + (fheight - 150) + 'px">';
+                    $(rwinfo.ydData).each(function (index, ele) {
+                        html = html + '<label class="ui-label" style="position: relative; width: auto;padding: 0 5px;margin: 0 5px 5px 0;">' + ComFunJS.convuser(ele) + '</label>';
+                    })
+                    html = html + '</div>';
+
+                    $.dialog({
+                        title: '已阅人员',
+                        content: html,
+                        button: ["确认"]
+                    });
+                    $(".ui-dialog-ft").find("button").click(function () {
+                        $(".ui-dialog").remove();
+                    });
+                }
+            },
+            wy: function () {
+                if (rwinfo.wydData.size() > 0) {
+                    var html = '<div class=" ui-label-list" style="overflow-y: auto;margin-top:10px;max-height:' + (fheight - 150) + 'px">';
+                    $(rwinfo.wydData).each(function (index, ele) {
+                        html = html + '<label class="ui-label" style="position: relative; width: auto;padding: 0 5px;margin: 0 5px 5px 0;">' + ComFunJS.convuser(ele) + '</label>';
+                    })
+
+                    html = html + '</div>';
+
+                    $.dialog({
+                        title: '未阅人员',
+                        content: html,
+                        button: ["确认"]
+                    });
+                    $(".ui-dialog-ft").find("button").click(function () {
+                        $(".ui-dialog").remove();
+                    });
+                }
+            },
+            fdtp: function (obj) {
+                if (!$(".fs_gallery").html()) {
+                    $('.mall_pcp').fsgallery();
+                    $(obj).trigger("click");
+                }
+            },
+            viewwxx: function (el) {
+                if (el.YLUrl) {
+                    window.location = el.YLUrl;
+                }
+            }
+        });
+        avalon.ready(function () {
+            //获取页面高度
+            fheight = document.documentElement.clientHeight;
+            if (strId != null) {
+                $.getJSON('/API/VIEWAPI.ashx?Action=WXGL_GETHUODONGMODEL&r=' + Math.random(), { P1: strId }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        rwinfo.modelData = resultData.Result;
+                        rwinfo.IsEdit = resultData.Result1;
+                    }
+                    else {
+                        window.location.replace("UI_Error.html?msg=信息不存在或已删除");
+                    }
+                })
+            }
+        })
+
+        $(".ui-btn").click(function () {
+            if ($("#content").val() == null || $("#content").val() == "") {
+                $.tips({
+                    content: "请输入评论内容",
+                    stayTime: 2000,
+                    type: "warn"
+                })
+                return;
+            }
+
+
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_ADDCOMENT&r=' + Math.random(), { "P1": $("#content").val(), "MsgType": "XXFB", "MsgLYID": strId }, function (resultData) {
+                if (resultData.ErrorMsg == "") {
+                    rwinfo.plData.push(resultData.Result);
+                    rwinfo.plcount = rwinfo.plcount + 1;
+                    var el = $.tips({
+                        content: "评论成功！！",
+                        stayTime: 2000,
+                        type: "success"
+                    })
+                    $("#content").val("");
+                }
+                else {
+                    var el = $.tips({
+                        content: "评论失败！！",
+                        stayTime: 2000,
+                        type: "warn"
+                    })
+                }
+            })
+
+        });
+
+
+        function setwatermark() {
+            var curuser = ComFunJS.convuser(ComFunJS.getCookie("username"));
+            if (curuser && model.modelData.IsSecret.toLowerCase() == "true") {
+                watermark({ watermark_txt: curuser, watermark_y: $(".header").height() + 20, watermark_page_width: $("#details").width(), watermark_page_height: $("#details").height() });
+
+            }
+        }
+    </script>
 </body>
 
 </html>

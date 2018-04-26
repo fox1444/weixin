@@ -21,7 +21,6 @@
         }
 
         .weui_cell_hd, .weui_cell_hd .weui_input, .btnSucc {
-           
         }
 
         .button {
@@ -32,6 +31,10 @@
                 line-height: 2rem;
                 height: 2rem;
             }
+
+        .uploadbutton{
+
+        }
     </style>
 </head>
 <body ms-controller="rongyu">
@@ -57,6 +60,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="weui_cells_title">图片</div>
+                    <div class="weui_cells weui_cells_form">
+                        <div class="weui_cell">
+                            <div class="weui_cell_hd" style="display:none;"><label class="weui_label label">内容</label></div>
+                            <div class="weui_cell_bd weui_cell_primary">
+                                <div id="wrapper">
+                                    <input id="fileUpload" type="file" multiple /><br />
+                                    <div id="image-holder"> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <br />
@@ -75,15 +90,15 @@
         var strId = ComFunJS.getQueryString("id");
         var tempmodel = avalon.define({
             $id: "rongyu",
-           
+
             ColumnData: [],
             name: "添加荣誉信息",
             IsEdit: "",
             modelData: { "Title": "", "Content": "" },
             inittemp: function () {
-               
+
             },//初始化
-            
+
             SaveData: function () {
 
                 $.getJSON("/API/VIEWAPI.ashx?ACTION=WXGL_ADDRYMODELWX&r=" + Math.random(), { P2: JSON.stringify(tempmodel.modelData.$model) }, function (r) {
@@ -108,11 +123,49 @@
                         window.location = "/WX/ry_info.html?id=" + strId + "&r=" + Math.random();
                     }
                 })
-                
+
             }
             else {
 
             }
+
+            $("#fileUpload").on('change', function () {
+                //获取上传文件的数量
+                var countFiles = $(this)[0].files.length;
+
+                var imgPath = $(this)[0].value;
+                var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+                var image_holder = $("#image-holder");
+                image_holder.empty();
+
+                if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                    if (typeof (FileReader) != "undefined") {
+
+                        // 循环所有要上传的图片
+                        for (var i = 0; i < countFiles; i++) {
+
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                $("<img />", {
+                                    "src": e.target.result,
+                                    "class": "thumb-image"
+                                }).appendTo(image_holder);
+                            }
+
+                            image_holder.show();
+                            reader.readAsDataURL($(this)[0].files[i]);
+                        }
+
+                    } else {
+                        alert("你的浏览器不支持FileReader！");
+                    }
+                } else {
+                    alert("请选择图像文件。");
+                }
+            });
         })
+
+
+
     </script>
 </body>

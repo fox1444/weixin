@@ -66,11 +66,11 @@
 <body ms-controller="RYList">
     <div class="page page-current" id="pageindex1">
         <header class="bar bar-nav" ms-if="Name">
-            <a class="button button-link button-nav pull-left back" ms-on-click="gohome()">
-                <span class="icon icon-left"></span>
+            <a class="button button-link button-nav pull-left" ms-click="gohome()">
+                <span class="icon icon-left" ms-click="gohome()"></span>
             </a>
             <h1 class="title">{{Name}}</h1>
-            <a class="button-add" ms-click="viewadd()" ms-if="model.IsZuZhang"><span class="icon">+</span></a>
+            <a class="button-add" ms-click="viewadd()" ms-if="model.IsZuZhang=='1'"><span class="icon">+</span></a>
         </header>
 
         <div class="content infinite-scroll infinite-scroll-bottom" data-distance="50">
