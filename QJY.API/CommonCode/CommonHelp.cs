@@ -682,6 +682,8 @@ namespace QJY.API
             {
 
             }
+            if (tmp.ToLowerInvariant() == "null")
+                tmp = "";
             return tmp;
         }
         public static string Getszhlcode()

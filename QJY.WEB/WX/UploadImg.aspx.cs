@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -20,13 +21,17 @@ namespace QJY.WEB.WX
             for (int i = 0; i < Files.Count; i++)
             {
                 HttpPostedFile PostedFile = Files[i];
+                
                 if (PostedFile.ContentLength > 0)
                 {
                     string FileName = PostedFile.FileName;
+                    Response.Write(FileName);
                     string strExPrentFile = FileName.Substring(FileName.LastIndexOf(".") + 1);
 
                     string sFilePath = "/uploadfile/11" + i + "."+strExPrentFile;
                     PostedFile.SaveAs(Server.MapPath(sFilePath));
+
+                    
                 }
                 else
                 {
