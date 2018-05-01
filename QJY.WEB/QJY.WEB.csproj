@@ -245,6 +245,7 @@
     <Content Include="View_Mobile\UI\HyDetail.html" />
     <Content Include="View_Mobile\UI\UI_Login.html" />
     <Content Include="View_Mobile\UI\UI_YCGL_LIST.html" />
+    <Content Include="WX\Satisfaction.html" />
     <Content Include="WX\HD_Add.html" />
     <Content Include="WX\Group_member.html" />
     <Content Include="WX\JS\chart.js" />
@@ -446,6 +447,7 @@
     <Content Include="WX\JS\kindeditor-4.1.4\themes\qq\editor.gif" />
     <Content Include="WX\JS\kindeditor-4.1.4\themes\qq\qq.css" />
     <Content Include="WX\JS\kindeditor-4.1.4\themes\simple\simple.css" />
+    <Content Include="WX\Calculation.html" />
     <Content Include="WX\message\box.html" />
     <Content Include="WX\RY_Add.html" />
     <Content Include="WX\CSS\fonts\icomoon.svg" />
@@ -1877,6 +1879,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="uploadfile\" />
     <Folder Include="ViewV5\fileupload\" />
     <Folder Include="ViewV5\upload\" />
@@ -1895,6 +1898,10 @@
     <ProjectReference Include="..\QJY.API\QJY.API.csproj">
       <Project>{c165fb76-6ac0-42f8-970d-bd3f7d235d1b}</Project>
       <Name>QJY.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Senparc.Weixin.MP.Sample.CommonService\Senparc.Weixin.MP.Sample.CommonService.csproj">
+      <Project>{ccd291e9-16fa-4b53-b032-ebd3f659567b}</Project>
+      <Name>Senparc.Weixin.MP.Sample.CommonService</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

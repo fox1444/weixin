@@ -61,14 +61,14 @@ namespace QJY.WEB.WX
                 //}
             }
             string redirect_uri = CommonHelp.GetCookieString("pagehistory");
-            //if (redirect_uri.Trim().Length > 0)
-            //{
-            //    Response.Redirect(HttpUtility.UrlDecode(redirect_uri));
-            //}
-            //else
-            //{
+            if (redirect_uri.Trim().Length > 0)
+            {
+                Response.Redirect(HttpUtility.UrlDecode(redirect_uri));
+            }
+            else
+            {
                 Response.Redirect("/WX/home.html");
-            //}
+            }
 
         }
 

@@ -3,14 +3,18 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>新品推荐</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <link rel="shortcut icon" href="/favicon.ico">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>新品推荐</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="/View_Mobile/Frozenui1.3/css/frozen.css?ver=20171228" rel="stylesheet" />
     <link rel="stylesheet" href="/View_Mobile/css/sm.min.css">
     <link rel="stylesheet" href="/WX/CSS/wxstyle.css">
     <style type="text/css">
+        .content {
+            padding-bottom: 2rem;
+        }
         .img-icon{
             width:3rem;
             text-align:center;
@@ -56,6 +60,50 @@
                 </div>
             </div>
         </div>
+        <footer class="footer-nav-group">
+            <ul>
+                <li>
+                    <div ms-on-click="showsubpage(this)" ms-on-blur="onblur(this)">
+                        政策法规
+                        <ul class="sub-nav">
+                            <li ms-on-click="gopage('/View_Mobile/UI/UI_XXFB_LIST.html?id=612&name=法律&r='+ Math.random())">
+                                法律
+                            </li>
+                            <li ms-on-click="gopage('/View_Mobile/UI/UI_XXFB_LIST.html?id=613&name=营销&r='+ Math.random())">
+                                营销
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div ms-on-click="gopage('/wx/newproduct.html?id=614&name=新品&r='+ Math.random())">
+                        新品推荐
+                    </div>
+                </li>
+                <li>
+                    <div ms-on-click="showsubpage(this)" ms-on-blur="onblur(this)">
+                        小组之家
+                        <ul class="sub-nav">
+                            <li ms-on-click="gopage('/WX/home.html')">
+                                会议室
+                            </li>
+                            <li ms-on-click="gopage('/WX/Ry_list.html?r='+ Math.random())">
+                                荣誉室
+                            </li>
+                            <li ms-on-click="gopage('/WX/hd_list.html?r='+ Math.random())">
+                                活动室
+                            </li>
+                            <li ms-on-click="gopage('/WX/Satisfaction.html?r='+ Math.random())">
+                                满意度调查
+                            </li>
+                            <li ms-on-click="gopage('/WX/Calculation.html?r='+ Math.random())">
+                                紧俏烟计算器
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </footer>
     </div>
     <script src="/View_Mobile/JS/layer/layer.m.js"></script>
     <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
@@ -124,6 +172,23 @@
                     });
                 })
 
+            },
+            showsubpage: function (t) {
+
+                if ($(t).children(".sub-nav").css("display") == "block") {
+                    $(".sub-nav").hide();
+                }
+                else {
+                    $(".sub-nav").hide();
+                    $(t).children(".sub-nav").show();
+                }
+            },
+            gopage: function (url) {
+                if (url)
+                    window.location.href = url;
+            },
+            onblur: function (t) {
+                $(t).hide();
             },
         })
 

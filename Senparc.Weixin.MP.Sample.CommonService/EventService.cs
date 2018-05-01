@@ -22,6 +22,7 @@ using System.Web;
 using System.Configuration;
 using Senparc.Weixin.MP.Sample.CommonService.TemplateMessage;
 #else
+using Microsoft.AspNetCore.Http;
 using Senparc.Weixin.MP.Sample.CommonService.TemplateMessage;
 using Senparc.Weixin.MP.Sample.CommonService.Utilities;
 #endif
