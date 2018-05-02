@@ -35,7 +35,7 @@ namespace QJY.API
             if (accesstoken.Trim().Length > 0)
             {
                 CommonHelp.UpdateAppConfig("AccessToken", accesstoken);
-                new JH_Auth_LogB().InsertLog("WXFWHelper", "更新AccessToken为" + accesstoken, "WXFWHelper", _username, _username, 0, "");
+                new JH_Auth_LogB().InsertLog("WXFWHelper", "立即更新AccessToken为" + accesstoken, "WXFWHelper", _username, _username, 0, "");
             }
             return accesstoken;
         }

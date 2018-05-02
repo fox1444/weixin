@@ -34,7 +34,7 @@ namespace QJY.WEB
         public void TimerNow(object source, System.Timers.ElapsedEventArgs e)
         {
             string strIp = CommonHelp.getIP(HttpContext.Current);
-            new JH_Auth_LogB().InsertLog("Application_Start", "启动时运行", "Global.asax", "System", "System", 0, "");
+            new JH_Auth_LogB().InsertLog("Application_Start", "Application启动", "Global.asax", "System", "System", 0, "");
             try
             {
                 //Task<string> task1 = new Task<string>(() =>
@@ -112,7 +112,7 @@ namespace QJY.WEB
 
             //string acc = bm.GetToken("", true);
             string strIp = CommonHelp.getIP(HttpContext.Current);
-            new JH_Auth_LogB().InsertLog("Application_End", "关闭时运行", "Global.asax", "System", "System", 0, strIp);
+            new JH_Auth_LogB().InsertLog("Application_End", "Application关闭", "Global.asax", "System", "System", 0, strIp);
 
             try
             {
