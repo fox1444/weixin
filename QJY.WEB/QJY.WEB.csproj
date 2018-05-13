@@ -206,7 +206,6 @@
     <Content Include="ViewV5\AppPage\HYGL\HYSLIST.html" />
     <Content Include="ViewV5\AppPage\HYGL\HYSVIEW.html" />
     <Content Include="ViewV5\AppPage\SEAT\SEAT_2.html" />
-    <Content Include="ViewV5\AppPage\SEAT\SEAT.html" />
     <Content Include="ViewV5\AppPage\YCGL\CLGL.html" />
     <Content Include="ViewV5\AppPage\YCGL\CLGLLIST.html" />
     <Content Include="ViewV5\AppPage\YCGL\CLGLVIEW.html" />
@@ -245,9 +244,9 @@
     <Content Include="View_Mobile\UI\HyDetail.html" />
     <Content Include="View_Mobile\UI\UI_Login.html" />
     <Content Include="View_Mobile\UI\UI_YCGL_LIST.html" />
-    <Content Include="WX\Satisfaction.html" />
-    <Content Include="WX\HD_Add.html" />
-    <Content Include="WX\Group_member.html" />
+    <Content Include="WX\zlxz\Satisfaction.html" />
+    <Content Include="WX\zlxz\HD_Add.html" />
+    <Content Include="WX\zlxz\Group_member.html" />
     <Content Include="WX\JS\chart.js" />
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\bin\LitJSON.dll" />
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\demo.aspx" />
@@ -447,28 +446,27 @@
     <Content Include="WX\JS\kindeditor-4.1.4\themes\qq\editor.gif" />
     <Content Include="WX\JS\kindeditor-4.1.4\themes\qq\qq.css" />
     <Content Include="WX\JS\kindeditor-4.1.4\themes\simple\simple.css" />
-    <Content Include="WX\Calculation.html" />
+    <Content Include="WX\zlxz\Calculation.html" />
     <Content Include="WX\message\box.html" />
-    <Content Include="WX\RY_Add.html" />
+    <Content Include="WX\zlxz\RY_Add.html" />
     <Content Include="WX\CSS\fonts\icomoon.svg" />
     <Content Include="WX\CSS\wxstyle.css" />
-    <Content Include="WX\default.aspx" />
+    <Content Include="WX\zlxz\default.aspx" />
     <Content Include="WX\images\plus-serch.png" />
     <Content Include="WX\images\plus-zhankai.png" />
     <Content Include="WX\images\plus-zhedie.png" />
-    <Content Include="WX\BindPhone.html" />
-    <Content Include="WX\home.html" />
-    <Content Include="WX\index_不用.html" />
+    <Content Include="WX\zlxz\BindPhone.html" />
+    <Content Include="WX\zlxz\home.html" />
     <Content Include="WX\JS\WxControl.js" />
-    <Content Include="WX\MyGroup.html" />
+    <Content Include="WX\zlxz\MyGroup.html" />
     <Content Include="WX\Me.html" />
     <Content Include="WX\FSlist.html" />
-    <Content Include="WX\NewProduct.html" />
-    <Content Include="WX\HD_List.html" />
-    <Content Include="WX\HD_Info.html" />
-    <Content Include="WX\RY_List.html" />
-    <Content Include="WX\RY_Info.html" />
-    <Content Include="WX\UploadImg.aspx" />
+    <Content Include="WX\zlxz\NewProduct.html" />
+    <Content Include="WX\zlxz\HD_List.html" />
+    <Content Include="WX\zlxz\HD_Info.html" />
+    <Content Include="WX\zlxz\RY_List.html" />
+    <Content Include="WX\zlxz\RY_Info.html" />
+    <Content Include="WX\zlxz\UploadImg.aspx" />
     <Content Include="WX\WeiXin.aspx" />
     <Content Include="WZWeb\CSS\bootstrap.css" />
     <Content Include="WZWeb\CSS\dialog.css" />
@@ -1801,18 +1799,18 @@
     <Compile Include="ToolS\YZMCode.aspx.designer.cs">
       <DependentUpon>YZMCode.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WX\default.aspx.cs">
+    <Compile Include="WX\zlxz\default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WX\default.aspx.designer.cs">
+    <Compile Include="WX\zlxz\default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WX\UploadImg.aspx.cs">
+    <Compile Include="WX\zlxz\UploadImg.aspx.cs">
       <DependentUpon>UploadImg.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WX\UploadImg.aspx.designer.cs">
+    <Compile Include="WX\zlxz\UploadImg.aspx.designer.cs">
       <DependentUpon>UploadImg.aspx</DependentUpon>
     </Compile>
     <Compile Include="WX\WeiXin.aspx.cs">
@@ -1898,10 +1896,6 @@
     <ProjectReference Include="..\QJY.API\QJY.API.csproj">
       <Project>{c165fb76-6ac0-42f8-970d-bd3f7d235d1b}</Project>
       <Name>QJY.API</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Senparc.Weixin.MP.Sample.CommonService\Senparc.Weixin.MP.Sample.CommonService.csproj">
-      <Project>{ccd291e9-16fa-4b53-b032-ebd3f659567b}</Project>
-      <Name>Senparc.Weixin.MP.Sample.CommonService</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

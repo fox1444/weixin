@@ -98,15 +98,11 @@
             inittemp: function () {
 
             },//初始化
-
             SaveData: function () {
-
                 $.getJSON("/API/VIEWAPI.ashx?ACTION=WXGL_ADDRYMODELWX&r=" + Math.random(), { P2: JSON.stringify(tempmodel.modelData.$model) }, function (r) {
                     if (r.ErrorMsg == '') {
-                        window.location = "/WX/ry_list.html?r=" + Math.random();
-
+                        window.location = "ry_list.html?r=" + Math.random();
                     }
-
                 });
             }
         });
@@ -120,13 +116,9 @@
                     }
                     if (tempmodel.IsEdit != "1") {
                         ComFunJS.winwarning("您没有权限修改");
-                        window.location = "/WX/ry_info.html?id=" + strId + "&r=" + Math.random();
+                        window.location = "ry_info.html?id=" + strId + "&r=" + Math.random();
                     }
                 })
-
-            }
-            else {
-
             }
 
             $("#fileUpload").on('change', function () {
@@ -143,7 +135,6 @@
 
                         // 循环所有要上传的图片
                         for (var i = 0; i < countFiles; i++) {
-
                             var reader = new FileReader();
                             reader.onload = function (e) {
                                 $("<img />", {

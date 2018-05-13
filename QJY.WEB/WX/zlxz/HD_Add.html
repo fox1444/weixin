@@ -87,10 +87,8 @@
 
                 $.getJSON("/API/VIEWAPI.ashx?ACTION=WXGL_ADDHUODONGMODEL&r=" + Math.random(), { P2: JSON.stringify(tempmodel.modelData.$model) }, function (r) {
                     if (r.ErrorMsg == '') {
-                        window.location = "/WX/hd_list.html?r=" + Math.random();
-
+                        window.location = "hd_list.html?r=" + Math.random();
                     }
-
                 });
             }
         });
@@ -104,13 +102,9 @@
                     }
                     if (tempmodel.IsEdit != "1") {
                         ComFunJS.winwarning("您没有权限修改");
-                        window.location = "/WX/hd_info.html?id=" + strId + "&r=" + Math.random();
+                        window.location = "hd_info.html?id=" + strId + "&r=" + Math.random();
                     }
                 })
-
-            }
-            else {
-
             }
         })
     </script>

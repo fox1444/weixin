@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.IO;
-using Senparc.Weixin.MP;
+﻿using Senparc.Weixin.MP;
 using Senparc.Weixin.MP.Entities.Request;
-using Senparc.Weixin.MP.Sample.CommonService.CustomMessageHandler;
+using System;
+using System.IO;
 
 namespace QJY.WEB.WX
 {
@@ -62,41 +56,41 @@ namespace QJY.WEB.WX
                 var maxRecordCount = 10;
 
                 //自定义MessageHandler，对微信请求的详细判断操作都在这里面。
-                var messageHandler = new CustomMessageHandler(Request.InputStream, postModel, maxRecordCount);
+                //var messageHandler = new CustomMessageHandler(Request.InputStream, postModel, maxRecordCount);
 
-                try
-                {
-                    //测试时可开启此记录，帮助跟踪数据，使用前请确保App_Data文件夹存在，且有读写权限。
-                    messageHandler.RequestDocument.Save(
-                        Server.MapPath("~/App_Data/" + DateTime.Now.Ticks + "_Request_" +
-                                       messageHandler.RequestMessage.FromUserName + ".txt"));
-                    //执行微信处理过程
-                    messageHandler.Execute();
-                    //测试时可开启，帮助跟踪数据
-                    messageHandler.ResponseDocument.Save(
-                        Server.MapPath("~/App_Data/" + DateTime.Now.Ticks + "_Response_" +
-                                       messageHandler.ResponseMessage.ToUserName + ".txt"));
-                    WriteContent(messageHandler.ResponseDocument.ToString());
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    using (TextWriter tw = new StreamWriter(Server.MapPath("~/App_Data/Error_" + DateTime.Now.Ticks + ".txt")))
-                    {
-                        tw.WriteLine(ex.Message);
-                        tw.WriteLine(ex.InnerException.Message);
-                        if (messageHandler.ResponseDocument != null)
-                        {
-                            tw.WriteLine(messageHandler.ResponseDocument.ToString());
-                        }
-                        tw.Flush();
-                        tw.Close();
-                    }
-                }
-                finally
-                {
-                    Response.End();
-                }
+                //try
+                //{
+                //    //测试时可开启此记录，帮助跟踪数据，使用前请确保App_Data文件夹存在，且有读写权限。
+                //    messageHandler.RequestDocument.Save(
+                //        Server.MapPath("~/App_Data/" + DateTime.Now.Ticks + "_Request_" +
+                //                       messageHandler.RequestMessage.FromUserName + ".txt"));
+                //    //执行微信处理过程
+                //    messageHandler.Execute();
+                //    //测试时可开启，帮助跟踪数据
+                //    messageHandler.ResponseDocument.Save(
+                //        Server.MapPath("~/App_Data/" + DateTime.Now.Ticks + "_Response_" +
+                //                       messageHandler.ResponseMessage.ToUserName + ".txt"));
+                //    WriteContent(messageHandler.ResponseDocument.ToString());
+                //    return;
+                //}
+                //catch (Exception ex)
+                //{
+                //    using (TextWriter tw = new StreamWriter(Server.MapPath("~/App_Data/Error_" + DateTime.Now.Ticks + ".txt")))
+                //    {
+                //        tw.WriteLine(ex.Message);
+                //        tw.WriteLine(ex.InnerException.Message);
+                //        if (messageHandler.ResponseDocument != null)
+                //        {
+                //            tw.WriteLine(messageHandler.ResponseDocument.ToString());
+                //        }
+                //        tw.Flush();
+                //        tw.Close();
+                //    }
+                //}
+                //finally
+                //{
+                //    Response.End();
+                //}
             }
         }
 

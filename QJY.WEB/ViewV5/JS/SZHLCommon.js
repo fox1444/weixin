@@ -1,5 +1,5 @@
 ﻿var ComFunJS = new Object({
-    yuming: "http://www.lgosoft.com",
+    yuming: "www.lstobacco.com",
     isIE: function () {
         if (!!window.ActiveXObject || "ActiveXObject" in window)
             return true;
@@ -1270,7 +1270,7 @@ $(function () {
             fn.success = success;
         }
         $.ajax({
-            url: ComFunJS.yuming + url,
+            url: url,
             data: data,
             dataType: "json",
             type: "post",
@@ -1306,7 +1306,7 @@ $(function () {
         }
         $.ajax({
             type: "post",
-            url: ComFunJS.yuming + url,
+            url: url,
             data: data,
             success: function (data, textStatus) {
                 if (data.ErrorMsg == "NOSESSIONCODE" || data.ErrorMsg == "WXTIMEOUT") {
