@@ -480,7 +480,7 @@ namespace QJY.API
             page = page == 0 ? 1 : page;
 
             int total = 0;
-            DataTable dt = new JH_Auth_UserB().GetDataPager(tableName, tableColumn, pagecount, page, " b.DeptShort,ISNULL(u.UserOrder, 1000000) asc", strWhere, ref total);
+            DataTable dt = new JH_Auth_UserB().GetDataPager(tableName, tableColumn, pagecount, page, " b.DeptShort desc,ISNULL(u.UserOrder, 1000000) asc", strWhere, ref total);
             msg.Result = dt;
 
             msg.Result1 = Math.Ceiling(total * 1.0 / 8);
