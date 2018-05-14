@@ -655,20 +655,30 @@ namespace QJY.API
         }
         public static void SetCookie(string key, string value)
         {
-            HttpContext.Current.Response.Cookies.Remove(key);
-            HttpCookie cookie = new HttpCookie(key);
-            cookie.Value = value;
-            HttpContext.Current.Response.SetCookie(cookie);
+            try
+            {
+                HttpContext.Current.Response.Cookies.Remove(key);
+            }
+            catch
+            {
+
+            }
+            HttpCookie cookie = new HttpCookie(key, value);
         }
 
         public static void SetCookie(string key, string value, DateTime expires)
         {
-            HttpContext.Current.Response.Cookies.Remove(key);
-            HttpCookie cookie = new HttpCookie(key);
-            cookie.Value = value;
+            try
+            {
+                HttpContext.Current.Response.Cookies.Remove(key);
+            }
+            catch
+            {
+
+            }
+            HttpCookie cookie = new HttpCookie(key, value);
             cookie.Expires = expires;
             HttpContext.Current.Response.SetCookie(cookie);
-
         }
 
         public static string GetCookieString(string key)
@@ -686,10 +696,12 @@ namespace QJY.API
                 tmp = "";
             return tmp;
         }
+
         public static string Getszhlcode()
         {
             return GetCookieString("szhlcode");
         }
+
         public static string GetUserNameByszhlcode()
         {
             string _username = "System";
@@ -742,6 +754,7 @@ namespace QJY.API
                 return 0;
             }
         }
+
         public static void UpdateAppConfig(string ConfigName, string ConfigValue)
         {
             string _username = GetUserNameByszhlcode();
@@ -762,12 +775,24 @@ namespace QJY.API
                 new APPConfigB().Insert(model);
             }
         }
-
+        /// <summary>
+        /// 所有取AccessToken值的地方都在这里
+        /// </summary>
         public static string GetAccessToken()
         {
             APPConfig model = new APPConfigB().GetEntity(d => d.ConfigName == "AccessToken");
             if (model != null)
-                return model.ConfigValue;
+            {
+                double expires = DateTime.Now.Subtract(DateTime.Parse(model.CRDate.ToString())).TotalSeconds;
+                if (expires > 6000)
+                {
+                    return new WXFWHelp().GetToken();
+                }
+                else
+                {
+                    return model.ConfigValue;
+                }
+            }
             else
                 return "";
         }
@@ -775,8 +800,6 @@ namespace QJY.API
         /// <summary>
         /// 获取数字验证码
         /// </summary>
-        /// <param name="codenum"></param>
-        /// <returns></returns>
         public static string numcode(int codenum)
         {
             string Vchar = "0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9";
@@ -803,8 +826,6 @@ namespace QJY.API
         /// <summary>
         /// 登录验证码
         /// </summary>
-        /// <param name="codenum"></param>
-        /// <returns></returns>
         public static string yzmcode(int codenum)
         {
             string Vchar = "0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,W,X,Y,Z";
@@ -828,6 +849,7 @@ namespace QJY.API
             }
             return identifycode;
         }
+
         public static string getIPAddress()
         {
             string result = "";
@@ -876,6 +898,7 @@ namespace QJY.API
             return result;
 
         }
+
         private static bool IsIPAddress(string str1)
         {
             if (str1 == null || str1 == string.Empty || str1.Length < 7 || str1.Length > 15) return false;
@@ -885,7 +908,6 @@ namespace QJY.API
             Regex regex = new Regex(regformat, RegexOptions.IgnoreCase);
             return regex.IsMatch(str1);
         }
-
 
         public static string getIpAddr(string ip = "")
         {
@@ -1033,6 +1055,7 @@ namespace QJY.API
 
             return json;
         }
+
         public class IMPORTYZ
         {
             public string Name { get; set; }
@@ -1041,7 +1064,6 @@ namespace QJY.API
             public string IsRepeat { get; set; }
             public string IsExist { get; set; }
         }
-
 
         public string ExportToExcel(string Name, DataTable dt)
         {
@@ -1216,8 +1238,6 @@ namespace QJY.API
             }
             return ReturnValue;
         }
-
-
 
         public string checkconetst(HttpContext context)
         {
