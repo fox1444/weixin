@@ -20,12 +20,34 @@ namespace QJY.API
 {
     public class WXFWHelp
     {
-
-
         public WXFWHelp()
         {
         }
-
+        /// <summary>
+        /// Global中定时更新AccessToken
+        /// </summary>
+        public static void UpdateTokenByTimer()
+        {
+            string strIp = CommonHelp.getIP(HttpContext.Current);
+            try
+            {
+                string acc = GetTokenAsync(true);
+                if (acc.Length > 0)
+                {
+                }
+                else
+                {
+                    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为空", "Global.asax", "System", HttpContext.Current.Request.Url.Host.ToString(), 0, strIp);
+                }
+            }
+            catch (Exception ex)
+            {
+                new JH_Auth_LogB().InsertLog("Application_Start", "更新Access错误" + ex.ToString(), "Global.asax", "System", HttpContext.Current.Request.Url.Host.ToString(), 0, strIp);
+            }
+        }
+        /// <summary>
+        /// 立即更新AccessToken
+        /// </summary>
         public string GetToken()
         {
             AccessTokenResult r = CommonApi.GetToken(CommonHelp.AppConfig("AppId"), CommonHelp.AppConfig("AppSecret"), "client_credential");
@@ -39,8 +61,11 @@ namespace QJY.API
             }
             return accesstoken;
         }
-
-        public string GetTokenAsync(bool getNewToken = false)
+        /// <summary>
+        /// 异步更新AccessToken
+        /// </summary>
+        /// <param name="getNewToken"></param>
+        public static string GetTokenAsync(bool getNewToken = false)
         {
             //AccessTokenResult r = CommonApi.GetToken(Qyinfo.corpId, Qyinfo.corpSecret, "client_credential");
             string strIp = CommonHelp.getIP(HttpContext.Current);
@@ -72,8 +97,6 @@ namespace QJY.API
             }
             return accesstoken;
         }
-
-
         //从公众号中进入获取用户信息并更新数据库中账号
         public static WX_User GetWXUserInfo(string _code)
         {
@@ -90,13 +113,16 @@ namespace QJY.API
 
             return null;
         }
-
+        /// <summary>
+        /// 根据公众号openid获取用户信息
+        /// </summary>
         public static UserInfoJson GetUserInfoByOpenid(string openid)
         {
             return UserApi.Info(CommonHelp.GetAccessToken(), openid);
         }
-
-        //直接更新本地数据库中账号      
+        /// <summary>
+        /// 直接更新本地数据库中账号 
+        /// </summary>
         public static WX_User GetUserInfoByOpenidWithUpdateLocal(string openid, OAuthAccessTokenResult _accresstoken, string _code)
         {
             UserInfoJson u = GetUserInfoByOpenid(openid);
@@ -108,7 +134,9 @@ namespace QJY.API
             }
             return wxuser;
         }
-
+        /// <summary>
+        /// 更新本地数据库
+        /// </summary>
         public static WX_User UpdateLocalUserInfo(UserInfoJson u, OAuthAccessTokenResult _accresstoken, string _code)
         {
             string _accesstokenstr = "";

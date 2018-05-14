@@ -1731,11 +1731,10 @@ var ComFunJS = {
                     //ComFunJS.winwarning("未登录或登录已过期");
                     var pagehistory = window.location.href;
                     ComFunJS.setCookieMinute("pagehistory", pagehistory, 10);
-                    window.location.href = '/wx/default.aspx?commit=reauthrise';
+                    window.location.href = '/wx/zlxz/default.aspx?commit=reauthrise';
                 }
                 else if (data.ErrorMsg != "") {
                     ComFunJS.winwarning(data.ErrorMsg);
-                    //alert(data.ErrorMsg + Model.Result);
                 }
             } catch (e) {
                 ComFunJS.closeAll()
@@ -1746,7 +1745,6 @@ var ComFunJS = {
         })
         $(document).on('ajaxError', function (event, xhr, options, exc) {
             ComFunJS.winwarning("请求失败！");
-            //alert(data.ErrorMsg + Model.Result);
         })
     },
 }

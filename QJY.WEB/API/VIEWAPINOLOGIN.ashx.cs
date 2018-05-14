@@ -79,18 +79,12 @@ namespace QJY.WEB
                         //}
                         if (bl)
                         {
-
                             var container = ServiceContainerV.Current().Resolve<IWsService>(acs[0].ToUpper());
-
                             Model.Action = Model.Action.Substring(acs[0].Length + 1);
                             container.ProcessRequest(context, ref Model, P1.TrimEnd(), P2.TrimEnd(), new JH_Auth_UserB.UserInfo());
-
-
-
                         }
                         #endregion
                     }
-
                 }
                 catch (Exception ex)
                 {

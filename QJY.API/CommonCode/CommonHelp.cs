@@ -663,9 +663,7 @@ namespace QJY.API
             {
 
             }
-            HttpCookie cookie = new HttpCookie(key);
-            cookie.Value = value;
-            HttpContext.Current.Response.SetCookie(cookie);
+            HttpCookie cookie = new HttpCookie(key, value);
         }
 
         public static void SetCookie(string key, string value, DateTime expires)
@@ -678,8 +676,7 @@ namespace QJY.API
             {
 
             }
-            HttpCookie cookie = new HttpCookie(key);
-            cookie.Value = value;
+            HttpCookie cookie = new HttpCookie(key, value);
             cookie.Expires = expires;
             HttpContext.Current.Response.SetCookie(cookie);
         }
@@ -778,7 +775,9 @@ namespace QJY.API
                 new APPConfigB().Insert(model);
             }
         }
-
+        /// <summary>
+        /// 所有取AccessToken值的地方都在这里
+        /// </summary>
         public static string GetAccessToken()
         {
             APPConfig model = new APPConfigB().GetEntity(d => d.ConfigName == "AccessToken");
@@ -801,8 +800,6 @@ namespace QJY.API
         /// <summary>
         /// 获取数字验证码
         /// </summary>
-        /// <param name="codenum"></param>
-        /// <returns></returns>
         public static string numcode(int codenum)
         {
             string Vchar = "0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9";
@@ -829,8 +826,6 @@ namespace QJY.API
         /// <summary>
         /// 登录验证码
         /// </summary>
-        /// <param name="codenum"></param>
-        /// <returns></returns>
         public static string yzmcode(int codenum)
         {
             string Vchar = "0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,W,X,Y,Z";
