@@ -27,7 +27,7 @@ namespace QJY.WEB.WX
             //重新跳转授权页面
             if (commit == "reauthrise")
             {
-                string reauthriseurl = CommonHelp.AppConfig("Host") + "/wx/default.aspx";
+                string reauthriseurl = CommonHelp.AppConfig("Host") + "/wx/zlxz/default.aspx";
                 if (reauthriseurl.Trim().Length > 0)
                 {
                     string authurl = OAuthApi.GetAuthorizeUrl(CommonHelp.AppConfig("AppId"), reauthriseurl, "reload", OAuthScope.snsapi_userinfo);
@@ -56,7 +56,7 @@ namespace QJY.WEB.WX
                     else
                     {
                         CommonHelp.SetCookie("openid", u.Openid, expires);
-                        Response.Redirect("/WX/BindPhone.html");
+                        Response.Redirect("/WX/zlxz/BindPhone.html");
                     }
                 //}
             }
@@ -67,7 +67,7 @@ namespace QJY.WEB.WX
             }
             else
             {
-                Response.Redirect("/WX/home.html");
+                Response.Redirect("/WX/zlxz/home.html");
             }
 
         }

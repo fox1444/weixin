@@ -429,18 +429,11 @@ namespace QJY.API
             DataTable dtUser = new JH_Auth_UserB().GetUserListbyBranch(deptCode, P2, UserInfo.QYinfo.ComId);
             msg.Result = dtUser;
         }
-
         /// <summary>
         /// 根据用户名串获取部门人员
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="strUserName"></param>
         public void GETUSERBYUSERNAMES(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-
             DataTable dtUser = new JH_Auth_UserB().GetUserListbyUserNames(P1, P2);
             msg.Result = dtUser;
         }
@@ -487,7 +480,7 @@ namespace QJY.API
             page = page == 0 ? 1 : page;
 
             int total = 0;
-            DataTable dt = new JH_Auth_UserB().GetDataPager(tableName, tableColumn, pagecount, page, " b.DeptShort,ISNULL(u.UserOrder, 1000000) asc", strWhere, ref total);
+            DataTable dt = new JH_Auth_UserB().GetDataPager(tableName, tableColumn, pagecount, page, " b.DeptShort desc,ISNULL(u.UserOrder, 1000000) asc", strWhere, ref total);
             msg.Result = dt;
 
             msg.Result1 = Math.Ceiling(total * 1.0 / 8);

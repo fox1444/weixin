@@ -116,7 +116,7 @@
             Name: "荣誉室",
             IsZuZhang: "",
             gohome: function () {
-                window.location = "/WX/home.html?r=" + Math.random();
+                window.location = "home.html?r=" + Math.random();
             },
             viewadd: function () {
                 window.location = "Ry_add.html?r=" + Math.random();
@@ -144,10 +144,8 @@
                         model.page += 1;
                     }
                 })
-
             }
         })
-
 
         avalon.ready(function () {
             $.init();
@@ -162,8 +160,6 @@
                 return 0;
             }
         }
-
     </script>
-
 </body>
 </html>

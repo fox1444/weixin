@@ -17,9 +17,7 @@
       <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
     <style>
-
         body {
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -169,7 +167,7 @@
         .room-block-hold {
             overflow: scroll;
             width: 100%;
-            height: 480px;            
+            height: 480px;
         }
 
         .chairmen-wrapper {
@@ -204,28 +202,17 @@
             display: block;
             height: 15px;
             overflow: hidden;
-            font-size:10px;
+            font-size: 10px;
         }
+
         .navbar-fixed-bottom {
-        padding:10px;
+            padding: 10px;
         }
     </style>
 </head>
 <body ms-controller="UserSelect">
     <div class="container-fluid " style="margin: 10px" id="dvContent">
         <div style="width: 700px; position: absolute;">
-            <!--<ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">组织机构</a></li>
-                <li role="presentation"><a href="#rolepanel" aria-controls="rolepanel" role="tab" data-toggle="tab">所有角色</a></li>
-            </ul>
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active fade in" id="home" style="padding-top: 20px">
-                    <ul id="tree" class="ztree"></ul>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="rolepanel">
-                    <ul id="treeRole" class="ztree"></ul>
-                </div>
-            </div>-->
             <div class="room-block-hold">
                 <div class="chairmen-wrapper">
                     <div class="room-chairmen">
@@ -255,13 +242,6 @@
                     </div>
                 </div>
             </div>
-            <!--<div class="formtitle" style="margin-bottom: 5px;"><span>{{selBM}}({{QueryUsers.size()}})<font ms-if="isSignle=='N'"><i class="fa fa-square  isel selall" ms-click="SelUserAll(this)" style="margin-left:10px"></i>全选</font></span></div>
-            <div class="panel-body" style="padding: 0; min-height: 40px">
-                <div class="pCard float-shadow" ms-repeat-user="QueryUsers" ms-click="SelUser(user,this)" style="padding-right: 10px; min-width: 80px">
-                    <span class="usersel"><i class="fa isel fa-check-square " ms-if="user.issel"></i></span>
-                    <div class="pName" style="padding-top: 5px">{{user.UserRealName}}</div>
-                </div>
-            </div>-->
         </div>
     </div>
     <div class=" navbar-fixed-bottom " style="background-color: #F8F8F8; width: 100%;">
@@ -295,110 +275,31 @@
             isAll: ComFunJS.getQueryString("isall"), //是否加载所有人，N:根据当前用户所在部门加载，Y:加载所有人员
             selBM: "",//已选择部门
             SelUsers: [],//已选择用户
-            QueryUsers: [],//查询用户结果
             render: function () {
             },
             inittemp: function () {
                 //编辑加载数据
-
                 $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETHYGLMODEL', { P1: model.HyId }, function (resultData) {
                     if (resultData.ErrorMsg == "") {
                         model.modelData = resultData.Result[0];
                         model.getUserTree();
-                       
                     }
                 })
             },
             getUserTree: function () {
-                var setting = {
-                    data: {
-                        simpleData: {
-                            enable: true,
-                            idKey: "id",
-                            pIdKey: "pId",
-                            rootPId: 0
-                        }
-                    },
-                    view: {
-                        showLine: false
-                    },
-                    callback: {
-
-                    }
-                };
-
-
-                $.getJSON("/API/VIEWAPI.ashx", { "Action": "XTGL_GETALLBMUSERLISTNEW", P1: model.isAll }, function (msg) {
-                    zTreeObj = $.fn.zTree.init($("#tree"), setting, eval(msg.Result));
-                    node = zTreeObj.getNodeByParam("pId", 0, null);
-                    if (node) {
-                        zTreeObj.selectNode(node);
-                        model.selBM = node.name;
-                        $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETYUSERBYCODE', { P1: node.id }, function (resultData) {
-                            if (resultData.ErrorMsg == "") {
-                                resultData.Result.forEach(function (el) {
-                                    el.issel = false;
-                                    $.each(model.modelData.CYUser.split(','), function (i, n) {
-                                        if (n == el.UserName) {
-                                            el.issel = true;
-                                            model.SelUsers.push(el);
-                                        }
-                                    });
-                                })
-                                model.QueryUsers = resultData.Result;
-                                model.LoadRoom();
-                            }
+                $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETUSERBYUSERNAMES', { P1: model.modelData.CYUser }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        resultData.Result.forEach(function (el) {
+                            if (el.UserName != '') {
+                                model.SelUsers.push(el);
+                            };
                         })
+                        model.LoadRoom();
+                        model.InputBlur();
                     }
-                });
-
-            },
-            SaveUserGroup: function () {
-                var UserNames = "";
-                model.SelUsers.forEach(function (item) {
-                    UserNames += item.UserName + ",";
-                })
-                $.post("/API/VIEWAPI.ashx", { Action: "XTGL_ADDUSERGROUP", P1: model.GroupName, P2: UserNames.substring(0, UserNames.length - 1), "DataType": "USERGROUP" }, function (jsonresult) {
-                    if ($.trim(jsonresult.ErrorMsg) == "") {
-                        model.UserGroupData.push(jsonresult.Result);
-                        $('#UserGroupModal').modal('hide');
-                        top.ComFunJS.winsuccess("操作成功");
-                    }
-                })
-            },
-            GetUserList: function (item, dom) {
-                zTreeObjRole.cancelSelectedNode();
-                zTreeObj.cancelSelectedNode();
-                $(".usergroup  li a").removeClass("curSelectedNode");
-                $(dom).find("a").addClass("curSelectedNode");
-                $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETUSERLISTBYGROUP', { P1: item.ID }, function (resultData) {
-                    resultData.Result.forEach(function (el) {
-                        el.issel = false;
-                        model.SelUsers.$model.forEach(function (user) {
-                            if (el.UserName == user.UserName) {
-                                el.issel = true;
-                            }
-                        })
-                    })
-                    model.QueryUsers = resultData.Result;
-
-                })
-            },
-            DelUserGroup: function (item, event) {
-                if (event.stopPropagation) {
-                    event.stopPropagation();
-                }
-                top.ComFunJS.winconfirm("确认要删除分组“" + item.DataContent + "”吗？", function () {
-                    $.post("/API/VIEWAPI.ashx", { Action: "XTGL_DELUSERGROUP", P1: item.ID }, function (jsonresult) {
-                        if ($.trim(jsonresult.ErrorMsg) == "") {
-                            model.UserGroupData.remove(item);
-                            top.ComFunJS.winsuccess("删除成功");
-                        }
-                    })
                 })
             },
             LoadRoom: function () {
-
                 if (model.modelData.RoomWidth && model.modelData.RoomLength) {
                     var rw = parseInt(model.modelData.RoomWidth);
                     var rl = parseInt(model.modelData.RoomLength);
@@ -427,8 +328,6 @@
                     $('.chairmen-wrapper').css('width', wpx);
                     model.LoadSelectZcb();
                 }
-
-               
             },
             LoadSelectZcb: function () {
                 if (model.modelData.ZCB.trim() != "") {
@@ -453,6 +352,7 @@
                     focus: function () {
                         model.lengthRecord = $(this).parent().children("input").eq(0).val();
                         model.widthRecord = $(this).parent().children("input").eq(1).val();
+                        $('.seat_' + model.lengthRecord + '_' + model.widthRecord).css('background','blue').css('color','#fff');
                     },
                     blur: function () {
                         model.BindInputData(this);
@@ -497,12 +397,11 @@
                 }
             },
             ReBindInputData: function () {
-
                 //清除之前的座位
                 $('.seat_info').each(function (index, obj) {
                     $(obj).html('');
                     $(obj).parent().children("span").eq(2).html('');
-                    $(obj).parent().css("background", "");
+                    $(obj).parent().css("background", "").css('color', '#333');
                 });
                 $(".pWidthLength").each(function (index, obj) {
 
@@ -516,7 +415,7 @@
                     if (_cs.length > 0) {
                         _cs.html(_sname);
                         _csid.html(_sid);
-                        $('.seat_' + _lp + '_' + _wp).css("background", "pink");
+                        $('.seat_' + _lp + '_' + _wp).css("background", "pink").css('color','#333');
                     }
                 });
             },
@@ -537,8 +436,6 @@
             modelData: { "ID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "" }
         });
 
-
-
         function getZCB() {
             var zcb = [];
             $(".pWidthLength").each(function (index, obj) {
@@ -557,10 +454,8 @@
 
         }
 
-
         avalon.ready(function () {
             model.inittemp();
-            setTimeout(" model.InputBlur()", 500);
         });
 
     </script>

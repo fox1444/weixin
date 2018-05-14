@@ -122,7 +122,6 @@ namespace QJY.API
         /// <returns></returns>
         public DataTable GetUserListbyUserNames(string _usernames, string strFilter)
         {
-
             string strSQL = "select * from JH_Auth_User where userName in (select items from dbo.split('" + _usernames + "', ','))";
             DataTable dt = new JH_Auth_UserB().GetDTByCommand(strSQL + " ORDER by UserRealName");
             return dt;
