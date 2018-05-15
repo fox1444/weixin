@@ -18,10 +18,11 @@ using Senparc.Weixin.QY.AdvancedAPIs.Chat;
 
 namespace QJY.API
 {
+    /// <summary>
+    /// 微信企业号服务类
+    /// </summary>
     public class WXHelp
     {
-
-
         public JH_Auth_QY Qyinfo = null;
 
         public WXHelp(JH_Auth_QY QY)
@@ -29,7 +30,6 @@ namespace QJY.API
             //获取企业信息
             Qyinfo = QY;
         }
-
 
         public string GetToken(string appID = "")
         {
@@ -439,10 +439,6 @@ namespace QJY.API
         }
         #endregion
         
-
-
-
-
         #region 菜单相关
         public QyJsonResult WX_WxCreateMenuNew(int agentId, string ModelCode, ref List<Senparc.Weixin.QY.Entities.Menu.BaseButton> lm)
         {
@@ -606,8 +602,6 @@ namespace QJY.API
         }
         #endregion
 
-
-
         public string GetMediaFile(string mediaId, string strType = ".jpg")
         {
             string path = HttpContext.Current.Server.MapPath("\\temp\\");
@@ -712,12 +706,6 @@ namespace QJY.API
         public string expires_in { get; set; }
 
     }
-
-
-
-
-
-
 
     #region 微信扫码登录所需的类
     public class GetProviderToken

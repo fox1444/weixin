@@ -29,9 +29,6 @@
             地址：{{modelData.Name}}
         </div>
         <div class="default_block">
-            <!--<div class="ewrcode">
-                <img ms-attr-src="{{tempmodel.EWMcode}}" />
-            </div>-->
             <div class="infomation">
                 尊敬的<span style="color:#ff4700">{{tempmodel.currentuser.UserRealName}}</span>，欢迎您参加本次会议
             </div>
@@ -69,13 +66,12 @@
             isjl: "",
             Name: "",
             wximg: "",
-            EWMcode: "",
             phonenumber: '',
             phonenumbererrorMsg: '',
             dataid: ComFunJS.getQueryString('id'),
             RoomID: ComFunJS.getQueryString("rid"),
             view_detail: function () {
-                var pnum = ComFunJS.getCookie("input_phonenumber");
+                var pnum = ComFunJS.getCookie("userphonenumber");
                 if (pnum) {
                     $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELWITHPHONE', { P1: tempmodel.dataid, P2: pnum }, function (resultData) {
                         if (resultData.ErrorMsg == "") {
@@ -116,9 +112,8 @@
                         if (resultData.Result[0]) {
                             tempmodel.phonebackData = resultData.Result[0];
                             //查询有结果返回
-                            ComFunJS.setCookieMinute("input_phonenumber", tempmodel.phonenumber, 60);
-
-                            var pn = ComFunJS.getCookie("input_phonenumber");
+                            ComFunJS.setCookieMinute("userphonenumber", tempmodel.phonenumber, 60);
+                            var pn = tempmodel.phonenumber;
                             if (pn && pn != null && pn != undefined && pn != '') {
                                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETUSERBYPHONENUMBER&r=" + Math.random(), { P1: pn }, function (r) {
                                     if (r.ErrorMsg == "") {
@@ -129,7 +124,6 @@
                             $('.input_block').hide();
                             $('.default_block').show();
 
-                            //location.href = "/View_Mobile/UI/HyDetail_step.html?id=" + tempmodel.dataid + "&r=" + Math.random();
                         }
                         else {
                             $('.input_block').show();
@@ -143,8 +137,6 @@
 
                     }
                 })
-
-
             },
             inittemp: function (strId) {
                 strId = tempmodel.dataid;
@@ -154,7 +146,7 @@
                             tempmodel.modelData = resultData.Result[0];
                             tempmodel.tpData = resultData.Result1;
 
-                            var pn = ComFunJS.getCookie("input_phonenumber");
+                            var pn = ComFunJS.getCookie("userphonenumber");
                             if (pn && pn != null && pn != undefined && pn != '') {
                                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETUSERBYPHONENUMBER&r=" + Math.random(), { P1: pn }, function (r) {
                                     if (r.ErrorMsg == "") {
@@ -164,8 +156,7 @@
                                     }
                                 });
                             }
-                            else
-                            {
+                            else {
                                 $('.input_block').show();
                                 $('.default_block').hide();
                             }
@@ -178,7 +169,6 @@
                                     tempmodel.isjl = "1";
                                 }
                             }
-                            tempmodel.EWMcode = "http://qr.liantu.com/api.php?text=" + ComFunJS.yuming + "/View_Mobile/UI/HyDetail_start.html?id=" + tempmodel.modelData.ID + "&bg=ffffff&fg=007457&w=600&logo=" + ComFunJS.yuming + "/View_Mobile/images/tobacco-logo-icon.png";
                             setTimeout(" ComFunJS.initForm()", 500)
                         }
                     })

@@ -6,7 +6,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>小组之家</title>
+    <title>我的群</title>
     <link href="/View_Mobile/Frozenui1.3/css/frozen.css?ver=20171228" rel="stylesheet" />
     <link rel="stylesheet" href="/View_Mobile/css/sm.min.css">
     <link rel="stylesheet" href="/WX/CSS/wxstyle.css">
@@ -37,27 +37,14 @@
         }
     </style>
 </head>
-<body ms-controller="Home">
+<body ms-controller="BGXT">
     <div class="page page-current " id="pageindex1">
         <div class="content native-scroll">
-            <div class="list-block contacts-block" style="margin:0px;" ms-if="model.jianduGroups.length>0">
+            <div class="list-block contacts-block" style="margin:0px;" ms-if="model.crowdName!=''">
                 <div class="list-group">
-                    <div class="item-content" ms-repeat-el="jianduGroups">
-                        <div class="item-inner">
-                            <div class="item-title" ms-click="gogroup(el.XiaoZu)">{{el.XiaoZu}}</div>
-                            <div class="img-icon">
-                                <span class="chartbox" ms-click="gochart(el.XiaoZu)"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="list-block contacts-block" style="margin:0px;" ms-if="model.xzName!=''">
-                <div class="list-group">
-                    <div class="list-group-title">{{model.xzName}}<span class="chartbox" ms-click="gochart(model.xzName)"></span></div>
+                    <div class="list-group-title">{{model.chartGroupName}}<span class="chartbox" ms-click="gochart(model.chartGroupName)"></span></div>
                     <ul>
-                        <li ms-repeat-el="xzList">
+                        <li ms-repeat-el="userList">
                             <div class="item-content">
                                 <div class="item-inner">
                                     <div class="item-title">
@@ -66,14 +53,11 @@
                                             <span><a ms-attr-href="tel:{{el.mobphone}}" external><i class="fa  fa-mobile-phone"></i>{{el.mobphone}}</a></span>
                                         </div>
                                     </div>
-                                    <div>
+                                    <!--<div>
                                         <span class="" ms-if="el.UserGW">
                                             {{el.UserGW}}
                                         </span>
-                                        <!--<span class="" ms-if="el.IsZuZhang">
-                                            组长
-                                        </span>-->
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </li>
@@ -84,43 +68,18 @@
         <footer class="footer-nav-group">
             <ul>
                 <li>
-                    <div ms-on-click="showsubpage(this)">
+                    <div ms-on-click="gopage('/wx/bgxt/index.html?r='+ Math.random())" ms-on-blur="onblur(this)">
                         政策法规
-                        <ul class="sub-nav">
-                            <li ms-on-click="gopage('/View_Mobile/UI/UI_XXFB_LIST.html?id=612&name=法律&r='+ Math.random())">
-                                法律
-                            </li>
-                            <li ms-on-click="gopage('/View_Mobile/UI/UI_XXFB_LIST.html?id=613&name=营销&r='+ Math.random())">
-                                营销
-                            </li>
-                        </ul>
                     </div>
                 </li>
                 <li>
-                    <div ms-on-click="gopage('/wx/zlxz/newproduct.html?id=614&name=新品&r='+ Math.random())" ms-on-blur="onblur(this)">
-                        新品推荐
+                    <div ms-on-click="gopage('/wx/bgxt/hy_list.html?r='+ Math.random())" ms-on-blur="onblur(this)">
+                        会议系统
                     </div>
                 </li>
                 <li>
-                    <div ms-on-click="showsubpage(this)" ms-on-blur="onblur(this)">
-                        小组之家
-                        <ul class="sub-nav">
-                            <li ms-on-click="gopage('/WX/zlxz/home.html')">
-                                会议室
-                            </li>
-                            <li ms-on-click="gopage('/WX/zlxz/Ry_list.html?r='+ Math.random())">
-                                荣誉室
-                            </li>
-                            <li ms-on-click="gopage('/WX/zlxz/hd_list.html?r='+ Math.random())">
-                                活动室
-                            </li>
-                            <li ms-on-click="gopage('/WX/zlxz/Satisfaction.html?r='+ Math.random())">
-                                满意度调查
-                            </li>
-                            <li ms-on-click="gopage('/WX/zlxz/Calculation.html?r='+ Math.random())">
-                                紧俏烟计算器
-                            </li>
-                        </ul>
+                    <div ms-on-click="gopage('/wx/bgxt/index.html?r='+ Math.random())" ms-on-blur="onblur(this)">
+                        我的群
                     </div>
                 </li>
             </ul>
@@ -134,11 +93,11 @@
     <script src="/wx/JS/WxControl.js"></script>
     <script>
         var model = avalon.define({
-            $id: "Home",
+            $id: "BGXT",
             userData: {},
-            jianduGroups: { "XiaoZu": "" },
-            xzList: [],
-            xzName: "",
+            userList: [],
+            crowdName: "",
+            chartGroupName: "",
             gogroup: function (g) {
                 window.location = "/WX/zlxz/group_member.html?g=" + g + "&r=" + Math.random();
             },
@@ -146,37 +105,18 @@
                 window.location = "/WX/Message/box.html?g=" + g + "&r=" + Math.random();
             },
             inittemp: function () {
-                //var pn = ComFunJS.getCookie("szhlcode");
-                //alert(pn);
                 $.getJSON("/API/VIEWAPI.ashx?Action=XTGL_GETUSERINFO&r=" + Math.random(), {}, function (r) {
                     if (r.ErrorMsg == "") {
                         model.userData = r.Result;
                     }
                 })
 
-                $.getJSON("/API/VIEWAPI.ashx?Action=WXGL_GETMYJIANDUGROUPTEAM&r=" + Math.random(), {}, function (r) {
+                $.getJSON("/API/VIEWAPI.ashx?Action=WXGL_GETMYCROWD&r=" + Math.random(), {}, function (r) {
                     model.loading = false;
                     if (r.ErrorMsg == "") {
-                        model.jianduGroups = r.Result;
-                    }
-                })
-
-                $.getJSON("/API/VIEWAPI.ashx?Action=WXGL_GETMYGROUPTEAM&r=" + Math.random(), {}, function (r) {
-                    model.loading = false;
-                    if (r.ErrorMsg == "") {
-                        model.xzList.pushArray(r.Result);
-                        model.xzName = r.Result1;
-                        //判断是否加载完毕
-                        //if (r.Result.length < model.pagecount) {
-                        //    // 加载完毕，则注销无限加载事件，以防不必要的加载
-                        //    $.detachInfiniteScroll($('.infinite-scroll'));
-                        //    // 删除加载提示符
-                        //    $('.infinite-scroll-preloader').remove();
-                        //    return;
-                        //}
-
-                        //$.refreshScroller();
-                        //model.page += 1;
+                        model.userList.pushArray(r.Result);
+                        model.crowdName = r.Result1;
+                        model.chartGroupName = r.Result2;
                     }
                 })
             },

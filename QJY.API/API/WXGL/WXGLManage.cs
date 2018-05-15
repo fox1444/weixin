@@ -70,23 +70,28 @@ namespace QJY.API
             msg.Result = dt;
             msg.Result1 = total;
         }
+        /// <summary>
+        /// 获取我所在的自律小组信息
+        /// </summary>
         public void GETMYGROUPTEAM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             //我的自律小组名称
-            JH_Auth_User ext = new JH_Auth_UserB().GetEntity(d => d.ID == UserInfo.User.ID);
+            JH_Auth_User thisuser = new JH_Auth_UserB().GetEntity(d => d.ID == UserInfo.User.ID);
 
             string viewname = "select U.* , wu.nickName from JH_Auth_User U LEFT JOIN WX_User wu on u.WxOpenid = wu.openid  " +
-                "where u.ZiLvXiaoZu is not null and u.ZiLvXiaoZu <> '' and  u.ZiLvXiaoZu = '" + ext.ZiLvXiaoZu + "' "
-                + "or  ('" + ext.ZiLvXiaoZu + "' like (select Items from dbo.Split(REPLACE(u.jianduxiaozu,' ',''),';') where items='" + ext.ZiLvXiaoZu + "'))" 
+                "where u.ZiLvXiaoZu is not null and u.ZiLvXiaoZu <> '' and  u.ZiLvXiaoZu = '" + thisuser.ZiLvXiaoZu + "' "
+                + "or  ('" + thisuser.ZiLvXiaoZu + "' like (select Items from dbo.Split(REPLACE(u.jianduxiaozu,' ',''),';') where items='" + thisuser.ZiLvXiaoZu + "'))"
                 + " order by u.UserOrder, u.IsZuZhang desc, u.UserRealName asc";
 
             // DataTable dt = new JH_Auth_UserB().GetDataPager(viewname, " U.* , wu.nickName, ext.ExtendDataValue as XiaoZu, ext2.ExtendDataValue as IsZuZhang ", 999999, 1, " u.UserRealName asc ", strWhere, ref recordCount);
             DataTable dt = new JH_Auth_UserB().GetDTByCommand(viewname);
 
             msg.Result = dt;
-            msg.Result1 = ext.ZiLvXiaoZu;
+            msg.Result1 = thisuser.ZiLvXiaoZu;
         }
-
+        /// <summary>
+        /// 根据小组名称获取自律小组信息，包含我所监督的小组
+        /// </summary>
         public void GETGROUPTEAMBYCODE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             P1 = P1.Trim();
@@ -101,21 +106,21 @@ namespace QJY.API
 
             msg.Result = dt;
         }
-
-        
+        /// <summary>
+        /// 获取我所监督的自律小组列表
+        /// </summary>
         public void GETMYJIANDUGROUPTEAM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             //我的自律小组名称
-            JH_Auth_User ext = new JH_Auth_UserB().GetEntity(d => d.ID == UserInfo.User.ID);
-
-            string viewname = "select Items as XiaoZu from dbo.Split(REPLACE('" + ext.JianDuXiaoZu + "',' ',''),';') ";
-
+            JH_Auth_User thisuser = new JH_Auth_UserB().GetEntity(d => d.ID == UserInfo.User.ID);
+            string viewname = "select Items as XiaoZu from dbo.Split(REPLACE('" + thisuser.JianDuXiaoZu + "',' ',''),';') ";
             DataTable dt = new JH_Auth_UserB().GetDTByCommand(viewname);
-
             msg.Result = dt;
-            msg.Result1 = ext.ZiLvXiaoZu;
+            msg.Result1 = thisuser.ZiLvXiaoZu;
         }
-
+        /// <summary>
+        /// 绑定手机号和姓名
+        /// </summary>
         public void BINDPHONE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             JH_Auth_User j = JsonConvert.DeserializeObject<JH_Auth_User>(P1);
@@ -124,12 +129,12 @@ namespace QJY.API
                 msg.ErrorMsg = "绑定失败";
                 return;
             }
-            if (string.IsNullOrWhiteSpace(j.UserRealName))
+            if (string.IsNullOrWhiteSpace(j.UserRealName.Trim()))
             {
                 msg.ErrorMsg = "姓名不能为空";
                 return;
             }
-            if (string.IsNullOrWhiteSpace(j.mobphone))
+            if (string.IsNullOrWhiteSpace(j.mobphone.Trim()))
             {
                 msg.ErrorMsg = "手机号不能为空";
                 return;
@@ -142,10 +147,9 @@ namespace QJY.API
             string _openid = CommonHelp.GetCookieString("openid");
             WX_User u = new WX_UserB().GetEntity(d => d.Openid == _openid);
             msg.Result = u;
-            DateTime expires = DateTime.Now.AddMinutes(60);
             if (u != null)
             {
-                JH_Auth_User localuser = new JH_Auth_UserB().GetEntity(d => d.mobphone == j.mobphone);
+                JH_Auth_User localuser = new JH_Auth_UserB().GetEntity(d => d.mobphone == j.mobphone.Trim());
                 if (localuser == null)
                 {
                     //localuser = new JH_Auth_User();
@@ -186,9 +190,8 @@ namespace QJY.API
                         localuser.logindate = DateTime.Now;
                         new JH_Auth_UserB().Update(localuser);//更新logindate  pccode不能更新
 
-                        CommonHelp.SetCookie("szhlcode", localuser.pccode, expires);
-                        CommonHelp.SetCookie("username", localuser.UserName, expires);
-
+                        WXFWHelp.UpdateCookieAfterSignIn(localuser);
+                        msg.Result = localuser;
                     }
                     else
                     {
@@ -203,6 +206,25 @@ namespace QJY.API
                 return;
             }
         }
+        /// <summary>
+        /// 我的群，根据科室/职务来划分
+        /// </summary>
+        public void GETMYCROWD(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            //我的自律小组名称
+            JH_Auth_User thisuser = new JH_Auth_UserB().GetEntity(d => d.ID == UserInfo.User.ID);
+            string viewname = "select u.* , wu.nickName, b.DeptName from JH_Auth_User U LEFT JOIN WX_User wu on u.WxOpenid = wu.openid  "
+                + " left join JH_Auth_Branch b on u.BranchCode=b.DeptCode "
+                + " where u.BranchCode=" + thisuser.BranchCode + " and  u.zhiwu = '" + thisuser.zhiwu + "' "
+                + " order by u.UserOrder, u.UserRealName asc";
+
+            DataTable dt = new JH_Auth_UserB().GetDTByCommand(viewname);
+
+            msg.Result = dt;
+            msg.Result1 = thisuser.zhiwu;
+            msg.Result2 = thisuser.zhiwu + "-" + dt.Rows[0]["DeptName"].ToString();
+        }
+
         public void ADDRYMODELWX(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             WX_RY model = JsonConvert.DeserializeObject<WX_RY>(P2);
@@ -270,7 +292,6 @@ namespace QJY.API
                 msg.ErrorMsg = "您没有权限删除";
             }
         }
-        
         public void ADDHUODONGMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             WX_HD model = JsonConvert.DeserializeObject<WX_HD>(P2);
@@ -326,7 +347,6 @@ namespace QJY.API
             else
                 msg.Result1 = 0;
         }
-
         public void GETMESSAGEHISTORY(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             DataTable dt = new DataTable();
@@ -341,7 +361,6 @@ namespace QJY.API
             msg.Result = dt;
             msg.Result1 = total;
         }
-
         public void INSERTMESSAGE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
 

@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.IO;
-using Senparc.Weixin.MP;
-using Senparc.Weixin.MP.Entities.Request;
-using QJY.API;
-using Senparc.Weixin.MP.AdvancedAPIs.User;
-using Senparc.Weixin.MP.AdvancedAPIs;
-using Senparc.Weixin.MP.AdvancedAPIs.OAuth;
+﻿using QJY.API;
 using QJY.Data;
-using System.Text;
-using Senparc.Weixin.HttpUtility;
+using Senparc.Weixin.MP;
+using Senparc.Weixin.MP.AdvancedAPIs;
+using System;
+using System.Web;
 
 namespace QJY.WEB.WX
 {
@@ -27,7 +17,7 @@ namespace QJY.WEB.WX
             //重新跳转授权页面
             if (commit == "reauthrise")
             {
-                string reauthriseurl = CommonHelp.AppConfig("Host") + "/wx/zlxz/default.aspx";
+                string reauthriseurl = CommonHelp.AppConfig("Host") + "/wx/default.aspx";
                 if (reauthriseurl.Trim().Length > 0)
                 {
                     string authurl = OAuthApi.GetAuthorizeUrl(CommonHelp.AppConfig("AppId"), reauthriseurl, "reload", OAuthScope.snsapi_userinfo);
@@ -36,6 +26,7 @@ namespace QJY.WEB.WX
                 }
             }
 
+            bool IsZiLvXiaoZu = false;
             //授权返回
             if (code.Length > 0)
             {
@@ -45,19 +36,19 @@ namespace QJY.WEB.WX
                 //}
                 //else
                 //{
-                    WX_User u = WXFWHelp.GetWXUserInfo(code);
-                    DateTime expires = DateTime.Now.AddMinutes(60);
-                    JH_Auth_User userInfo = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.Openid && d.IsWX == 1);
-                    if (userInfo != null)
-                    {
-                        CommonHelp.SetCookie("szhlcode", userInfo.pccode, expires);
-                        CommonHelp.SetCookie("username", userInfo.UserName, expires);
-                    }
-                    else
-                    {
-                        CommonHelp.SetCookie("openid", u.Openid, expires);
-                        Response.Redirect("/WX/zlxz/BindPhone.html");
-                    }
+                WX_User u = WXFWHelp.GetWXUserInfo(code);
+                DateTime expires = DateTime.Now.AddMinutes(30);
+                JH_Auth_User userInfo = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.Openid && d.IsWX == 1);
+                if (userInfo != null)//已绑定手机号和姓名
+                {
+                    WXFWHelp.UpdateCookieAfterSignIn(userInfo);
+                    IsZiLvXiaoZu = userInfo.ZiLvXiaoZu?.Trim().Length > 0;
+                }
+                else//未绑定手机号和姓名
+                {
+                    CommonHelp.SetCookie("openid", u.Openid, expires);
+                    Response.Redirect("/WX/BindPhone.html");
+                }
                 //}
             }
             string redirect_uri = CommonHelp.GetCookieString("pagehistory");
@@ -65,12 +56,13 @@ namespace QJY.WEB.WX
             {
                 Response.Redirect(HttpUtility.UrlDecode(redirect_uri));
             }
-            else
+            else//默认返回页面
             {
-                Response.Redirect("/WX/zlxz/home.html");
+                if(IsZiLvXiaoZu)
+                    Response.Redirect("/WX/zlxz/home.html");
+                else
+                    Response.Redirect("/WX/bgxt/index.html");
             }
-
         }
-
     }
 }

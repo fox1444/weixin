@@ -79,31 +79,31 @@
     <script>
         var tempmodel = avalon.define({
             $id: "BindPhone",
-            ColumnData: [],
+            userData: {},
             name: "绑定手机",
             inittemp: function (strId) {
 
             },//初始化
             modelData: { "UserRealName": "", "mobphone": "", "weixinCard": "" },
             SaveData: function () {
-
                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?ACTION=WXGL_BINDPHONE&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (r) {
-
                     if (r.ErrorMsg == '') {
                         var pagehistory = ComFunJS.getCookie("pagehistory");
                         if (pagehistory != '' && !pagehistory && pagehistory != null) {
                             window.location.href = pagehistory;
                         }
                         else {
-                            window.location.href = "/WX/zlxz/home.html?r=" + Math.random();
+                            var IsZiLvXiaoZu = false;
+                            if (r.Result[0].ZiLvXiaoZu.length > 0)
+                                IsZiLvXiaoZu = true;
+
+                            if (IsZiLvXiaoZu)
+                                window.location.href = "/WX/zlxz/home.html?r=" + Math.random();
+                            else
+                                window.location.href = "/WX/bgxt/index.html?r=" + Math.random();
                         }
-
                     }
-
                 });
-            },
-            Complate: function () {
-                window.location.href = "/WX/zlxz/home.html?r=" + Math.random();
             }
         });//# sourceURL=MHYGL.js;
 

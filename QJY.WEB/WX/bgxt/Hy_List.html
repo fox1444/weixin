@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>会议管理</title>
+    <title>会议系统</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -12,7 +12,6 @@
     <link href="/View_Mobile/CSS/szhlextend.css?ver=20160904" rel="stylesheet" />
     <!--<link rel="stylesheet" href="/View_Mobile/CSS/animate.css">-->
     <style type="text/css">
-
         .ms-controller, [ms-controller] {
             display: none;
         }
@@ -31,19 +30,6 @@
             }
 
         .badge {
-            /*position: absolute;
-            top: .1rem;
-            z-index: 100;
-            height: .8rem;
-            min-width: .8rem;
-            padding: 0 .2rem;
-            font-size: .6rem;
-            line-height: .8rem;
-            color: white;
-            vertical-align: top;
-            background: red;
-            border-radius: .5rem;
-            margin-left: .1rem;*/
             position: absolute;
             top: .3rem;
             z-index: 100;
@@ -64,33 +50,19 @@
     <div class="page-group">
         <div class="page page-current" id="pageindex1">
             <div class="buttons-tab">
-                <a href="#" ms-if="DataID=='-1'" ms-on-click="getdata(1)" class="tab-link button external" ms-class-1="active:type=='1'">创建</a>
+                <!--<a href="#" ms-if="DataID=='-1'" ms-on-click="getdata(1)" class="tab-link button external" ms-class-1="active:type=='1'">创建</a>
                 <a href="#" ms-if="DataID=='-1'" ms-on-click="getdata(2)" class="tab-link button external" ms-class-1="active:type=='2'">参与</a>
                 <a href="#" ms-if="DataID=='-1'" ms-on-click="getdata(3)" class="tab-link button external" ms-class-1="active:type=='3'">
                     待审<span class="badge" ms-if="shNum&&shNum!='0'"></span>
                 </a>
                 <a href="#" ms-if="DataID=='-1'" ms-on-click="getdata(4)" class="tab-link button external" ms-class-1="active:type=='4'">已审</a>
-                <a href="#" ms-if="DataID!='-1'" class="tab-link button external active">会议管理</a>
+                <a href="#" ms-if="DataID!='-1'" class="tab-link button external active">会议管理</a>-->
+                <a href="#" ms-if="DataID=='-1'" class="tab-link button external">我参加的会议</a>
             </div>
             <div class="content infinite-scroll infinite-scroll-bottom" data-distance="50" style="margin-top:2rem" id="touchcontent">
                 <div class="list-container">
                     <div class="card facebook-card animated fadeInUp" ms-repeat-el="ctData">
                         <div class="ribbon-wrapper-green"><div class="ribbon-green">{{(el.StateName=='已审批'||el.StateName=='-1')?el.HLStatus:el.StateName}}</div></div>
-                        <!--<div class="card-header no-border" ms-on-click="showdetil(el)">
-                            <div class="facebook-avatar"><img ms-src="/ViewV5/Base/DownFile.aspx?type=TX&user={{el.CRUser}}" style="border-radius: 3px;width:34px;height:34px"></div>
-                            <div class="facebook-name">{{ComFunJS.convusers(el.CRUser)}}</div>
-                            <div class="facebook-date" ms-if="el.isfold">{{$.timeago(el.CRDate)}}</div>
-                            <div class="facebook-date" ms-if="!el.isfold">{{covtitle(el.Title)}}</div>
-
-                        </div>-->
-                        <!--<div class="card-header no-border" ms-on-click="showdetil(el)">
-                            <div class="facebook-avatar"><img ms-src="/ViewV5/Base/DownFile.aspx?type=TX&user={{el.CRUser}}" style="border-radius: 3px;width:32px;height:32px"><div class="cadename" ms-if="!el.isfold">{{ComFunJS.convuser(el.CRUser)}}</div></div>
-                            <div class="facebook-date" ms-if="el.isfold">{{ComFunJS.convuser(el.CRUser)}}</div>
-                            <div class="facebook-date">{{$.timeago(el.CRDate)}}</div>
-                            <div class="facebook-date">{{el.CRDate|date("MM月dd日")}}</div>
-                            <div class="facebook-date" ms-if="!el.isfold" style="overflow: hidden; word-wrap: break-word; word-break: break-all; ">{{covtitle(el.Name)}}</div>
-                            <div class="facebook-date" ms-if="!el.isfold" style="overflow: hidden; word-wrap: break-word; word-break: break-all; ">{{covtitle(el.Title)}}</div>
-                        </div>-->
                         <div class="card-header no-border" ms-on-click="showdetil(el)">
                             <div class="facebook-avatar">
                                 <img ms-src="{{ComFunJS.getfile()+'&type=TX&user='+el.CRUser}}" width="40" class="border-r">
@@ -110,7 +82,7 @@
                         <div class="card-content  " ms-visible="el.isfold">
                             <div class="card-item">
                                 <span class="c999 title-item">会议主题：</span>
-                                <span>{{el.Title}}</span>
+                                <span>{{covtitle(el.Title)}}</span>
                             </div>
                             <div class="card-item">
                                 <span class="c999 title-item">起止时间：</span>
@@ -136,98 +108,32 @@
                                 <span class="c999 title-item">会议室：</span>
                                 <span>{{el.Name}}</span>
                             </div>
-                            <div class="card-item">
-                                <span class="c999 title-item">会议内容：</span>
-                                <span>{{el.Details|html}}</span>
+                            <div class="buttons-tab list-op">
+                                <a class="tab-link button external" ms-click="vieww(el)">
+                                    <i class="iconfont icon-view"></i>查看会议详情
+                                </a>
                             </div>
-                            <div class="card-item" ms-if="el.HYJL">
-                                <span class="c999 title-item">会议纪要：</span>
-                                <span>{{ComFunJS.bqhContent(el.HYJL)|html}}</span>
-                            </div>
-                            <div class="card-item" ms-if="el.HYFW">
-                                <span class="c999 title-item">会议服务：</span>
-                                <span>{{el.HYFW|html}}</span>
-                            </div>
-                            <div class="card-item" ms-if="el.StateName!='-1'">
-                                <span class="c999 title-item">审核状态：</span>
-                                <span>{{el.StateName|html}}</span>
-                            </div>
-                            <ul class="filelist" style="margin-left:.5rem;">
-                                <li ms-repeat-file="el.FileList">
-                                    <!--<img ms-class="mall_pcp:ComFunJS.isPic(file.FileExtendName)" class="" ms-on-click="viewfile(file)" ms-src="/ViewV5/Base/DownFile.aspx?fileId={{file.ID}}">-->
-                                    <img ms-class="mall_pcp:ComFunJS.isPic(file.FileExtendName)" class="" ms-on-click="viewfile(file)" ms-src="/ViewV5/images/qywd/{{file.FileExtendName}}.png">
-                                    <a ms-attr-href="{{ComFunJS.getfile(file.ID)}}">
-                                        <span class="fileinfo" ms-if="!ComFunJS.isPic(file.FileExtendName)">{{file.Name}}</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <!--<div class="buttons-tab list-op" ms-if="isxs(el)">
+                            <a class="tab-link button external" ms-click="vieww(el)" ms-if="type!='3' && el.CRUser==nowuser">
+                                <i class="iconfont icon-view"></i>查看
+                            </a>
+                            <a class="tab-link button external" ms-click="vieww(el)" ms-if="(type=='3' || DataID!=-1) &&el.StateName=='正在审批'">
+                                <i class="iconfont icon-shenhe"></i>审核
+                            </a>
+                            <a class="tab-link button external" ms-if="isxsCJQD(el)" style="" ms-click="hyqr(el)">
+                                <i class="iconfont icon-wocanyu"></i>参加
+                            </a>
+                            <a class="tab-link button external" ms-if="isxsCJQD(el)" style="" ms-click="hyqj(el)">
+                                <i class="iconfont icon-qingjia"></i>请假
+                            </a>
+                            <a class="tab-link button external" ms-if="(el.StateName=='已审批'||el.StateName=='-1') && (el.RYStatus && (el.RYStatus.indexOf('2') != -1 || el.RYStatus.indexOf('4') != -1) && el.RYStatus.indexOf('3') ==-1)" ms-click="hyqd(el)">
+                                <i class="iconfont icon-bianji"></i>签到
+                            </a>
+                            <a class="tab-link button external" ms-if="(el.StateName=='已审批'||el.StateName=='-1') && isxsHYJL(el)" ms-click="hyjy(el)">
+                                <i class="iconfont icon-jiyao"></i>纪要
+                            </a>
 
-
-                            <div ms-visible="(el.StateName=='已审批'||el.StateName=='-1')&&el.PLList.size()>0">
-                                <div class="lookright-box">
-                                    <div class="menu-general">
-                                        <ul>
-                                            <!--<li ms-on-click="getpldata(el,1)" ms-class-1="active:el.pltype=='1'" ms-if="el.PLList.size()!=0">
-                                                <a>状态({{el.PLList.size()}})</a>
-                                            </li>-->
-                                            <li ms-on-click="getpldata(el,2)" ms-class-1="active:el.pltype=='2'">
-                                                <a>参加({{getplcount(el,'2')}})</a>
-                                            </li>
-                                            <li ms-on-click="getpldata(el,3)" ms-class-1="active:el.pltype=='3'">
-                                                <a>签到({{getplcount(el,'3')}})</a>
-                                            </li>
-                                            <li ms-on-click="getpldata(el,4)" ms-class-1="active:el.pltype=='4'">
-                                                <a>请假({{getplcount(el,'4')}})</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div id="map">
-                                    <!--跟进-->
-                                    <div style="display: block;">
-                                        <!--评论样式-->
-                                        <div class="crm-dt" ms-repeat-pl="el.PLList" ms-visible="pl.MsgISShow==el.pltype">
-                                            <span class="crm-yuan"></span>
-                                            <div class="crm-dt-cont">
-                                                <div class="m5">
-                                                    <p class="c999">{{pl.CRUserName}} <span class=" ft14 pull-right">{{pl.CRDate|date("MM月dd日")}}</span></p>
-                                                    <h3 class="crm-xg ft14 mt5" style="word-break:break-all;word-wrap:break-word;">
-                                                        <span ms-if="pl.MsgISShow">【{{pl.MSGContent}}】</span>
-                                                        <span ms-if="pl.MsgISShow=='4'">{{ComFunJS.bqhContent(pl.Remark)|html}}</span>
-                                                    </h3>
-                                                    <ul class="filelist">
-                                                        <!--repeat428537517786-->
-                                                        <li ms-repeat-file="pl.FileList">
-                                                            <img ms-class="mall_pcp:ComFunJS.isPic(file.FileExtendName)" class="" ms-on-click="viewfile(file)" ms-src="/ViewV5/Base/DownFile.aspx?fileId={{file.ID}}" />
-                                                            <span class="fileinfo" ms-if="!ComFunJS.isPic(file.FileExtendName)">{{file.Name}}</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="buttons-tab list-op" ms-if="isxs(el)">
-                                <a class="tab-link button external" ms-click="vieww(el)" ms-if="type!='3' && el.CRUser==nowuser">
-                                    <i class="iconfont icon-view"></i>查看
-                                </a>
-                                <a class="tab-link button external" ms-click="vieww(el)" ms-if="(type=='3' || DataID!=-1) &&el.StateName=='正在审批'">
-                                    <i class="iconfont icon-shenhe"></i>审核
-                                </a>
-                                <a class="tab-link button external" ms-if="isxsCJQD(el)" style="" ms-click="hyqr(el)">
-                                    <i class="iconfont icon-wocanyu"></i>参加
-                                </a>
-                                <a class="tab-link button external" ms-if="isxsCJQD(el)" style="" ms-click="hyqj(el)">
-                                    <i class="iconfont icon-qingjia"></i>请假
-                                </a>
-                                <a class="tab-link button external" ms-if="(el.StateName=='已审批'||el.StateName=='-1') && (el.RYStatus && (el.RYStatus.indexOf('2') != -1 || el.RYStatus.indexOf('4') != -1) && el.RYStatus.indexOf('3') ==-1)" ms-click="hyqd(el)">
-                                    <i class="iconfont icon-bianji"></i>签到
-                                </a>
-                                <a class="tab-link button external" ms-if="(el.StateName=='已审批'||el.StateName=='-1') && isxsHYJL(el)" ms-click="hyjy(el)">
-                                    <i class="iconfont icon-jiyao"></i>纪要
-                                </a>
-                            </div>
+                                                </div>-->
                         </div>
                     </div>
                     <div class="card facebook-card animated" ms-if="loadtip">
@@ -240,8 +146,6 @@
                     <div class="preloader"></div>
                 </div>
             </div>
-            <!--<span class="animated fadeIn" ms-if="DataID=='-1'" ms-click="addHYGL()" id="plus_btn" style="z-index:99998;opacity:.9"><img src="../images/plus_icon.png"></span>
-            <span class="animated fadeIn" ms-if="DataID=='-1'" ms-click="changefold()" id="plus_list" style="z-index:99998;opacity:.9"><img ms-attr-src="'../images/'+(isfold?'rwglss':'rwglzk')+'.png'"></span>-->
             <div class="right-panel">
                 <ul>
                     <li ms-if="DataID=='-1'">
@@ -253,9 +157,9 @@
                     <li ms-if="DataID!=='-1'">
                         <a class="mod-li-icon" ms-click="viewall()"><img src="../images/plus-zhankai.png"></a>
                     </li>
-                    <li ms-if="DataID=='-1'">
+                    <!--<li ms-if="DataID=='-1'">
                         <a class="mod-li-icon" ms-click="addHYGL()"><img src="/View_Mobile/images/plus-add.png"></a>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
         </div>
@@ -282,7 +186,6 @@
     <script src="/View_Mobile/JS/raty/jquery.raty.js?v=1.3"></script>
     <script src="/View_Mobile/JS/ComFunJS.js?jsver=20160425"></script>
     <script>
-
         var model = avalon.define({
             $id: "HYList",
             ctData: [],//数据源
@@ -330,8 +233,8 @@
             },//展开显示信息
             vieww: function (el) {
                 //路由加载
-                window.location = "/View_Mobile/UI/BASE/APP_MOBIL_WF.html?FormCode=HYGL&id=" + el.ID + "&r=" + Math.random();
-                //window.location = "/View_Mobile/UI/BASE/APP_MOBIL_WF.html?FormCode=HYGLSETP&id=" + el.ID + "&PIID=" + el.intProcessStanceid + "&r=" + Math.random();
+                //window.location = "/View_Mobile/UI/BASE/APP_MOBIL_WF.html?FormCode=HYGL&id=" + el.ID + "&r=" + Math.random();
+                window.location = "/View_Mobile/UI/HyDetail_step.html?id=" + el.ID + "&r=" + Math.random();
             },
             addHYGL: function (el) {
                 window.location = "/View_Mobile/UI/BASE/APP_MOBIL_WF.html?FormCode=HYGL&r=" + Math.random();
@@ -503,7 +406,6 @@
                 })
             },
             hyqd: function (el) {//签到
-
                 $.post("/API/VIEWAPI.ashx?Action=HYGL_UPDATEHYQK&r=" + Math.random(), { "P1": el.ID, "P2": "3" }, function (data) {
 
                     if (data.ErrorMsg == "") {
@@ -613,7 +515,7 @@
 
             $.init();
             if (model.DataID == "-1") {//如果参数中没有数据ID，则默认抓取当前用户数据
-                model.type = 1;
+                model.type = 2;
                 util.toucher(document.getElementById('touchcontent'))
                     .on('swipeLeft', '.list-container', function () {
                         model.type = model.type == 4 ? 1 : model.type * 1 + 1;
