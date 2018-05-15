@@ -18,6 +18,9 @@ using Senparc.Weixin.MP.AdvancedAPIs;
 
 namespace QJY.API
 {
+    /// <summary>
+    /// 微信公众号服务类
+    /// </summary>
     public class WXFWHelp
     {
         public WXFWHelp()
@@ -37,12 +40,12 @@ namespace QJY.API
                 }
                 else
                 {
-                    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为空", "Global.asax", "System", HttpContext.Current.Request.Url.Host.ToString(), 0, strIp);
+                    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为空", "Global.asax", "System", "www.lgosoft.com", 0, strIp);
                 }
             }
             catch (Exception ex)
             {
-                new JH_Auth_LogB().InsertLog("Application_Start", "更新Access错误" + ex.ToString(), "Global.asax", "System", HttpContext.Current.Request.Url.Host.ToString(), 0, strIp);
+                new JH_Auth_LogB().InsertLog("Application_Start", "更新Access错误" + ex.ToString(), "Global.asax", "System", "www.lgosoft.com", 0, strIp);
             }
         }
         /// <summary>
@@ -87,9 +90,7 @@ namespace QJY.API
                 {
                     if (jsapi_ticket.ticket.Length > 0)
                     {
-                        DateTime expires = DateTime.Now.AddSeconds(jsapi_ticket.expires_in);
                         CommonHelp.UpdateAppConfig("jsapi_ticket", jsapi_ticket.ticket);
-                        CommonHelp.SetCookie("jsapi_ticket", jsapi_ticket.ticket, expires);
                         new JH_Auth_LogB().InsertLog("WXFWHelper", "更新jsapi_ticket为" + jsapi_ticket.ticket, "WXFWHelper", _username, _username, 0, strIp);
 
                     }
@@ -97,7 +98,9 @@ namespace QJY.API
             }
             return accesstoken;
         }
-        //从公众号中进入获取用户信息并更新数据库中账号
+        /// <summary>
+        /// 从公众号中进入获取用户信息并更新数据库中账号
+        /// </summary>
         public static WX_User GetWXUserInfo(string _code)
         {
             try
@@ -215,6 +218,16 @@ namespace QJY.API
             //    localuser.logindate = DateTime.Now;
             //    new JH_Auth_UserB().Update(localuser);//更新logindate  pccode不能更新
             //}
+        }
+        /// <summary>
+        /// 微信授权登录成功后更新本地账号缓存
+        /// </summary>
+        public static void UpdateCookieAfterSignIn(JH_Auth_User userInfo)
+        {
+            DateTime expires = DateTime.Now.AddMinutes(30);
+            CommonHelp.SetCookie("szhlcode", userInfo.pccode, expires);
+            CommonHelp.SetCookie("username", userInfo.UserName, expires);
+            CommonHelp.SetCookie("userphonenumber", userInfo.mobphone, expires);
         }
     }
 }

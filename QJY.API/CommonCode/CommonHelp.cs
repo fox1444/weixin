@@ -653,6 +653,21 @@ namespace QJY.API
             }
             return tmp;
         }
+
+        public static int GetQueryInt(string QueryName)
+        {
+            int tmp = 0;
+            try
+            {
+                tmp = int.Parse(HttpContext.Current.Request.QueryString[QueryName].ToString());
+            }
+            catch
+            {
+
+            }
+            return tmp;
+        }
+
         public static void SetCookie(string key, string value)
         {
             try

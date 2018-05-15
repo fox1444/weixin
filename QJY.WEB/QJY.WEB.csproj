@@ -232,7 +232,6 @@
     <Content Include="View_Mobile\Images\tobacco-logo2.jpg" />
     <Content Include="View_Mobile\Images\wrap-bg.jpg" />
     <Content Include="View_Mobile\UI\HyDetail_index.html" />
-    <Content Include="View_Mobile\UI\HyDetail_start.html" />
     <Content Include="View_Mobile\UI\HyDetail_step.html" />
     <Content Include="View_Mobile\JS\avalon1.47.js" />
     <Content Include="View_Mobile\UI\TEMP\MODEL\MWXGROUP.html" />
@@ -244,6 +243,8 @@
     <Content Include="View_Mobile\UI\HyDetail.html" />
     <Content Include="View_Mobile\UI\UI_Login.html" />
     <Content Include="View_Mobile\UI\UI_YCGL_LIST.html" />
+    <Content Include="WX\bgxt\Index.html" />
+    <Content Include="WX\bgxt\Hy_List.html" />
     <Content Include="WX\zlxz\Satisfaction.html" />
     <Content Include="WX\zlxz\HD_Add.html" />
     <Content Include="WX\zlxz\Group_member.html" />
@@ -451,12 +452,12 @@
     <Content Include="WX\zlxz\RY_Add.html" />
     <Content Include="WX\CSS\fonts\icomoon.svg" />
     <Content Include="WX\CSS\wxstyle.css" />
-    <Content Include="WX\zlxz\default.aspx" />
+    <Content Include="WX\Default.aspx" />
     <Content Include="WX\images\plus-serch.png" />
     <Content Include="WX\images\plus-zhankai.png" />
     <Content Include="WX\images\plus-zhedie.png" />
-    <Content Include="WX\zlxz\BindPhone.html" />
-    <Content Include="WX\zlxz\home.html" />
+    <Content Include="WX\BindPhone.html" />
+    <Content Include="WX\zlxz\Home.html" />
     <Content Include="WX\JS\WxControl.js" />
     <Content Include="WX\zlxz\MyGroup.html" />
     <Content Include="WX\Me.html" />
@@ -1799,12 +1800,12 @@
     <Compile Include="ToolS\YZMCode.aspx.designer.cs">
       <DependentUpon>YZMCode.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WX\zlxz\default.aspx.cs">
-      <DependentUpon>default.aspx</DependentUpon>
+    <Compile Include="WX\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WX\zlxz\default.aspx.designer.cs">
-      <DependentUpon>default.aspx</DependentUpon>
+    <Compile Include="WX\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="WX\zlxz\UploadImg.aspx.cs">
       <DependentUpon>UploadImg.aspx</DependentUpon>
