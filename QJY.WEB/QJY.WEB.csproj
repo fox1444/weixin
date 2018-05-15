@@ -245,6 +245,7 @@
     <Content Include="View_Mobile\UI\UI_YCGL_LIST.html" />
     <Content Include="WX\bgxt\Index.html" />
     <Content Include="WX\bgxt\Hy_List.html" />
+    <Content Include="WX\message\bgxtbox.html" />
     <Content Include="WX\zlxz\Satisfaction.html" />
     <Content Include="WX\zlxz\HD_Add.html" />
     <Content Include="WX\zlxz\Group_member.html" />
@@ -448,11 +449,11 @@
     <Content Include="WX\JS\kindeditor-4.1.4\themes\qq\qq.css" />
     <Content Include="WX\JS\kindeditor-4.1.4\themes\simple\simple.css" />
     <Content Include="WX\zlxz\Calculation.html" />
-    <Content Include="WX\message\box.html" />
+    <Content Include="WX\message\zlxzbox.html" />
     <Content Include="WX\zlxz\RY_Add.html" />
     <Content Include="WX\CSS\fonts\icomoon.svg" />
     <Content Include="WX\CSS\wxstyle.css" />
-    <Content Include="WX\Default.aspx" />
+    <Content Include="WX\Authrise.aspx" />
     <Content Include="WX\images\plus-serch.png" />
     <Content Include="WX\images\plus-zhankai.png" />
     <Content Include="WX\images\plus-zhedie.png" />
@@ -1753,6 +1754,7 @@
     <Content Include="WX\images\会理自律小组现场会组员名单20180418--%282%29.xlsx" />
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\file_manager_json.ashx" />
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\upload_json.ashx" />
+    <Content Include="WX\message\GetMsg.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\HtmlModule.cs" />
@@ -1800,12 +1802,15 @@
     <Compile Include="ToolS\YZMCode.aspx.designer.cs">
       <DependentUpon>YZMCode.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WX\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="WX\Authrise.aspx.cs">
+      <DependentUpon>Authrise.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WX\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="WX\Authrise.aspx.designer.cs">
+      <DependentUpon>Authrise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WX\message\GetMsg.ashx.cs">
+      <DependentUpon>GetMsg.ashx</DependentUpon>
     </Compile>
     <Compile Include="WX\zlxz\UploadImg.aspx.cs">
       <DependentUpon>UploadImg.aspx</DependentUpon>

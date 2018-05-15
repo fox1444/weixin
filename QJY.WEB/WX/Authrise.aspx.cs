@@ -7,7 +7,7 @@ using System.Web;
 
 namespace QJY.WEB.WX
 {
-    public partial class _default : System.Web.UI.Page
+    public partial class Authrise : System.Web.UI.Page
     {
         string szhlcode = CommonHelp.Getszhlcode();
         string code = CommonHelp.GetQueryString("code");
@@ -17,7 +17,7 @@ namespace QJY.WEB.WX
             //重新跳转授权页面
             if (commit == "reauthrise")
             {
-                string reauthriseurl = CommonHelp.AppConfig("Host") + "/wx/default.aspx";
+                string reauthriseurl = CommonHelp.AppConfig("Host") + "/wx/Authrise.aspx";
                 if (reauthriseurl.Trim().Length > 0)
                 {
                     string authurl = OAuthApi.GetAuthorizeUrl(CommonHelp.AppConfig("AppId"), reauthriseurl, "reload", OAuthScope.snsapi_userinfo);

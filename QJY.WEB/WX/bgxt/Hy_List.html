@@ -90,9 +90,9 @@
                             </div>
                             <div class="card-item" ms-if="el.CYUser">
                                 <span class="c999 title-item">参与人：</span>
-                                <span>{{ComFunJS.convusers(el.CYUser)}}</span>
+                                <span ms-if="el.ZCUser">{{ComFunJS.convusers(el.ZCUser)}},</span><span>{{ComFunJS.convusers(el.CYUser)}}</span>
                             </div>
-                            <div class="card-item" ms-if="el.JLUser">
+                            <!--<div class="card-item" ms-if="el.JLUser">
                                 <span class="c999 title-item">纪要人：</span>
                                 <span>{{ComFunJS.convusers(el.JLUser)}}</span>
                             </div>
@@ -103,7 +103,7 @@
                             <div class="card-item" ms-if="el.SXUser">
                                 <span class="c999 title-item">摄像人：</span>
                                 <span>{{ComFunJS.convusers(el.SXUser)}}</span>
-                            </div>
+                            </div>-->
                             <div class="card-item">
                                 <span class="c999 title-item">会议室：</span>
                                 <span>{{el.Name}}</span>

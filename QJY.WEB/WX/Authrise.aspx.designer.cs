@@ -10,6 +10,6 @@
 namespace QJY.WEB.WX {
     
     
-    public partial class _default {
+    public partial class Authrise {
     }
 }
