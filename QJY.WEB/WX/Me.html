@@ -58,6 +58,67 @@
                                     </div>
                                 </div>
                             </div>
+                        </li>                        
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">姓名</div>
+                                    <div>
+                                        <span>
+                                            {{userData.User.UserRealName}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">手机号</div>
+                                    <div>
+                                        <span>
+                                            {{userData.User.mobphone}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">部门</div>
+                                    <div>
+                                        <span>
+                                            {{userData.BranchInfo.DeptName}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">岗位</div>
+                                    <div>
+                                        <span>
+                                            {{userData.User.zhiwu}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">职务</div>
+                                    <div>
+                                        <span>
+                                            {{userData.User.UserGW}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                         <li>
                             <div class="item-content">
@@ -71,40 +132,15 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-title">姓名</div>
-                                    <div>
-                                        <span class="edit-icon" ms-click="updateUserRealName(userData.User)">
-                                            {{userData.User.UserRealName}}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-title">手机号</div>
-                                    <div>
-                                        <span class="edit-icon" ms-click="updatephone(userData.User)">
-                                            {{userData.User.mobphone}}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="footer-nav">
+        <!--<div class="footer-nav">
             <ul>
                 <li>
-                    <span ms-on-click="gopage(1)" class="nav-group ">
-                        小组
+                    <span ms-on-click="gopage('/wx/bgxt/hy_list.html?r='+ Math.random())" class="nav-group ">
+                        办公系统
                     </span>
                 </li>
                 <li>
@@ -113,12 +149,12 @@
                     </span>
                 </li>
                 <li>
-                    <span ms-on-click="gopage(3)" class="nav-me active">
+                    <span ms-on-click="gopage('/wx/me.html?r='+ Math.random())" class="nav-me active">
                         我
                     </span>
                 </li>
             </ul>
-        </div>
+        </div>-->
     </div>
     <script src="/View_Mobile/JS/layer/layer.m.js"></script>
     <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
@@ -131,8 +167,6 @@
             $id: "Me",
             userData: {},
             inittemp: function () {
-                //var pn = ComFunJS.getCookie("szhlcode");
-                //alert(pn);
                 $.getJSON("/API/VIEWAPI.ashx?Action=XTGL_GETUSERINFO", {}, function (r) {
                     if (r.ErrorMsg == "") {
                         model.userData = r.Result;
@@ -172,14 +206,10 @@
 
                 }, false, { type: "微信号", content: e.weixinCard });
             },
-            gopage: function (k) {
-                if (k == 1)
-                    window.location = "mygroup.html";
-                else if (k == 2)
-                    window.location = "search.html";
-                else if (k == 3)
-                    window.location = "me.html";
-            }
+            gopage: function (url) {
+                if (url)
+                    window.location.href = url;
+            },
         })
 
         avalon.ready(function () {

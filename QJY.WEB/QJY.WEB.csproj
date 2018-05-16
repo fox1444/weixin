@@ -1885,6 +1885,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="uploadfile\" />
+    <Folder Include="ViewV5\AppPage\ZCGL\" />
     <Folder Include="ViewV5\fileupload\" />
     <Folder Include="ViewV5\upload\" />
     <Folder Include="WX\JS\kindeditor-4.1.4\attached\" />
