@@ -6,7 +6,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>我的群</title>
+    <title>会议室</title>
     <link href="/View_Mobile/Frozenui1.3/css/frozen.css?ver=20171228" rel="stylesheet" />
     <link rel="stylesheet" href="/View_Mobile/css/sm.min.css">
     <link rel="stylesheet" href="/WX/CSS/wxstyle.css">
@@ -78,8 +78,16 @@
                     </div>
                 </li>
                 <li>
-                    <div ms-on-click="gopage('/wx/bgxt/index.html?r='+ Math.random())" ms-on-blur="onblur(this)">
-                        我的群
+                    <div ms-on-click="showsubpage(this)" ms-on-blur="onblur(this)">
+                        我的
+                        <ul class="sub-nav">
+                            <li ms-on-click="gopage('/wx/bgxt/index.html?r='+ Math.random())">
+                                会议室
+                            </li>
+                            <li ms-on-click="gopage('/wx/me.html?r='+ Math.random())">
+                                个人信息
+                            </li>
+                        </ul>
                     </div>
                 </li>
             </ul>

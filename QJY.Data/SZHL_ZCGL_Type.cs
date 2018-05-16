@@ -12,17 +12,13 @@ namespace QJY.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class JH_Auth_WXPJ
+    public partial class SZHL_ZCGL_Type
     {
         public int ID { get; set; }
-        public string TJID { get; set; }
-        public string TJSecret { get; set; }
-        public string Token { get; set; }
-        public string EncodingAESKey { get; set; }
-        public string Ticket { get; set; }
-        public string Remark { get; set; }
-        public Nullable<System.DateTime> CreateTime { get; set; }
-        public string TJName { get; set; }
-        public string TJStatus { get; set; }
+        public string Title { get; set; }
+        public string Comment { get; set; }
+        public string CRUser { get; set; }
+        public System.DateTime CRDate { get; set; }
+        public int IsDel { get; set; }
     }
 }

@@ -294,9 +294,7 @@ namespace QJY.API
 
     #endregion
 
-
     #region 综合办公
-
     public class JH_Auth_TLB : BaseEFDao<JH_Auth_TL>
     {
         public DataTable GetTL(string strMsgType, string MSGTLYID)
@@ -316,27 +314,12 @@ namespace QJY.API
         }
     }
    
-    public class SZHL_XXFBTypeB : BaseEFDao<SZHL_XXFBType>
-    {
-    }
-    public class SZHL_XXFBB : BaseEFDao<SZHL_XXFB>
-    {
-    }
-    public class SZHL_XXFB_ITEMB : BaseEFDao<SZHL_XXFB_ITEM>
-    {
-    }
-    public class SZHL_LCSPB : BaseEFDao<SZHL_LCSP>
-    {
-    }
-
-
-    public class SZHL_CCXJB : BaseEFDao<SZHL_CCXJ>
-    {
-    }
-    public class SZHL_WQQDB : BaseEFDao<SZHL_WQQD>
-    {
-    }
-   
+    public class SZHL_XXFBTypeB : BaseEFDao<SZHL_XXFBType> { }
+    public class SZHL_XXFBB : BaseEFDao<SZHL_XXFB> { }
+    public class SZHL_XXFB_ITEMB : BaseEFDao<SZHL_XXFB_ITEM> { }
+    public class SZHL_LCSPB : BaseEFDao<SZHL_LCSP>{ }
+    public class SZHL_CCXJB : BaseEFDao<SZHL_CCXJ> { }
+    public class SZHL_WQQDB : BaseEFDao<SZHL_WQQD> { }
     public class SZHL_JFBXB : BaseEFDao<SZHL_JFBX>
     {
         /// <summary>
@@ -361,126 +344,49 @@ namespace QJY.API
             return formCode;
         }
     }
-    public class SZHL_JFBXITEMB : BaseEFDao<SZHL_JFBXITEM>
-    {
-    }
-    public class SZHL_RWGLB : BaseEFDao<SZHL_RWGL>
-    {
-    }
-
-    public class SZHL_RWGL_ITEMB : BaseEFDao<SZHL_RWGL_ITEM>
-    {
-    }
-   
-
-
-    public class JH_Auth_CommonB : BaseEFDao<JH_Auth_Common>
-    {
-    }
-  
-    public class SZHL_TXSXB : BaseEFDao<SZHL_TXSX>
-    {
-    }
-    public class SZHL_DXGLB : BaseEFDao<SZHL_DXGL>
-    {
-    }
-    public class SZHL_TXLB : BaseEFDao<SZHL_TXL>
-    {
-    }
-
-    public class SZHL_XXFB_SCKB : BaseEFDao<SZHL_XXFB_SCK>
-    {
-    }
-    public class SZHL_GZBGB : BaseEFDao<SZHL_GZBG>
-    {
-    }
-  
-    public class SZHL_NOTEB : BaseEFDao<SZHL_NOTE>
-    {
-    }
-   
-    public class SZHL_XMGLB : BaseEFDao<SZHL_XMGL>
-    {
-    }
-   
-    public class SZHL_KQBCB : BaseEFDao<SZHL_KQBC>
-    { }
-    public class SZHL_KQJLB : BaseEFDao<SZHL_KQJL>
-    { }
-
+    public class SZHL_JFBXITEMB : BaseEFDao<SZHL_JFBXITEM> { }
+    public class SZHL_RWGLB : BaseEFDao<SZHL_RWGL> {  }
+    public class SZHL_RWGL_ITEMB : BaseEFDao<SZHL_RWGL_ITEM>{ }
+    public class JH_Auth_CommonB : BaseEFDao<JH_Auth_Common>{ }
+    public class SZHL_TXSXB : BaseEFDao<SZHL_TXSX> { }
+    public class SZHL_DXGLB : BaseEFDao<SZHL_DXGL> { }
+    public class SZHL_TXLB : BaseEFDao<SZHL_TXL> { }
+    public class SZHL_XXFB_SCKB : BaseEFDao<SZHL_XXFB_SCK> { }
+    public class SZHL_GZBGB : BaseEFDao<SZHL_GZBG> { }  
+    public class SZHL_NOTEB : BaseEFDao<SZHL_NOTE> { }   
+    public class SZHL_XMGLB : BaseEFDao<SZHL_XMGL> { }  
+    public class SZHL_KQBCB : BaseEFDao<SZHL_KQBC> { }
+    public class SZHL_KQJLB : BaseEFDao<SZHL_KQJL> { }
     public class SZHL_XZ_JLB : BaseEFDao<SZHL_XZ_JL> { }
     public class SZHL_XZ_GZDB : BaseEFDao<SZHL_XZ_GZD> { }
-
     public class SZHL_DRAFTB : BaseEFDao<SZHL_DRAFT> { }
-
     public class SZHL_GZGLB : BaseEFDao<SZHL_GZGL> { }
     public class SZHL_GZGL_JCSZB : BaseEFDao<SZHL_GZGL_JCSZ> { }
     public class SZHL_GZGL_FLB : BaseEFDao<SZHL_GZGL_FL> { }
     public class SZHL_GZGL_WXYJB : BaseEFDao<SZHL_GZGL_WXYJ> { }
-
-    public class SZHL_TSSQB : BaseEFDao<SZHL_TSSQ>
-    { }
-
-
-    public class SZHL_HYGLB : BaseEFDao<SZHL_HYGL>
-    {
-    }
-    public class APPConfigB : BaseEFDao<APPConfig>
-    {
-    }
-    public class WX_UserB : BaseEFDao<WX_User>
-    {
-    }
-    public class MessageB : BaseEFDao<Message>
-    {
-    }
-    public class WX_RYB : BaseEFDao<WX_RY>
-    {
-    }
-    public class WX_HDB : BaseEFDao<WX_HD>
-    {
-    }
-    public class WX_GroupB : BaseEFDao<WX_Group>
-    {
-    }
-    public class WX_UserGroupB : BaseEFDao<WX_UserGroup>
-    {
-    }
-    public class SZHL_HYGL_ROOMB : BaseEFDao<SZHL_HYGL_ROOM>
-    {
-    }
-    public class SZHL_HYGL_QRB : BaseEFDao<SZHL_HYGL_QR>
-    {
-    }
-    public class SZHL_HYGL_QDB : BaseEFDao<SZHL_HYGL_QD>
-    {
-    }
-
-    public class SZHL_YCGLB : BaseEFDao<SZHL_YCGL>
-    {
-    }
-    public class SZHL_YCGL_CARB : BaseEFDao<SZHL_YCGL_CAR>
-    {
-    }
+    public class SZHL_TSSQB : BaseEFDao<SZHL_TSSQ>{ }
+    public class SZHL_HYGLB : BaseEFDao<SZHL_HYGL>{ }
+    public class APPConfigB : BaseEFDao<APPConfig>{ }
+    public class WX_UserB : BaseEFDao<WX_User>{ }
+    public class MessageB : BaseEFDao<Message> { }
+    public class SZHL_ZCGLB : BaseEFDao<SZHL_ZCGL> { }
+    public class SZHL_ZCGL_TypeB : BaseEFDao<SZHL_ZCGL_Type> { }
+    public class WX_RYB : BaseEFDao<WX_RY> { }
+    public class WX_HDB : BaseEFDao<WX_HD> { }
+    public class WX_GroupB : BaseEFDao<WX_Group> { }
+    public class WX_UserGroupB : BaseEFDao<WX_UserGroup> { }
+    public class SZHL_HYGL_ROOMB : BaseEFDao<SZHL_HYGL_ROOM> { }
+    public class SZHL_HYGL_QRB : BaseEFDao<SZHL_HYGL_QR> { }
+    public class SZHL_HYGL_QDB : BaseEFDao<SZHL_HYGL_QD> { }
+    public class SZHL_YCGLB : BaseEFDao<SZHL_YCGL> { }
+    public class SZHL_YCGL_CARB : BaseEFDao<SZHL_YCGL_CAR>  { }
     #endregion
 
     #region CRM
-    public class SZHL_CRM_KHGLB : BaseEFDao<SZHL_CRM_KHGL>
-    {
-    }
-    public class SZHL_CRM_CONTACTB : BaseEFDao<SZHL_CRM_CONTACT>
-    {
-    }
-    public class SZHL_CRM_HTGLB : BaseEFDao<SZHL_CRM_HTGL>
-    {
-    }
- 
-    public class SZHL_CRM_CPGLB : BaseEFDao<SZHL_CRM_CPGL>
-    {
-    }
-    public class SZHL_CRM_GJJLB : BaseEFDao<SZHL_CRM_GJJL>
-    {
-    }
-
+    public class SZHL_CRM_KHGLB : BaseEFDao<SZHL_CRM_KHGL> { }
+    public class SZHL_CRM_CONTACTB : BaseEFDao<SZHL_CRM_CONTACT> { }
+    public class SZHL_CRM_HTGLB : BaseEFDao<SZHL_CRM_HTGL> { }
+    public class SZHL_CRM_CPGLB : BaseEFDao<SZHL_CRM_CPGL> { }
+    public class SZHL_CRM_GJJLB : BaseEFDao<SZHL_CRM_GJJL> { }
     #endregion
 }

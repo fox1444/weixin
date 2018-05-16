@@ -291,6 +291,12 @@
     <Compile Include="SZHL_YCGL_CAR.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>
+    <Compile Include="SZHL_ZCGL.cs">
+      <DependentUpon>QJY.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SZHL_ZCGL_Type.cs">
+      <DependentUpon>QJY.tt</DependentUpon>
+    </Compile>
     <Compile Include="WX_Group.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>

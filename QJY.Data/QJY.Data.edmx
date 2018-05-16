@@ -1504,6 +1504,44 @@
           <Property Name="SeatNum" Type="varchar" MaxLength="50" />
           <Property Name="Remark" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="SZHL_ZCGL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="200" />
+          <Property Name="EPCode" Type="nvarchar" MaxLength="200" />
+          <Property Name="FactoryCode" Type="nvarchar" MaxLength="200" />
+          <Property Name="Tag" Type="nvarchar" MaxLength="500" />
+          <Property Name="BranchCode" Type="int" Nullable="false" />
+          <Property Name="zhiwu" Type="varchar" MaxLength="50" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" />
+          <Property Name="Location" Type="varchar" MaxLength="500" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="OrginalPrice" Type="float" Nullable="false" />
+          <Property Name="PresentPrice" Type="float" Nullable="false" />
+          <Property Name="Qty" Type="int" Nullable="false" />
+          <Property Name="RegistDate" Type="datetime" Nullable="false" />
+          <Property Name="Depreciation" Type="int" Nullable="false" />
+          <Property Name="CRUser" Type="varchar" MaxLength="50" />
+          <Property Name="CRDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SZHL_ZCGL_Type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="CRUser" Type="varchar" MaxLength="50" />
+          <Property Name="CRDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDel" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="WX_Group">
           <Key>
             <PropertyRef Name="GroupCode" />
@@ -1780,6 +1818,8 @@
           <EntitySet Name="SZHL_XZ_JL" EntityType="Self.SZHL_XZ_JL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_YCGL" EntityType="Self.SZHL_YCGL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_YCGL_CAR" EntityType="Self.SZHL_YCGL_CAR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SZHL_ZCGL" EntityType="Self.SZHL_ZCGL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SZHL_ZCGL_Type" EntityType="Self.SZHL_ZCGL_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_Group" EntityType="Self.WX_Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_HD" EntityType="Self.WX_HD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_RY" EntityType="Self.WX_RY" Schema="dbo" store:Type="Tables" />
@@ -1882,6 +1922,8 @@
           <EntitySet Name="WX_RY" EntityType="QJY_SaaSModel.WX_RY" />
           <EntitySet Name="WX_HD" EntityType="QJY_SaaSModel.WX_HD" />
           <EntitySet Name="Messages" EntityType="QJY_SaaSModel.Message" />
+          <EntitySet Name="SZHL_ZCGL" EntityType="QJY_SaaSModel.SZHL_ZCGL" />
+          <EntitySet Name="SZHL_ZCGL_Type" EntityType="QJY_SaaSModel.SZHL_ZCGL_Type" />
         </EntityContainer>
         <EntityType Name="FT_File">
           <Key>
@@ -3582,6 +3624,44 @@
           <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Status" Type="Int32" Nullable="false" />
           <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SZHL_ZCGL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EPCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FactoryCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Tag" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="BranchCode" Type="Int32" Nullable="false" />
+          <Property Name="zhiwu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="OrginalPrice" Type="Double" Nullable="false" />
+          <Property Name="PresentPrice" Type="Double" Nullable="false" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <Property Name="RegistDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Depreciation" Type="Int32" Nullable="false" />
+          <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDel" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SZHL_ZCGL_Type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDel" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5369,6 +5449,46 @@
                 <ScalarProperty Name="CRUserRealName" ColumnName="CRUserRealName" />
                 <ScalarProperty Name="CRUser" ColumnName="CRUser" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SZHL_ZCGL">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL">
+              <MappingFragment StoreEntitySet="SZHL_ZCGL">
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="Depreciation" ColumnName="Depreciation" />
+                <ScalarProperty Name="RegistDate" ColumnName="RegistDate" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="PresentPrice" ColumnName="PresentPrice" />
+                <ScalarProperty Name="OrginalPrice" ColumnName="OrginalPrice" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="zhiwu" ColumnName="zhiwu" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="FactoryCode" ColumnName="FactoryCode" />
+                <ScalarProperty Name="EPCode" ColumnName="EPCode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SZHL_ZCGL_Type">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL_Type">
+              <MappingFragment StoreEntitySet="SZHL_ZCGL_Type">
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
