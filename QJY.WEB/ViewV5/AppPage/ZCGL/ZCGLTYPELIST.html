@@ -39,7 +39,7 @@
                     </td>
                     <td ms-repeat-im="ShowColumns" ms-visible="im.IsSel">{{FnFormat(el[im.ColName],im)|html}}</td>
                     <td>
-                        <a class="cz-btn ft18 bj-color tip" data-toggle="tooltip" title="编辑" ms-click="EditForm('HYGL_HYS',el.ID,'',$event)">
+                        <a class="cz-btn ft18 bj-color tip" data-toggle="tooltip" title="编辑" ms-click="EditForm('ZCGL_TYPE',el.ID,'',$event)">
                             <i class="iconfont icon-bianji"></i>
                         </a>
                         <a class="cz-btn ft18 sc-color tip" data-toggle="tooltip" ms-if="el.IsDel==0" title="禁用" ms-click="DelHYS(el,1,$event)">
@@ -98,7 +98,9 @@
             model.ShowColumns.clear();
             model.ShowColumns.pushArray([
                 { "ColName": "Title", "ColText": "类型名称", "IsSel": true, "format": "text" },
-                { "ColName": "Comment", "ColText": "简介", "IsSel": true, "format": "text", "len":" 20" },
+                { "ColName": "Comment", "ColText": "简介", "IsSel": true, "format": "text", "len": " 20" },
+                { "ColName": "DisplayOrder", "ColText": "排序", "IsSel": true, "format": "text" },
+                { "ColName": "IsDel", "ColText": "状态", "IsSel": true, "format": "hyszt" }
             ]);
             //类型数据
 

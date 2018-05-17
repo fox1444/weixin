@@ -1,5 +1,8 @@
 ﻿using FastReflectionLib;
+using Newtonsoft.Json;
+using QJY.Data;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 using System.Web;
@@ -14,6 +17,8 @@ namespace QJY.API
             ZCGLManage model = new ZCGLManage();
             methodInfo.FastInvoke(model, new object[] { context, msg, P1, P2, UserInfo });
         }
+
+        #region 资产管理
         /// <summary>
         /// 资产列表
         /// </summary>
@@ -60,13 +65,67 @@ namespace QJY.API
 
         }
         /// <summary>
+        /// 资产详细信息
+        /// </summary>
+        public void GETZCGLMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            string strWhere = " z.IsDel=0 and z.ComId=" + UserInfo.User.ComId + " and z.ID=" + Id;
+            string colNme = @"z.*, t.Title ";
+            string tableName = string.Format(@" SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID");
+
+            string strSql = string.Format("Select {0}  From {1} where {2} order by z.CRDate desc", colNme, tableName, strWhere);
+            DataTable dt = new SZHL_ZCGLB().GetDTByCommand(strSql);
+            msg.Result = dt;
+        }
+        /// <summary>
+        /// 添加资产
+        /// </summary>
+        public void ADDZCGL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            SZHL_ZCGL ZC = JsonConvert.DeserializeObject<SZHL_ZCGL>(P1);
+
+            if (ZC == null)
+            {
+                msg.ErrorMsg = "添加失败";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(ZC.Name))
+            {
+                msg.ErrorMsg = "名称不能为空";
+                return;
+            }
+            if (ZC.TypeID <= 0)
+            {
+                msg.ErrorMsg = "请选择资产类型！";
+                return;
+            }
+
+            if (ZC.ID == 0)
+            {
+
+
+                //可用会议室需要优化，根据时间段来判断会议室是否可用
+                //List<SZHL_HYGL_ROOM> car1 = new SZHL_HYGL_ROOMB().GetEntities(d => d.ComId == UserInfo.User.ComId && d.ID == HY.RoomID && d.Status == "1" && d.IsDel == 0).ToList();
+
+            }
+            else
+            {
+                new SZHL_ZCGLB().Update(ZC);
+            }
+            msg.Result = ZC;
+        }
+        #endregion
+
+        #region 资产类型管理
+        /// <summary>
         /// 所有资产类型列表
         /// </summary>
         public void GETZCGLTYPELIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            var list = new SZHL_ZCGL_TypeB().GetEntities(p => p.IsDel == 0);
-            //DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select * from dbo.SZHL_ZCGL_Type where IsDel=0 and ComId=" + UserInfo.User.ComId);
-            msg.Result = list;
+            //var list = new SZHL_ZCGL_TypeB().GetEntities(p => p.IsDel == 0);
+            DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select * from dbo.SZHL_ZCGL_Type where IsDel=0 and ComId=" + UserInfo.User.ComId + " order by DisplayOrder");
+            msg.Result = dt;
         }
         /// <summary>
         /// 资产类型分页列表
@@ -86,25 +145,80 @@ namespace QJY.API
             int.TryParse(context.Request.QueryString["pagecount"] ?? "10", out pagecount);//页数
             page = page == 0 ? 1 : page;
             int total = 0;
-            DataTable dt = new SZHL_ZCGL_TypeB().GetDataPager(" SZHL_ZCGL_Type cc", "cc.*", pagecount, page, " cc.CRDate desc", strWhere, ref total);
+            DataTable dt = new SZHL_ZCGL_TypeB().GetDataPager(" SZHL_ZCGL_Type cc", "cc.*", pagecount, page, " cc.DisplayOrder", strWhere, ref total);
 
             msg.Result = dt;
             msg.Result1 = total;
         }
+     
         /// <summary>
-        /// 资产管理
+        /// 资产类型详细信息
         /// </summary>
-        public void GETZCGLMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        public void GETTYPEMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int Id = int.Parse(P1);
-            string strWhere = " z.IsDel=0 and z.ComId=" + UserInfo.User.ComId + " and z.ID=" + Id;
-            string colNme = @"z.*, t.Title ";
-            string tableName = string.Format(@" SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID");
-
-            string strSql = string.Format("Select {0}  From {1} where {2} order by z.CRDate desc", colNme, tableName, strWhere);
-            DataTable dt = new SZHL_ZCGLB().GetDTByCommand(strSql);
-            msg.Result = dt;
+            SZHL_ZCGL_Type model = new SZHL_ZCGL_TypeB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
+            msg.Result = model;
         }
+        /// <summary>
+        /// 添加资产类型
+        /// </summary>
+        public void ADDTYPE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            SZHL_ZCGL_Type t = JsonConvert.DeserializeObject<SZHL_ZCGL_Type>(P1);
 
+            if (string.IsNullOrEmpty(t.Title))
+            {
+                msg.ErrorMsg = "类型名称不能为空!";
+            }
+
+            if (string.IsNullOrEmpty(msg.ErrorMsg))
+            {
+                if (t.ID == 0)
+                {
+                    var t1 = new SZHL_ZCGL_TypeB().GetEntity(p => p.ComId == UserInfo.User.ComId && p.Title == t.Title);
+                    if (t1 != null)
+                    {
+                        msg.ErrorMsg = "系统已经存在此类型名称!";
+                    }
+                    else
+                    {
+                        t.CRDate = DateTime.Now;
+                        t.CRUser = UserInfo.User.UserName;
+                        t.ComId = Convert.ToInt16(UserInfo.User.ComId);
+                        t.IsDel = 0;
+                        new SZHL_ZCGL_TypeB().Insert(t);
+                        msg.Result = t;
+                    }
+                }
+                else
+                {
+                    var hys1 = new SZHL_ZCGL_TypeB().GetEntity(p => p.ComId == UserInfo.User.ComId && p.Title == t.Title && p.ID != t.ID);
+                    if (hys1 != null)
+                    {
+                        msg.ErrorMsg = "系统已经存在此类型名称";
+                    }
+                    else
+                    {
+                        new SZHL_ZCGL_TypeB().Update(t);
+                        msg.Result = t;
+                    }
+                }
+
+            }
+        }
+        /// <summary>
+        /// 删除资产类型
+        /// </summary>
+        public void DELZCGLTYPE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            int ss = int.Parse(P2);
+            SZHL_ZCGL_Type model = new SZHL_ZCGL_TypeB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
+            model.IsDel = ss;
+            new SZHL_ZCGL_TypeB().Update(model);
+
+        }
+        #endregion
     }
 }

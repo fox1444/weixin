@@ -49,16 +49,9 @@ namespace QJY.API
         #endregion
 
         #region 部门管理
-
-
         /// <summary>
         /// 添加部门
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1">部门名称</param>
-        /// <param name="P2">部门描述</param>
-        /// <param name="strUserName"></param>
         public void ADDBRANCH(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             JH_Auth_Branch branch = new JH_Auth_Branch();
@@ -68,11 +61,6 @@ namespace QJY.API
         /// <summary>
         /// 获取部门信息
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="strUserName"></param>
         public void GETBRANCHBYCODE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int code = int.Parse(P1);
@@ -83,11 +71,6 @@ namespace QJY.API
         /// <summary>
         /// 删除部门
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1">用户名</param>
-        /// <param name="P2"></param>
-        /// <param name="strUserName"></param>
         public void DELBRANCH(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
 
@@ -124,11 +107,6 @@ namespace QJY.API
         /// <summary>
         /// 获取部门列表（ztree使用）
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="strUserName"></param>
         public void GETALLBMUSERLISTNEW(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             //判断是否强制加载所有部门数据
@@ -177,7 +155,22 @@ namespace QJY.API
 
                 msg.Result = branchList;
             }
-
+        }
+        /// <summary>
+        /// 全部部门不分层级全部获取
+        /// </summary>
+        public void GETALLBRANCH(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            DataTable dt = new JH_Auth_BranchB().GetDTByCommand("select * from dbo.JH_Auth_Branch where ComId=" + UserInfo.User.ComId + " order by DeptShort desc");
+            msg.Result = dt;
+        }
+        /// <summary>
+        /// 部门下所有职务/岗位
+        /// </summary>
+        public void GETALLZHIWUBYBRANCHCODE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            DataTable dt = new JH_Auth_BranchB().GetDTByCommand("select * from jh_auth_role where rolename in (select distinct(zhiwu) from JH_Auth_User where branchcode='" + P1 + "') and IsUse='Y' and ComId=" + UserInfo.User.ComId + " order by DisplayOrder");
+            msg.Result = dt;
         }
         #endregion
 
@@ -2175,14 +2168,10 @@ namespace QJY.API
         }
         #endregion
 
+        #region 上传文件
         /// <summary>
         /// 上传文件
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void UPLOADFILE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             try
@@ -2247,11 +2236,6 @@ namespace QJY.API
         /// <summary>
         /// 上传文件（文档中心）
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void UPLOADFILES(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             try
@@ -2282,10 +2266,6 @@ namespace QJY.API
         /// <summary>
         /// 上传文件到服务器
         /// </summary>
-        /// <param name="uploadUrl"></param>
-        /// <param name="fileName"></param>
-        /// <param name="uploadFile"></param>
-        /// <returns></returns>
         public string SaveFile(string uploadUrl, string fileName, HttpPostedFile uploadFile)
         {
             try
@@ -2338,7 +2318,7 @@ namespace QJY.API
             }
 
         }
-
+        #endregion
         //设置手机APP首页显示应用
         public void SETAPPINDEX(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {

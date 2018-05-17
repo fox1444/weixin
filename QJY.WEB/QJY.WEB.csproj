@@ -213,6 +213,7 @@
     <Content Include="ViewV5\AppPage\YCGL\YCGLINDEX.html" />
     <Content Include="ViewV5\AppPage\YCGL\YCGLLIST.html" />
     <Content Include="ViewV5\AppPage\YCGL\YCGLVIEW.html" />
+    <Content Include="ViewV5\AppPage\ZCGL\TYPE.html" />
     <Content Include="ViewV5\AppPage\ZCGL\ZCGL.html" />
     <Content Include="ViewV5\AppPage\ZCGL\ZCGLTYPELIST.html" />
     <Content Include="ViewV5\AppPage\ZCGL\ZCGLLIST.html" />

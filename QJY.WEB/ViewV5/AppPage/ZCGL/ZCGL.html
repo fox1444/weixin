@@ -11,9 +11,9 @@
                     </div>
                 </li>
                 <li class="add-item add-width fl-right">
-                    <label class="add-item-label">编码</label>
+                    <label class="add-item-label"><i>*</i>登记时间</label>
                     <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.Code" />
+                        <input type="text" class="form-control szhl_form_date_time szhl_require" ms-duplex="modelData.RegistDate">
                     </div>
                 </li>
                 <li class="add-item add-width fl-left">
@@ -36,17 +36,35 @@
                     </div>
                 </li>
                 <li class="add-item add-width fl-left">
+                    <label class="add-item-label"><i>*</i>部门</label>
+                    <div class="add-ic">
+                        <select name="conBranch" id="conBranch" ms-duplex="modelData.BranchCode" class="form-control szhl_require" ms-change="LoadBranch(this.value)">
+                            <option ms-repeat-item="BranchData" ms-attr-value="item.DeptCode">{{item.DeptName}}</option>
+                        </select>
+                    </div>
+                </li>
+                <li class="add-item add-width fl-right">
+                    <label class="add-item-label">岗位</label>
+                    <div class="add-ic">
+                        <select name="conzhiwu" id="conzhiwu" ms-duplex="modelData.zhiwu" class="form-control">
+                            <option value=""></option>
+                            <option ms-repeat-item="zhiwuData" ms-attr-value="item.RoleName">{{item.RoleName}}</option>
+                        </select>
+                    </div>
+                </li>
+                <li class="add-item add-width fl-left">
+                    <label class="add-item-label">编码</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.Code" />
+                    </div>
+                </li>
+                <li class="add-item add-width fl-right">
                     <label class="add-item-label">标签</label>
                     <div class="add-ic">
                         <input type="text" class="form-control" ms-duplex="modelData.Tag" />
                     </div>
                 </li>
-                <li class="add-item add-width fl-right">
-                    <label class="add-item-label"><i>*</i>登记时间</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control szhl_form_date_time szhl_require" ms-duplex="modelData.RegistDate">
-                    </div>
-                </li>
+
             </ul>
         </div>
     </div>
@@ -56,7 +74,9 @@
         $id: "ZCGL",
         ColumnData: [],
         name: "资产管理",
-        CLData: [],
+        CLData: [],  //类型
+        BranchData: [],  //部门
+        zhiwuData: [],  //职务
         TypeId: ComFunJS.getQueryString("typeId"),
         iswf: true,//是否属于流程表单
         inittemp: function (strId) {
@@ -73,6 +93,7 @@
                     }
                 }
             })
+            tempmodel.LoadBranch();
             if (strId) {
                 //编辑加载数据
                 $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLMODEL', { P1: strId }, function (resultData) {
@@ -86,11 +107,31 @@
                 ComFunJS.initForm();
             }
         },//初始化
-
+        LoadBranch: function (bcode) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLBRANCH', {}, function (resultData) {
+                if (resultData.ErrorMsg == "") {
+                    tempmodel.BranchData = resultData.Result;
+                    if (resultData.Result.length > 0) {
+                        if (bcode) {
+                            tempmodel.modelData.BranchCode = bcode;
+                        }
+                        if (!tempmodel.modelData.BranchCode) {
+                            tempmodel.modelData.BranchCode = resultData.Result[0].DeptCode;
+                        };
+                        $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLZHIWUBYBRANCHCODE', { P1: tempmodel.modelData.BranchCode}, function (r) {
+                            if (r.ErrorMsg == "") {
+                                tempmodel.zhiwuData = r.Result;
+                                tempmodel.modelData.zhiwu = '';
+                            }
+                        })
+                    }
+                }
+            })
+        },
         modelData: { "ID": "", "Name": "", "Title": "", "Code": "", "EPCode": "", "FactoryCode": "", "Tag": "", "BranchCode": "", "zhiwu": "", "UserName": "", "Location": "", "Status": "", "TypeID": "", "Comment": "", "OrginalPrice": "0", "PresentPrice": "0", "Qty": "1", "RegistDate": "", "Depreciation": "", "CRUser": ComFunJS.getnowuser()
         },
         SaveData: function (callback) {
-            $.post("/API/VIEWAPI.ashx?ACTION=HYGL_ADDZCGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
+            $.post("/API/VIEWAPI.ashx?ACTION=ZCGL_ADDZCGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
                 return callback.call(this, result);
             });
         }

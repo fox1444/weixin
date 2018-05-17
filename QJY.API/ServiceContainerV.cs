@@ -14,7 +14,7 @@ namespace QJY.API
 
             IUnityContainer container = new UnityContainer();
            
-            container.RegisterType<IWsService, Commanage>("Commanage");//免注册接口类
+            container.RegisterType<IWsService, Commanage>("Commanage".ToUpper());//免注册接口类
 
             #region 基础模块接口
             container.RegisterType<IWsService, AuthManage>("XTGL");//基础接口
