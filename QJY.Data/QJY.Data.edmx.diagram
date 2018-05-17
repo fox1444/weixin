@@ -90,8 +90,8 @@
         <EntityTypeShape EntityType="QJY_SaaSModel.WX_RY" Width="1.5" PointX="29.375" PointY="26.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.WX_HD" Width="1.5" PointX="27.375" PointY="30.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.Message" Width="1.5" PointX="29.375" PointY="30.75" />
-        <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_ZCGL" Width="1.5" PointX="31.375" PointY="0.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_ZCGL_Type" Width="1.5" PointX="31.375" PointY="6.75" />
+        <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_ZCGL" Width="1.5" PointX="31.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

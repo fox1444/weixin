@@ -26,7 +26,7 @@ namespace QJY.Data
         public string UserName { get; set; }
         public string Location { get; set; }
         public int Status { get; set; }
-        public int Type { get; set; }
+        public int TypeID { get; set; }
         public string Comment { get; set; }
         public double OrginalPrice { get; set; }
         public double PresentPrice { get; set; }
