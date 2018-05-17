@@ -213,6 +213,9 @@
     <Content Include="ViewV5\AppPage\YCGL\YCGLINDEX.html" />
     <Content Include="ViewV5\AppPage\YCGL\YCGLLIST.html" />
     <Content Include="ViewV5\AppPage\YCGL\YCGLVIEW.html" />
+    <Content Include="ViewV5\AppPage\ZCGL\ZCGL.html" />
+    <Content Include="ViewV5\AppPage\ZCGL\ZCGLTYPELIST.html" />
+    <Content Include="ViewV5\AppPage\ZCGL\ZCGLLIST.html" />
     <Content Include="ViewV5\APP_WARN.html" />
     <Content Include="ViewV5\CSS\font_icon.css" />
     <Content Include="ViewV5\images\qrcode.png" />
@@ -1885,7 +1888,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="uploadfile\" />
-    <Folder Include="ViewV5\AppPage\ZCGL\" />
     <Folder Include="ViewV5\fileupload\" />
     <Folder Include="ViewV5\upload\" />
     <Folder Include="WX\JS\kindeditor-4.1.4\attached\" />

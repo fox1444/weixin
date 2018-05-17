@@ -140,7 +140,6 @@ namespace QJY.API
         }
         #endregion
 
-
         #region 添加会议室
         /// <summary>
         /// 添加会议室
@@ -266,11 +265,9 @@ namespace QJY.API
             msg.Result1 = list1;
         }
         #endregion
-
         #endregion
 
         #region 会议管理
-
         #region 会议列表
         /// <summary>
         /// 会议列表
@@ -565,9 +562,6 @@ namespace QJY.API
             }
 
         }
-
-
-
         #endregion
 
         #region 会议详细信息
@@ -915,7 +909,6 @@ namespace QJY.API
             msg.Result1 = total;
         }
         #endregion
-
         #endregion
 
         #region 会议信息管理

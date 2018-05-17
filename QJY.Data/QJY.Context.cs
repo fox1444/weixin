@@ -110,7 +110,7 @@ namespace QJY.Data
         public virtual DbSet<WX_RY> WX_RY { get; set; }
         public virtual DbSet<WX_HD> WX_HD { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
-        public virtual DbSet<SZHL_ZCGL> SZHL_ZCGL { get; set; }
         public virtual DbSet<SZHL_ZCGL_Type> SZHL_ZCGL_Type { get; set; }
+        public virtual DbSet<SZHL_ZCGL> SZHL_ZCGL { get; set; }
     }
 }
