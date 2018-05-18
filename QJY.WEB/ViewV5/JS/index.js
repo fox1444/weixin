@@ -593,6 +593,16 @@
                         }
                     }
                     break;
+                case "zcstatus":     //物品状态
+                    {
+                        switch (str) {
+                            case "0": str = '完好'; break;
+                            case "10": str = '损坏'; break;
+                            case "20": str = '残缺'; break;
+                            case "40": str = '老化'; break;
+                        }
+                    }
+                    break;
                 default: {
 
                 }

@@ -6,17 +6,17 @@
     <!-- 按条件选择 -->
     <div class="tab-filter-type">
         <div class="oh">
-            <h5 class="pull-left tr">类型：</h5>
+            <h5 class="pull-left tr">资产类型：</h5>
             <ul class="tab-type ft14">
                 <li ms-click="SelectTYPE('')"><span class="active">全部</span></li>
-                <li ms-repeat-el="TypeData" ms-click="SelectTYPE(el.ID)"><span>{{el.Name}}</span></li>
+                <li ms-repeat-el="TypeData" ms-click="SelectTYPE(el.ID)"><span>{{el.Title}}</span></li>
             </ul>
         </div>
 
         <!-- 搜索 -->
         <div class="oh">
             <div class="input-group ml15" style="width:295px;">
-                <input type="search" class="form-control" ms-duplex="search.searchcontent" placeholder="搜索资产名称">
+                <input type="search" class="form-control" ms-duplex="search.searchcontent" placeholder="搜索资产名称或者编号">
                 <span class="input-group-addon" ms-click="GetLIST()">搜索</span>
             </div>
         </div>
@@ -86,10 +86,6 @@
         $id: "ZCGLLIST",
         curTYPE: "",
         tmpListData: [],
-        SelectType: function (type) {
-            model.search.seartype = type;
-            tempindex.GetLIST();
-        },
         SelectTYPE: function (type) {
             tempindex.curTYPE = type;
             tempindex.GetLIST();
@@ -105,10 +101,10 @@
             model.ShowColumns.pushArray([
                 { "ColName": "Name", "ColText": "名称", "IsSel": true, "format": "text", "type": "link" },
                 { "ColName": "Code", "ColText": "编码", "IsSel": true, "format": "text" },
-                { "ColName": "UserName", "ColText": "责任人", "IsSel": true, "format": "text" },
+                { "ColName": "UserRealName", "ColText": "责任人", "IsSel": true, "format": "text" },
                 { "ColName": "Location", "ColText": "存放地址", "IsSel": true, "format": "text", "len": 10  },
-                { "ColName": "Type", "ColText": "类型", "width": "10%", IsSel: true, "format": "text" },
-                { "ColName": "Status", "ColText": "状态", "IsSel": true, "format": "text" },
+                { "ColName": "Title", "ColText": "类型", "width": "10%", IsSel: true, "format": "text" },
+                { "ColName": "Status", "ColText": "状态", "IsSel": true, "format": "zcstatus" },
             ]);
             //类型数据
             tempindex.GetTYPE();
