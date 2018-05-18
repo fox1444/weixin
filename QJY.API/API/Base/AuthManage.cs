@@ -238,7 +238,6 @@ namespace QJY.API
         #endregion
 
         #region 组织部门、人员
-
         /// <summary>
         /// 添加人员
         /// </summary>
@@ -351,11 +350,7 @@ namespace QJY.API
         /// <summary>
         /// 根据用户删除用户
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
         /// <param name="P1">用户名</param>
-        /// <param name="P2"></param>
-        /// <param name="strUserName"></param>
         public void DELUSER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
 
@@ -381,7 +376,6 @@ namespace QJY.API
         /// <param name="strUserName"></param>
         public void UPDATEUSERISUSE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-
             JH_Auth_User UPUser = new JH_Auth_UserB().GetUserByUserName(UserInfo.QYinfo.ComId, P1);
             UPUser.IsUse = P2;
 
@@ -394,16 +388,137 @@ namespace QJY.API
             {
                 msg.ErrorMsg = "更新失败";
             }
-
         }
-
         public void SETISSHOWYD(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             JH_Auth_User user = UserInfo.User;
             user.IsShowYD = 1;
             new JH_Auth_UserB().Update(user);
         }
+        /// <summary>
+        /// 导出员工
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="msg"></param>
+        /// <param name="P1"></param>
+        /// <param name="P2"></param>
+        /// <param name="UserInfo"></param>
+        public void EXPORTYG(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            GETUSERBYCODENEW_PAGE(context, msg, P1, P2, UserInfo);
 
+            DataTable dt = msg.Result;
+
+            string sqlCol = "ID,UserOrder|序号,DeptName|部门,RoomCode|房间号,UserName|账号,UserRealName|姓名,Sex|性别,mobphone|手机,QQ|QQ,weixinCard|微信,mailbox|邮箱,telphone|座机,zhiwu|职务,Usersign|职责,UserGW|岗位,IDCard|身份证,HomeAddress|家庭住址";
+            DataTable dtResult = dt.DelTableCol(sqlCol);
+            DataTable dtExtColumn = new JH_Auth_ExtendModeB().GetExtColumnAll(UserInfo.QYinfo.ComId, "YGGL");
+            foreach (DataRow drExt in dtExtColumn.Rows)
+            {
+                dtResult.Columns.Add(drExt["TableFiledName"].ToString(), Type.GetType("System.String"));
+            }
+
+            if (dtExtColumn.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dtResult.Rows)
+                {
+                    DataTable dtExtData = new JH_Auth_ExtendModeB().GetExtDataAll(UserInfo.QYinfo.ComId, "YGGL", dr["ID"].ToString());
+                    foreach (DataRow drExtData in dtExtData.Rows)
+                    {
+                        dr[drExtData["TableFiledName"].ToString()] = drExtData["ExtendDataValue"].ToString();
+                    }
+                }
+            }
+            dtResult.Columns.Remove("ID");
+            CommonHelp ch = new CommonHelp();
+            msg.ErrorMsg = ch.ExportToExcel("员工", dtResult);
+        }
+        public void SETBRANCHLEADER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string strSql = string.Format("UPDATE JH_Auth_Branch set BranchLeader='{0}' where  DeptCode={1}", P1, P2);
+            new JH_Auth_BranchB().ExsSql(strSql);
+        }
+        public void SETUSERLEADER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string strSql = string.Format("UPDATE JH_Auth_User set UserLeader='{0}' where  username='{1}' and ComID={2}", P1, P2, UserInfo.User.ComId);
+            new JH_Auth_BranchB().ExsSql(strSql);
+        }
+        #endregion
+
+        #region 根据条件获取用户信息
+        /// <summary>
+        /// 根据用户名获取用户信息
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="msg"></param>
+        /// <param name="P1"></param>
+        /// <param name="P2"></param>
+        /// <param name="UserInfo"></param>
+        public void GETUSERBYUSERNAME(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            //如果获取当前用户信息，直接返回，否则按用户名查找
+            if (P1 == UserInfo.User.UserName)
+            {
+                msg.Result = UserInfo;
+                if (!string.IsNullOrEmpty(UserInfo.User.Files))
+                {
+                    int[] FilesIds = UserInfo.User.Files.SplitTOInt(',');
+                    msg.Result1 = new FT_FileB().GetEntities(d => FilesIds.Contains(d.ID));
+                    msg.Result2 = UserInfo.QYinfo.CRDate.Value.AddYears(1);
+                }
+            }
+            else
+            {
+                UserInfo = new JH_Auth_UserB().GetUserInfo(UserInfo.User.ComId.Value, P1);
+                msg.Result = UserInfo;
+                if (!string.IsNullOrEmpty(UserInfo.User.Files))
+                {
+                    int[] FilesIds = UserInfo.User.Files.SplitTOInt(',');
+                    msg.Result1 = new FT_FileB().GetEntities(d => FilesIds.Contains(d.ID));
+                    msg.Result2 = UserInfo.QYinfo.CRDate.Value.AddYears(1);
+                }
+            }
+        }
+        /// <summary>
+        /// 根据用手机号获取用户信息
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="msg"></param>
+        /// <param name="P1"></param>
+        /// <param name="P2"></param>
+        /// <param name="UserInfo"></param>
+        public void GETUSERBYPHONENUMBER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            if (P1 != "")
+            {
+                JH_Auth_User uu = new JH_Auth_UserB().GetUserByPhoneNumber(P1);
+                if (uu != null)
+                    msg.Result = uu;
+                else
+                    msg.ErrorMsg = "未查询到用户信息";
+            }
+            else
+            {
+                msg.ErrorMsg = "未查询到用户信息";
+            }
+        }
+        /// <summary>
+        /// 根据部门和职务获取用户列表
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="msg"></param>
+        /// <param name="P1">BranchCode</param>
+        /// <param name="P2">zhiwu名称</param>
+        /// <param name="UserInfo"></param>
+        public void GETUSERLISTBYBRANCHANDZHIWU(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int deptCode = 0;
+            if (!int.TryParse(P1, out deptCode))
+            {
+                deptCode = 1;
+            }
+            DataTable dtUser = new JH_Auth_UserB().GetUserListbyBranchandzhiwu(deptCode, P2, UserInfo.QYinfo.ComId);
+            msg.Result = dtUser;
+        }
         /// <summary>
         /// 根据部门编号获取部门人员
         /// </summary>
@@ -423,7 +538,7 @@ namespace QJY.API
             msg.Result = dtUser;
         }
         /// <summary>
-        /// 根据用户名串获取部门人员
+        /// 根据用户名字符串获取人员列表
         /// </summary>
         public void GETUSERBYUSERNAMES(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
@@ -431,7 +546,7 @@ namespace QJY.API
             msg.Result = dtUser;
         }
         /// <summary>
-        /// 根据部门编号获取部门人员
+        /// 根据部门编号获取部门人员列表分页
         /// </summary>
         /// <param name="context"></param>
         /// <param name="msg"></param>
@@ -479,37 +594,6 @@ namespace QJY.API
             msg.Result1 = Math.Ceiling(total * 1.0 / 8);
             msg.Result2 = total;
         }
-        //导出员工
-        public void EXPORTYG(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
-        {
-            GETUSERBYCODENEW_PAGE(context, msg, P1, P2, UserInfo);
-
-            DataTable dt = msg.Result;
-
-            string sqlCol = "ID,UserOrder|序号,DeptName|部门,RoomCode|房间号,UserName|账号,UserRealName|姓名,Sex|性别,mobphone|手机,QQ|QQ,weixinCard|微信,mailbox|邮箱,telphone|座机,zhiwu|职务,Usersign|职责,UserGW|岗位,IDCard|身份证,HomeAddress|家庭住址";
-            DataTable dtResult = dt.DelTableCol(sqlCol);
-            DataTable dtExtColumn = new JH_Auth_ExtendModeB().GetExtColumnAll(UserInfo.QYinfo.ComId, "YGGL");
-            foreach (DataRow drExt in dtExtColumn.Rows)
-            {
-                dtResult.Columns.Add(drExt["TableFiledName"].ToString(), Type.GetType("System.String"));
-            }
-
-            if (dtExtColumn.Rows.Count > 0)
-            {
-                foreach (DataRow dr in dtResult.Rows)
-                {
-                    DataTable dtExtData = new JH_Auth_ExtendModeB().GetExtDataAll(UserInfo.QYinfo.ComId, "YGGL", dr["ID"].ToString());
-                    foreach (DataRow drExtData in dtExtData.Rows)
-                    {
-                        dr[drExtData["TableFiledName"].ToString()] = drExtData["ExtendDataValue"].ToString();
-                    }
-                }
-            }
-            dtResult.Columns.Remove("ID");
-            CommonHelp ch = new CommonHelp();
-            msg.ErrorMsg = ch.ExportToExcel("员工", dtResult);
-        }
-
         /// <summary>
         /// 根据部门编号获取可用人员
         /// </summary>
@@ -528,12 +612,18 @@ namespace QJY.API
             DataTable dtUser = new JH_Auth_UserB().GetUserListbyBranchUse(deptCode, P2, UserInfo);
             msg.Result = dtUser;
         }
-        //根据角色获取用户
+        /// <summary>
+        /// 根据角色获取用户列表
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="msg"></param>
+        /// <param name="P1"></param>
+        /// <param name="P2"></param>
+        /// <param name="UserInfo"></param>
         public void GETUSERBYROLECODE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int roleCode = int.Parse(P1);
             msg.Result = new JH_Auth_UserRoleB().GetUserDTByRoleCode(roleCode, UserInfo.User.ComId.Value);
-
         }
         /// <summary>
         /// 获取前端需要的人员选择列表
@@ -544,18 +634,7 @@ namespace QJY.API
             //获取选择用户需要的HTML和转化用户名需要的json数据
             msg.Result = dtUsers;
         }
-
-        public void SETBRANCHLEADER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
-        {
-            string strSql = string.Format("UPDATE JH_Auth_Branch set BranchLeader='{0}' where  DeptCode={1}", P1, P2);
-            new JH_Auth_BranchB().ExsSql(strSql);
-        }
-        public void SETUSERLEADER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
-        {
-            string strSql = string.Format("UPDATE JH_Auth_User set UserLeader='{0}' where  username='{1}' and ComID={2}", P1, P2, UserInfo.User.ComId);
-            new JH_Auth_BranchB().ExsSql(strSql);
-        }
-        #endregion
+        #endregion     
 
         #region 获取当前人员下属人员的接口
         public void GETCHILDRENUSER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
@@ -955,48 +1034,6 @@ namespace QJY.API
             msg.Result = dt.OrderBy(" num desc");
         }
         #endregion
-
-        public void GETUSERBYUSERNAME(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
-        {
-            //如果获取当前用户信息，直接返回，否则按用户名查找
-            if (P1 == UserInfo.User.UserName)
-            {
-                msg.Result = UserInfo;
-                if (!string.IsNullOrEmpty(UserInfo.User.Files))
-                {
-                    int[] FilesIds = UserInfo.User.Files.SplitTOInt(',');
-                    msg.Result1 = new FT_FileB().GetEntities(d => FilesIds.Contains(d.ID));
-                    msg.Result2 = UserInfo.QYinfo.CRDate.Value.AddYears(1);
-                }
-            }
-            else
-            {
-                UserInfo = new JH_Auth_UserB().GetUserInfo(UserInfo.User.ComId.Value, P1);
-                msg.Result = UserInfo;
-                if (!string.IsNullOrEmpty(UserInfo.User.Files))
-                {
-                    int[] FilesIds = UserInfo.User.Files.SplitTOInt(',');
-                    msg.Result1 = new FT_FileB().GetEntities(d => FilesIds.Contains(d.ID));
-                    msg.Result2 = UserInfo.QYinfo.CRDate.Value.AddYears(1);
-                }
-            }
-        }
-        public void GETUSERBYPHONENUMBER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
-        {
-            //如果获取当前用户信息，直接返回，否则按用户名查找
-            if (P1 != "")
-            {
-                JH_Auth_User uu = new JH_Auth_UserB().GetUserByPhoneNumber(P1);
-                if (uu != null)
-                    msg.Result = uu;
-                else
-                    msg.ErrorMsg = "未查询到用户信息";
-            }
-            else
-            {
-                msg.ErrorMsg = "未查询到用户信息";
-            }
-        }
 
         #region 字典管理
         public void GETZIDIANLIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
@@ -2319,7 +2356,16 @@ namespace QJY.API
 
         }
         #endregion
-        //设置手机APP首页显示应用
+
+        #region 设置手机APP首页显示应用
+        /// <summary>
+        /// 设置手机APP首页显示应用
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="msg"></param>
+        /// <param name="P1"></param>
+        /// <param name="P2"></param>
+        /// <param name="UserInfo"></param>
         public void SETAPPINDEX(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             string type = context.Request["type"] ?? "APPINDEX";//默认为APP首页显示菜单，传值为PC首页的快捷方式按钮
@@ -2348,6 +2394,7 @@ namespace QJY.API
             msg.Result = customData;
 
         }
+        #endregion
 
         #region 设置部门人员的查看权限
         public void SETBRANCHQX(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
@@ -2689,6 +2736,7 @@ namespace QJY.API
         #endregion
     }
 
+    #region 类
     public class WXUserBR
     {
         public int DeptCode { get; set; }
@@ -2713,5 +2761,6 @@ namespace QJY.API
         public int? DataID { get; set; }
         public string ExtendDataValue { get; set; }
     }
+    #endregion
 
 }

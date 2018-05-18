@@ -36,7 +36,7 @@ namespace QJY.API
             searchstr = searchstr.TrimEnd();
             if (searchstr != "")
             {
-                strWhere += string.Format(" And ( z.Name like '%{0}%' )", searchstr);
+                strWhere += string.Format(" And ( z.Name like '%{0}%'  or z.Code like '%{0}%')", searchstr);
             }
             int DataID = -1;
             int.TryParse(context.Request.QueryString["ID"] ?? "-1", out DataID);//记录Id
@@ -58,7 +58,7 @@ namespace QJY.API
 
             DataTable dt = new DataTable();
 
-            dt = new SZHL_ZCGLB().GetDataPager("SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID", "z.*,t.Title ", pagecount, page, " z.CRDate desc", strWhere, ref total);
+            dt = new SZHL_ZCGLB().GetDataPager("SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID left join JH_Auth_User u on z.UserName=u.UserName", "z.*, u.UserRealName, t.Title ", pagecount, page, " z.CRDate desc", strWhere, ref total);
 
             msg.Result = dt;
             msg.Result1 = total;
@@ -92,7 +92,7 @@ namespace QJY.API
             }
             if (string.IsNullOrWhiteSpace(ZC.Name))
             {
-                msg.ErrorMsg = "名称不能为空";
+                msg.ErrorMsg = "名称不能为空！";
                 return;
             }
             if (ZC.TypeID <= 0)
@@ -100,20 +100,40 @@ namespace QJY.API
                 msg.ErrorMsg = "请选择资产类型！";
                 return;
             }
-
+            if (ZC.Status < 0)
+            {
+                msg.ErrorMsg = "请选择物品状态！";
+                return;
+            }
+            if (ZC.Qty <= 0)
+            {
+                msg.ErrorMsg = "请输入数量！";
+                return;
+            }
             if (ZC.ID == 0)
             {
-
-
-                //可用会议室需要优化，根据时间段来判断会议室是否可用
-                //List<SZHL_HYGL_ROOM> car1 = new SZHL_HYGL_ROOMB().GetEntities(d => d.ComId == UserInfo.User.ComId && d.ID == HY.RoomID && d.Status == "1" && d.IsDel == 0).ToList();
-
+                ZC.CRDate = DateTime.Now;
+                ZC.CRUser = UserInfo.User.UserName;
+                ZC.ComId = UserInfo.User.ComId.Value;
+                ZC.IsDel = 0;
+                new SZHL_ZCGLB().Insert(ZC);
             }
             else
             {
                 new SZHL_ZCGLB().Update(ZC);
             }
             msg.Result = ZC;
+        }
+        /// <summary>
+        /// 删除资产
+        /// </summary>
+        public void DELZCGLMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            SZHL_ZCGL model = new SZHL_ZCGLB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
+            model.IsDel = 1;
+            new SZHL_ZCGLB().Update(model);
+
         }
         #endregion
 
@@ -150,7 +170,7 @@ namespace QJY.API
             msg.Result = dt;
             msg.Result1 = total;
         }
-     
+
         /// <summary>
         /// 资产类型详细信息
         /// </summary>

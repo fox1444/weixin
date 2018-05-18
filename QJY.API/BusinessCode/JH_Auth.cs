@@ -67,7 +67,6 @@ namespace QJY.API
             branchmodel = new JH_Auth_UserB().GetEntity(d => d.mobphone == PhoneNumber);
             return branchmodel;
         }
-
         public string GetUserRealName(int intComid, string strUserName)
         {
             JH_Auth_User User = new JH_Auth_UserB().GetUserByUserName(intComid, strUserName);
@@ -80,7 +79,6 @@ namespace QJY.API
                 return User.UserRealName;
             }
         }
-
         public void UpdateloginDate(int ComId, string strUser)
         {
             string strSql = string.Format("UPDATE JH_Auth_User SET logindate='{0}' WHERE ComId={1} and UserName = '{2}'", DateTime.Now, ComId, strUser.ToFormatLike());
@@ -92,7 +90,6 @@ namespace QJY.API
             string strSql = string.Format("UPDATE JH_Auth_User SET UserPass='{0}' WHERE ComId={1} and UserName in ('{2}')", strNewPassWord, ComId, strUser.ToFormatLike());
             new JH_Auth_UserB().ExsSql(strSql);
         }
-
 
         /// <summary>
         /// 根据部门获取用户列表
@@ -113,7 +110,21 @@ namespace QJY.API
             DataTable dt = new JH_Auth_UserB().GetDTByCommand(strSQL + " ORDER by b.DeptCode,u.UserOrder asc");
             return dt;
         }
-
+        /// <summary>
+        /// 根据部门和职务获取用户列表
+        /// </summary>
+        /// <param name="branchCode"></param>
+        /// <param name="zhiwu"></param>
+        /// <param name="strFilter">姓名，部门，手机号</param>
+        /// <param name="ComId"></param>
+        /// <returns></returns>
+        public DataTable GetUserListbyBranchandzhiwu(int branchCode, string zhiwu, int ComId)
+        {
+            string strSQL = "select u.*,b.DeptName,b.DeptCode from  JH_Auth_User u  inner join JH_Auth_Branch b on u.branchCode=b.DeptCode where  ";
+            strSQL += string.Format(" u.branchCode={0} and zhiwu<>'' and zhiwu='{1}' and IsUse='Y' ", branchCode, zhiwu);
+            DataTable dt = new JH_Auth_UserB().GetDTByCommand(strSQL + " ORDER by b.DeptShort, u.UserOrder asc");
+            return dt;
+        }
         /// <summary>
         /// 根据用户名串获取用户列表
         /// </summary>
