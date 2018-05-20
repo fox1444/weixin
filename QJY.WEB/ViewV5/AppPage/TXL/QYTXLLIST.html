@@ -6,11 +6,6 @@
     .jg-right {
         padding-top: 20px;
     }
-    /*.main-content {
-    clear:both;
-    display:table;
-    content:""
-    }*/
 </style>
 <div ms-controller="YGINDEX">
     <div class="jg-left pull-left ft14">
@@ -20,7 +15,7 @@
                 <div class="jg-item" ms-class-1="active:branch.DeptCode==SelDeptItem.DeptCode">
                     <b ms-click="BranchClick(branch,$event)">
                         <i class="caret" ms-click="BranchToggle(this,$event)" ms-class-1="active:branch.ChildBranch.size()>0"></i>
-                        <span class="jg-name">{{branch.DeptName}}</span>
+                        <span class="jg-name">{{FnFormat(branch.DeptName,'short')|html}}</span>
                     </b>
                     <div class="jg-sz">
                         <span class="iconfont icon-dayin" ms-click="OpenPrint(branch,$event)"></span>
@@ -133,7 +128,7 @@
         InitWigetData: function () {
             model.ShowColumns.clear();
             model.ShowColumns.pushArray([
-                { "ColName": "DeptName", "ColText": "部门", "IsSel": true, "format": "text" },
+                { "ColName": "DeptName", "ColText": "部门", "IsSel": true, "format": "text"},
                 { "ColName": "zhiwu", "ColText": "职务", "IsSel": true, "format": "text" },
                 { "ColName": "mobphone", "ColText": "手机", "IsSel": true, "format": "text" },
                 { "ColName": "isgz", "ColText": "关注状态", "IsSel": false, "format": "gzstatus" },
@@ -169,7 +164,8 @@
             ]);
             tempindex.GetBranch();
             ComFunJS.initForm();
-        }, GetUserList: function () {
+        },
+        GetUserList: function () {
             $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETUSERBYCODENEW_PAGE', { "P1": tempindex.SelDeptItem.DeptCode, P2: tempindex.searchContent, pagecount: model.page.pagecount, p: 1 }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.UserData = resultData.Result;
@@ -202,7 +198,8 @@
                 tempindex.SelDeptItem = resultData.Result[0];
                 tempindex.GetUserList();
             })
-        }, BranchToggle: function (dom, event) {
+        },
+        BranchToggle: function (dom, event) {
             if (event) {
                 event.stopPropagation();
             }
@@ -214,7 +211,8 @@
                 $(dom).parent().parent().next(".children-list").slideToggle('fast');
 
             }
-        }, BranchClick: function (item, event) {
+        },
+        BranchClick: function (item, event) {
             if (event) {
                 event.stopPropagation();
             }
@@ -222,12 +220,14 @@
             tempindex.SelDeptItem = item.$model;
             tempindex.GetUserList();
 
-        }, OpenPrint: function (item, event) {
+        },
+        OpenPrint: function (item, event) {
             if (event) {
                 event.stopPropagation();
             }
             top.ComFunJS.winviewform("/ViewV5/AppPage/TXL/TXLPrint.html?branchId=" + item.DeptCode, "数据打印", "1000", "");
-        }, GetWXStatus: function (s) {
+        },
+        GetWXStatus: function (s) {
             var statusName = "";
             //关注状态: 1 = 已关注，2 = 已禁用，4 = 未关注
             switch (s) {
@@ -245,6 +245,21 @@
                     break;
             }
             return statusName;
+        },
+        FnFormat: function (str, format) { //格式化
+            if (str && format) {
+                switch (format) {
+                    case "short":
+                        {
+                            return ComFunJS.convstr(str + "", 12);
+                        }
+                        break;
+                    default: {
+                        return "";
+                    }
+                }
+            }
+            return str;
         }
     });
 

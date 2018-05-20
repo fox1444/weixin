@@ -206,6 +206,8 @@ public partial class QJY_SaaSEntities : DbContext
 
     public virtual DbSet<SZHL_ZCGL_Type> SZHL_ZCGL_Type { get; set; }
 
+    public virtual DbSet<SZHL_ZCGL_Location> SZHL_ZCGL_Location { get; set; }
+
 }
 
 }

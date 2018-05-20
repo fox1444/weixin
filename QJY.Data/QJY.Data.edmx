@@ -1518,6 +1518,7 @@
           <Property Name="BranchCode" Type="int" Nullable="false" />
           <Property Name="zhiwu" Type="varchar" MaxLength="50" />
           <Property Name="UserName" Type="varchar" MaxLength="100" />
+          <Property Name="LocationID" Type="int" />
           <Property Name="Location" Type="varchar" MaxLength="500" />
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="TypeID" Type="int" Nullable="false" />
@@ -1527,6 +1528,20 @@
           <Property Name="Qty" Type="int" Nullable="false" />
           <Property Name="RegistDate" Type="datetime" Nullable="false" />
           <Property Name="Depreciation" Type="int" Nullable="false" />
+          <Property Name="CRUser" Type="varchar" MaxLength="50" />
+          <Property Name="CRDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SZHL_ZCGL_Location">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="ImagesIds" Type="varchar" MaxLength="500" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="CRUser" Type="varchar" MaxLength="50" />
           <Property Name="CRDate" Type="datetime" Nullable="false" />
           <Property Name="IsDel" Type="int" Nullable="false" />
@@ -1821,6 +1836,7 @@
           <EntitySet Name="SZHL_YCGL" EntityType="Self.SZHL_YCGL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_YCGL_CAR" EntityType="Self.SZHL_YCGL_CAR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_ZCGL" EntityType="Self.SZHL_ZCGL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SZHL_ZCGL_Location" EntityType="Self.SZHL_ZCGL_Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_ZCGL_Type" EntityType="Self.SZHL_ZCGL_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_Group" EntityType="Self.WX_Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_HD" EntityType="Self.WX_HD" Schema="dbo" store:Type="Tables" />
@@ -1926,6 +1942,7 @@
           <EntitySet Name="Messages" EntityType="QJY_SaaSModel.Message" />
           <EntitySet Name="SZHL_ZCGL" EntityType="QJY_SaaSModel.SZHL_ZCGL" />
           <EntitySet Name="SZHL_ZCGL_Type" EntityType="QJY_SaaSModel.SZHL_ZCGL_Type" />
+          <EntitySet Name="SZHL_ZCGL_Location" EntityType="QJY_SaaSModel.SZHL_ZCGL_Location" />
         </EntityContainer>
         <EntityType Name="FT_File">
           <Key>
@@ -3653,6 +3670,7 @@
           <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDel" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" />
         </EntityType>
         <EntityType Name="SZHL_ZCGL_Type">
           <Key>
@@ -3662,6 +3680,20 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDel" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SZHL_ZCGL_Location">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ImagesIds" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -5460,6 +5492,7 @@
           <EntitySetMapping Name="SZHL_ZCGL">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL">
               <MappingFragment StoreEntitySet="SZHL_ZCGL">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
                 <ScalarProperty Name="IsDel" ColumnName="IsDel" />
                 <ScalarProperty Name="CRDate" ColumnName="CRDate" />
                 <ScalarProperty Name="CRUser" ColumnName="CRUser" />
@@ -5492,6 +5525,21 @@
                 <ScalarProperty Name="CRDate" ColumnName="CRDate" />
                 <ScalarProperty Name="CRUser" ColumnName="CRUser" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SZHL_ZCGL_Location">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL_Location">
+              <MappingFragment StoreEntitySet="SZHL_ZCGL_Location">
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="ImagesIds" ColumnName="ImagesIds" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

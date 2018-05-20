@@ -1,14 +1,14 @@
-﻿<div ms-controller="TYPELIST">
+﻿<div ms-controller="LOCATIONLIST">
     <!-- 添加按钮 -->
     <div class="btn-add">
-        <button type="button" class="btn btn-info btn-lg" ms-click="AddView('ZCGL_TYPE')"><i class="iconfont icon-jiahao ft12 mr5"></i>添加类型</button>
+        <button type="button" class="btn btn-info btn-lg" ms-click="AddView('ZCGL_LOCATION')"><i class="iconfont icon-jiahao ft12 mr5"></i>添加场地</button>
     </div>
     <!-- 按条件选择 -->
     <div class="tab-filter-type">
         <!-- 搜索 -->
         <div class="oh">
             <div class="input-group ml15" style="width:295px;">
-                <input type="search" class="form-control" ms-duplex="search.searchcontent" placeholder="搜索类型">
+                <input type="search" class="form-control" ms-duplex="search.searchcontent" placeholder="搜索场地">
                 <span class="input-group-addon" ms-click="GetLIST()">搜索</span>
             </div>
         </div>
@@ -38,13 +38,13 @@
                     </td>
                     <td ms-repeat-im="ShowColumns" ms-visible="im.IsSel">{{FnFormat(el[im.ColName],im)|html}}</td>
                     <td>
-                        <a class="cz-btn ft18 bj-color tip" data-toggle="tooltip" title="编辑" ms-click="EditForm('ZCGL_TYPE',el.ID,'',$event)">
+                        <a class="cz-btn ft18 bj-color tip" data-toggle="tooltip" title="编辑" ms-click="EditForm('ZCGL_Location',el.ID,'',$event)">
                             <i class="iconfont icon-bianji"></i>
                         </a>
-                        <a class="cz-btn ft18 sc-color tip" data-toggle="tooltip" ms-if="el.IsDel==0" title="禁用" ms-click="DelHYS(el,1,$event)">
+                        <a class="cz-btn ft18 sc-color tip" data-toggle="tooltip" ms-if="el.IsDel==0" title="禁用" ms-click="Del(el,1,$event)">
                             <i class="iconfont icon-stop"></i>
                         </a>
-                        <a class="cz-btn ft18 sc-color tip" data-toggle="tooltip" ms-if="el.IsDel==1" title="启用" ms-click="DelHYS(el,0,$event)">
+                        <a class="cz-btn ft18 sc-color tip" data-toggle="tooltip" ms-if="el.IsDel==1" title="启用" ms-click="Del(el,0,$event)">
                             <i class="iconfont icon-qidong"></i>
                         </a>
                     </td>
@@ -75,7 +75,7 @@
 <script>
 
     var tempindex = avalon.define({
-        $id: "TYPELIST",
+        $id: "LOCATIONLIST",
         curXJType: "",
         tmpListData:[],
         SelectType: function (type) {
@@ -96,7 +96,7 @@
             //显示的列名
             model.ShowColumns.clear();
             model.ShowColumns.pushArray([
-                { "ColName": "Title", "ColText": "类型名称", "IsSel": true, "format": "text" },
+                { "ColName": "Title", "ColText": "场地名称", "IsSel": true, "format": "text" },
                 { "ColName": "Comment", "ColText": "简介", "IsSel": true, "format": "text", "len": " 20" },
                 { "ColName": "DisplayOrder", "ColText": "排序", "IsSel": true, "format": "text" },
                 { "ColName": "IsDel", "ColText": "状态", "IsSel": true, "format": "hyszt" }
@@ -110,7 +110,7 @@
         GetLIST: function () {
             model.page.pageindex = 1;
             tempindex.tmpListData.clear();
-            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELIST_PAGE', { p: 1, P1: model.search.searchcontent, P2: model.search.seartype, pagecount: model.page.pagecount, Content: model.search.searchcontent, lb: tempindex.curXJType }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLIST_PAGE', { p: 1, P1: model.search.searchcontent, P2: model.search.seartype, pagecount: model.page.pagecount, Content: model.search.searchcontent, lb: tempindex.curXJType }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.tmpListData = resultData.Result;
                     if (tempindex.tmpListData.size() == 0) { model.isnull = true; } else { model.isnull = false; }
@@ -122,7 +122,7 @@
                         skin: 'molv',
                         jump: function (e) { //触发分页后的回调
                             if (e.curr != model.page.pageindex) {
-                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELIST_PAGE', { p: e.curr, P1: model.search.searchcontent, P2: model.search.seartype, pagecount: model.page.pagecount, Content: model.search.searchcontent, lb: tempindex.curXJType }, function (resultData) {
+                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLIST_PAGE', { p: e.curr, P1: model.search.searchcontent, P2: model.search.seartype, pagecount: model.page.pagecount, Content: model.search.searchcontent, lb: tempindex.curXJType }, function (resultData) {
                                     if (resultData.ErrorMsg == "") {
                                         tempindex.tmpListData = resultData.Result;
                                     }
@@ -134,14 +134,14 @@
                 }
             })
         },
-        DelHYS: function (item, str, event) {
+        Del: function (item, str, event) {
             if (event.stopPropagation) {
                 event.stopPropagation();
             }
             var msg = "禁用";
             if (str == "0") { msg = "启用"; }
-            top.ComFunJS.winconfirm("确认要" + msg + "该类型吗", function () {
-                $.post("/API/VIEWAPI.ashx?ACTION=ZCGL_DELZCGLTYPE", { P1: item.ID, P2: str }, function (result) {
+            top.ComFunJS.winconfirm("确认要" + msg + "该场地吗", function () {
+                $.post("/API/VIEWAPI.ashx?ACTION=ZCGL_DELZCGLLOCATION", { P1: item.ID, P2: str }, function (result) {
                     if ($.trim(result.ErrorMsg) == "") {
                         item.IsDel = parseInt(str);
                         top.ComFunJS.winsuccess("操作成功");

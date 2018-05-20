@@ -4,6 +4,17 @@
             <!--<div class="fg-item"><span>基本信息</span></div>-->
             <ul class="clearfix" style="display: block;padding:0">
                 <li class="add-item add-width fl-left">
+                    <label class="add-item-label">编码</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.Code" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <!--<div class="fg-item"><span>基本信息</span></div>-->
+            <ul class="clearfix" style="display: block;padding:0">
+                <li class="add-item add-width fl-left">
                     <label class="add-item-label"><i>*</i>名称</label>
                     <div class="add-ic">
                         <input type="text" autofocus="autofocus" class="form-control szhl_require" ms-duplex="modelData.Name" />
@@ -29,8 +40,11 @@
                         <select class="form-control" ms-duplex="modelData.Status">
                             <option value="0" selected="selected">完好</option>
                             <option value="10">损坏</option>
-                            <option value="20">残缺</option>
-                            <option value="30">老化</option>
+                            <option value="20">丢失</option>
+                            <option value="30">闲置</option>
+                            <option value="40">维修</option>
+                            <option value="50">待报废</option>
+                            <option value="60">已报废</option>
                         </select>
                     </div>
                 </li>
@@ -43,7 +57,7 @@
                 <li class="add-item add-width fl-right">
                     <label class="add-item-label"><i>*</i>部门</label>
                     <div class="add-ic">
-                        <select name="conBranch" id="conBranch" ms-duplex="modelData.BranchCode" class="form-control szhl_require" ms-change="LoadZhiwu(this.value,true)">
+                        <select name="conBranch" id="conBranch" ms-duplex="modelData.BranchCode" class="form-control szhl_require" ms-change="LoadZhiwu(this.value,modelData.zhiwu,true)">
                             <option ms-repeat-item="BranchData" ms-attr-value="item.DeptCode">{{item.DeptName}}</option>
                         </select>
                     </div>
@@ -69,7 +83,11 @@
                 <li class="add-item add-width fl-left">
                     <label class="add-item-label">存放地址</label>
                     <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.Location" />
+                        <!--<input type="text" class="form-control" ms-duplex="modelData.Location" />-->
+                        <select name="conLocationID" id="conLocationID" ms-duplex="modelData.LocationID" class="form-control">
+                            <option value="0"></option>
+                            <option ms-repeat-item="LocationData" ms-attr-value="item.ID">{{item.Title}}</option>
+                        </select>
                     </div>
                 </li>
                 <li class="add-item add-width fl-right">
@@ -128,37 +146,27 @@
         BranchData: [],  //部门
         zhiwuData: [],  //职务
         UserData: [],  //责任人
+        LocationData: [],//场地
         iswf: true,//是否属于流程表单
-        inittemp: function (strId) {
-            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELIST', {}, function (resultData) {
-                if (resultData.ErrorMsg == "") {
-                    tempmodel.CLData = resultData.Result;
-                    if (resultData.Result.length > 0) {
-                        if (tempmodel.TypeId) {
-                            tempmodel.modelData.TypeID = tempmodel.TypeId;
-                        }
-                        if (!tempmodel.modelData.TypeID) {
-                            tempmodel.modelData.TypeID = resultData.Result[0].ID;
-                        };
-                    }
-                }
-            })
-
+        inittemp: function (strId) {           
+            tempmodel.LoadType();
+            tempmodel.LoadLocation();
             if (strId) {
                 //编辑加载数据
                 $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLMODEL', { P1: strId }, function (resultData) {
                     if (resultData.ErrorMsg == "") {
                         tempmodel.modelData = resultData.Result[0];
-                        tempmodel.LoadBranch();
-                        tempmodel.LoadZhiwu(tempmodel.modelData.BranchCode, false);
+                        tempmodel.LoadBranch(tempmodel.modelData.BranchCode);
                         tempmodel.LoadUser(tempmodel.modelData.BranchCode, tempmodel.modelData.zhiwu, false);
                         setTimeout(" ComFunJS.initForm()", 500);
                     }
                 })
             } else {
+                tempmodel.LoadBranch();
                 pmodel.isDraft = true;
                 ComFunJS.initForm();
             }
+            
         },//初始化
         LoadBranch: function (bcode) {
             //部门列表
@@ -172,19 +180,22 @@
                         if (!tempmodel.modelData.BranchCode) {
                             tempmodel.modelData.BranchCode = resultData.Result[0].DeptCode;
                         };
+
+                        tempmodel.LoadZhiwu(tempmodel.modelData.BranchCode, tempmodel.modelData.zhiwu, false);
                     }
                 }
             })
         },
-        LoadZhiwu: function (bcode, clear) {
+        LoadZhiwu: function (bcode, zhiwu, clear) {
             //职务列表
             $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLZHIWUBYBRANCHCODE&r=' + Math.random(), { P1: bcode }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempmodel.zhiwuData = resultData.Result;
                     tempmodel.modelData.BranchCode = bcode;
-                    tempmodel.modelData.zhiwu = '';
-                    tempmodel.UserData = '';    
+                    tempmodel.modelData.zhiwu = zhiwu;
                     if (clear) {
+                        tempmodel.modelData.zhiwu = '';
+                        tempmodel.UserData = '';
                         $('#conzhiwu').val('');//不能删，不然职务列表抽风
                     }
                 }
@@ -195,14 +206,38 @@
             $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETUSERLISTBYBRANCHANDZHIWU&r=' + Math.random(), { P1: bcode, P2: zhiwu }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempmodel.UserData = resultData.Result;
-                    tempmodel.modelData.UserName = '';//需把之前选择的人员清空
+                    tempmodel.modelData.BranchCode = bcode;
+                    tempmodel.modelData.zhiwu = zhiwu;
                     if (clear) {
+                        tempmodel.modelData.UserName = '';//需把之前选择的人员清空
                         $('#conUserName').val('');
                     }
                 }
             })
         },
-        modelData: { "ComId": "0", "ID": "0", "Name": "", "Code": "", "EPCode": "", "FactoryCode": "", "Tag": "", "BranchCode": "", "zhiwu": "", "UserName": "", "Location": "", "Status": "0", "TypeID": "", "Comment": "", "OrginalPrice": "0", "PresentPrice": "0", "Qty": "1", "RegistDate": "", "Depreciation": "0", "CRUser": ComFunJS.getnowuser(), "CRDate": ComFunJS.getnowdate('yyyy-mm-dd hh:mm'), "IsDel": "0" },
+        LoadType: function () {
+            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELIST', {}, function (resultData) {
+                if (resultData.ErrorMsg == "") {
+                    tempmodel.CLData = resultData.Result;
+                    if (resultData.Result.length > 0) {
+                        if (tempmodel.TypeId) {
+                            tempmodel.modelData.TypeID = tempmodel.TypeId;
+                        }
+                        if (!tempmodel.modelData.TypeID) {
+                            tempmodel.modelData.TypeID = resultData.Result[0].ID;
+                        };
+                    }
+                }
+            })
+        },
+        LoadLocation: function () {
+            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLIST', {}, function (resultData) {
+                if (resultData.ErrorMsg == "") {
+                    tempmodel.LocationData = resultData.Result;
+                }
+            })
+        },
+        modelData: { "ComId": "0", "ID": "0", "Name": "", "Code": "", "EPCode": "", "FactoryCode": "", "Tag": "", "BranchCode": "", "zhiwu": "", "UserName": "", "LocationID": "0", "Location": "", "Status": "0", "TypeID": "", "Comment": "", "OrginalPrice": "0", "PresentPrice": "0", "Qty": "1", "RegistDate": "", "Depreciation": "0", "CRUser": ComFunJS.getnowuser(), "CRDate": ComFunJS.getnowdate('yyyy-mm-dd hh:mm'), "IsDel": "0" },
         SaveData: function (callback) {
             $.post("/API/VIEWAPI.ashx?ACTION=ZCGL_ADDZCGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
                 return callback.call(this, result);

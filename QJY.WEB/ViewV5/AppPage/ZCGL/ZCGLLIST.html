@@ -47,7 +47,7 @@
 
                     <td>
                         <span class="btn-click">
-                            <a class="cz-btn ft18 bj-color tip" data-toggle="tooltip" title="编辑" ms-if="el.CRUser==userName" ms-click="AddView('ZCGL','修改资产',el.ID,$event)">
+                            <a class="cz-btn ft18 bj-color tip" data-toggle="tooltip" title="编辑" ms-if="el.CRUser==userName" ms-click="AddView('ZCGL','编辑资产',el.ID,$event)">
                                 <i class="iconfont icon-bianji"></i>
                             </a>
                             <a class="cz-btn ft18 sc-color tip" data-toggle="tooltip" title="删除" ms-if="el.CRUser==userName" ms-click="Del(el,$event)">
@@ -63,7 +63,6 @@
             </tfoot>
         </table>
         <div class="ui-datatable-page ft14 pl20">
-
             <div id="pageDiv" ms-visible="model.page.total>model.pageNum[0].num" class="pull-right"></div>
             <div class="pull-right" ms-visible="tmpListData.size()!=0">
                 <span>共{{model.page.total}}条记录</span>
@@ -100,11 +99,12 @@
             model.ShowColumns.clear();
             model.ShowColumns.pushArray([
                 { "ColName": "Name", "ColText": "名称", "IsSel": true, "format": "text", "type": "link" },
-                { "ColName": "Code", "ColText": "编码", "IsSel": true, "format": "text" },
+                { "ColName": "Code", "ColText": "编码", "IsSel": true, "format": "text"},
+                { "ColName": "zhiwu", "ColText": "岗位", "IsSel": true, "format": "text" },
                 { "ColName": "UserRealName", "ColText": "责任人", "IsSel": true, "format": "text" },
-                { "ColName": "Location", "ColText": "存放地址", "IsSel": true, "format": "text", "len": 10  },
+                { "ColName": "LocTitle", "ColText": "存放地址", "IsSel": true, "format": "text", "len": 10  },
                 { "ColName": "Title", "ColText": "类型", "width": "10%", IsSel: true, "format": "text" },
-                { "ColName": "Status", "ColText": "状态", "IsSel": true, "format": "zcstatus" },
+                { "ColName": "Status", "ColText": "状态", "IsSel": true, "format": "zcstatus"},
             ]);
             //类型数据
             tempindex.GetTYPE();
@@ -146,7 +146,7 @@
         },
         View: function (id, piid, event) {
             if ($(event).hasClass("lk")) {
-                ComFunJS.winviewform("/ViewV5/AppPage/ZCGL/ZCGLView.html?ID=" + id + "&PIID=" + piid + "&r=" + Math.random(), "详细信息");
+                ComFunJS.winviewform("/ViewV5/AppPage/ZCGL/ZCGLView.html?ID=" + id + "&r=" + Math.random(), "资产详细信息");
             }
         },
         Del: function (el, event) {

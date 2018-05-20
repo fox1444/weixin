@@ -371,6 +371,7 @@ namespace QJY.API
     public class MessageB : BaseEFDao<Message> { }
     public class SZHL_ZCGLB : BaseEFDao<SZHL_ZCGL> { }
     public class SZHL_ZCGL_TypeB : BaseEFDao<SZHL_ZCGL_Type> { }
+    public class SZHL_ZCGL_LocationB : BaseEFDao<SZHL_ZCGL_Location> { }
     public class WX_RYB : BaseEFDao<WX_RY> { }
     public class WX_HDB : BaseEFDao<WX_HD> { }
     public class WX_GroupB : BaseEFDao<WX_Group> { }

@@ -302,7 +302,7 @@
         if (event) {
             event.stopPropagation();
         }
-        ComFunJS.winviewform("/ViewV5/AppPage/APP_ADD_WF.html?FormCode=" + code + "&ID=" + ID + "&PIID=" + PIID + "&r=" + Math.random(), "修改", "1000");
+        ComFunJS.winviewform("/ViewV5/AppPage/APP_ADD_WF.html?FormCode=" + code + "&ID=" + ID + "&PIID=" + PIID + "&r=" + Math.random(), "编辑", "1000");
     },
     UseYYList: [],
     GetYYList: function () {
@@ -598,8 +598,11 @@
                         switch (str) {
                             case "0": str = '完好'; break;
                             case "10": str = '损坏'; break;
-                            case "20": str = '残缺'; break;
-                            case "40": str = '老化'; break;
+                            case "20": str = '丢失'; break;
+                            case "30": str = '闲置'; break;
+                            case "40": str = '维修'; break;
+                            case "50": str = '待报废'; break;
+                            case "60": str = '已报废'; break;
                         }
                     }
                     break;

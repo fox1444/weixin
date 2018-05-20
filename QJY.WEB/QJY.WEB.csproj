@@ -213,6 +213,9 @@
     <Content Include="ViewV5\AppPage\YCGL\YCGLINDEX.html" />
     <Content Include="ViewV5\AppPage\YCGL\YCGLLIST.html" />
     <Content Include="ViewV5\AppPage\YCGL\YCGLVIEW.html" />
+    <Content Include="ViewV5\AppPage\ZCGL\LOCATION.html" />
+    <Content Include="ViewV5\AppPage\ZCGL\ZCGLLOCATIONLIST.html" />
+    <Content Include="ViewV5\AppPage\ZCGL\ZCGLVIEW.html" />
     <Content Include="ViewV5\AppPage\ZCGL\TYPE.html" />
     <Content Include="ViewV5\AppPage\ZCGL\ZCGL.html" />
     <Content Include="ViewV5\AppPage\ZCGL\ZCGLTYPELIST.html" />

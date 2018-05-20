@@ -58,7 +58,7 @@ namespace QJY.API
 
             DataTable dt = new DataTable();
 
-            dt = new SZHL_ZCGLB().GetDataPager("SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID left join JH_Auth_User u on z.UserName=u.UserName", "z.*, u.UserRealName, t.Title ", pagecount, page, " z.CRDate desc", strWhere, ref total);
+            dt = new SZHL_ZCGLB().GetDataPager("SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID left join SZHL_ZCGL_Location l on z.LocationID=l.ID left join JH_Auth_User u on z.UserName=u.UserName", "z.*, u.UserRealName, t.Title, l.Title as LocTitle", pagecount, page, " z.CRDate desc", strWhere, ref total);
 
             msg.Result = dt;
             msg.Result1 = total;
@@ -71,8 +71,8 @@ namespace QJY.API
         {
             int Id = int.Parse(P1);
             string strWhere = " z.IsDel=0 and z.ComId=" + UserInfo.User.ComId + " and z.ID=" + Id;
-            string colNme = @"z.*, t.Title ";
-            string tableName = string.Format(@" SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID");
+            string colNme = @"z.*, t.Title, l.Title as LocTitle, b.DeptName,u.UserRealName ";
+            string tableName = string.Format(@" SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID left join SZHL_ZCGL_Location l on z.LocationID=l.ID left join JH_Auth_Branch b on z.BranchCode=b.DeptCode left join JH_Auth_User u on z.UserName=u.UserName");
 
             string strSql = string.Format("Select {0}  From {1} where {2} order by z.CRDate desc", colNme, tableName, strWhere);
             DataTable dt = new SZHL_ZCGLB().GetDTByCommand(strSql);
@@ -237,6 +237,110 @@ namespace QJY.API
             SZHL_ZCGL_Type model = new SZHL_ZCGL_TypeB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
             model.IsDel = ss;
             new SZHL_ZCGL_TypeB().Update(model);
+
+        }
+        #endregion
+
+        #region 资产场地管理
+        /// <summary>
+        /// 所有资产类型列表
+        /// </summary>
+        public void GETZCGLLOCATIONLIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            //var list = new SZHL_ZCGL_TypeB().GetEntities(p => p.IsDel == 0);
+            DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select * from dbo.SZHL_ZCGL_LOCATION where IsDel=0 and ComId=" + UserInfo.User.ComId + " order by DisplayOrder");
+            msg.Result = dt;
+        }
+        /// <summary>
+        /// 资产类型分页列表
+        /// </summary>  
+        public void GETZCGLLOCATIONLIST_PAGE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string strWhere = " cc.ComId=" + UserInfo.User.ComId;
+            //strWhere += string.Format(" And cc.CRUser='{0}' ", UserInfo.User.UserName);
+            if (P1 != "")
+            {
+                strWhere += string.Format(" And cc.Title like '%{0}%'", P1);
+            }
+
+            int page = 0;
+            int pagecount = 10;
+            int.TryParse(context.Request.QueryString["p"] ?? "1", out page);
+            int.TryParse(context.Request.QueryString["pagecount"] ?? "10", out pagecount);//页数
+            page = page == 0 ? 1 : page;
+            int total = 0;
+            DataTable dt = new SZHL_ZCGL_TypeB().GetDataPager(" SZHL_ZCGL_LOCATION cc", "cc.*", pagecount, page, " cc.DisplayOrder", strWhere, ref total);
+
+            msg.Result = dt;
+            msg.Result1 = total;
+        }
+
+        /// <summary>
+        /// 资产类型详细信息
+        /// </summary>
+        public void GETLOCATIONMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            SZHL_ZCGL_Location model = new SZHL_ZCGL_LocationB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
+            msg.Result = model;
+        }
+        /// <summary>
+        /// 添加资产类型
+        /// </summary>
+        public void ADDLOCATION(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            SZHL_ZCGL_Location t = JsonConvert.DeserializeObject<SZHL_ZCGL_Location>(P1);
+
+            if (string.IsNullOrEmpty(t.Title))
+            {
+                msg.ErrorMsg = "类型名称不能为空!";
+            }
+
+            if (string.IsNullOrEmpty(msg.ErrorMsg))
+            {
+                if (t.ID == 0)
+                {
+                    var t1 = new SZHL_ZCGL_LocationB().GetEntity(p => p.ComId == UserInfo.User.ComId && p.Title == t.Title);
+                    if (t1 != null)
+                    {
+                        msg.ErrorMsg = "系统已经存在此类型名称!";
+                    }
+                    else
+                    {
+                        t.CRDate = DateTime.Now;
+                        t.CRUser = UserInfo.User.UserName;
+                        t.ComId = Convert.ToInt16(UserInfo.User.ComId);
+                        t.IsDel = 0;
+                        new SZHL_ZCGL_LocationB().Insert(t);
+                        msg.Result = t;
+                    }
+                }
+                else
+                {
+                    var hys1 = new SZHL_ZCGL_LocationB().GetEntity(p => p.ComId == UserInfo.User.ComId && p.Title == t.Title && p.ID != t.ID);
+                    if (hys1 != null)
+                    {
+                        msg.ErrorMsg = "系统已经存在此类型名称";
+                    }
+                    else
+                    {
+                        new SZHL_ZCGL_LocationB().Update(t);
+                        msg.Result = t;
+                    }
+                }
+
+            }
+        }
+        /// <summary>
+        /// 删除资产类型
+        /// </summary>
+        public void DELZCGLLOCATION(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            int ss = int.Parse(P2);
+            SZHL_ZCGL_Location model = new SZHL_ZCGL_LocationB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
+            model.IsDel = ss;
+            new SZHL_ZCGL_LocationB().Update(model);
 
         }
         #endregion

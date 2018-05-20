@@ -294,6 +294,9 @@
     <Compile Include="SZHL_ZCGL.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>
+    <Compile Include="SZHL_ZCGL_Location.cs">
+      <DependentUpon>QJY.tt</DependentUpon>
+    </Compile>
     <Compile Include="SZHL_ZCGL_Type.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>

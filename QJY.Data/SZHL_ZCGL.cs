@@ -62,6 +62,8 @@ public partial class SZHL_ZCGL
 
     public int IsDel { get; set; }
 
+    public Nullable<int> LocationID { get; set; }
+
 }
 
 }

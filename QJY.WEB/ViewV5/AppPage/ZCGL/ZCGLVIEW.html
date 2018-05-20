@@ -1,0 +1,167 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>资产详情</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1473753044_842232.css">
+    <link rel="stylesheet" type="text/css" href="/ViewV5/CSS/bootstrap3.3.5/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/ViewV5/CSS/animate.css">
+    <link rel="stylesheet" type="text/css" href="/ViewV5/CSS/index.css">
+    <link rel="stylesheet" type="text/css" href="/ViewV5/CSS/default.css">
+    <style>
+    </style>
+</head>
+
+<body style="background-color: #F8F8F8; height: 100%;" ms-controller="ZCGLVIEW">
+    <div class="padding20">
+        <div class="card card3 mb20">
+            <div class="detail-nav">
+                <div class="tab-kh nav-bt">
+                    <span class="cur"><i class="iconfont icon-bookmark"></i>资产信息</span>
+                    <div class="pr20" style="float: right;">
+                        <button class="btn btn-info" ms-if="nowuser==modelData.CRUser" ms-click="Edit()">编辑</button>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-con">
+                <div class="detail-item" ms-repeat-el="ShowColumns" ms-class-1="{{el.class}}">
+                    <span class="item-tit">{{el.ColText}}</span>
+                    <div class="item-con ">{{FnFormat(modelData[el.ColName],el)|html}}</div>
+                </div>
+                <div class="detail-item">
+                    <span class="item-tit">二维码</span>
+                    <div class="fj clearfix mt10">
+                        <img ms-attr-src="{{model.EWMcode}}" class="EWM-medium" align="left" style=" float:left; vertical-align:top; clear:both;" />
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <span class="item-tit">二维码</span>
+                    <canvas id="cvs" class="fj clearfix mt10" width="200" height="250" style="margin:20px auto;display: block; float:left;">
+                        当前浏览器不支持canvas
+                        <!-- 如果浏览器支持canvas，则canvas标签里的内容不会显示出来 -->
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/ViewV5/JS/jquery-1.11.2.min.js"></script>
+    <script src="/ViewV5/JS/layer/layer.js"></script>
+    <script src="/ViewV5/CSS/bootstrap3.3.5/js/bootstrap.js"></script>
+    <script src="/ViewV5/JS/avalon1.47.js"></script>
+    <script src="/ViewV5/JS/SZHLCommon.js?jsver=20160915"></script>
+    <script src="/ViewV5/JS/YSteps/Steps.js"></script>
+    <script type="text/javascript">
+        $(".padding20 .lookright-box .menu-general ul li").each(function (i) {
+            $(this).click(function () {
+                $(this).addClass("active").siblings().removeClass("active");
+                model.modelData.pltype = i + 2;
+            });
+        });
+
+        var model = avalon.define({
+            $id: "ZCGLVIEW",
+            modelData: {},
+            ShowColumns: [],
+            tpData: [],
+            plData: [],
+            plStatus: "",
+            EWMcode: "",
+            strId: ComFunJS.getQueryString("ID"),
+            nowuser: ComFunJS.getnowuser(),
+            GetModelData: function () {
+                if (model.strId) {
+                    //编辑加载数据
+                    $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLMODEL', { P1: model.strId }, function (resultData) {
+                        if (resultData.ErrorMsg == "") {
+                            if (resultData.Result.length > 0) {
+                                model.modelData = resultData.Result[0];
+                                model.EWMcode = "http://qr.liantu.com/api.php?text=" + ComFunJS.yuming + "/View_Mobile/UI/zcDetail_index.html?id=" + model.modelData.ID + "&bg=ffffff&fg=007457&w=600&logo=" + ComFunJS.yuming + "/View_Mobile/images/tobacco-logo-icon.png";
+
+                                //获取canvas元素
+                                var cvs = document.getElementById("cvs");
+                                //创建image对象
+                                var imgObj = new Image();
+                                imgObj.src = model.EWMcode;
+                                //待图片加载完后，将其显示在canvas上
+                                imgObj.onload = function () {
+                                    var ctx = cvs.getContext('2d');
+                                    ctx.drawImage(this, 0, 0, 200, 200);//this即是imgObj,保持图片的原始大小：200*200
+
+                                    ctx.fillStyle = '#000';   // 文字填充颜色  
+                                    ctx.font = "normal 15px 微软雅黑";
+                                    //ctx.textAlign = "center";
+                                    ctx.fillText(model.modelData.Name, 10, 215);
+                                    //ctx.drawImage(this, 0, 0,1024,768);//改变图片的大小到1024*768
+                                }
+
+                            }
+                            setTimeout(" ComFunJS.initForm()", 500)
+                        }
+                    })
+                }
+            },
+            Edit: function (ID) {
+                window.location.href = "/ViewV5/AppPage/APP_ADD_WF.html?FormCode=ZCGL&id=" + model.modelData.ID;
+            },
+            FnFormat: function (str, fmt) { //格式化
+                switch (fmt.format) {
+                    case "dateformat":
+                        {
+                            return ComFunJS.getnowdate("yyyy-mm-dd hh:mm", str);
+                        }
+                        break;
+                    case "zcstatus":     //物品状态
+                        {
+                            if (str == "0") return "完好";
+                            else if (str == "10") return "损坏";
+                            else if (str == "20") return "丢失";
+                            else if (str == "30") return "闲置";
+                            else if (str == "40") return "维修";
+                            else if (str == "50") return "待报废";
+                            else if (str == "60") return "已报废";
+                        }
+                    case "text":
+                        {
+                            var len = fmt.len || 20;
+                            return ComFunJS.convstr(str + "", len);
+                        }
+                        break;
+                    default: {
+                        return str;
+                    }
+                }
+            }
+        });
+        avalon.ready(function () {
+            model.ShowColumns.pushArray(
+                [
+                    { "ColName": "Code", "ColText": "编码", "IsSel": true },
+                    { "ColName": "Name", "ColText": "名称", "IsSel": true, "class": "width50" },
+                    { "ColName": "RegistDate", "ColText": "登记日期", "IsSel": true, "class": "width50", "format": "dateformat" },
+                    { "ColName": "Title", "ColText": "资产类型", "width": "10%", IsSel: true, "class": "width50" },
+                    { "ColName": "Status", "ColText": "物品状态", "IsSel": true, "class": "width50", "format": "zcstatus" },
+                    { "ColName": "Qty", "ColText": "数量", "IsSel": true, "class": "width50" },
+                    { "ColName": "DeptName", "ColText": "部门", "IsSel": true, "class": "width50" },
+                    { "ColName": "zhiwu", "ColText": "岗位", "IsSel": true, "class": "width50" },
+                    { "ColName": "UserRealName", "ColText": "责任人", "IsSel": true, "class": "width50" },
+                    { "ColName": "LocTitle", "ColText": "存放地址", "IsSel": true, "class": "width50" },
+                    { "ColName": "Tag", "ColText": "标签", "IsSel": true, "class": "width50" },
+                    { "ColName": "EPCode", "ColText": "EPC编码", "IsSel": true, "class": "width50" },
+                    { "ColName": "FactoryCode", "ColText": "出厂编码", "IsSel": true, "class": "width50" },
+                    { "ColName": "OrginalPrice", "ColText": "原值(元)", "IsSel": true, "class": "width50" },
+                    { "ColName": "PresentPrice", "ColText": "现值(元)", "IsSel": true, "class": "width50" },
+                    { "ColName": "Depreciation", "ColText": "折旧年限", "IsSel": true, "class": "width50" },
+                    { "ColName": "Comment", "ColText": "备注", "IsSel": true },
+                ]);
+
+            model.GetModelData();
+
+
+        })
+    </script>
+</body>
+</html>
