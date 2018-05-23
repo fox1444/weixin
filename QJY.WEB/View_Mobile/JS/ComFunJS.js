@@ -1747,6 +1747,35 @@ var ComFunJS = {
             ComFunJS.winwarning("请求失败！");
         })
     },
+
+    FnFormat: function (str, fmt) { //格式化
+        switch (fmt.format) {
+            case "dateformat":
+                {
+                    return ComFunJS.getnowdate("yyyy-mm-dd hh:mm", str);
+                }
+                break;
+            case "zcstatus":     //物品状态
+                {
+                    if (str == "0") return "完好";
+                    else if (str == "10") return "损坏";
+                    else if (str == "20") return "丢失";
+                    else if (str == "30") return "闲置";
+                    else if (str == "40") return "维修";
+                    else if (str == "50") return "待报废";
+                    else if (str == "60") return "已报废";
+                }
+            case "text":
+                {
+                    var len = fmt.len || 20;
+                    return ComFunJS.convstr(str + "", len);
+                }
+                break;
+            default: {
+                return str;
+            }
+        }
+    }
 }
 
 ComFunJS.initsetajax();

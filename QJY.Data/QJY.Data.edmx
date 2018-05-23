@@ -1531,6 +1531,7 @@
           <Property Name="CRUser" Type="varchar" MaxLength="50" />
           <Property Name="CRDate" Type="datetime" Nullable="false" />
           <Property Name="IsDel" Type="int" Nullable="false" />
+          <Property Name="Managezhiwu" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="SZHL_ZCGL_Location">
           <Key>
@@ -3671,6 +3672,7 @@
           <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDel" Type="Int32" Nullable="false" />
           <Property Name="LocationID" Type="Int32" />
+          <Property Name="Managezhiwu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SZHL_ZCGL_Type">
           <Key>
@@ -5492,6 +5494,7 @@
           <EntitySetMapping Name="SZHL_ZCGL">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL">
               <MappingFragment StoreEntitySet="SZHL_ZCGL">
+                <ScalarProperty Name="Managezhiwu" ColumnName="Managezhiwu" />
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
                 <ScalarProperty Name="IsDel" ColumnName="IsDel" />
                 <ScalarProperty Name="CRDate" ColumnName="CRDate" />

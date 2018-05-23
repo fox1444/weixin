@@ -610,8 +610,6 @@
 
                 }
             }
-
-
         }
         if (fmt.len) {
             str = str.length > fmt.len ? str.substring(0, fmt.len) + '...' : str;
@@ -685,7 +683,8 @@
                 top.ComFunJS.winsuccess((model.QDStatus == 1 ? "签到" : "签退") + "成功");
             }
         })
-    }, InitData: function () {
+    },
+    InitData: function () {
         $.post("/API/VIEWAPI.ashx", { Action: "INIT_INITMODELTYPE" }, function (result) {
 
         })

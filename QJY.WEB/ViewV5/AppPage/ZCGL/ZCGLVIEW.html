@@ -31,17 +31,15 @@
                     <span class="item-tit">{{el.ColText}}</span>
                     <div class="item-con ">{{FnFormat(modelData[el.ColName],el)|html}}</div>
                 </div>
-                <div style=" clear:both;">
-                    </div>
-                <div class="detail-item">
+                <!--<div class="detail-item">
                     <span class="item-tit">二维码</span>
                     <div class="fj clearfix mt10">
                         <img ms-attr-src="{{model.EWMcode}}" class="EWM-medium" align="left" style=" float:left; vertical-align:top; clear:both;" />
                     </div>
-                </div>
+                </div>-->
                 <div class="detail-item">
                     <span class="item-tit">二维码</span>
-                    <canvas id="cvs" class="fj clearfix mt10" width="200" height="230" style="display: block; float:left;">
+                    <canvas id="cvs" class="fj clearfix mt10">
                         当前浏览器不支持canvas
                         <!-- 如果浏览器支持canvas，则canvas标签里的内容不会显示出来 -->
                     </canvas>
@@ -81,25 +79,9 @@
                         if (resultData.ErrorMsg == "") {
                             if (resultData.Result.length > 0) {
                                 model.modelData = resultData.Result[0];
-                                model.EWMcode = "http://qr.liantu.com/api.php?text=" + ComFunJS.yuming + "/View_Mobile/UI/zcDetail_index.html?id=" + model.modelData.ID + "&bg=ffffff&fg=007457&w=600&logo=" + ComFunJS.yuming + "/View_Mobile/images/tobacco-logo-icon.png";
+                                model.EWMcode = "http://qr.liantu.com/api.php?text=" + ComFunJS.yuming + "/WX/bgxt/zc_Detail.html?id=" + model.modelData.ID + "&bg=ffffff&fg=007457&w=600&logo=" + ComFunJS.yuming + "/View_Mobile/images/tobacco-logo-icon.png";
 
-                                //获取canvas元素
-                                var cvs = document.getElementById("cvs");
-                                //创建image对象
-                                var imgObj = new Image();
-                                imgObj.src = model.EWMcode;
-                                //待图片加载完后，将其显示在canvas上
-                                imgObj.onload = function () {
-                                    var ctx = cvs.getContext('2d');
-                                    ctx.drawImage(this, 0, 0, 200, 200);//this即是imgObj,保持图片的原始大小：200*200
-
-                                    ctx.fillStyle = '#000';   // 文字填充颜色  
-                                    ctx.font = "normal 15px 微软雅黑";
-                                    //ctx.textAlign = "center";
-                                    ctx.fillText(model.modelData.Name, 10, 215);
-                                    //ctx.drawImage(this, 0, 0,1024,768);//改变图片的大小到1024*768
-                                }
-
+                                ComFunJS.DrawEWMcancas('cvs', model.EWMcode, model.modelData.Name);
                             }
                             setTimeout(" ComFunJS.initForm()", 500)
                         }
@@ -141,22 +123,23 @@
         avalon.ready(function () {
             model.ShowColumns.pushArray(
                 [
-                    { "ColName": "Code", "ColText": "编码", "IsSel": true },
-                    { "ColName": "Name", "ColText": "名称", "IsSel": true, "class": "width50" },
-                    { "ColName": "RegistDate", "ColText": "登记日期", "IsSel": true, "class": "width50", "format": "dateformat" },
+                    { "ColName": "Code", "ColText": "资产编码", "IsSel": true },
+                    { "ColName": "Name", "ColText": "资产名称", "IsSel": true, "class": "width50" },
+                    { "ColName": "RegistDate", "ColText": "开始使用日期", "IsSel": true, "class": "width50", "format": "dateformat" },
                     { "ColName": "Title", "ColText": "资产类型", "width": "10%", IsSel: true, "class": "width50" },
-                    { "ColName": "Status", "ColText": "物品状态", "IsSel": true, "class": "width50", "format": "zcstatus" },
+                    { "ColName": "Status", "ColText": "使用状态", "IsSel": true, "class": "width50", "format": "zcstatus" },
                     { "ColName": "Qty", "ColText": "数量", "IsSel": true, "class": "width50" },
-                    { "ColName": "DeptName", "ColText": "部门", "IsSel": true, "class": "width50" },
-                    { "ColName": "zhiwu", "ColText": "岗位", "IsSel": true, "class": "width50" },
-                    { "ColName": "UserRealName", "ColText": "责任人", "IsSel": true, "class": "width50" },
-                    { "ColName": "LocTitle", "ColText": "存放地址", "IsSel": true, "class": "width50" },
+                    //{ "ColName": "DeptName", "ColText": "公司", "IsSel": true, "class": "width50" },
+                    { "ColName": "zhiwu", "ColText": "部门", "IsSel": true, "class": "width50" },
+                    { "ColName": "UserRealName", "ColText": "使用人", "IsSel": true, "class": "width50" },
+                    { "ColName": "LocTitle", "ColText": "存放地点", "IsSel": true, "class": "width50" },
                     { "ColName": "Tag", "ColText": "标签", "IsSel": true, "class": "width50" },
                     { "ColName": "EPCode", "ColText": "EPC编码", "IsSel": true, "class": "width50" },
                     { "ColName": "FactoryCode", "ColText": "出厂编码", "IsSel": true, "class": "width50" },
                     { "ColName": "OrginalPrice", "ColText": "原值(元)", "IsSel": true, "class": "width50" },
                     { "ColName": "PresentPrice", "ColText": "现值(元)", "IsSel": true, "class": "width50" },
                     { "ColName": "Depreciation", "ColText": "折旧年限", "IsSel": true, "class": "width50" },
+                    { "ColName": "Managezhiwu", "ColText": "管理部门", "IsSel": true, "class": "width50" },
                     { "ColName": "Comment", "ColText": "备注", "IsSel": true },
                 ]);
 

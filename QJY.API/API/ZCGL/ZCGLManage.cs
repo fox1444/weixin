@@ -65,12 +65,58 @@ namespace QJY.API
 
         }
         /// <summary>
+        /// 当前用户的资产列表
+        /// </summary>
+
+        public void GETZCGLLISTTHISUSER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string userName = UserInfo.User.UserName;
+            string strWhere = " z.IsDel=0 and z.ComId=" + UserInfo.User.ComId + " and z.UserName='"+ userName + "'";
+
+            string typeid = context.Request["typeid"] ?? "";
+            if (typeid != "")
+            {
+                strWhere += string.Format(" And z.TypeID='{0}' ", typeid);
+            }
+            string searchstr = context.Request["searchstr"] ?? "";
+            searchstr = searchstr.TrimEnd();
+            if (searchstr != "")
+            {
+                strWhere += string.Format(" And ( z.Name like '%{0}%'  or z.Code like '%{0}%')", searchstr);
+            }
+            int DataID = -1;
+            int.TryParse(context.Request.QueryString["ID"] ?? "-1", out DataID);//记录Id
+            if (DataID != -1)
+            {
+                string strIsHasDataQX = new JH_Auth_QY_ModelB().ISHASDATAREADQX("ZCGL", DataID, UserInfo);
+                if (strIsHasDataQX == "Y")
+                {
+                    strWhere += string.Format(" And z.ID = '{0}'", DataID);
+                }
+            }
+
+            int page = 0;
+            int pagecount = 10;
+            int.TryParse(context.Request.QueryString["p"] ?? "1", out page);
+            int.TryParse(context.Request.QueryString["pagecount"] ?? "10", out pagecount);//页数
+            page = page == 0 ? 1 : page;
+            int total = 0;
+
+            DataTable dt = new DataTable();
+
+            dt = new SZHL_ZCGLB().GetDataPager("SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID left join SZHL_ZCGL_Location l on z.LocationID=l.ID left join JH_Auth_User u on z.UserName=u.UserName left join JH_Auth_Branch b on z.BranchCode=b.DeptCode", "z.*, b.DeptName,  u.UserRealName, t.Title, l.Title as LocTitle", pagecount, page, " z.CRDate desc", strWhere, ref total);
+
+            msg.Result = dt;
+            msg.Result1 = total;
+
+        }
+        /// <summary>
         /// 资产详细信息
         /// </summary>
         public void GETZCGLMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int Id = int.Parse(P1);
-            string strWhere = " z.IsDel=0 and z.ComId=" + UserInfo.User.ComId + " and z.ID=" + Id;
+            string strWhere = " z.IsDel=0  and z.ID=" + Id;
             string colNme = @"z.*, t.Title, l.Title as LocTitle, b.DeptName,u.UserRealName ";
             string tableName = string.Format(@" SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID left join SZHL_ZCGL_Location l on z.LocationID=l.ID left join JH_Auth_Branch b on z.BranchCode=b.DeptCode left join JH_Auth_User u on z.UserName=u.UserName");
 

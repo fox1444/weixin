@@ -15,7 +15,7 @@
                 <div class="jg-item" ms-class-1="active:branch.DeptCode==SelDeptItem.DeptCode">
                     <b ms-click="BranchClick(branch,$event)">
                         <i class="caret" ms-click="BranchToggle(this,$event)" ms-class-1="active:branch.ChildBranch.size()>0"></i>
-                        <span class="jg-name">{{FnFormat(branch.DeptName,'short')|html}}</span>
+                        <span class="jg-name">{{ComFunJS.convstr(branch.DeptName, 12)|html}}</span>
                     </b>
                     <div class="jg-sz">
                         <span class="iconfont icon-dayin" ms-click="OpenPrint(branch,$event)"></span>
@@ -129,7 +129,8 @@
             model.ShowColumns.clear();
             model.ShowColumns.pushArray([
                 { "ColName": "DeptName", "ColText": "部门", "IsSel": true, "format": "text"},
-                { "ColName": "zhiwu", "ColText": "职务", "IsSel": true, "format": "text" },
+                { "ColName": "zhiwu", "ColText": "岗位", "IsSel": true, "format": "text" },
+                { "ColName": "UserGW", "ColText": "职务", "IsSel": true, "format": "text" },
                 { "ColName": "mobphone", "ColText": "手机", "IsSel": true, "format": "text" },
                 { "ColName": "isgz", "ColText": "关注状态", "IsSel": false, "format": "gzstatus" },
                 { "ColName": "telphone", "ColText": "座机", "IsSel": false, "format": "text" },
@@ -246,21 +247,7 @@
             }
             return statusName;
         },
-        FnFormat: function (str, format) { //格式化
-            if (str && format) {
-                switch (format) {
-                    case "short":
-                        {
-                            return ComFunJS.convstr(str + "", 12);
-                        }
-                        break;
-                    default: {
-                        return "";
-                    }
-                }
-            }
-            return str;
-        }
+        
     });
 
     function jptj(event) {

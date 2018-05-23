@@ -21,7 +21,7 @@
                     </div>
                 </li>
                 <li class="add-item add-width fl-right">
-                    <label class="add-item-label"><i>*</i>登记时间</label>
+                    <label class="add-item-label"><i>*</i>开始使用日期</label>
                     <div class="add-ic">
                         <input type="text" class="form-control szhl_form_date_time szhl_require" ms-duplex="modelData.RegistDate">
                     </div>
@@ -35,7 +35,7 @@
                     </div>
                 </li>
                 <li class="add-item add-width fl-right">
-                    <label class="add-item-label"><i>*</i>物品状态</label>
+                    <label class="add-item-label"><i>*</i>使用状态</label>
                     <div class="add-ic">
                         <select class="form-control" ms-duplex="modelData.Status">
                             <option value="0" selected="selected">完好</option>
@@ -55,7 +55,7 @@
                     </div>
                 </li>
                 <li class="add-item add-width fl-right">
-                    <label class="add-item-label"><i>*</i>部门</label>
+                    <label class="add-item-label"><i>*</i>公司</label>
                     <div class="add-ic">
                         <select name="conBranch" id="conBranch" ms-duplex="modelData.BranchCode" class="form-control szhl_require" ms-change="LoadZhiwu(this.value,modelData.zhiwu,true)">
                             <option ms-repeat-item="BranchData" ms-attr-value="item.DeptCode">{{item.DeptName}}</option>
@@ -63,7 +63,7 @@
                     </div>
                 </li>
                 <li class="add-item add-width fl-left">
-                    <label class="add-item-label">岗位</label>
+                    <label class="add-item-label">部门</label>
                     <div class="add-ic">
                         <select name="conzhiwu" id="conzhiwu" ms-duplex="modelData.zhiwu" class="form-control" ms-change="LoadUser(modelData.BranchCode,this.value,true)">
                             <option value=""></option>
@@ -72,7 +72,7 @@
                     </div>
                 </li>
                 <li class="add-item add-width fl-right">
-                    <label class="add-item-label">责任人</label>
+                    <label class="add-item-label">使用人</label>
                     <div class="add-ic">
                         <select name="conUserName" id="conUserName" ms-duplex="modelData.UserName" class="form-control">
                             <option value=""></option>
@@ -126,6 +126,14 @@
                         <input type="text" onkeyup="if (isNaN(value)) execCommand('undo')" onafterpaste="if (isNaN(value)) execCommand('undo')" class="form-control" ms-duplex="modelData.Depreciation" />
                     </div>
                 </li>
+                <li class="add-item add-width fl-right">
+                    <label class="add-item-label">管理部门</label>
+                    <div class="add-ic">
+                        <select name="conmzw" id="conmzw" ms-duplex="modelData.Managezhiwu" class="form-control">
+                            <option ms-repeat-item="ManagezhiwuData" ms-attr-value="item.RoleName">{{item.RoleName}}</option>
+                        </select>
+                    </div>
+                </li>
                 <li class="add-item add-widthall">
                     <label class="add-item-label">备注</label>
                     <div class="add-ic">
@@ -143,12 +151,13 @@
         name: "资产管理",
         TypeId: ComFunJS.getQueryString("typeId"),
         CLData: [],  //类型
-        BranchData: [],  //部门
-        zhiwuData: [],  //职务
-        UserData: [],  //责任人
+        BranchData: [],  //公司
+        zhiwuData: [],  //部门
+        ManagezhiwuData: [], //管理部门
+        UserData: [],  //使用人
         LocationData: [],//场地
         iswf: true,//是否属于流程表单
-        inittemp: function (strId) {           
+        inittemp: function (strId) {
             tempmodel.LoadType();
             tempmodel.LoadLocation();
             if (strId) {
@@ -158,11 +167,13 @@
                         tempmodel.modelData = resultData.Result[0];
                         tempmodel.LoadBranch(tempmodel.modelData.BranchCode);
                         tempmodel.LoadUser(tempmodel.modelData.BranchCode, tempmodel.modelData.zhiwu, false);
+                        tempmodel.LoadManagezhiwu();
                         setTimeout(" ComFunJS.initForm()", 500);
                     }
                 })
             } else {
                 tempmodel.LoadBranch();
+                tempmodel.LoadManagezhiwu();
                 pmodel.isDraft = true;
                 ComFunJS.initForm();
             }
@@ -211,6 +222,17 @@
                     if (clear) {
                         tempmodel.modelData.UserName = '';//需把之前选择的人员清空
                         $('#conUserName').val('');
+                    }
+                }
+            })
+        },
+        LoadManagezhiwu: function () {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLZHIWUBYBRANCHCODE&r=' + Math.random(), { P1: 1728 }, function (resultData) {
+                if (resultData.ErrorMsg == "") {
+                    tempmodel.ManagezhiwuData = resultData.Result;
+                    if (!tempmodel.modelData.Managezhiwu || tempmodel.modelData.Managezhiwu == '') {
+                        tempmodel.modelData.Managezhiwu = '信息中心';
+                        $('#conmzw').val(tempmodel.modelData.Managezhiwu);
                     }
                 }
             })
