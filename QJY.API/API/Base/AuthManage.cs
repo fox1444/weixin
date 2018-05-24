@@ -317,11 +317,11 @@ namespace QJY.API
                 else
                 {
                     //添加默认员工角色
-                    JH_Auth_UserRole Model = new JH_Auth_UserRole();
-                    Model.UserName = user.UserName;
-                    Model.RoleCode = 1219;
-                    Model.ComId = user.ComId;
-                    new JH_Auth_UserRoleB().Insert(Model);
+                    //JH_Auth_UserRole Model = new JH_Auth_UserRole();
+                    //Model.UserName = user.UserName;
+                    //Model.RoleCode = 1219;
+                    //Model.ComId = user.ComId;
+                    //new JH_Auth_UserRoleB().Insert(Model);
 
                 }
             }

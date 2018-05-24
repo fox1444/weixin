@@ -73,8 +73,16 @@
                     </div>
                 </li>
                 <li>
-                    <div ms-on-click="gopage('/wx/bgxt/hy_list.html?r='+ Math.random())" ms-on-blur="onblur(this)">
-                        会议系统
+                    <div ms-on-click="showsubpage(this)" ms-on-blur="onblur(this)">
+                        办公系统
+                        <ul class="sub-nav">
+                            <li ms-on-click="gopage('/wx/bgxt/hy_list.html?r='+ Math.random())">
+                                会议记录
+                            </li>
+                            <li ms-on-click="gopage('/wx/bgxt/zc_list.html?r='+ Math.random())">
+                                固定资产
+                            </li>
+                        </ul>
                     </div>
                 </li>
                 <li>
