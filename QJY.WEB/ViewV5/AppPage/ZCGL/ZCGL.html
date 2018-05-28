@@ -65,7 +65,7 @@
                 <li class="add-item add-width fl-left">
                     <label class="add-item-label">部门</label>
                     <div class="add-ic">
-                        <select name="conusergw" id="conusergw" ms-duplex="modelData.usergw" class="form-control" ms-change="LoadUser(modelData.BranchCode,this.value,true)">
+                        <select name="conusergw" id="conusergw" ms-duplex="modelData.UserGW" class="form-control" ms-change="LoadUser(modelData.BranchCode,this.value,true)">
                             <option value=""></option>
                             <option ms-repeat-item="GWData" ms-attr-value="item.UserGW">{{item.UserGW}}</option>
                         </select>
@@ -129,7 +129,7 @@
                 <li class="add-item add-width fl-right">
                     <label class="add-item-label">管理部门</label>
                     <div class="add-ic">
-                        <select name="conmzw" id="conmzw" ms-duplex="modelData.Manageusergw" class="form-control">
+                        <select name="conmzw" id="conmzw" ms-duplex="modelData.Managezhiwu" class="form-control">
                             <option ms-repeat-item="ManageGWData" ms-attr-value="item.UserGW">{{item.UserGW}}</option>
                         </select>
                     </div>
@@ -230,8 +230,8 @@
             $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLGWBYBRANCHCODE&r=' + Math.random(), { P1: 1728 }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempmodel.ManageGWData = resultData.Result;
-                    if (!tempmodel.modelData.Manageusergw || tempmodel.modelData.Manageusergw == '') {
-                        tempmodel.modelData.Manageusergw = '信息中心';
+                    if (!tempmodel.modelData.Managezhiwu || tempmodel.modelData.Managezhiwu == '') {
+                        tempmodel.modelData.Managezhiwu = '信息中心';
                         $('#conmzw').val(tempmodel.modelData.Manageusergw);
                     }
                 }
