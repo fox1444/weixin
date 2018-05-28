@@ -111,17 +111,17 @@ namespace QJY.API
             return dt;
         }
         /// <summary>
-        /// 根据部门和职务获取用户列表
+        /// 根据部门和岗位获取用户列表
         /// </summary>
         /// <param name="branchCode"></param>
-        /// <param name="zhiwu"></param>
+        /// <param name="userGW"></param>
         /// <param name="strFilter">姓名，部门，手机号</param>
         /// <param name="ComId"></param>
         /// <returns></returns>
-        public DataTable GetUserListbyBranchandzhiwu(int branchCode, string zhiwu, int ComId)
+        public DataTable GetUserListbyBranchandUserGW(int branchCode, string userGW, int ComId)
         {
             string strSQL = "select u.*,b.DeptName,b.DeptCode from  JH_Auth_User u  inner join JH_Auth_Branch b on u.branchCode=b.DeptCode where  ";
-            strSQL += string.Format(" u.branchCode={0} and zhiwu<>'' and zhiwu='{1}' and IsUse='Y' ", branchCode, zhiwu);
+            strSQL += string.Format(" u.branchCode={0} and UserGW<>'' and UserGW='{1}' and IsUse='Y' ", branchCode, userGW);
             DataTable dt = new JH_Auth_UserB().GetDTByCommand(strSQL + " ORDER by b.DeptShort, u.UserOrder asc");
             return dt;
         }

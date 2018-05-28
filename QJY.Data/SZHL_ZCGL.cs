@@ -24,6 +24,7 @@ namespace QJY.Data
         public int BranchCode { get; set; }
         public string zhiwu { get; set; }
         public string UserName { get; set; }
+        public Nullable<int> LocationID { get; set; }
         public string Location { get; set; }
         public int Status { get; set; }
         public int TypeID { get; set; }
@@ -36,7 +37,6 @@ namespace QJY.Data
         public string CRUser { get; set; }
         public System.DateTime CRDate { get; set; }
         public int IsDel { get; set; }
-        public Nullable<int> LocationID { get; set; }
         public string Managezhiwu { get; set; }
     }
 }

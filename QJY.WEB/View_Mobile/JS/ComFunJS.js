@@ -1394,9 +1394,9 @@ var ComFunJS = {
                         username += '<div class="list_child_node"><span class="child_title">' + ele.UserRealName + '</span>';
                         username += '<span class="child_ext" >';
                         if (ele.DeptRoot == "-1") {
-                            username += ele.zhiwu.replace('领导班子','');
+                            username += ele.UserGW.replace('领导班子','');
                         }
-                        username += ele.UserGW + '</span></div> ';
+                        username += ele.zhiwu + '</span></div> ';
                     }
                 })
 

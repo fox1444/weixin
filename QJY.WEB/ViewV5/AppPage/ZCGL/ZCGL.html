@@ -57,7 +57,7 @@
                 <li class="add-item add-width fl-right">
                     <label class="add-item-label"><i>*</i>公司</label>
                     <div class="add-ic">
-                        <select name="conBranch" id="conBranch" ms-duplex="modelData.BranchCode" class="form-control szhl_require" ms-change="LoadZhiwu(this.value,modelData.zhiwu,true)">
+                        <select name="conBranch" id="conBranch" ms-duplex="modelData.BranchCode" class="form-control szhl_require" ms-change="LoadGW(this.value,modelData.usergw,true)">
                             <option ms-repeat-item="BranchData" ms-attr-value="item.DeptCode">{{item.DeptName}}</option>
                         </select>
                     </div>
@@ -65,9 +65,9 @@
                 <li class="add-item add-width fl-left">
                     <label class="add-item-label">部门</label>
                     <div class="add-ic">
-                        <select name="conzhiwu" id="conzhiwu" ms-duplex="modelData.zhiwu" class="form-control" ms-change="LoadUser(modelData.BranchCode,this.value,true)">
+                        <select name="conusergw" id="conusergw" ms-duplex="modelData.usergw" class="form-control" ms-change="LoadUser(modelData.BranchCode,this.value,true)">
                             <option value=""></option>
-                            <option ms-repeat-item="zhiwuData" ms-attr-value="item.RoleName">{{item.RoleName}}</option>
+                            <option ms-repeat-item="GWData" ms-attr-value="item.UserGW">{{item.UserGW}}</option>
                         </select>
                     </div>
                 </li>
@@ -129,8 +129,8 @@
                 <li class="add-item add-width fl-right">
                     <label class="add-item-label">管理部门</label>
                     <div class="add-ic">
-                        <select name="conmzw" id="conmzw" ms-duplex="modelData.Managezhiwu" class="form-control">
-                            <option ms-repeat-item="ManagezhiwuData" ms-attr-value="item.RoleName">{{item.RoleName}}</option>
+                        <select name="conmzw" id="conmzw" ms-duplex="modelData.Manageusergw" class="form-control">
+                            <option ms-repeat-item="ManageGWData" ms-attr-value="item.UserGW">{{item.UserGW}}</option>
                         </select>
                     </div>
                 </li>
@@ -152,8 +152,8 @@
         TypeId: ComFunJS.getQueryString("typeId"),
         CLData: [],  //类型
         BranchData: [],  //公司
-        zhiwuData: [],  //部门
-        ManagezhiwuData: [], //管理部门
+        GWData: [],  //部门
+        ManageGWData: [], //管理部门
         UserData: [],  //使用人
         LocationData: [],//场地
         iswf: true,//是否属于流程表单
@@ -166,14 +166,14 @@
                     if (resultData.ErrorMsg == "") {
                         tempmodel.modelData = resultData.Result[0];
                         tempmodel.LoadBranch(tempmodel.modelData.BranchCode);
-                        tempmodel.LoadUser(tempmodel.modelData.BranchCode, tempmodel.modelData.zhiwu, false);
-                        tempmodel.LoadManagezhiwu();
+                        tempmodel.LoadUser(tempmodel.modelData.BranchCode, tempmodel.modelData.UserGW, false);
+                        tempmodel.LoadManageusergw();
                         setTimeout(" ComFunJS.initForm()", 500);
                     }
                 })
             } else {
                 tempmodel.LoadBranch();
-                tempmodel.LoadManagezhiwu();
+                tempmodel.LoadManageusergw();
                 pmodel.isDraft = true;
                 ComFunJS.initForm();
             }
@@ -192,33 +192,33 @@
                             tempmodel.modelData.BranchCode = resultData.Result[0].DeptCode;
                         };
 
-                        tempmodel.LoadZhiwu(tempmodel.modelData.BranchCode, tempmodel.modelData.zhiwu, false);
+                        tempmodel.LoadGW(tempmodel.modelData.BranchCode, tempmodel.modelData.UserGW, false);
                     }
                 }
             })
         },
-        LoadZhiwu: function (bcode, zhiwu, clear) {
+        LoadGW: function (bcode, usergw, clear) {
             //职务列表
-            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLZHIWUBYBRANCHCODE&r=' + Math.random(), { P1: bcode }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLGWBYBRANCHCODE&r=' + Math.random(), { P1: bcode }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
-                    tempmodel.zhiwuData = resultData.Result;
+                    tempmodel.GWData = resultData.Result;
                     tempmodel.modelData.BranchCode = bcode;
-                    tempmodel.modelData.zhiwu = zhiwu;
+                    tempmodel.modelData.UserGW = usergw;
                     if (clear) {
-                        tempmodel.modelData.zhiwu = '';
+                        tempmodel.modelData.UserGW = '';
                         tempmodel.UserData = '';
-                        $('#conzhiwu').val('');//不能删，不然职务列表抽风
+                        $('#conusergw').val('');//不能删，不然职务列表抽风
                     }
                 }
             })
         },
-        LoadUser: function (bcode, zhiwu, clear) {
+        LoadUser: function (bcode, usergw, clear) {
             //人员列表
-            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETUSERLISTBYBRANCHANDZHIWU&r=' + Math.random(), { P1: bcode, P2: zhiwu }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETUSERLISTBYBRANCHANDUSERGW&r=' + Math.random(), { P1: bcode, P2: usergw }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempmodel.UserData = resultData.Result;
                     tempmodel.modelData.BranchCode = bcode;
-                    tempmodel.modelData.zhiwu = zhiwu;
+                    tempmodel.modelData.UserGW = usergw;
                     if (clear) {
                         tempmodel.modelData.UserName = '';//需把之前选择的人员清空
                         $('#conUserName').val('');
@@ -226,13 +226,13 @@
                 }
             })
         },
-        LoadManagezhiwu: function () {
-            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLZHIWUBYBRANCHCODE&r=' + Math.random(), { P1: 1728 }, function (resultData) {
+        LoadManageusergw: function () {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLGWBYBRANCHCODE&r=' + Math.random(), { P1: 1728 }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
-                    tempmodel.ManagezhiwuData = resultData.Result;
-                    if (!tempmodel.modelData.Managezhiwu || tempmodel.modelData.Managezhiwu == '') {
-                        tempmodel.modelData.Managezhiwu = '信息中心';
-                        $('#conmzw').val(tempmodel.modelData.Managezhiwu);
+                    tempmodel.ManageGWData = resultData.Result;
+                    if (!tempmodel.modelData.Manageusergw || tempmodel.modelData.Manageusergw == '') {
+                        tempmodel.modelData.Manageusergw = '信息中心';
+                        $('#conmzw').val(tempmodel.modelData.Manageusergw);
                     }
                 }
             })
@@ -259,7 +259,7 @@
                 }
             })
         },
-        modelData: { "ComId": "0", "ID": "0", "Name": "", "Code": "", "EPCode": "", "FactoryCode": "", "Tag": "", "BranchCode": "", "zhiwu": "", "UserName": "", "LocationID": "0", "Location": "", "Status": "0", "TypeID": "", "Comment": "", "OrginalPrice": "0", "PresentPrice": "0", "Qty": "1", "RegistDate": "", "Depreciation": "0", "CRUser": ComFunJS.getnowuser(), "CRDate": ComFunJS.getnowdate('yyyy-mm-dd hh:mm'), "IsDel": "0" },
+        modelData: { "ComId": "0", "ID": "0", "Name": "", "Code": "", "EPCode": "", "FactoryCode": "", "Tag": "", "BranchCode": "", "usergw": "", "UserName": "", "LocationID": "0", "Location": "", "Status": "0", "TypeID": "", "Comment": "", "OrginalPrice": "0", "PresentPrice": "0", "Qty": "1", "RegistDate": "", "Depreciation": "0", "CRUser": ComFunJS.getnowuser(), "CRDate": ComFunJS.getnowdate('yyyy-mm-dd hh:mm'), "IsDel": "0" },
         SaveData: function (callback) {
             $.post("/API/VIEWAPI.ashx?ACTION=ZCGL_ADDZCGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
                 return callback.call(this, result);
