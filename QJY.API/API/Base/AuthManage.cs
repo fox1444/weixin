@@ -165,11 +165,19 @@ namespace QJY.API
             msg.Result = dt;
         }
         /// <summary>
-        /// 部门下所有职务/岗位
+        /// 部门下所有职务(包含在权限表中)
         /// </summary>
         public void GETALLZHIWUBYBRANCHCODE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             DataTable dt = new JH_Auth_BranchB().GetDTByCommand("select * from jh_auth_role where rolename in (select distinct(zhiwu) from JH_Auth_User where branchcode='" + P1 + "') and IsUse='Y' and ComId=" + UserInfo.User.ComId + " order by DisplayOrder");
+            msg.Result = dt;
+        }
+        /// <summary>
+        /// 部门下所有岗位
+        /// </summary>
+        public void GETALLGWBYBRANCHCODE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            DataTable dt = new JH_Auth_BranchB().GetDTByCommand("select distinct(UserGW) from JH_Auth_User where branchcode='" + P1 + "' and IsUse ='Y'");
             msg.Result = dt;
         }
         #endregion
@@ -502,21 +510,21 @@ namespace QJY.API
             }
         }
         /// <summary>
-        /// 根据部门和职务获取用户列表
+        /// 根据部门和岗位获取用户列表
         /// </summary>
         /// <param name="context"></param>
         /// <param name="msg"></param>
         /// <param name="P1">BranchCode</param>
-        /// <param name="P2">zhiwu名称</param>
+        /// <param name="P2">UserGW名称</param>
         /// <param name="UserInfo"></param>
-        public void GETUSERLISTBYBRANCHANDZHIWU(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        public void GETUSERLISTBYBRANCHANDGW(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int deptCode = 0;
             if (!int.TryParse(P1, out deptCode))
             {
                 deptCode = 1;
             }
-            DataTable dtUser = new JH_Auth_UserB().GetUserListbyBranchandzhiwu(deptCode, P2, UserInfo.QYinfo.ComId);
+            DataTable dtUser = new JH_Auth_UserB().GetUserListbyBranchandUserGW(deptCode, P2, UserInfo.QYinfo.ComId);
             msg.Result = dtUser;
         }
         /// <summary>
