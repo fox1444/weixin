@@ -50,7 +50,7 @@
                 <div class="jg-item" ms-class-1="active:branch.DeptCode==SelDeptItem.DeptCode">
                     <b ms-click="BranchClick(branch,$event)">
                         <i class="caret" ms-click="BranchToggle(this,$event)" ms-class-1="active:branch.ChildBranch.size()>0"></i>
-                        <span class="jg-name">{{ConBranch(branch.DeptName)}}</span>
+                        <span class="jg-name" ms-title="{{branch.DeptName}}">{{ConBranch(branch.DeptName)}}</span>
                     </b>
                     <div class="jg-sz">
                         <i class="dropdown-toggle jh c999" data-toggle="dropdown" aria-expanded="true">+</i>
@@ -703,7 +703,8 @@
                 typeName = "已关注";
             }
             return typeName;
-        }, TBGZSTATUS: function () {
+        },
+        TBGZSTATUS: function () {
             $.getJSON('/API/VIEWAPI.ashx?Action=INIT_TBGZSTATUS', {}, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     top.ComFunJS.winsuccess("同步成功");
