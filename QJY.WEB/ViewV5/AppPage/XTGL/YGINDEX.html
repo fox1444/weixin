@@ -83,13 +83,10 @@
             <button type="button" class="btn btn-info" ms-click="UserAdd()"><i class="iconfont icon-jiahao ft12 mr5"></i>添加员工</button>
             <button type="button" class="btn btn-info" ms-click="UserImport()"><i class="iconfont icon-dr ft12 mr5"></i>批量导入</button>
             <a class="btn btn-info" ms-click="dcyg()"><i class="iconfont icon-dc ft12 mr5"></i>导出</a>
-
         </div>
         <!-- 机构管理详情 -->
         <div class="jg-cont ft14">
-
             <div class=" ml15" style="position: relative">
-
                 <a class="c-default dropdown-toggle ft16" data-toggle="dropdown">
                     <i class="iconfont icon-bookmark c-default mr5"></i>{{SelDeptItem.DeptName}}<span class="caret ml10"></span>
                 </a>
@@ -128,7 +125,6 @@
                 </div>
             </div>
         </div>
-        <!--  -->
         <div class="default-tab ft14">
             <div class="ml15 pb20 mr15">
                 <button type="button" class="btn btn-info" ms-click="UPDATEPLUser()">分配部门</button>
@@ -165,7 +161,6 @@
                                 <span ms-if="item.IsUse=='N'" class="ico-radius-r"></span>
                                 <span ms-if="item.IsUse=='Y'" class="ico-radius-r color-greed"></span>{{item.UserRealName}}
                             </td>
-
                             <td ms-repeat-im="ShowColumns" style="min-width: 120px;" ms-visible="im.IsSel">{{FnFormat(item[im.ColName],im)|html}}</td>
                             <td>
                                 <div style="position: relative" class="bg-fun">
@@ -173,12 +168,8 @@
                                     <span class="iconfont icon-bianji  c-default cursor tip mr5" title="编辑" ms-click="EditUser(item);"></span>
                                     <span class="iconfont icon-khgl  c-default cursor tip mr5" ms-click="OpenUserLead(item);" title="设置上级"></span>
                                     <span class="iconfont icon-qidong   cursor  mr5" ms-class-1="jinyong:item.IsUse=='Y'" ms-click="EditIsUse(item);" ms-attr-title="item.IsUse=='Y'?'禁用':'启用'"></span>
-
-
                                 </div>
-
                             </td>
-
                         </tr>
                     </tbody>
                     <tfoot>
@@ -469,7 +460,8 @@
                 }
 
             });
-        }, userLead: "",
+        },
+        userLead: "",
         selUserName: "",
         OpenUserLead: function (item) {
             $('#UserLeadModal').modal('show');

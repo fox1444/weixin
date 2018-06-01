@@ -7,14 +7,8 @@
   url('//at.alicdn.com/t/font_eedtp7mde99q9f6r.svg?t=1498222693380#iconfont') format('svg'); /* iOS 4.1- */
 }
 
-.iconfont {
-  font-family:"iconfont" !important;
-  font-size:16px;
-  font-style:normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.icon-zcgl:before {content: "\e608";}
+.iconfont {font-family:"iconfont" !important;  font-size:16px;  font-style:normal;  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
+.icon-zcgl:before {content: "\e655";}
 
 .icon-fsgl:before {content: "\e646";}
 
