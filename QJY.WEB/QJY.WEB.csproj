@@ -256,6 +256,7 @@
     <Content Include="WX\bgxt\Index.html" />
     <Content Include="WX\bgxt\Hy_List.html" />
     <Content Include="WX\message\bgxtbox.html" />
+    <Content Include="WX\message\newMsg.html" />
     <Content Include="WX\zlxz\Satisfaction.html" />
     <Content Include="WX\zlxz\HD_Add.html" />
     <Content Include="WX\zlxz\Group_member.html" />
@@ -1765,6 +1766,7 @@
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\file_manager_json.ashx" />
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\upload_json.ashx" />
     <Content Include="WX\message\GetMsg.ashx" />
+    <Content Include="WX\message\MsgWB.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\HtmlModule.cs" />
@@ -1821,6 +1823,9 @@
     </Compile>
     <Compile Include="WX\message\GetMsg.ashx.cs">
       <DependentUpon>GetMsg.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="WX\message\MsgWB.ashx.cs">
+      <DependentUpon>MsgWB.ashx</DependentUpon>
     </Compile>
     <Compile Include="WX\zlxz\UploadImg.aspx.cs">
       <DependentUpon>UploadImg.aspx</DependentUpon>

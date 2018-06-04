@@ -801,7 +801,7 @@ namespace QJY.API
                 double expires = DateTime.Now.Subtract(DateTime.Parse(model.CRDate.ToString())).TotalSeconds;
                 if (expires > 6000)
                 {
-                    return new WXFWHelp().GetToken();
+                    return  WXFWHelp.GetToken();
                 }
                 else
                 {
