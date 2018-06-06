@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Senparc.Weixin.Entities;
-using Senparc.Weixin.MP;
-using Senparc.Weixin;
-using Senparc.Weixin.MP.Entities;
-using Senparc.Weixin.MP.CommonAPIs;
-using QJY.Data;
-using Senparc.Weixin.MP.Containers;
-using System.Web;
-using Senparc.Weixin.MP.AdvancedAPIs.User;
-using Senparc.Weixin.MP.AdvancedAPIs.OAuth;
+﻿using QJY.Data;
 using Senparc.Weixin.MP.AdvancedAPIs;
+using Senparc.Weixin.MP.AdvancedAPIs.OAuth;
+using Senparc.Weixin.MP.AdvancedAPIs.User;
+using Senparc.Weixin.MP.CommonAPIs;
+using Senparc.Weixin.MP.Containers;
+using Senparc.Weixin.MP.Entities;
+using System;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace QJY.API
 {
@@ -51,7 +44,7 @@ namespace QJY.API
         /// <summary>
         /// 立即更新AccessToken
         /// </summary>
-        public string GetToken()
+        public static string GetToken()
         {
             AccessTokenResult r = CommonApi.GetToken(CommonHelp.AppConfig("AppId"), CommonHelp.AppConfig("AppSecret"), "client_credential");
             string _username = CommonHelp.GetUserNameByszhlcode();
