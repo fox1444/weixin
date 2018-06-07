@@ -215,14 +215,14 @@ namespace QJY.API
             JH_Auth_User thisuser = new JH_Auth_UserB().GetEntity(d => d.ID == UserInfo.User.ID);
             string viewname = "select u.* , wu.nickName, b.DeptName from JH_Auth_User U LEFT JOIN WX_User wu on u.WxOpenid = wu.openid  "
                 + " left join JH_Auth_Branch b on u.BranchCode=b.DeptCode "
-                + " where u.BranchCode=" + thisuser.BranchCode + " and  u.zhiwu = '" + thisuser.zhiwu + "' "
+                + " where u.BranchCode=" + thisuser.BranchCode + " and  u.UserGW = '" + thisuser.UserGW + "' "
                 + " order by u.UserOrder, u.UserRealName asc";
 
             DataTable dt = new JH_Auth_UserB().GetDTByCommand(viewname);
 
             msg.Result = dt;
-            msg.Result1 = thisuser.zhiwu;
-            msg.Result2 = thisuser.zhiwu + "-" + dt.Rows[0]["DeptName"].ToString();
+            msg.Result1 = thisuser.UserGW;
+            msg.Result2 = thisuser.UserGW + "-" + dt.Rows[0]["DeptName"].ToString();
         }
 
         public void ADDRYMODELWX(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
