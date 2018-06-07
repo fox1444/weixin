@@ -97,7 +97,7 @@ namespace QJY.API
 
                     if (app.AppType == "1")
                     {
-                        MassApi.SendNews(GetToken(app.AppID.ToString()), th.UserS.Replace(',', '|'), "", "", app.AppID, th.MODEL);
+                        //MassApi.SendNews(GetToken(app.AppID.ToString()), th.UserS.Replace(',', '|'), "", "", app.AppID, th.MODEL);
                     }
                     else
                     {
