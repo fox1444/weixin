@@ -12,7 +12,13 @@
                 <li ms-repeat-el="TypeData" ms-click="SelectTYPE(el.ID)"><span>{{el.Title}}</span></li>
             </ul>
         </div>
-
+        <div class="oh" style="margin-bottom:15px;">
+            <h5 class="pull-left tr">所属部门：</h5>
+            <select name="conGWs" id="conGWs" ms-change="SelectUSERGW(this.value)" style="font-size:80%;">
+                <option value="">所有</option>
+                <option ms-repeat-item="GWData" ms-attr-value="item.UserGW">{{item.UserGW}}</option>
+            </select>
+        </div>
         <!-- 搜索 -->
         <div class="oh">
             <div class="input-group ml15" style="width:295px;">
@@ -43,7 +49,7 @@
                     <td class="tc">
                         {{$index+1+page.pagecount*(page.pageindex-1)}}
                     </td>
-                    <td ms-repeat-im="ShowColumns" ms-class-1="lk:im.type=='link'" ms-visible="im.IsSel" ms-click="View(el.ID,el.intProcessStanceid,this)">
+                    <td ms-repeat-im="ShowColumns" ms-class-1="lk:im.type=='link'" ms-visible="im.IsSel" ms-click="View(el.ID,this)">
                         {{FnFormat(el[im.ColName],im)|html}}
                     </td>
                     <td>
@@ -82,9 +88,16 @@
     var tempindex = avalon.define({
         $id: "ZCGLLIST",
         curTYPE: "",
+        curUSERGW: "",
+        TypeData:[],
+        GWData: [], 
         tmpListData: [],
         SelectTYPE: function (type) {
             tempindex.curTYPE = type;
+            tempindex.GetLIST();
+        },
+        SelectUSERGW: function (val) {
+            tempindex.curUSERGW = val;
             tempindex.GetLIST();
         },
         selNum: function (item) {    //选择显示的条数
@@ -92,7 +105,6 @@
             tempindex.GetLIST();
         },
         InitWigetData: function () {
-
             //显示的列名
             model.ShowColumns.clear();
             model.ShowColumns.pushArray([
@@ -106,19 +118,28 @@
             ]);
             //类型数据
             tempindex.GetTYPE();
+            tempindex.LoadUSERGW();
             tempindex.GetLIST();
         },
         GetTYPE: function () {
             $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELIST', {}, function (resultData) {
                 if (resultData.ErrorMsg == "") {
-                    model.TypeData = resultData.Result;
+                    tempindex.TypeData = resultData.Result;
                 }
             })
+        },
+        LoadUSERGW: function () {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLGWBYBRANCHCODE&r=' + Math.random(), { P1: 1728 }, function (resultData) {
+                if (resultData.ErrorMsg == "") {
+                    tempindex.GWData = resultData.Result;                    
+                    }
+                }
+            )
         },
         GetLIST: function () {
             model.page.pageindex = 1;
             tempindex.tmpListData.clear();
-            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST', { p: 1, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST', { p: 1, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, usergw: tempindex.curUSERGW }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.tmpListData = resultData.Result;
                     if (tempindex.tmpListData.size() == 0) { model.isnull = true; } else { model.isnull = false; }
@@ -142,10 +163,8 @@
                 }
             })
         },
-        View: function (id, piid, event) {
-            if ($(event).hasClass("lk")) {
-                ComFunJS.winviewform("/ViewV5/AppPage/ZCGL/ZCGLView.html?ID=" + id + "&r=" + Math.random(), "资产详细信息");
-            }
+        View: function (id, event) {
+            ComFunJS.winviewform("/ViewV5/AppPage/ZCGL/ZCGLView.html?ID=" + id + "&r=" + Math.random(), "资产详细信息");
         },
         Del: function (el, event) {
             if (event) {

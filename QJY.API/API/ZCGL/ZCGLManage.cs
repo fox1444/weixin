@@ -28,9 +28,14 @@ namespace QJY.API
             string strWhere = " z.IsDel=0 and z.ComId=" + UserInfo.User.ComId;
 
             string typeid = context.Request["typeid"] ?? "";
+            string usergw = context.Request["usergw"] ?? "";
             if (typeid != "")
             {
                 strWhere += string.Format(" And z.TypeID='{0}' ", typeid);
+            }
+            if (usergw != "")
+            {
+                strWhere += string.Format(" And z.UserGW='{0}' ", usergw);
             }
             string searchstr = context.Request["searchstr"] ?? "";
             searchstr = searchstr.TrimEnd();
@@ -58,7 +63,7 @@ namespace QJY.API
 
             DataTable dt = new DataTable();
 
-            dt = new SZHL_ZCGLB().GetDataPager("SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID left join SZHL_ZCGL_Location l on z.LocationID=l.ID left join JH_Auth_User u on z.UserName=u.UserName", "z.*, u.UserRealName, t.Title, l.Title as LocTitle", pagecount, page, " z.CRDate desc", strWhere, ref total);
+            dt = new SZHL_ZCGLB().GetDataPager("SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID left join SZHL_ZCGL_Location l on z.LocationID=l.ID left join JH_Auth_User u on z.UserName=u.UserName left join  JH_Auth_Branch b on b.DeptCode=z.BranchCode", "z.*, u.UserRealName, t.Title, l.Title as LocTitle", pagecount, page, "b.DeptShort desc, u.UserRealName asc, z.CRDate desc", strWhere, ref total);
 
             msg.Result = dt;
             msg.Result1 = total;
