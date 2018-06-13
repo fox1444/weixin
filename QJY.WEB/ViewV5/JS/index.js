@@ -271,14 +271,6 @@
 
         }
     },//添加表格
-    AddzcbView: function (Name, ID, event) {
-        if (event) {
-            event.stopPropagation();
-        }
-        ComFunJS.winviewform("/ViewV5/AppPage/SEAT/SEAT_2.html?id=" + ID + "&r=" + Math.random(), Name, "1000");
-
-    },//Weiler
-
 
     ViewForm: function (code, ID, PIID, event) {
         event = event ? event : window.event

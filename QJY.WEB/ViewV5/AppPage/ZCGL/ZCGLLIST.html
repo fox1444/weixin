@@ -54,11 +54,14 @@
                     </td>
                     <td>
                         <span class="btn-click">
-                            <a class="cz-btn ft18 bj-color tip" data-toggle="tooltip" title="编辑" ms-if="el.CRUser==userName" ms-click="AddView('ZCGL','编辑资产',el.ID,$event)">
+                            <a class="cz-btn ft18 bj-color tip" data-toggle="tooltip" title="编辑" ms-if="el.CRUser==userName" ms-click="AddView('ZCGL','编辑' + el.UserGW + el.UserRealName + el.Name,el.ID,$event)">
                                 <i class="iconfont icon-bianji"></i>
                             </a>
                             <a class="cz-btn ft18 sc-color tip" data-toggle="tooltip" title="删除" ms-if="el.CRUser==userName" ms-click="Del(el,$event)">
                                 <i class="iconfont icon-shanchu"></i>
+                            </a>
+                            <a title="生命周期" ms-click="LifeCycle(el.UserGW + el.UserRealName + el.Name + '生命周期管理',el.ID,$event)">
+                                生命周期
                             </a>
                         </span>
                     </td>
@@ -89,8 +92,8 @@
         $id: "ZCGLLIST",
         curTYPE: "",
         curUSERGW: "",
-        TypeData:[],
-        GWData: [], 
+        TypeData: [],
+        GWData: [],
         tmpListData: [],
         SelectTYPE: function (type) {
             tempindex.curTYPE = type;
@@ -131,9 +134,9 @@
         LoadUSERGW: function () {
             $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLGWBYBRANCHCODE&r=' + Math.random(), { P1: 1728 }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
-                    tempindex.GWData = resultData.Result;                    
-                    }
+                    tempindex.GWData = resultData.Result;
                 }
+            }
             )
         },
         GetLIST: function () {
@@ -179,6 +182,9 @@
                 })
             }, function () { })
 
+        },
+        LifeCycle: function(Name, ID, event) {
+            ComFunJS.winviewform("/ViewV5/AppPage/ZCGL/LifeCycle.html?ID=" + ID + "&r=" + Math.random(), Name,'1000');
         },
     })
 </script>
