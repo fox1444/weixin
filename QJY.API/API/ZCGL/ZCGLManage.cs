@@ -22,7 +22,7 @@ namespace QJY.API
         /// <summary>
         /// 资产列表
         /// </summary>
-        public void GETZCGLLIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        public void GETZCGLLIST_PAGE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             string userName = UserInfo.User.UserName;
             string strWhere = " z.IsDel=0 and z.ComId=" + UserInfo.User.ComId;

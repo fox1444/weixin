@@ -1,20 +1,16 @@
-﻿using System;
+﻿using QJY.Data;
+using Senparc.Weixin.Entities;
+using Senparc.Weixin.HttpUtility;
+using Senparc.Weixin.QY.AdvancedAPIs;
+using Senparc.Weixin.QY.AdvancedAPIs.MailList;
+using Senparc.Weixin.QY.AdvancedAPIs.OAuth2;
+using Senparc.Weixin.QY.CommonAPIs;
+using Senparc.Weixin.QY.Entities;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
-using Senparc.Weixin.Entities;
-using Senparc.Weixin.QY;
-using Senparc.Weixin.QY.Entities;
-using Senparc.Weixin.QY.CommonAPIs;
-using Senparc.Weixin.QY.AdvancedAPIs;
-using Senparc.Weixin.QY.AdvancedAPIs.App;
-
-using Senparc.Weixin.QY.AdvancedAPIs.OAuth2;
-using Senparc.Weixin.HttpUtility;
-using System.IO;
-using QJY.Data;
-using Senparc.Weixin.QY.AdvancedAPIs.MailList;
-using Senparc.Weixin.QY.AdvancedAPIs.Chat;
 
 namespace QJY.API
 {
@@ -101,7 +97,7 @@ namespace QJY.API
 
                     if (app.AppType == "1")
                     {
-                        MassApi.SendNews(GetToken(app.AppID.ToString()), th.UserS.Replace(',', '|'), "", "", app.AppID, th.MODEL);
+                        //MassApi.SendNews(GetToken(app.AppID.ToString()), th.UserS.Replace(',', '|'), "", "", app.AppID, th.MODEL);
                     }
                     else
                     {
@@ -114,8 +110,6 @@ namespace QJY.API
                 CommonHelp.WriteLOG(ex.ToString());
             }
         }
-
-
 
         /// <summary>
         /// 文字消息

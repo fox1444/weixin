@@ -15,10 +15,10 @@
         </p>
         <ul class="jg-list-box">
             <li ms-repeat-item="RoleListData" ms-click="GetUserList(item,$index)">
-                <div class="jg-item" ms-class="active:item.RoleCode==SelRoleItem.RoleCode">
+                <div class="jg-item" ms-class="active:item.RoleCode==SelRoleItem.RoleCode"  >
                     <b class="ml15">
                         <i class="iconfont icon-group"></i>
-                        <span class="jg-name">{{item.RoleName}}</span><i class="jg-number ft12 c999">（{{item.userCount}}人）</i>
+                        <span class="jg-name" ms-title="{{item.RoleName}}">{{ComFunJS.convstr(item.RoleName, 9)}}</span><i class="jg-number ft12 c999">（{{item.userCount}}）</i>
                     </b>
                 </div>
             </li>

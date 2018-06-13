@@ -117,8 +117,7 @@
     </div>
 
     <script src="/View_Mobile/js/layer/layer.m.js"></script>
-    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
-
+    <script src="/View_Mobile/js/zepto.min.js"></script>
     <script src="/View_Mobile/JS/avalon1.47.js"></script>
     <script src="/View_Mobile/js/ComFunJS.js"></script>
     <script>
@@ -163,17 +162,7 @@
                     }
                 }
             },
-            isZK: function () {
-                if (tempmodel.isDeploy == 0) {
-                    tempmodel.isDeploy = 1;
-                    $("#zk").text("收起");
-                }
-                else {
-                    tempmodel.isDeploy = 0;
-                    $("#zk").text("展开");
-                }
-                //tempmodel.isDeploy == 0 ? 1 : 0;
-            },
+
             inittemp: function (strId) {
                 tempmodel.getdata(1);
                 var users = window.localStorage.getItem("alluserinfo");
@@ -221,36 +210,6 @@
                             else {
                                 tempmodel.gostart();
                             }
-                            //ComFunJS.uploadimgnew(tempmodel.tpData);
-
-                            //if (tempmodel.modelData.StartTime && tempmodel.modelData.StartTime.length > 16) {
-                            //    tempmodel.modelData.StartTime = tempmodel.modelData.StartTime.substring(0, 16);
-                            //}
-                            //if (tempmodel.modelData.StartTime) {
-                            //    var ss = tempmodel.modelData.StartTime.split(' ');
-                            //    var ss1 = ss[0].split('-');
-                            //    var ss2 = ss[1].split(':');
-                            //    var hh = ss2[0];
-                            //    if (hh.substring(0, 1) == "0") { hh = hh.substring(1, 1); }
-                            //    $("#StartTime").datetimePicker({
-                            //        value: [ss1[0], ss1[1], ss1[2], hh, ss2[1]]
-                            //    });
-                            //}
-                            //if (tempmodel.modelData.EndTime && tempmodel.modelData.EndTime.length > 16) {
-                            //    tempmodel.modelData.EndTime = tempmodel.modelData.EndTime.substring(0, 16);
-                            //}
-
-                            //if (tempmodel.modelData.EndTime) {
-                            //    var ss = tempmodel.modelData.EndTime.split(' ');
-                            //    var ss1 = ss[0].split('-');
-                            //    var ss2 = ss[1].split(':');
-                            //    var hh = ss2[0];
-                            //    if (hh.substring(0, 1) == "0") { hh = hh.substring(1, 1); }
-                            //    $("#EndTime").datetimePicker({
-                            //        value: [ss1[0], ss1[1], ss1[2], hh, ss2[1]]
-                            //    });
-                            //}
-
                             setTimeout(" ComFunJS.initForm()", 500);
                         }
                     })
@@ -306,11 +265,7 @@
                         tmp += '<li class="first"  >' + l + '</li>';
                         for (let w = 1; w <= rw; w++) {
                             tmp += '<li class="seat_' + l + '_' + w + '"  >';
-                            //tmp += '<span>' + w + '</span>';
-                            //tmp += '<span class="seat_info "></span>';
-                            //tmp += '<span class="seat_info_userid" style="display:none"></span>';
                             tmp += '</li>';
-
                         }
                         tmp += '</ul>';
                         tmp += '</li>';
@@ -329,7 +284,6 @@
                     $('.room-block').html(tmp);
                     var wpx = (tempmodel.modelData.RoomWidth * 25) + 'px';
                     $('.room-block').css('width', wpx);
-                    //$('.chairmen-wrapper').css('width', wpx);
                     tempmodel.LoadSelectZcb();
                 }
             },
@@ -339,8 +293,6 @@
                     holdseats.forEach(function (v, i) {
                         var _cs = $('.seat_' + v.ycode + '_' + v.xcode);
                         if (v.userid == tempmodel.currentuser.ID) {
-
-                            //$('.seat_' + v.ycode + '_' + v.xcode).css("background", "#ff4700");
                             $('.seat_' + v.xcode + '_' + v.ycode).attr("class", "selected");
                         }
                     });
@@ -353,17 +305,12 @@
                         }
                     });
                 }
-
             },
             modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "" }
-
         });
 
         avalon.ready(function () {
             tempmodel.inittemp();
-            //setTimeout("tempmodel.LoadRoom()", 800);
-            //setTimeout("tempmodel.LoadSelectZcb()", 1000);
-
         })
 
         $(window).on("load resize", function () {

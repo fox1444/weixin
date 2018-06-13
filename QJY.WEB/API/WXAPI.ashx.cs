@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Microsoft.Practices.Unity;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json;
-using System.Web.SessionState;
-using System.IO;
-using System.Xml;
-using Senparc.Weixin;
-using Senparc.Weixin.Entities;
-using Senparc.Weixin.QY.AdvancedAPIs;
 using QJY.API;
 using QJY.Data;
-using System.Net;
-using System.Text;
-using System.Configuration;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.SessionState;
+using System.Xml;
 namespace QJY.WEB
 {
     /// <summary>
@@ -74,7 +67,7 @@ namespace QJY.WEB
                                     }
                                 }
                                 var pj = new JH_Auth_WXPJB().GetEntity(p => p.TJID == jam.TJId);
-                                Tencent.WXBizMsgCrypt wxcpt = new Tencent.WXBizMsgCrypt(pj.Token, pj.EncodingAESKey, ToUserName);
+                                Senparc.Weixin.QY.Tencent.WXBizMsgCrypt wxcpt = new Senparc.Weixin.QY.Tencent.WXBizMsgCrypt(pj.Token, pj.EncodingAESKey, ToUserName);
                                 int n = wxcpt.DecryptMsg(signature, timestamp, nonce, str, ref strde);
                                 XmlDocument XmlDocument1 = new XmlDocument();
                                 XmlDocument1.LoadXml(HttpContext.Current.Server.UrlDecode(strde));
@@ -284,7 +277,7 @@ namespace QJY.WEB
 
                                 var pj = new JH_Auth_WXPJB().GetEntity(p => p.TJID == "tj7882b1f8bc56f05f");
 
-                                Tencent.WXBizMsgCrypt wxcpt = new Tencent.WXBizMsgCrypt(pj.Token, pj.EncodingAESKey, corpId);
+                                Senparc.Weixin.QY.Tencent.WXBizMsgCrypt wxcpt = new Senparc.Weixin.QY.Tencent.WXBizMsgCrypt(pj.Token, pj.EncodingAESKey, corpId);
 
                                 wxcpt.DecryptMsg(signature, timestamp, nonce, str, ref strde);
 
@@ -509,7 +502,7 @@ namespace QJY.WEB
 
                     var pj = new JH_Auth_WXPJB().GetEntity(p => p.TJID == ToUserName);
 
-                    Tencent.WXBizMsgCrypt wxcpt = new Tencent.WXBizMsgCrypt(pj.Token, pj.EncodingAESKey, ToUserName);
+                    Senparc.Weixin.QY.Tencent.WXBizMsgCrypt wxcpt = new Senparc.Weixin.QY.Tencent.WXBizMsgCrypt(pj.Token, pj.EncodingAESKey, ToUserName);
                     int n = wxcpt.DecryptMsg(signature, timestamp, nonce, str, ref strde);
 
                     string strtct = string.Empty;
@@ -598,7 +591,7 @@ namespace QJY.WEB
         /// <returns></returns>
         public bool CheckSignature(string token, string signature, string timestamp, string nonce, string corpId, string encodingAESKey, string echostr, ref string retEchostr)
         {
-            Tencent.WXBizMsgCrypt wxcpt = new Tencent.WXBizMsgCrypt(token, encodingAESKey, corpId);
+            Senparc.Weixin.QY.Tencent.WXBizMsgCrypt wxcpt = new Senparc.Weixin.QY.Tencent.WXBizMsgCrypt(token, encodingAESKey, corpId);
             int result = wxcpt.VerifyURL(signature, timestamp, nonce, echostr, ref retEchostr);
             if (result != 0)
             {

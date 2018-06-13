@@ -15,7 +15,7 @@
                 <div class="jg-item" ms-class-1="active:branch.DeptCode==SelDeptItem.DeptCode">
                     <b ms-click="BranchClick(branch,$event)">
                         <i class="caret" ms-click="BranchToggle(this,$event)" ms-class-1="active:branch.ChildBranch.size()>0"></i>
-                        <span class="jg-name">{{ComFunJS.convstr(branch.DeptName, 12)|html}}</span>
+                        <span class="jg-name" ms-title="{{branch.DeptName}}">{{ComFunJS.convstr(branch.DeptName, 12)|html}}</span>
                     </b>
                     <div class="jg-sz">
                         <span class="iconfont icon-dayin" ms-click="OpenPrint(branch,$event)"></span>

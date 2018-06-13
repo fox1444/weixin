@@ -452,10 +452,10 @@
             len = 40;
             str = ComFunJS.convstr(text, 18);
             $("#large-link").remove();
-            $('#' + id).after('&nbsp;&nbsp;<a id="large-link">点击查看小图</a>');
-            $('#large-link').click(function () {
-                ComFunJS.DrawEWMcancas(id, imgurl, text);
-            });
+            //$('#' + id).after('&nbsp;&nbsp;<a id="large-link">点击查看小图</a>');
+            //$('#large-link').click(function () {
+            //    ComFunJS.DrawEWMcancas(id, imgurl, text);
+            //});
         }
         else if (size == 'large') {
             width = 600;
@@ -463,16 +463,19 @@
             len = 50;
             str = ComFunJS.convstr(text, 22);
             $("#large-link").remove();
-            $('#' + id).after('&nbsp;&nbsp;<a id="large-link">点击查看小图</a>');
-            $('#large-link').click(function () {
-                ComFunJS.DrawEWMcancas(id, imgurl, text);
-            });
+            //$('#' + id).after('&nbsp;&nbsp;<a id="large-link">点击查看小图</a>');
+            //$('#large-link').click(function () {
+            //    ComFunJS.DrawEWMcancas(id, imgurl, text);
+            //});
         }
         else {
             $("#large-link").remove();
             $('#' + id).after('&nbsp;&nbsp;<a id="large-link">点击查看高清大图</a>');
             $('#large-link').click(function () {
-                ComFunJS.DrawEWMcancas(id, imgurl, text, 'large');
+                ComFunJS.setCookie('ewm_imgurl', imgurl);
+                ComFunJS.setCookie('ewm_text', text);
+                window.open("/ViewV5/ewm.html");  
+                //ComFunJS.DrawEWMcancas(id, imgurl, text, 'large');
             });
         }
         
@@ -504,6 +507,7 @@
             //ctx.drawImage(this, 0, 0,1024,768);//改变图片的大小到1024*768
         }
     },//绘制有文字的二维码
+
     convertuser: function (user) {
         var returnmsg = "";
         var arruser = user.split(",");

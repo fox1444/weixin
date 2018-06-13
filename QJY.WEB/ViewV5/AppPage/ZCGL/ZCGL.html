@@ -198,7 +198,7 @@
             })
         },
         LoadGW: function (bcode, usergw, clear) {
-            //职务列表
+            //岗位
             $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLGWBYBRANCHCODE&r=' + Math.random(), { P1: bcode }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempmodel.GWData = resultData.Result;
@@ -207,7 +207,7 @@
                     if (clear) {
                         tempmodel.modelData.UserGW = '';
                         tempmodel.UserData = '';
-                        $('#conusergw').val('');//不能删，不然职务列表抽风
+                        $('#conusergw').val('');//不能删，不然岗位列表抽风
                     }
                 }
             })
