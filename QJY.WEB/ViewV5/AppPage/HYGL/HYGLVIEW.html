@@ -173,7 +173,6 @@
             Edit: function (ID) {
                 window.location.href = "/ViewV5/AppPage/APP_ADD_WF.html?FormCode=HYGL&id=" + model.modelData.ID + "&PIID=" + model.modelData.PIID + "&PDID=" + model.PDID;
             },
-
             viewfile: function (file) {
                 if (ComFunJS.isPic(file.FileExtendName)) {
                     ComFunJS.viewbigimg(this)
@@ -186,8 +185,8 @@
             },
             UpStatus: function (tltype) {
                 $.post("/API/VIEWAPI.ashx?Action=HYGL_UPDATEHYQK", { "P1": model.strId, "P2": tltype }, function (resultData) {
-                    if (result.ErrorMsg == "") {
-                        model.plData.push(result.Result);
+                    if (resultData.ErrorMsg == "") {
+                        model.plData.push(resultData.Result);
                         //model.plStatus = tltype;
 
                         if (model.plStatus) {
@@ -196,8 +195,10 @@
                         else {
                             model.plStatus = tltype;
                         }
+                        top.ComFunJS.winsuccess("操作成功！！");
+                    } else {
+                        top.ComFunJS.winwarning("操作失败！！");
                     }
-
                 })
             },
             UpHYQJ: function (event) {
@@ -229,7 +230,6 @@
                 })
             },
             hyjy: function () {//记录
-
                 ComFunJS.winbtnwin("/ViewV5/Base/APP_COMMENT.html?contentdec=会议纪要&content=" + model.modelData.HYJL + "&r=" + Math.random(), "会议纪要", 600, 400, {}, function (layero, inx) {
                     var frameid = $("iframe", $(layero)).attr('id');
                     var plnr = ComFunJS.isIE() ? window.frames[frameid].getpl() : window.frames[frameid].contentWindow.getpl();
@@ -436,6 +436,7 @@
                 return str;
             }
         });
+
         avalon.ready(function () {
             model.ShowColumns.pushArray(
                 [{ "ColName": "Title", "ColText": "会议标题", "IsSel": true, "class": "width50" },

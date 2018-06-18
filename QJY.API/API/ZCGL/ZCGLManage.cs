@@ -29,6 +29,8 @@ namespace QJY.API
 
             string typeid = context.Request["typeid"] ?? "";
             string usergw = context.Request["usergw"] ?? "";
+            string locationid = context.Request["locationid"] ?? "";
+
             if (typeid != "")
             {
                 strWhere += string.Format(" And z.TypeID='{0}' ", typeid);
@@ -36,6 +38,10 @@ namespace QJY.API
             if (usergw != "")
             {
                 strWhere += string.Format(" And z.UserGW='{0}' ", usergw);
+            }
+            if (locationid != "")
+            {
+                strWhere += string.Format(" And z.LocationID='{0}' ", locationid);
             }
             string searchstr = context.Request["searchstr"] ?? "";
             searchstr = searchstr.TrimEnd();
@@ -72,11 +78,10 @@ namespace QJY.API
         /// <summary>
         /// 当前用户的资产列表
         /// </summary>
-
         public void GETZCGLLISTTHISUSER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             string userName = UserInfo.User.UserName;
-            string strWhere = " z.IsDel=0 and z.ComId=" + UserInfo.User.ComId + " and z.UserName='"+ userName + "'";
+            string strWhere = " z.IsDel=0 and z.ComId=" + UserInfo.User.ComId + " and z.UserName='" + userName + "'";
 
             string typeid = context.Request["typeid"] ?? "";
             if (typeid != "")
@@ -184,7 +189,19 @@ namespace QJY.API
             SZHL_ZCGL model = new SZHL_ZCGLB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
             model.IsDel = 1;
             new SZHL_ZCGLB().Update(model);
-
+        }
+        /// <summary>
+        /// 岗位/部门列表，并包含资产数量
+        /// </summary>
+        public void GETALLGWBYBRANCHCODE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string where = "";
+            if (!string.IsNullOrEmpty(P2))
+            {
+                where = " and z.TypeID='" + P2 + "' ";
+            }
+            DataTable dt = new JH_Auth_BranchB().GetDTByCommand("select distinct(UserGW),(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.UserGW=u.UserGW " + where + ") as ZCNum from JH_Auth_User u  where branchcode='" + P1 + "' and IsUse ='Y' and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.UserGW=u.UserGW " + where + ")>0 order by UserGW");
+            msg.Result = dt;
         }
         #endregion
 
@@ -196,6 +213,32 @@ namespace QJY.API
         {
             //var list = new SZHL_ZCGL_TypeB().GetEntities(p => p.IsDel == 0);
             DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select * from dbo.SZHL_ZCGL_Type where IsDel=0 and ComId=" + UserInfo.User.ComId + " order by DisplayOrder");
+            msg.Result = dt;
+        }
+        /// <summary>
+        /// 所有资产类型列表，并展示资产数量
+        /// </summary>
+        public void GETZCGLTYPELISTWITHNUM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string where = "";
+            if (!string.IsNullOrEmpty(P1))
+            {
+                where = " and z.UserGW='" + P1 + "' ";
+            }
+            DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0" + where + " and z.TypeID=t.ID) as ZCNum from dbo.SZHL_ZCGL_Type t where IsDel=0 and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0" + where + " and z.TypeID=t.ID)>0 order by DisplayOrder");
+            msg.Result = dt;
+        }
+        /// <summary>
+        /// 根据场地获取所有资产类型列表，并展示资产数量
+        /// </summary>
+        public void GETZCGLTYPELISTBYLOCATIONWITHNUM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string where = "";
+            if (!string.IsNullOrEmpty(P1))
+            {
+                where = " and z.LocationID='" + P1 + "' ";
+            }
+            DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0" + where + " and z.TypeID=t.ID) as ZCNum from dbo.SZHL_ZCGL_Type t where IsDel=0 and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0" + where + " and z.TypeID=t.ID)>0 order by DisplayOrder");
             msg.Result = dt;
         }
         /// <summary>
@@ -221,7 +264,6 @@ namespace QJY.API
             msg.Result = dt;
             msg.Result1 = total;
         }
-
         /// <summary>
         /// 资产类型详细信息
         /// </summary>
@@ -300,6 +342,20 @@ namespace QJY.API
         {
             //var list = new SZHL_ZCGL_TypeB().GetEntities(p => p.IsDel == 0);
             DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select * from dbo.SZHL_ZCGL_LOCATION where IsDel=0 and ComId=" + UserInfo.User.ComId + " order by DisplayOrder");
+            msg.Result = dt;
+        }
+        /// <summary>
+        /// 所有资产类型列表，并展示资产数量
+        /// </summary>
+
+        public void GETZCGLLOCATIONLISTWITHNUM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string where = "";
+            if (!string.IsNullOrEmpty(P1))
+            {
+                where = " and z.TypeID='" + P1 + "' ";
+            }
+            DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ") as ZCNum  from dbo.SZHL_ZCGL_LOCATION l where IsDel=0 and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ")>0 order by DisplayOrder");
             msg.Result = dt;
         }
         /// <summary>
@@ -393,6 +449,99 @@ namespace QJY.API
             model.IsDel = ss;
             new SZHL_ZCGL_LocationB().Update(model);
 
+        }
+        #endregion
+
+        #region 资产生命周期管理
+        /// <summary>
+        /// 生命周期信息
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="msg"></param>
+        /// <param name="P1">LIFECYCLEID</param>
+        /// <param name="P2"></param>
+        /// <param name="UserInfo"></param>
+        public void GETLIFECYCLEMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            string strWhere = " IsDel=0  and ID=" + Id;
+            string colNme = @"* ";
+            string tableName = string.Format(@" SZHL_ZCGL_LifeCycle ");
+
+            string strSql = string.Format("Select {0}  From {1} where {2} ", colNme, tableName, strWhere);
+            DataTable dt = new SZHL_ZCGLB().GetDTByCommand(strSql);
+            msg.Result = dt;
+        }
+
+        /// <summary>
+        /// 添加或者编辑
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="msg"></param>
+        /// <param name="P1"></param>
+        /// <param name="P2"></param>
+        /// <param name="UserInfo"></param>
+        public void UPDATELIFECYCLE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int LCId = int.Parse(P1);
+            SZHL_ZCGL_LifeCycle ZCLC = JsonConvert.DeserializeObject<SZHL_ZCGL_LifeCycle>(P2);
+            string ZCGLid = context.Request["zcglID"] ?? "";
+            if (ZCLC == null || ZCGLid == "" || ZCGLid == "0")
+            {
+                msg.ErrorMsg = "添加失败";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(ZCLC.Title))
+            {
+                msg.ErrorMsg = "标题不能为空！";
+                return;
+            }
+            if (ZCLC.FromDate == null)
+            {
+                msg.ErrorMsg = "日期不能为空！";
+                return;
+            }
+            if (ZCLC.TypeID < 0)
+            {
+                msg.ErrorMsg = "请选择类型！";
+                return;
+            }
+
+            if (LCId == 0)
+            {
+                ZCLC.ZCGLID = int.Parse(ZCGLid);
+                ZCLC.CRDate = DateTime.Now;
+                ZCLC.CRUser = UserInfo.User.UserName;
+                ZCLC.ComId = UserInfo.User.ComId.Value;
+                ZCLC.IsDel = 0;
+                new SZHL_ZCGL_LifeCycleB().Insert(ZCLC);
+            }
+            else
+            {
+                ZCLC.UpdateDate = DateTime.Now;
+                ZCLC.UpdateUser = UserInfo.User.UserName;
+                new SZHL_ZCGL_LifeCycleB().Update(ZCLC);
+            }
+            msg.Result = ZCLC;
+        }
+
+        /// <summary>
+        /// 获取生命周期列表根据资产ID
+        /// </summary>
+        public void GETLIFECYCLLISTBYZCGLID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            msg.Result = new SZHL_ZCGL_LifeCycleB().GetDTByCommand("select * from dbo.SZHL_ZCGL_LifeCycle where IsDel=0 and ZCGLID=" + Id + " and ComId=" + UserInfo.User.ComId + " order by FromDate desc");
+        }
+        /// <summary>
+        /// 删除生命周期
+        /// </summary>
+        public void DELLIFECYCLE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            SZHL_ZCGL_LifeCycle model = new SZHL_ZCGL_LifeCycleB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
+            model.IsDel = 1;
+            new SZHL_ZCGL_LifeCycleB().Update(model);
         }
         #endregion
     }

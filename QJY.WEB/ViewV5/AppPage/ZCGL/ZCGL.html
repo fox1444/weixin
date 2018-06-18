@@ -30,7 +30,7 @@
                     <label class="add-item-label"><i>*</i>资产类型</label>
                     <div class="add-ic">
                         <select name="conType" id="conType" ms-duplex="modelData.TypeID" class="form-control szhl_require">
-                            <option ms-repeat-item="CLData" ms-attr-value="item.ID">{{item.Title}}</option>
+                            <option ms-repeat-item="TypeData" ms-attr-value="item.ID">{{item.Title}}</option>
                         </select>
                     </div>
                 </li>
@@ -38,13 +38,7 @@
                     <label class="add-item-label"><i>*</i>使用状态</label>
                     <div class="add-ic">
                         <select class="form-control" ms-duplex="modelData.Status">
-                            <option value="0" selected="selected">完好</option>
-                            <option value="10">损坏</option>
-                            <option value="20">丢失</option>
-                            <option value="30">闲置</option>
-                            <option value="40">维修</option>
-                            <option value="50">待报废</option>
-                            <option value="60">已报废</option>
+                            <option ms-repeat-item="ComFunJS.ZCStatusData" ms-attr-value="item.ID" ms-attr-selected="item.ID==modelData.Status?'selected':''">{{item.TypeName}}</option>
                         </select>
                     </div>
                 </li>
@@ -147,10 +141,9 @@
 <script>
     var tempmodel = avalon.define({
         $id: "ZCGL",
-        ColumnData: [],
         name: "资产管理",
         TypeId: ComFunJS.getQueryString("typeId"),
-        CLData: [],  //类型
+        TypeData: [],  //类型
         BranchData: [],  //公司
         GWData: [],  //部门
         ManageGWData: [], //管理部门
@@ -240,7 +233,7 @@
         LoadType: function () {
             $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELIST', {}, function (resultData) {
                 if (resultData.ErrorMsg == "") {
-                    tempmodel.CLData = resultData.Result;
+                    tempmodel.TypeData = resultData.Result;
                     if (resultData.Result.length > 0) {
                         if (tempmodel.TypeId) {
                             tempmodel.modelData.TypeID = tempmodel.TypeId;

@@ -50,7 +50,7 @@
                         {{$index+1+page.pagecount*(page.pageindex-1)}}
                     </td>
                     <td ms-repeat-im="ShowColumns" ms-class-1="lk:im.type=='link'" ms-visible="im.IsSel" ms-click="View(el.ID,this)">
-                        {{FnFormat(el[im.ColName],im)|html}}
+                        {{ComFunJS.FnFormat(el[im.ColName],im.format)|html}}
                     </td>
                     <td>
                         <span class="btn-click">
@@ -60,7 +60,7 @@
                             <a class="cz-btn ft18 sc-color tip" data-toggle="tooltip" title="删除" ms-if="el.CRUser==userName" ms-click="Del(el,$event)">
                                 <i class="iconfont icon-shanchu"></i>
                             </a>
-                            <a title="生命周期" ms-click="LifeCycle(el.UserGW + el.UserRealName + el.Name + '生命周期管理',el.ID,$event)">
+                            <a title="生命周期" class="lk" ms-click="LifeCycle(el.UserGW + el.UserRealName + el.Name + '生命周期管理',el.ID,$event)">
                                 生命周期
                             </a>
                         </span>
@@ -142,7 +142,7 @@
         GetLIST: function () {
             model.page.pageindex = 1;
             tempindex.tmpListData.clear();
-            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST', { p: 1, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, usergw: tempindex.curUSERGW }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE', { p: 1, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, usergw: tempindex.curUSERGW }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.tmpListData = resultData.Result;
                     if (tempindex.tmpListData.size() == 0) { model.isnull = true; } else { model.isnull = false; }
@@ -154,7 +154,7 @@
                         skin: 'molv',
                         jump: function (e) { //触发分页后的回调
                             if (e.curr != model.page.pageindex) {
-                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST', { p: e.curr, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE }, function (resultData) {
+                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE', { p: e.curr, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, usergw: tempindex.curUSERGW  }, function (resultData) {
                                     if (resultData.ErrorMsg == "") {
                                         tempindex.tmpListData = resultData.Result;
                                     }
@@ -184,7 +184,7 @@
 
         },
         LifeCycle: function(Name, ID, event) {
-            ComFunJS.winviewform("/ViewV5/AppPage/ZCGL/LifeCycle.html?ID=" + ID + "&r=" + Math.random(), Name,'1000');
+            ComFunJS.winviewform("/ViewV5/AppPage/ZCGL/LIFECYCLELIST.html?ID=" + ID + "&r=" + Math.random(), Name,'1000');
         },
     })
 </script>

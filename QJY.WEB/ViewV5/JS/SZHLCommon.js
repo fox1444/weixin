@@ -440,7 +440,7 @@
             newchar = newchar + "整"
         return newchar;
     },//选择人员
-    DrawEWMcancas: function (id, imgurl, text, size) {
+    DrawEWMcancas: function (id, imgurl, text, size, title) {
         var width = 200;
         var height = 200;
         var len = 30;
@@ -470,7 +470,10 @@
         }
         else {
             $("#large-link").remove();
-            $('#' + id).after('&nbsp;&nbsp;<a id="large-link">点击查看高清大图</a>');
+            if (!title || title == '') {
+                title = "点击查看高清大图";
+            }
+            $('#' + id).after('&nbsp;&nbsp;<a id="large-link">' + title + '</a>');
             $('#large-link').click(function () {
                 ComFunJS.setCookie('ewm_imgurl', imgurl);
                 ComFunJS.setCookie('ewm_text', text);
@@ -781,7 +784,6 @@
                     try {
                     } catch (e) { }
                 }
-
             }
         }
         layer.open(optionwin);
@@ -1014,7 +1016,6 @@
             })
         }
         if ($(".szhl_Upload:hidden").length > 0) {
-
             $(".szhl_Upload:hidden").each(function () {
                 var $input = $(this);
                 var btnName = $(this).attr('title') ? $(this).attr('title') : "上传文件";//按钮名称
@@ -1322,8 +1323,63 @@
             }
         }
         return str;
-    }
+    },
 
+    //Weiler自定义类型
+    ZCStatusData: [
+        { "ID": "0", "TypeName": "完好" },
+        { "ID": "10", "TypeName": "维修" },
+        { "ID": "20", "TypeName": "丢失" },
+        { "ID": "30", "TypeName": "闲置" },
+        { "ID": "40", "TypeName": "损坏" },
+        { "ID": "50", "TypeName": "待报废" },
+        { "ID": "60", "TypeName": "已报废" },
+    ], //资产状态类型
+    LifeCycleTypeData: [
+        { "ID": "0", "TypeName": "入库" },
+        { "ID": "10", "TypeName": "维修" },
+        { "ID": "20", "TypeName": "变更使用者" },
+        { "ID": "30", "TypeName": "借出" },
+        { "ID": "90", "TypeName": "报废" },
+    ],  //资产生命周期类型
+    FnFormat: function (str, fmt) { //格式化
+        switch (fmt) {
+            case "dateformat":
+                {
+                    return ComFunJS.getnowdate("yyyy-mm-dd hh:mm", str);
+                }
+                break;
+            case "zcstatus":     //资产状态
+                {
+                    if (str == "0") return "完好";
+                    else if (str == "10") return "维修";
+                    else if (str == "20") return "丢失";
+                    else if (str == "30") return "闲置";
+                    else if (str == "40") return "损坏";
+                    else if (str == "50") return "待报废";
+                    else if (str == "60") return "已报废";
+                }
+                break;
+            case "lfcytype":     //资产生命周期类型
+                {
+                    if (str == "0") return "入库";
+                    else if (str == "10") return "维修";
+                    else if (str == "20") return "变更使用者";
+                    else if (str == "30") return "借出";
+                    else if (str == "90") return "报废";
+                }
+                break;
+            case "text":
+                {
+                    var len = fmt.len || 20;
+                    return ComFunJS.convstr(str + "", len);
+                }
+                break;
+            default: {
+                return str;
+            }
+        }
+    }
 });
 
 $(function () {

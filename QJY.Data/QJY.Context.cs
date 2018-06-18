@@ -208,6 +208,8 @@ public partial class QJY_SaaSEntities : DbContext
 
     public virtual DbSet<SZHL_ZCGL> SZHL_ZCGL { get; set; }
 
+    public virtual DbSet<SZHL_ZCGL_LifeCycle> SZHL_ZCGL_LifeCycle { get; set; }
+
 }
 
 }

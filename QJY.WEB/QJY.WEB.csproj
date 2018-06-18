@@ -200,7 +200,7 @@
     <Content Include="ViewV5\AppPage\HYGL\HYS.html" />
     <Content Include="ViewV5\AppPage\HYGL\HYSLIST.html" />
     <Content Include="ViewV5\AppPage\HYGL\HYSVIEW.html" />
-    <Content Include="ViewV5\AppPage\ZCGL\LifeCycle.html" />
+    <Content Include="ViewV5\AppPage\ZCGL\LIFECYCLELIST.html" />
     <Content Include="ViewV5\AppPage\SEAT\SEAT_2.html" />
     <Content Include="ViewV5\AppPage\YCGL\CLGL.html" />
     <Content Include="ViewV5\AppPage\YCGL\CLGLLIST.html" />
@@ -210,6 +210,9 @@
     <Content Include="ViewV5\AppPage\YCGL\YCGLLIST.html" />
     <Content Include="ViewV5\AppPage\YCGL\YCGLVIEW.html" />
     <Content Include="ViewV5\AppPage\ZCGL\LOCATION.html" />
+    <Content Include="ViewV5\AppPage\ZCGL\EDIT_LIFECYCLE.html" />
+    <Content Include="ViewV5\AppPage\ZCGL\ZCCDTJ.html" />
+    <Content Include="ViewV5\AppPage\ZCGL\ZCBMTJ.html" />
     <Content Include="ViewV5\AppPage\ZCGL\ZCGLLOCATIONLIST.html" />
     <Content Include="ViewV5\AppPage\ZCGL\ZCGLVIEW.html" />
     <Content Include="ViewV5\AppPage\ZCGL\TYPE.html" />

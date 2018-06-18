@@ -1749,7 +1749,7 @@ var ComFunJS = {
     },
 
     FnFormat: function (str, fmt) { //格式化
-        switch (fmt.format) {
+        switch (fmt) {
             case "dateformat":
                 {
                     return ComFunJS.getnowdate("yyyy-mm-dd hh:mm", str);
@@ -1758,13 +1758,22 @@ var ComFunJS = {
             case "zcstatus":     //物品状态
                 {
                     if (str == "0") return "完好";
-                    else if (str == "10") return "损坏";
+                    else if (str == "10") return "维修";
                     else if (str == "20") return "丢失";
                     else if (str == "30") return "闲置";
-                    else if (str == "40") return "维修";
+                    else if (str == "40") return "损坏";
                     else if (str == "50") return "待报废";
                     else if (str == "60") return "已报废";
                 }
+            case "lfcytype":     //资产生命周期类型
+                {
+                    if (str == "0") return "入库";
+                    else if (str == "10") return "维修";
+                    else if (str == "20") return "变更使用者";
+                    else if (str == "30") return "借出";
+                    else if (str == "90") return "报废";
+                }
+                break;
             case "text":
                 {
                     var len = fmt.len || 20;

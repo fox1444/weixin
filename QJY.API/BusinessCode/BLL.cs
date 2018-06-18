@@ -217,9 +217,6 @@ namespace QJY.API
             //修改原版本
 
         }
-
-
-
         /// <summary>
         /// 判断同一目录下是否有相同文件(不判断应用文件夹)
         /// </summary>
@@ -244,7 +241,6 @@ namespace QJY.API
         /// <param name="model"></param>
         /// <returns></returns>
 
-
         /// <summary>
         /// 更新企业空间占用
         /// </summary>
@@ -261,26 +257,20 @@ namespace QJY.API
             return qymodel.QyExpendSpace.Value;
         }
     }
-
-
-
     public class FT_File_DownhistoryB : BaseEFDao<FT_File_Downhistory>
     {
 
     }
-
 
     public class FT_File_ShareB : BaseEFDao<FT_File_Share>
     {
 
     }
 
-
     public class FT_File_UserAuthB : BaseEFDao<FT_File_UserAuth>
     {
 
     }
-
 
     public class FT_File_UserTagB : BaseEFDao<FT_File_UserTag>
     {
@@ -291,7 +281,6 @@ namespace QJY.API
     {
 
     }
-
     #endregion
 
     #region 综合办公
@@ -370,6 +359,7 @@ namespace QJY.API
     public class WX_UserB : BaseEFDao<WX_User>{ }
     public class MessageB : BaseEFDao<Message> { }
     public class SZHL_ZCGLB : BaseEFDao<SZHL_ZCGL> { }
+    public class SZHL_ZCGL_LifeCycleB : BaseEFDao<SZHL_ZCGL_LifeCycle> { }
     public class SZHL_ZCGL_TypeB : BaseEFDao<SZHL_ZCGL_Type> { }
     public class SZHL_ZCGL_LocationB : BaseEFDao<SZHL_ZCGL_Location> { }
     public class WX_RYB : BaseEFDao<WX_RY> { }

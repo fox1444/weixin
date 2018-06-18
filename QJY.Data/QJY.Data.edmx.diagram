@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1b180fae3589429ab91711e04b3ebb50" Name="Diagram1" ZoomLevel="86">
+      <Diagram DiagramId="1b180fae3589429ab91711e04b3ebb50" Name="Diagram1" ZoomLevel="91">
         <EntityTypeShape EntityType="QJY_SaaSModel.FT_File" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.FT_File_Downhistory" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.FT_File_Share" Width="1.5" PointX="2.75" PointY="3.75" />
@@ -93,6 +93,7 @@
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_ZCGL_Type" Width="1.5" PointX="31.375" PointY="6.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_ZCGL_Location" Width="1.5" PointX="31.375" PointY="10.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_ZCGL" Width="1.5" PointX="31.375" PointY="14.75" />
+        <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_ZCGL_LifeCycle" Width="1.5" PointX="31.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

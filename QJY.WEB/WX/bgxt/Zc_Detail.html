@@ -15,12 +15,24 @@
         .ms-controller, [ms-controller] {
             display: none;
         }
+
         .card-content {
             padding-bottom: .5rem;
         }
+
         .card-header, .card-item, .ft14 {
             font-size: 0.8rem;
-            padding-bottom:0.2rem;
+            padding-bottom: 0.2rem;
+        }
+
+        .lookright-box, .crm-dt {
+            font-size: 0.7rem;
+        }
+        .c666{
+            color:#666!important;
+        }
+        .c999 {
+            color: #999!important;
         }
     </style>
 </head>
@@ -37,15 +49,39 @@
                             <div class=" head-ft16">
                                 {{modelData.Name}}
                             </div>
-                            <div class=" head-ft16">
-                                <span class="c999 ft14">{{modelData.RegistDate|date("yy年M月d日")}}</span>
-                            </div>
+                            <!--<div class=" head-ft16">
+                                <span class="c999 ">{{modelData.RegistDate|date("yy年M月d日")}}</span>
+                            </div>-->
                             <div style="clear:both"></div>
                         </div>
                         <div class="card-content">
                             <div class="card-item" ms-repeat-im="ShowColumns" ms-visible="modelData[im.ColName]" ms-class-1="{{modelData.class}}">
                                 <span class="c999 title-item">{{im.ColText}}</span>
-                                <span>{{ComFunJS.FnFormat(modelData[im.ColName],im)|html}}</span>
+                                <span>{{ComFunJS.FnFormat(modelData[im.ColName],im.format)|html}}</span>
+                            </div>
+                        </div>
+
+                        <div ms-visible="LCData.size()>0">
+                            <div class="lookright-box">
+                                <div class="menu-general">
+                                    <ul>
+                                        <li class="active">
+                                            <a>生命周期</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="crm-dt" ms-repeat-item="LCData">
+                                <span class="crm-yuan"></span>
+                                <div class="crm-dt-cont">
+                                    <div class="m5">
+                                        <p class="c666">
+                                            <b>【{{ComFunJS.FnFormat(item.TypeID,"lfcytype")|html}}】</b>> <span>{{item.Title}}</span>
+                                            <div style="padding-left:8px;">{{CheckType(item)}}</div>
+                                        </p>
+                                        <h3 class="c999" style="padding-left:10px;">{{ComFunJS.bqhContent(item.Comment)|html}}</h3>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -66,12 +102,12 @@
         var model = avalon.define({
             $id: "ZCDetail",
             modelData: {},
-            ShowColumns: [],          
+            ShowColumns: [],
+            LCData: [],
             strId: ComFunJS.getQueryString("ID"),
             covtitle: function (title) {
                 return ComFunJS.convstr($("<div>" + title + "</div>").text(), 25);
             },//转化 TITLE信息
-
             GetModelData: function () {
                 if (model.strId) {
                     //编辑加载数据
@@ -80,10 +116,53 @@
                             if (resultData.Result.length > 0) {
                                 model.modelData = resultData.Result[0];
                             }
-                            $("title").html(model.modelData.UserRealName + '-' + model.modelData.Name); 
+                            $("title").html(model.modelData.UserRealName + '-' + model.modelData.Name);
                             setTimeout(" ComFunJS.initForm()", 500)
                         }
                     })
+                }
+            },
+            GetLfCyList: function () {
+                if (model.strId) {
+                    $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETLIFECYCLLISTBYZCGLID', { P1: model.strId }, function (resultData) {
+                        if (resultData.ErrorMsg == "") {
+                            if (resultData.Result.length > 0) {
+                                model.LCData = resultData.Result;
+                            }
+                        }
+                    })
+                }
+            },
+            CheckType: function (el) {
+                switch (el.TypeID) {
+                    case 0://入库
+                        {
+                            return ComFunJS.FnFormat(el.FromDate, "dateformat") + "入库分配给" + el.FromUser;
+                        }
+                        break;
+                    case 10://维修
+                        {
+                            return "从" + ComFunJS.FnFormat(el.FromDate, "dateformat") + "至" + ComFunJS.FnFormat(el.ToDate, "dateformat") + "进行维修";
+                        }
+                        break;
+                    case 20://变更
+                        {
+                            return ComFunJS.FnFormat(el.FromDate, "dateformat") + "由" + el.FromUser + "变更为" + el.ToUser;
+                        }
+                        break;
+                    case 30://借出
+                        {
+                            return ComFunJS.FnFormat(el.FromDate, "dateformat") + "至" + ComFunJS.FnFormat(el.ToDate, "dateformat") + "借出给" + el.FromUser;
+                        }
+                        break;
+                    case 90://报废
+                        {
+                            return ComFunJS.FnFormat(el.FromDate, "dateformat") + "报废";
+                        }
+                        break;
+                    default: {
+                        return "";
+                    }
                 }
             },
         })
@@ -110,8 +189,9 @@
                     { "ColName": "Managezhiwu", "ColText": "管理部门", "IsSel": true, "class": "width50" },
                     { "ColName": "Comment", "ColText": "备注", "IsSel": true },
                 ]);
-            
+
             model.GetModelData();
+            model.GetLfCyList();
         })
     </script>
 </body>

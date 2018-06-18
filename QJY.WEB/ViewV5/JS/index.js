@@ -585,19 +585,6 @@
                         }
                     }
                     break;
-                case "zcstatus":     //物品状态
-                    {
-                        switch (str) {
-                            case "0": str = '完好'; break;
-                            case "10": str = '损坏'; break;
-                            case "20": str = '丢失'; break;
-                            case "30": str = '闲置'; break;
-                            case "40": str = '维修'; break;
-                            case "50": str = '待报废'; break;
-                            case "60": str = '已报废'; break;
-                        }
-                    }
-                    break;
                 default: {
 
                 }

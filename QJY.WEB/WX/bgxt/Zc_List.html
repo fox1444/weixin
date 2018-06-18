@@ -70,20 +70,12 @@
                                 <span class="c999">类型：</span>
                                 <span>{{covtitle(el.Title)}}</span>
                             </div>
-                            <!--<div class="" ms-if="!el.isfold">
-                                <span class="c999">状态：</span>
-                                <span>{{ComFunJS.FnFormat(el.Status,'zcstatus')}}</span>
-                            </div>-->
                             <div style="clear:both"></div>
                         </div>
                         <div class="card-content" ms-visible="el.isfold">
                             <!--<div class="card-item">
                                 <span class="c999 title-item">类型：</span>
                                 <span>{{covtitle(el.Title)}}</span>
-                            </div>
-                            <div class="card-item">
-                                <span class="c999 title-item">状态：</span>
-                                <span>{{ComFunJS.FnFormat(el.Status,'zcstatus')}}</span>
                             </div>
                             <div class="buttons-tab list-op">
                                 <a class="tab-link button external" ms-click="vieww(el)">
@@ -92,7 +84,7 @@
                             </div>-->
                             <div class="card-item" ms-repeat-im="ShowColumns"  ms-visible="el[im.ColName]" ms-class-1="{{el.class}}">
                                 <span class="c999 title-item">{{im.ColText}}</span>
-                                <span >{{ComFunJS.FnFormat(el[im.ColName],im)|html}}</span>
+                                <span>{{ComFunJS.FnFormat(el[im.ColName],im.format)|html}}</span>
                             </div>
                         </div>
                     </div>
