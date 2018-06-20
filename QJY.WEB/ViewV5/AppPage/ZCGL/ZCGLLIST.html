@@ -54,10 +54,10 @@
                     </td>
                     <td>
                         <span class="btn-click">
-                            <a class="cz-btn ft18 bj-color tip" data-toggle="tooltip" title="编辑" ms-if="el.CRUser==userName" ms-click="AddView('ZCGL','编辑' + el.UserGW + el.UserRealName + el.Name,el.ID,$event)">
+                            <a class="cz-btn ft18 bj-color tip" data-toggle="tooltip" title="编辑" ms-click="AddView('ZCGL','编辑' + el.UserGW + el.UserRealName + el.Name,el.ID,$event)">
                                 <i class="iconfont icon-bianji"></i>
                             </a>
-                            <a class="cz-btn ft18 sc-color tip" data-toggle="tooltip" title="删除" ms-if="el.CRUser==userName" ms-click="Del(el,$event)">
+                            <a class="cz-btn ft18 sc-color tip" data-toggle="tooltip" title="删除" ms-click="Del(el,$event)">
                                 <i class="iconfont icon-shanchu"></i>
                             </a>
                             <a title="生命周期" class="lk" ms-click="LifeCycle(el.UserGW + el.UserRealName + el.Name + '生命周期管理',el.ID,$event)">
@@ -136,13 +136,12 @@
                 if (resultData.ErrorMsg == "") {
                     tempindex.GWData = resultData.Result;
                 }
-            }
-            )
+            })
         },
         GetLIST: function () {
             model.page.pageindex = 1;
             tempindex.tmpListData.clear();
-            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE', { p: 1, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, usergw: tempindex.curUSERGW }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE&r=' + Math.random(), { p: 1, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, usergw: tempindex.curUSERGW }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.tmpListData = resultData.Result;
                     if (tempindex.tmpListData.size() == 0) { model.isnull = true; } else { model.isnull = false; }
@@ -154,9 +153,9 @@
                         skin: 'molv',
                         jump: function (e) { //触发分页后的回调
                             if (e.curr != model.page.pageindex) {
-                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE', { p: e.curr, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, usergw: tempindex.curUSERGW  }, function (resultData) {
-                                    if (resultData.ErrorMsg == "") {
-                                        tempindex.tmpListData = resultData.Result;
+                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE&r=' + Math.random(), { p: e.curr, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, usergw: tempindex.curUSERGW }, function (r) {
+                                    if (r.ErrorMsg == "") {
+                                        tempindex.tmpListData = r.Result;
                                     }
                                 })
                                 model.page.pageindex = e.curr;
@@ -183,8 +182,8 @@
             }, function () { })
 
         },
-        LifeCycle: function(Name, ID, event) {
-            ComFunJS.winviewform("/ViewV5/AppPage/ZCGL/LIFECYCLELIST.html?ID=" + ID + "&r=" + Math.random(), Name,'1000');
+        LifeCycle: function (Name, ID, event) {
+            ComFunJS.winviewform("/ViewV5/AppPage/ZCGL/LIFECYCLELIST.html?ID=" + ID + "&r=" + Math.random(), Name, '1000');
         },
     })
 </script>

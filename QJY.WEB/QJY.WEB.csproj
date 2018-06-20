@@ -253,6 +253,8 @@
     <Content Include="View_Mobile\UI\HyDetail.html" />
     <Content Include="View_Mobile\UI\UI_Login.html" />
     <Content Include="View_Mobile\UI\UI_YCGL_LIST.html" />
+    <Content Include="WX\bgxt\BranchZc_List.html" />
+    <Content Include="WX\bgxt\LocZc_List.html" />
     <Content Include="WX\bgxt\Zc_Detail.html" />
     <Content Include="WX\bgxt\Zc_List.html" />
     <Content Include="WX\bgxt\Index.html" />

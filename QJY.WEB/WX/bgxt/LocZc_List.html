@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>固定资产</title>
+    <title>场地固定资产信息</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -54,7 +54,7 @@
     <div class="page-group">
         <div class="page page-current" id="pageindex1">
             <div class="buttons-tab">
-                <a href="#" ms-if="DataID=='-1'" class="tab-link button external">我的资产</a>
+                <a href="#" ms-if="DataID=='-1'" class="tab-link button external">{{model.LocTitle}}资产列表</a>
             </div>
             <div class="content infinite-scroll infinite-scroll-bottom" data-distance="50" style="margin-top:2rem" id="touchcontent">
                 <div class="list-container">
@@ -140,6 +140,8 @@
             ctData: [],//数据源
             search: "",
             ShowColumns: [],
+            LocationID: ComFunJS.getQueryString("locationid"),
+            LocTitle:"",
             isShow: false,
             loading: false,
             loadtip: "",//切换页时显示信息
@@ -190,7 +192,7 @@
             loadMore: function () {
                 if (model.loading) return;
                 model.loading = true;
-                $.getJSON("/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLISTTHISUSER&r=" + Math.random(), { "p": model.page, searchstr: model.search.searchcontent }, function (r) {
+                $.getJSON("/API/VIEWAPINOLOGIN.ashx?Action=ZCGL_GETZCGLLIST_PAGE&r=" + Math.random(), { "p": model.page, searchstr: model.search.searchcontent, locationid: model.LocationID }, function (r) {
                     model.loading = false;
                     if (r.ErrorMsg == "") {
                         if (model.page == 1 && r.Result.length == 0) {
@@ -205,6 +207,7 @@
                         }
 
                         model.ctData.pushArray(r.Result);
+                        model.LocTitle = r.Result[0].LocTitle;
                         //判断是否加载完毕
                         if (r.Result.length < model.pagecount) {
                             // 加载完毕，则注销无限加载事件，以防不必要的加载
