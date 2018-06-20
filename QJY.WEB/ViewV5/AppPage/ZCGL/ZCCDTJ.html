@@ -102,7 +102,7 @@
             }
             else {
                 $('#large-link').show();
-                model.EWMcode = "http://qr.liantu.com/api.php?text=" + ComFunJS.yuming + "/WX/bgxt/loczc_Detail.html?loc=" + checkValue + "&bg=ffffff&fg=007457&w=600&logo=" + ComFunJS.yuming + "/View_Mobile/images/tobacco-logo-icon.png";
+                model.EWMcode = "http://qr.liantu.com/api.php?text=" + ComFunJS.yuming + "/WX/bgxt/loczc_List.html?locationid=" + checkValue + "&bg=ffffff&fg=007457&w=600&logo=" + ComFunJS.yuming + "/View_Mobile/images/tobacco-logo-icon.png";
                 ComFunJS.DrawEWMcancas('cvs', model.EWMcode, checkText + '资产信息', '', '查看二维码');//生成场地二维码
             }
             tempindex.GetTYPE();

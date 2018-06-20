@@ -40,7 +40,7 @@
     <div class="page-group">
         <div class="page page-current" id="pageindex1">
             <div class="buttons-tab">
-                <a href="#" class="tab-link button external">资产详情</a>
+                <a href="#" class="tab-link button external"><!--资产详情-->{{model.TitleInfo}}</a>
             </div>
             <div class="content infinite-scroll infinite-scroll-bottom" data-distance="50" style="margin-top:2rem" id="touchcontent">
                 <div class="list-container">
@@ -104,6 +104,7 @@
             modelData: {},
             ShowColumns: [],
             LCData: [],
+            TitleInfo:"",
             strId: ComFunJS.getQueryString("ID"),
             covtitle: function (title) {
                 return ComFunJS.convstr($("<div>" + title + "</div>").text(), 25);
@@ -116,7 +117,8 @@
                             if (resultData.Result.length > 0) {
                                 model.modelData = resultData.Result[0];
                             }
-                            $("title").html(model.modelData.UserRealName + '-' + model.modelData.Name);
+                            //$("title").html(model.modelData.UserRealName + '-' + model.modelData.Name);
+                            model.TitleInfo = model.modelData.UserRealName + '-' + model.modelData.Name
                             setTimeout(" ComFunJS.initForm()", 500)
                         }
                     })
@@ -124,7 +126,7 @@
             },
             GetLfCyList: function () {
                 if (model.strId) {
-                    $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETLIFECYCLLISTBYZCGLID', { P1: model.strId }, function (resultData) {
+                    $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=ZCGL_GETLIFECYCLLISTBYZCGLID', { P1: model.strId }, function (resultData) {
                         if (resultData.ErrorMsg == "") {
                             if (resultData.Result.length > 0) {
                                 model.LCData = resultData.Result;

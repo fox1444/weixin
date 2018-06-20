@@ -24,8 +24,13 @@ namespace QJY.API
         /// </summary>
         public void GETZCGLLIST_PAGE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            string userName = UserInfo.User.UserName;
-            string strWhere = " z.IsDel=0 and z.ComId=" + UserInfo.User.ComId;
+            int page = 0;
+            int pagecount = 10;
+            int.TryParse(context.Request["p"] ?? "1", out page);
+            int.TryParse(context.Request["pagecount"] ?? "10", out pagecount);//页数
+            page = page == 0 ? 1 : page;
+            int total = 0;
+            string strWhere = " z.IsDel=0 ";
 
             string typeid = context.Request["typeid"] ?? "";
             string usergw = context.Request["usergw"] ?? "";
@@ -49,23 +54,16 @@ namespace QJY.API
             {
                 strWhere += string.Format(" And ( z.Name like '%{0}%'  or z.Code like '%{0}%')", searchstr);
             }
-            int DataID = -1;
-            int.TryParse(context.Request.QueryString["ID"] ?? "-1", out DataID);//记录Id
-            if (DataID != -1)
-            {
-                string strIsHasDataQX = new JH_Auth_QY_ModelB().ISHASDATAREADQX("ZCGL", DataID, UserInfo);
-                if (strIsHasDataQX == "Y")
-                {
-                    strWhere += string.Format(" And z.ID = '{0}'", DataID);
-                }
-            }
-
-            int page = 0;
-            int pagecount = 10;
-            int.TryParse(context.Request.QueryString["p"] ?? "1", out page);
-            int.TryParse(context.Request.QueryString["pagecount"] ?? "10", out pagecount);//页数
-            page = page == 0 ? 1 : page;
-            int total = 0;
+            //int DataID = -1;
+            //int.TryParse(context.Request.QueryString["ID"] ?? "-1", out DataID);//记录Id
+            //if (DataID != -1)
+            //{
+            //    string strIsHasDataQX = new JH_Auth_QY_ModelB().ISHASDATAREADQX("ZCGL", DataID, UserInfo);
+            //    if (strIsHasDataQX == "Y")
+            //    {
+            //        strWhere += string.Format(" And z.ID = '{0}'", DataID);
+            //    }
+            //}
 
             DataTable dt = new DataTable();
 

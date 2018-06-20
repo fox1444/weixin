@@ -1448,6 +1448,7 @@ namespace QJY.API
         public string isHasDataQX(string strModelCode, int DataID, JH_Auth_UserB.UserInfo UserInfo)
         {
             string strISHasQX = "N";
+            //获取的是父级模块权限
             DataTable dt = new JH_Auth_ModelB().GetRelTableByModelCode(UserInfo.User.ComId.Value, strModelCode);
             if (dt.Rows.Count > 0)
             {
