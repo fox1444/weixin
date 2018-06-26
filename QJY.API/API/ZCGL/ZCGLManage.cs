@@ -529,7 +529,7 @@ namespace QJY.API
         public void GETLIFECYCLLISTBYZCGLID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int Id = int.Parse(P1);
-            msg.Result = new SZHL_ZCGL_LifeCycleB().GetDTByCommand("select * from dbo.SZHL_ZCGL_LifeCycle where IsDel=0 and ZCGLID=" + Id + " and ComId=" + UserInfo.User.ComId + " order by FromDate desc");
+            msg.Result = new SZHL_ZCGL_LifeCycleB().GetDTByCommand("select * from dbo.SZHL_ZCGL_LifeCycle where IsDel=0 and ZCGLID=" + Id + " order by FromDate desc");
         }
         /// <summary>
         /// 删除生命周期
