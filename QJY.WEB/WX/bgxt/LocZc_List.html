@@ -63,12 +63,12 @@
                             <div class=" head-ft16">{{el.Name}}<span class="ml10 c999 ft14" ms-if="!el.isfold">{{$.timeago(el.CRDate)}}</span></div>
                             <div class=" head-ft16" ms-if="el.isfold"><span class="c999 ft14">{{el.RegistDate|date("MM月dd日")}}</span></div>
                             <div class="" ms-if="!el.isfold">
-                                <span class="c999">编码：</span>
-                                <span>{{covtitle(el.Code)}}</span>
-                            </div>
-                            <div class="" ms-if="!el.isfold">
                                 <span class="c999">类型：</span>
                                 <span>{{covtitle(el.Title)}}</span>
+                            </div>
+                            <div class="" ms-if="!el.isfold">
+                                <span class="c999">使用人：</span>
+                                <span>{{covtitle(el.UserRealName)}}</span>
                             </div>
                             <div style="clear:both"></div>
                         </div>
