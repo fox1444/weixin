@@ -532,7 +532,7 @@
             }
         },
         UserImport: function () {
-            top.ComFunJS.winviewform("/ViewV5/AppPage/XTGL/IMPORTUSER.html", "导入用户", 1000, 600);
+            top.ComFunJS.winviewform("/ViewV5/AppPage/XTGL/IMPORTUSER.html?r=" + Math.random(), "导入用户", 1000, 600);
         },
         setBranch: function (item) {//用户信息或部门信息，设置类型：user/branch
             top.ComFunJS.winbtnwin("/ViewV5/AppPage/XTGL/TopBranchSelect.html?checkvalue=" + item.TXLQX + "&hasQX=" + item.IsHasQX, "选择部门", 500, 470, {}, function (layero, index) {

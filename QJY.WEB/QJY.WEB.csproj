@@ -223,6 +223,7 @@
     <Content Include="ViewV5\CSS\font_icon.css" />
     <Content Include="ViewV5\ewm.html" />
     <Content Include="ViewV5\images\qrcode.png" />
+    <Content Include="ViewV5\IMPORTZCGL.html" />
     <Content Include="ViewV5\JS\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
@@ -1894,6 +1895,7 @@
     <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="ViewV5\Desktop.zip" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
