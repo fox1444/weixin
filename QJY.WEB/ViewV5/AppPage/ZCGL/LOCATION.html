@@ -3,6 +3,7 @@
         $id: "ZCGLTYPE",
         name: "场地",
         ColumnData: [],
+        BranchData:[],
         modelData: { "Title": "", "Comment": "", "DisplayOrder": "0" },
         iswf: false,//是否属于流程表单
         inittemp: function (strId) {
@@ -10,18 +11,31 @@
                 //编辑加载数据
                 $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETLOCATIONMODEL', { P1: strId }, function (resultData) {
                     if (resultData.ErrorMsg == "") {
-
                         tempmodel.modelData = resultData.Result;
+                        tempmodel.LoadBranch(tempmodel.modelData.BranchCode);
                         setTimeout(" ComFunJS.initForm()", 500)
                     }
                 })
             } else {
                 ComFunJS.initForm();
-
             }
         },
+        LoadBranch: function (bcode) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLBRANCH&r=' + Math.random(), {}, function (resultData) {
+                if (resultData.ErrorMsg == "") {
+                    tempmodel.BranchData = resultData.Result;
+                    if (resultData.Result.length > 0) {
+                        if (bcode) {
+                            tempmodel.modelData.BranchCode = bcode;
+                        }
+                        if (!tempmodel.modelData.BranchCode) {
+                            tempmodel.modelData.BranchCode = resultData.Result[0].DeptCode;
+                        };
+                    }
+                }
+            })
+        },
         SaveData: function (callback) {
-
             var modelValue = JSON.stringify(tempmodel.modelData.$model)
             $.post("/API/VIEWAPI.ashx?ACTION=ZCGL_ADDLOCATION", { P1: modelValue }, function (result) {
                 return callback.call(this, result);
@@ -38,6 +52,14 @@
                     <label class="add-item-label"><i>*</i>场地名称</label>
                     <div class="add-ic">
                         <input type="text" class="form-control szhl_require" ms-duplex="modelData.Title" />
+                    </div>
+                </li>
+                <li class="add-item add-width2">
+                    <label class="add-item-label"><i>*</i>公司</label>
+                    <div class="add-ic">
+                        <select name="conBranch" id="conBranch" ms-duplex="modelData.BranchCode" class="form-control szhl_require" ms-change="LoadGW(this.value,modelData.usergw,true)">
+                            <option ms-repeat-item="BranchData" ms-attr-value="item.DeptCode">{{item.DeptName}}</option>
+                        </select>
                     </div>
                 </li>
                 <li class="add-item add-width2">

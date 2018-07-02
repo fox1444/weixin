@@ -1532,6 +1532,10 @@
           <Property Name="CRDate" Type="datetime" Nullable="false" />
           <Property Name="IsDel" Type="int" Nullable="false" />
           <Property Name="Managezhiwu" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Situation" Type="varchar(max)" />
+          <Property Name="Verify" Type="varchar(max)" />
+          <Property Name="IndexID" Type="int" />
         </EntityType>
         <EntityType Name="SZHL_ZCGL_LifeCycle">
           <Key>
@@ -1566,6 +1570,7 @@
           <Property Name="CRUser" Type="varchar" MaxLength="50" />
           <Property Name="CRDate" Type="datetime" Nullable="false" />
           <Property Name="IsDel" Type="int" Nullable="false" />
+          <Property Name="BranchCode" Type="int" />
         </EntityType>
         <EntityType Name="SZHL_ZCGL_Type">
           <Key>
@@ -3693,6 +3698,7 @@
           <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDel" Type="Int32" Nullable="false" />
+          <Property Name="BranchCode" Type="Int32" />
         </EntityType>
         <EntityType Name="SZHL_ZCGL">
           <Key>
@@ -3722,6 +3728,10 @@
           <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDel" Type="Int32" Nullable="false" />
           <Property Name="Managezhiwu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Situation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Verify" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IndexID" Type="Int32" />
         </EntityType>
         <EntityType Name="SZHL_ZCGL_LifeCycle">
           <Key>
@@ -5550,6 +5560,7 @@
           <EntitySetMapping Name="SZHL_ZCGL_Location">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL_Location">
               <MappingFragment StoreEntitySet="SZHL_ZCGL_Location">
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
                 <ScalarProperty Name="IsDel" ColumnName="IsDel" />
                 <ScalarProperty Name="CRDate" ColumnName="CRDate" />
                 <ScalarProperty Name="CRUser" ColumnName="CRUser" />
@@ -5565,6 +5576,10 @@
           <EntitySetMapping Name="SZHL_ZCGL">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL">
               <MappingFragment StoreEntitySet="SZHL_ZCGL">
+                <ScalarProperty Name="IndexID" ColumnName="IndexID" />
+                <ScalarProperty Name="Verify" ColumnName="Verify" />
+                <ScalarProperty Name="Situation" ColumnName="Situation" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Managezhiwu" ColumnName="Managezhiwu" />
                 <ScalarProperty Name="IsDel" ColumnName="IsDel" />
                 <ScalarProperty Name="CRDate" ColumnName="CRDate" />

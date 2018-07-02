@@ -41,8 +41,7 @@
                         序号
                     </th>
                     <th ms-repeat-im="ShowColumns" ms-visible="im.IsSel" ms-attr-width="im.width">{{im.ColText}}</th>
-                    <th>
-                    </th>
+                   
                 </tr>
             </thead>
             <tbody>
@@ -53,7 +52,7 @@
                     <td ms-repeat-im="ShowColumns" ms-class-1="lk:im.type=='link'" ms-visible="im.IsSel" ms-click="View(el.ID,this)">
                         {{ComFunJS.FnFormat(el[im.ColName],im.format)|html}}
                     </td>
-                    <td></td>
+                  
                 </tr>
             </tbody>
             <tfoot>
