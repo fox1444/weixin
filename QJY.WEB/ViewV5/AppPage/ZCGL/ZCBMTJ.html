@@ -3,8 +3,11 @@
     <div class="tab-filter-type">
         <div class="oh" style="margin-bottom:15px;">
             <h5 class="pull-left tr">所属部门：</h5>
+            <select name="conBranch" id="conBranch" ms-change="SelectBranch(this.value)" style="font-size:82%;">
+                <option ms-repeat-item="BranchData" ms-attr-value="item.DeptCode">{{item.DeptName}}</option>
+            </select>
             <select name="conGWs" id="conGWs" ms-change="SelectUSERGW(this.value)" style="font-size:82%;">
-                <option value="">所有</option>
+                <option value="">所有部门</option>
                 <option ms-repeat-item="GWData" ms-attr-value="item.UserGW">{{item.UserGW}}({{item.ZCNum}})</option>
             </select>
 
@@ -79,13 +82,24 @@
         $id: "ZCGLLIST",
         curTYPE: "",
         curUSERGW: "",
+        curBranch: "1728",
         EWMcode: "",
         TypeData: [],
+        BranchData: [],
         GWData: [],
         tmpListData: [],
         SelectTYPE: function (type) {
             tempindex.curTYPE = type;
             tempindex.LoadUSERGW();
+            tempindex.GetLIST();
+        },
+        SelectBranch: function (val) {
+            tempindex.curBranch = val;
+            tempindex.curUSERGW = '';
+            tempindex.GWData.clear();
+            tempindex.LoadUSERGW();
+            $('#conGWs').val('');
+            tempindex.GetTYPE();
             tempindex.GetLIST();
         },
         SelectUSERGW: function (val) {
@@ -120,8 +134,7 @@
             ]);
             //类型数据
             tempindex.GetTYPE();
-            tempindex.LoadUSERGW();
-            tempindex.GetLIST();
+            tempindex.LoadBranch();
         },
         GetTYPE: function () {
             $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELISTWITHNUM', { P1: tempindex.curUSERGW }, function (resultData) {
@@ -130,19 +143,27 @@
                 }
             })
         },
+        LoadBranch: function () {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETTHISUSERBRANCHLIST&r=' + Math.random(), {}, function (resultData) {
+                if (resultData.ErrorMsg == "") {
+                    tempindex.BranchData = resultData.Result;
+                    tempindex.curBranch = resultData.Result1;
+                    tempindex.LoadUSERGW();
+                    tempindex.GetLIST();
+                }
+            })
+        },
         LoadUSERGW: function () {
-            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETALLGWBYBRANCHCODE&r=' + Math.random(), { P1: 1728, P2: tempindex.curTYPE }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETALLGWBYBRANCHCODE&r=' + Math.random(), { P1: tempindex.curBranch, P2: tempindex.curTYPE }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.GWData = resultData.Result;
-
-
                 }
             })
         },
         GetLIST: function () {
             model.page.pageindex = 1;
             tempindex.tmpListData.clear();
-            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE', { p: 1, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, usergw: tempindex.curUSERGW }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE', { p: 1, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, usergw: tempindex.curUSERGW, branchcode: tempindex.curBranch }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.tmpListData = resultData.Result;
                     if (tempindex.tmpListData.size() == 0) { model.isnull = true; } else { model.isnull = false; }
@@ -154,7 +175,7 @@
                         skin: 'molv',
                         jump: function (e) { //触发分页后的回调
                             if (e.curr != model.page.pageindex) {
-                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE', { p: e.curr, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, usergw: tempindex.curUSERGW  }, function (resultData) {
+                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE', { p: e.curr, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, usergw: tempindex.curUSERGW, branchcode: tempindex.curBranch  }, function (resultData) {
                                     if (resultData.ErrorMsg == "") {
                                         tempindex.tmpListData = resultData.Result;
                                     }

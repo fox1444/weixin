@@ -33,7 +33,7 @@ namespace QJY.API
             string strWhere = " z.IsDel=0 ";
 
             string typeid = context.Request["typeid"] ?? "";
-            string branchcode= context.Request["branchcode"] ?? "";
+            string branchcode = context.Request["branchcode"] ?? "";
             string usergw = context.Request["usergw"] ?? "";
             string locationid = context.Request["locationid"] ?? "";
 
@@ -358,7 +358,11 @@ namespace QJY.API
             {
                 where = " and z.TypeID='" + P1 + "' ";
             }
-            DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ") as ZCNum  from dbo.SZHL_ZCGL_LOCATION l where IsDel=0 and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ")>0 order by DisplayOrder");
+            if (!string.IsNullOrEmpty(P2))
+            {
+                where = " and z.BranchCode='" + P2 + "' ";
+            }
+            DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ") as ZCNum  from dbo.SZHL_ZCGL_LOCATION l where IsDel=0  and BranchCode='" + P2 + "' and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ")>0 order by DisplayOrder");
             msg.Result = dt;
         }
         /// <summary>

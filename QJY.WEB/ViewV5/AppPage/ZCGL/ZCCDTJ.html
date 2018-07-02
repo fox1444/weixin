@@ -3,8 +3,11 @@
     <div class="tab-filter-type">
         <div class="oh" style="margin-bottom:15px;">
             <h5 class="pull-left tr">存放场地：</h5>
+            <select name="conBranch" id="conBranch" ms-change="SelectBranch(this.value)" style="font-size:82%;">
+                <option ms-repeat-item="BranchData" ms-attr-value="item.DeptCode">{{item.DeptName}}</option>
+            </select>
             <select name="conLOCs" id="conLOCs" ms-change="SelectLOCATION(this)" style="font-size:82%;">
-                <option value="">所有</option>
+                <option value="">所有场地</option>
                 <option ms-repeat-item="LOCATIONData" ms-attr-value="item.ID">{{item.Title}}({{item.ZCNum}})</option>
             </select>
 
@@ -79,13 +82,24 @@
         $id: "ZCGLLIST",
         curTYPE: "",
         curLOCATION: "",
+        curBranch: "1728",
         EWMcode: "",
         TypeData: [],
+        BranchData: [],
         LOCATIONData: [],
         tmpListData: [],
         SelectTYPE: function (type) {
             tempindex.curTYPE = type;
             tempindex.LoadLOCATION();
+            tempindex.GetLIST();
+        },
+        SelectBranch: function (val) {
+            tempindex.curBranch = val;
+            tempindex.curLOCATION = '';
+            tempindex.LOCATIONData.clear();
+            tempindex.LoadLOCATION();
+            $('#conLOCs').val('');
+            tempindex.GetTYPE();
             tempindex.GetLIST();
         },
         SelectLOCATION: function (el) {
@@ -125,8 +139,7 @@
             ]);
             //类型数据
             tempindex.GetTYPE();
-            tempindex.LoadLOCATION();
-            tempindex.GetLIST();
+            tempindex.LoadBranch();
         },
         GetTYPE: function () {
             $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELISTBYLOCATIONWITHNUM', { P1: tempindex.curLOCATION }, function (resultData) {
@@ -135,8 +148,18 @@
                 }
             })
         },
+        LoadBranch: function () {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETTHISUSERBRANCHLIST&r=' + Math.random(), {}, function (resultData) {
+                if (resultData.ErrorMsg == "") {
+                    tempindex.BranchData = resultData.Result;
+                    tempindex.curBranch = resultData.Result1;
+                    tempindex.LoadLOCATION();
+                    tempindex.GetLIST();
+                }
+            })
+        },
         LoadLOCATION: function () {
-            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLISTWITHNUM&r=' + Math.random(), { P1: tempindex.curTYPE }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLISTWITHNUM&r=' + Math.random(), { P1: tempindex.curTYPE, P2: tempindex.curBranch }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.LOCATIONData = resultData.Result;
                 }
@@ -145,7 +168,7 @@
         GetLIST: function () {
             model.page.pageindex = 1;
             tempindex.tmpListData.clear();
-            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE', { p: 1, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, locationid: tempindex.curLOCATION }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE', { p: 1, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, locationid: tempindex.curLOCATION, branchcode: tempindex.curBranch }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.tmpListData = resultData.Result;
                     if (tempindex.tmpListData.size() == 0) { model.isnull = true; } else { model.isnull = false; }
@@ -157,7 +180,7 @@
                         skin: 'molv',
                         jump: function (e) { //触发分页后的回调
                             if (e.curr != model.page.pageindex) {
-                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE', { p: e.curr, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, locationid: tempindex.curLOCATION }, function (resultData) {
+                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLIST_PAGE', { p: e.curr, pagecount: model.page.pagecount, searchstr: model.search.searchcontent, typeid: tempindex.curTYPE, locationid: tempindex.curLOCATION, branchcode: tempindex.curBranch }, function (resultData) {
                                     if (resultData.ErrorMsg == "") {
                                         tempindex.tmpListData = resultData.Result;
                                     }

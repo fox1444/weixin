@@ -107,6 +107,7 @@
         SelectBranch: function (val) {
             tempindex.curBranch = val;
             tempindex.curUSERGW = '';
+            tempindex.GWData.clear();
             tempindex.LoadUSERGW();
             $('#conGWs').val('');
             tempindex.GetLIST();
