@@ -33,12 +33,17 @@ namespace QJY.API
             string strWhere = " z.IsDel=0 ";
 
             string typeid = context.Request["typeid"] ?? "";
+            string branchcode= context.Request["branchcode"] ?? "";
             string usergw = context.Request["usergw"] ?? "";
             string locationid = context.Request["locationid"] ?? "";
 
             if (typeid != "")
             {
                 strWhere += string.Format(" And z.TypeID='{0}' ", typeid);
+            }
+            if (branchcode != "")
+            {
+                strWhere += string.Format(" And z.BranchCode='{0}' ", branchcode);
             }
             if (usergw != "")
             {
@@ -405,7 +410,12 @@ namespace QJY.API
 
             if (string.IsNullOrEmpty(t.Title))
             {
-                msg.ErrorMsg = "类型名称不能为空!";
+                msg.ErrorMsg = "场地名称不能为空!";
+            }
+
+            if (t.BranchCode == null || t.BranchCode <= 0)
+            {
+                msg.ErrorMsg = "公司不能为空!";
             }
 
             if (string.IsNullOrEmpty(msg.ErrorMsg))

@@ -4,7 +4,7 @@
         name: "场地",
         ColumnData: [],
         BranchData:[],
-        modelData: { "Title": "", "Comment": "", "DisplayOrder": "0" },
+        modelData: { "Title": "", "Comment": "","BranchCode":"0", "DisplayOrder": "0" },
         iswf: false,//是否属于流程表单
         inittemp: function (strId) {
             if (strId) {
@@ -17,6 +17,7 @@
                     }
                 })
             } else {
+                tempmodel.LoadBranch();
                 ComFunJS.initForm();
             }
         },
@@ -36,7 +37,13 @@
             })
         },
         SaveData: function (callback) {
-            var modelValue = JSON.stringify(tempmodel.modelData.$model)
+            if (!(/^[0-9]*$/.test(tempmodel.modelData.DisplayOrder))) {
+                parent.ComFunJS.winwarning("排序必须是数字");
+                $(".btnSucc").removeAttr('disabled');//可再次提交
+                return;
+            }
+
+            var modelValue = JSON.stringify(tempmodel.modelData.$model);
             $.post("/API/VIEWAPI.ashx?ACTION=ZCGL_ADDLOCATION", { P1: modelValue }, function (result) {
                 return callback.call(this, result);
             });
@@ -57,7 +64,7 @@
                 <li class="add-item add-width2">
                     <label class="add-item-label"><i>*</i>公司</label>
                     <div class="add-ic">
-                        <select name="conBranch" id="conBranch" ms-duplex="modelData.BranchCode" class="form-control szhl_require" ms-change="LoadGW(this.value,modelData.usergw,true)">
+                        <select name="conBranch" id="conBranch" ms-duplex="modelData.BranchCode" class="form-control szhl_require">
                             <option ms-repeat-item="BranchData" ms-attr-value="item.DeptCode">{{item.DeptName}}</option>
                         </select>
                     </div>

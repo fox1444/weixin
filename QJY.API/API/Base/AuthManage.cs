@@ -101,8 +101,6 @@ namespace QJY.API
                     return;
                 }
             }
-
-
         }
         /// <summary>
         /// 获取部门列表（ztree使用）
@@ -163,6 +161,20 @@ namespace QJY.API
         {
             DataTable dt = new JH_Auth_BranchB().GetDTByCommand("select * from dbo.JH_Auth_Branch where ComId=" + UserInfo.User.ComId + " order by DeptShort desc");
             msg.Result = dt;
+        }
+        /// <summary>
+        /// 当前用户的部门/公司列表，分公司只显示自己，总公司显示全部
+        /// </summary>
+        public void GETTHISUSERBRANCHLIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string strWhere = "";
+            if (UserInfo.User.BranchCode != 1728)
+            {
+                strWhere = string.Format(" And DeptCode='{0}' ", UserInfo.User.BranchCode);
+            }
+            DataTable dt = new JH_Auth_BranchB().GetDTByCommand("select * from dbo.JH_Auth_Branch where ComId=" + UserInfo.User.ComId + strWhere + " order by DeptShort desc");
+            msg.Result = dt;
+            msg.Result1 = UserInfo.User.BranchCode;
         }
         /// <summary>
         /// 部门下所有职务(包含在权限表中)
