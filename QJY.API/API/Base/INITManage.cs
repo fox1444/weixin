@@ -423,6 +423,111 @@ namespace QJY.API
         }
         #endregion
 
+        #region 导入资产
+        public void SAVEIMPORTZCGL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string branchMsg = "", branchErrorMsg = "", userMsg = "";
+            int i = 0, j = 0;
+            DataTable dt = new DataTable();
+            dt = JsonConvert.DeserializeObject<DataTable>(P1);
+
+            int rowIndex = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                string location = row[10].ToString().Trim();
+                if (location != "")
+                {
+                    try
+                    {
+                        SZHL_ZCGL_Location locationModel = new SZHL_ZCGL_LocationB().GetEntity(d => d.Title == location && d.ComId == UserInfo.User.ComId);
+                        if (locationModel == null)
+                        {
+                            locationModel = new SZHL_ZCGL_Location();
+                            locationModel.Title = location;
+                            locationModel.DisplayOrder = 0;
+                            locationModel.ComId = UserInfo.User.ComId.Value;
+                            locationModel.CRUser = "ZHANGTT";
+                            locationModel.CRDate = DateTime.Now;
+                            locationModel.IsDel = 0;
+                            locationModel.BranchCode = 1728;
+                            new SZHL_ZCGL_LocationB().Insert(locationModel);
+                            i++;
+                        }
+
+                        string zcCode = row[1].ToString().Trim();
+                        string zcName = row[2].ToString().Trim();
+                        string zcOrginalPrice = row[3].ToString().Trim();
+                        string zcPresentPrice = row[5].ToString().Trim();
+                        string zcRegistDate = row[6].ToString().Trim();
+                        string zcManagezhiwu = row[7].ToString().Trim();//管理部门
+                        string zcUserGW = row[8].ToString().Trim();//使用部门
+                        string zcUserRealName = row[9].ToString().Trim();//使用人姓名
+                        string zcLocation = row[10].ToString().Trim();
+                        string zcSituation = row[11].ToString().Trim();//盘点情况
+                        string zcComments = row[12].ToString().Trim();//备注
+                        string zcVeriFy = row[13].ToString().Trim();//备注
+                        string zcUserName = "";
+                        int zcLocationID = 0;
+
+                        JH_Auth_User zcUserModel = new JH_Auth_UserB().GetEntity(d => d.UserRealName == zcUserRealName && d.UserGW == zcUserGW && d.BranchCode == 1728 && d.ComId == UserInfo.User.ComId);
+                        if (zcUserModel != null)
+                        {
+                            zcUserName = zcUserModel.UserName;
+                        }
+
+                        SZHL_ZCGL_Location thislocationModel = new SZHL_ZCGL_LocationB().GetEntity(d => d.Title == location && d.ComId == UserInfo.User.ComId);
+                        if (thislocationModel != null)
+                        {
+                            zcLocationID = thislocationModel.ID;
+                        }
+
+                        SZHL_ZCGL zcglModel = new SZHL_ZCGLB().GetEntity(d => d.Name == zcName && d.Code == zcCode && d.UserName == zcUserName && d.UserGW == zcUserGW && d.ComId == UserInfo.User.ComId);
+                        if (zcglModel == null)
+                        {
+                            zcglModel = new SZHL_ZCGL();
+                            zcglModel.ComId = UserInfo.User.ComId.Value;
+                            zcglModel.Name = zcName;
+                            zcglModel.Code = zcCode;
+                            zcglModel.BranchCode = 1728;
+                            zcglModel.UserGW = zcUserGW;
+                            zcglModel.UserName = zcUserName;
+                            zcglModel.LocationID = zcLocationID;
+                            zcglModel.Location = zcLocation;
+                            zcglModel.Status = 0;
+                            zcglModel.Comment = zcComments;
+                            zcglModel.OrginalPrice = double.Parse(zcOrginalPrice);
+                            zcglModel.PresentPrice = double.Parse(zcPresentPrice);
+                            zcglModel.Qty = 1;
+                            zcglModel.RegistDate = DateTime.Parse(zcRegistDate);
+                            zcglModel.Depreciation = 0;
+                            zcglModel.CRUser = "ZHANGTT";
+                            zcglModel.CRDate = DateTime.Now;
+                            zcglModel.IsDel = 0;
+                            zcglModel.Managezhiwu = zcManagezhiwu;
+                            zcglModel.Situation = zcSituation;
+                            zcglModel.IndexID = 0;
+                            zcglModel.Verify = zcVeriFy;
+                            new SZHL_ZCGLB().Insert(zcglModel);
+                            j++;
+                        }
+                        else
+                        {
+                            zcglModel.Verify = zcVeriFy;
+                            new SZHL_ZCGLB().Update(zcglModel);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                }
+                msg.Result = branchErrorMsg + "<br/>" + userMsg;
+                msg.Result1 = "新增场地" + i + "个,新增资产" + j + "个<br/>" + branchMsg + (branchMsg == "" ? "" : "<br/>");
+            }
+        }
+        #endregion
+
         #region 导入用户
         public void SAVEIMPORTUSER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
@@ -593,7 +698,6 @@ namespace QJY.API
             msg.Result1 = "新增部门" + i + "个,新增用户" + j + "个<br/>" + branchMsg + (branchMsg == "" ? "" : "<br/>");
         }
 
-
         /// <summary>
         /// 将系统的组织架构同步到微信中去
         /// </summary>
@@ -762,7 +866,6 @@ namespace QJY.API
             msg.Result1 = "新增部门" + i + "个,新增用户" + j + "个<br/>";
 
         }
-
         public void TBTXL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             try
@@ -998,7 +1101,6 @@ namespace QJY.API
                 msg.ErrorMsg = ex.ToString();
             }
         }
-
         //同步关注状态
         public void TBGZSTATUS(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
@@ -1073,8 +1175,6 @@ namespace QJY.API
         }
 
         #region 企业号相关
-
-
         public void YZCOMPANYQYH(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             JH_Auth_QY company = new JH_Auth_QY();
@@ -1093,38 +1193,21 @@ namespace QJY.API
             }
 
         }
-
-
-
-
         /// <summary>
         /// 获取具有手机端的应用列表
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void GETWXAPP(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             msg.Result = new JH_Auth_ModelB().GetEntities(d => !string.IsNullOrEmpty(d.WXUrl)).OrderBy(d => d.ORDERID);
         }
-
-
         /// <summary>
         /// 获取当前企业号拥有的IP,只返回和可信域名相同的应用
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void GETQYAPP(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int id = Int32.Parse(P1);
             var model = new JH_Auth_ModelB().GetEntity(p => p.ID == id);
             msg.Result1 = model;//系统应用数据
-
 
             #region 获取应用默认菜单
             DataTable dt = new JH_Auth_CommonB().GetDTByCommand(" select * from JH_Auth_Common where ModelCode='" + model.ModelCode + "' and TopID='0' and type='1' order by Sort");
@@ -1144,15 +1227,9 @@ namespace QJY.API
                 msg.Result3 = UserInfo.QYinfo.WXUrl.TrimEnd('/') + "/View_Mobile/UI/UI_COMMON.html?funcode=" + model.ModelCode + "&corpId=" + UserInfo.QYinfo.corpId; ;
             }
         }
-
         /// <summary>
         /// 保存应用Token和EncodingAESKey
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void SAVEMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             JH_Auth_Model model = JsonConvert.DeserializeObject<JH_Auth_Model>(P1);
@@ -1178,15 +1255,9 @@ namespace QJY.API
                 msg.ErrorMsg = "绑定失败";
             }
         }
-
         /// <summary>
         /// 创建应用菜单
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void CREATEMENU(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             try
@@ -1220,15 +1291,9 @@ namespace QJY.API
                 msg.ErrorMsg = "创建菜单失败";
             }
         }
-
         /// <summary>
         /// 解除应用绑定
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void FIREMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             try
@@ -1292,7 +1357,6 @@ namespace QJY.API
 
 
         #endregion
-
         #endregion
     }
 }

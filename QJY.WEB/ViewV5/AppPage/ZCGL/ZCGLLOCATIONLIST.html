@@ -5,6 +5,13 @@
     </div>
     <!-- 按条件选择 -->
     <div class="tab-filter-type">
+        <div class="oh" style="margin-bottom:15px;">
+            <h5 class="pull-left tr">所属公司：</h5>
+            <select name="conBranchs" id="conBranchs" ms-change="SelectBranch(this.value)" style="font-size:80%;">
+                <option value="">所有</option>
+                <option ms-repeat-item="BranchData" ms-attr-value="item.DeptCode">{{item.DeptName}}</option>
+            </select>
+        </div>
         <!-- 搜索 -->
         <div class="oh">
             <div class="input-group ml15" style="width:295px;">
@@ -73,11 +80,16 @@
 </div>
 
 <script>
-
     var tempindex = avalon.define({
         $id: "LOCATIONLIST",
         curXJType: "",
-        tmpListData:[],
+        tmpListData: [],
+        BranchData: [],
+        curBranch: "",
+        SelectBranch: function (val) {
+            tempindex.curBranch = val;
+            tempindex.GetLIST();
+        },
         SelectType: function (type) {
             model.search.seartype = type;
             tempindex.GetLIST();
@@ -97,20 +109,27 @@
             model.ShowColumns.clear();
             model.ShowColumns.pushArray([
                 { "ColName": "Title", "ColText": "场地名称", "IsSel": true, "format": "text" },
-                { "ColName": "Comment", "ColText": "简介", "IsSel": true, "format": "text", "len": " 20" },
+                { "ColName": "DeptName", "ColText": "公司", "IsSel": true, "format": "text", "len": " 20" },
                 { "ColName": "DisplayOrder", "ColText": "排序", "IsSel": true, "format": "text" },
                 { "ColName": "IsDel", "ColText": "状态", "IsSel": true, "format": "hyszt" }
             ]);
             //类型数据
 
         //    model.GetTypeData("1");
+            tempindex.LoadBranch();
             tempindex.GetLIST();
         },
-
+        LoadBranch: function () {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLBRANCH&r=' + Math.random(), { }, function (resultData) {
+                if (resultData.ErrorMsg == "") {
+                    tempindex.BranchData = resultData.Result;
+                }
+            })
+        },
         GetLIST: function () {
             model.page.pageindex = 1;
             tempindex.tmpListData.clear();
-            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLIST_PAGE', { p: 1, P1: model.search.searchcontent, P2: model.search.seartype, pagecount: model.page.pagecount, Content: model.search.searchcontent, lb: tempindex.curXJType }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLIST_PAGE', { p: 1, P1: model.search.searchcontent, P2: model.search.seartype, pagecount: model.page.pagecount, Content: model.search.searchcontent, lb: tempindex.curXJType, branchcode: tempindex.curBranch }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.tmpListData = resultData.Result;
                     if (tempindex.tmpListData.size() == 0) { model.isnull = true; } else { model.isnull = false; }
@@ -122,7 +141,7 @@
                         skin: 'molv',
                         jump: function (e) { //触发分页后的回调
                             if (e.curr != model.page.pageindex) {
-                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLIST_PAGE', { p: e.curr, P1: model.search.searchcontent, P2: model.search.seartype, pagecount: model.page.pagecount, Content: model.search.searchcontent, lb: tempindex.curXJType }, function (resultData) {
+                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLIST_PAGE', { p: e.curr, P1: model.search.searchcontent, P2: model.search.seartype, pagecount: model.page.pagecount, Content: model.search.searchcontent, lb: tempindex.curXJType, branchcode: tempindex.curBranch }, function (resultData) {
                                     if (resultData.ErrorMsg == "") {
                                         tempindex.tmpListData = resultData.Result;
                                     }
@@ -131,6 +150,10 @@
                             }
                         }
                     });
+                }
+                else
+                {
+                    alert(resultData.ErrorMsg);
                 }
             })
         },

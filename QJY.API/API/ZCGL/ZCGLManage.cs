@@ -367,6 +367,12 @@ namespace QJY.API
             {
                 strWhere += string.Format(" And cc.Title like '%{0}%'", P1);
             }
+            string bc = context.Request["branchcode"] ?? "";
+
+            if (bc != "")
+            {
+                strWhere += string.Format(" And cc.BranchCode = '{0}'", bc);
+            }
 
             int page = 0;
             int pagecount = 10;
@@ -374,7 +380,8 @@ namespace QJY.API
             int.TryParse(context.Request.QueryString["pagecount"] ?? "10", out pagecount);//页数
             page = page == 0 ? 1 : page;
             int total = 0;
-            DataTable dt = new SZHL_ZCGL_TypeB().GetDataPager(" SZHL_ZCGL_LOCATION cc", "cc.*", pagecount, page, " cc.DisplayOrder", strWhere, ref total);
+
+            DataTable dt = new SZHL_ZCGL_TypeB().GetDataPager(" SZHL_ZCGL_LOCATION cc left join JH_Auth_Branch b on cc.BranchCode=b.DeptCode", "cc.* , b.DeptName", pagecount, page, " cc.DisplayOrder", strWhere, ref total);
 
             msg.Result = dt;
             msg.Result1 = total;

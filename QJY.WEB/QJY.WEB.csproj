@@ -1895,7 +1895,6 @@
     <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="ViewV5\Desktop.zip" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
