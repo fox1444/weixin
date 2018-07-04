@@ -155,17 +155,6 @@
                     </tr>
                 </tbody>
             </table>
-            <!-- <div><a href="../index.html" class="login_help">帮助中心</a></div> -->
-            <!--<div style="float: right; font-size: 18px; margin-top: 10px;">
-
-                <img src="/ViewV5/web/images/erweima.png" class="erweima">
-                <b class="sm" style="line-height: 29px;">扫描二维码关注企业号</b>
-                <div class="erweima_pic" style="display: none">
-                    <span class="sanjiao"></span>
-                    <img src="/ViewV5/images/qrcode.pmg" id="qyewm" style="top: 8px; position: absolute; z-index: 33333">
-                </div>
-            </div>-->
-
         </div>
     </div>
     <div class="menu-toggler sidebar-toggler">
@@ -201,7 +190,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div class="login-hu fr">
                     <ul class="caidan clear">
@@ -256,7 +244,6 @@
                                 </p>
                                 <div class="create-account" style="display: none;">
                                     <p>
-
                                         <a href="###" id="register-btn"></a>
                                     </p>
                                 </div>
@@ -319,22 +306,19 @@
                     $(".uppercase").trigger('click');
                 }
             }
+
             function changecode(obj) {
                 $(obj).attr("src", "/Tools/YZMCode.aspx?r=" + Math.random());
             }
 
             function setCookie(name, value) {
-
                 var Days = 30;
                 var exp = new Date();
                 exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
                 document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
-
             }
         </script>
         <script>
-
-
             (function () {
 
                 $('.yx').on({
@@ -390,7 +374,6 @@
                 } else {
                     $('#ie9-tips').hide();
                 }
-
             })
         </script>
         <script type="text/javascript">
@@ -405,13 +388,12 @@
                         $(".con>ul:eq(" + i + ")").show().siblings().hide();
                     });
                 });
-
             });
+
             $('#myCarousel').carousel({
                 interval: 5000
             });
         </script>
     </div>
-
 </body>
 </html>
