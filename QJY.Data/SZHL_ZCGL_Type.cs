@@ -22,5 +22,6 @@ namespace QJY.Data
         public string CRUser { get; set; }
         public System.DateTime CRDate { get; set; }
         public int IsDel { get; set; }
+        public int AllowLifeCycle { get; set; }
     }
 }

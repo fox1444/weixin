@@ -16,6 +16,8 @@ namespace QJY.Data
     {
         public int ComId { get; set; }
         public int ID { get; set; }
+        public int ZCGLID { get; set; }
+        public string Title { get; set; }
         public int TypeID { get; set; }
         public Nullable<System.DateTime> FromDate { get; set; }
         public Nullable<System.DateTime> ToDate { get; set; }
@@ -27,7 +29,5 @@ namespace QJY.Data
         public string UpdateUser { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public int IsDel { get; set; }
-        public string Title { get; set; }
-        public int ZCGLID { get; set; }
     }
 }

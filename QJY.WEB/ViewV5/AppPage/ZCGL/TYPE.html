@@ -3,14 +3,14 @@
         $id: "ZCGLTYPE",
         name: "资产类型",
         ColumnData: [],
-        modelData: { "Title": "", "Comment": "", "DisplayOrder": "0" },
+        modelData: { "Title": "", "Comment": "", "DisplayOrder": "0", "AllowLifeCycle": true},
         //iswf: false,//是否属于流程表单
         inittemp: function (strId) {
             if (strId) {
                 //编辑加载数据
                 $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETTYPEMODEL', { P1: strId }, function (resultData) {
                     if (resultData.ErrorMsg == "") {
-
+                        resultData.Result.AllowLifeCycle = resultData.Result.AllowLifeCycle == 0 ? false : true;
                         tempmodel.modelData = resultData.Result;
                         setTimeout(" ComFunJS.initForm()", 500)
                     }
@@ -20,8 +20,15 @@
 
             }
         },
+        chkshowhide: function (checkid) {
+            switch (checkid) {
+                case 1:
+                    tempmodel.modelData.AllowLifeCycle = !tempmodel.modelData.AllowLifeCycle;
+                    break;
+            }
+        },
         SaveData: function (callback) {
-
+            tempmodel.modelData.AllowLifeCycle = tempmodel.modelData.AllowLifeCycle ? 1 : 0;
             var modelValue = JSON.stringify(tempmodel.modelData.$model)
             $.post("/API/VIEWAPI.ashx?ACTION=ZCGL_ADDTYPE", { P1: modelValue }, function (result) {
                 return callback.call(this, result);
@@ -29,6 +36,8 @@
         }
     });
 </script>
+<style>
+</style>
 <div class="form-horizontal" ms-controller="ZCGLTYPE">
     <div style="margin: 0 80px;">
         <div>
@@ -50,6 +59,18 @@
                     <label class="add-item-label">简介</label>
                     <div class="add-ic">
                         <input type="text" class="form-control" ms-duplex="modelData.Comment" />
+                    </div>
+                </li>
+                <li class="add-item add-width2">
+                    <label class="add-item-label">是否可编辑生命周期</label>
+                    <div class="add-ic">
+                        <div class="checkbox checkbox-inline" ms-click="chkshowhide(1)" style="padding-left:0px">
+                            <div class="icheckbox_square-blue" ms-class-1="checked:modelData.AllowLifeCycle" id="inlineCheck1">
+                                <input type="checkbox" id="inlineCheckbox1" ms-duplex-checked="modelData.AllowLifeCycle">
+                                <span class="iconfont icon-check"></span>
+                            </div>
+                            <label style="padding:0">是否可编辑生命周期</label>
+                        </div>
                     </div>
                 </li>
             </ul>

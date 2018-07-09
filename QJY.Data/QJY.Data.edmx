@@ -1584,6 +1584,7 @@
           <Property Name="CRUser" Type="varchar" MaxLength="50" />
           <Property Name="CRDate" Type="datetime" Nullable="false" />
           <Property Name="IsDel" Type="int" Nullable="false" />
+          <Property Name="AllowLifeCycle" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="WX_Group">
           <Key>
@@ -3684,6 +3685,7 @@
           <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDel" Type="Int32" Nullable="false" />
+          <Property Name="AllowLifeCycle" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="SZHL_ZCGL_Location">
           <Key>
@@ -3739,6 +3741,8 @@
           </Key>
           <Property Name="ComId" Type="Int32" Nullable="false" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ZCGLID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TypeID" Type="Int32" Nullable="false" />
           <Property Name="FromDate" Type="DateTime" Precision="3" />
           <Property Name="ToDate" Type="DateTime" Precision="3" />
@@ -3750,8 +3754,6 @@
           <Property Name="UpdateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <Property Name="IsDel" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ZCGLID" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5546,6 +5548,7 @@
           <EntitySetMapping Name="SZHL_ZCGL_Type">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL_Type">
               <MappingFragment StoreEntitySet="SZHL_ZCGL_Type">
+                <ScalarProperty Name="AllowLifeCycle" ColumnName="AllowLifeCycle" />
                 <ScalarProperty Name="IsDel" ColumnName="IsDel" />
                 <ScalarProperty Name="CRDate" ColumnName="CRDate" />
                 <ScalarProperty Name="CRUser" ColumnName="CRUser" />
@@ -5610,8 +5613,6 @@
           <EntitySetMapping Name="SZHL_ZCGL_LifeCycle">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL_LifeCycle">
               <MappingFragment StoreEntitySet="SZHL_ZCGL_LifeCycle">
-                <ScalarProperty Name="ZCGLID" ColumnName="ZCGLID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="IsDel" ColumnName="IsDel" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
@@ -5623,6 +5624,8 @@
                 <ScalarProperty Name="ToDate" ColumnName="ToDate" />
                 <ScalarProperty Name="FromDate" ColumnName="FromDate" />
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ZCGLID" ColumnName="ZCGLID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ComId" ColumnName="ComId" />
               </MappingFragment>
