@@ -3,7 +3,7 @@
         $id: "ZCGLTYPE",
         name: "资产类型",
         ColumnData: [],
-        modelData: { "Title": "", "Comment": "", "DisplayOrder": "0", "AllowLifeCycle": true},
+        modelData: { "Title": "", "Comment": "", "DisplayOrder": "0", "AllowLifeCycle": true },
         //iswf: false,//是否属于流程表单
         inittemp: function (strId) {
             if (strId) {
@@ -40,40 +40,40 @@
 </style>
 <div class="form-horizontal" ms-controller="ZCGLTYPE">
     <div style="margin: 0 80px;">
-        <div>
-            <!--<div class="fg-item"><span>基本信息</span></div>-->
-            <ul class="clearfix" style="display: block;padding:0">
-                <li class="add-item add-width2">
-                    <label class="add-item-label"><i>*</i>类型名称</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control szhl_require" ms-duplex="modelData.Title" />
-                    </div>
-                </li>
-                <li class="add-item add-width2">
-                    <label class="add-item-label"><i>*</i>排序</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control szhl_require" ms-duplex="modelData.DisplayOrder" />
-                    </div>
-                </li>
-                <li class="add-item add-width2">
-                    <label class="add-item-label">简介</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.Comment" />
-                    </div>
-                </li>
-                <li class="add-item add-width2">
-                    <label class="add-item-label">是否可编辑生命周期</label>
-                    <div class="add-ic">
-                        <div class="checkbox checkbox-inline" ms-click="chkshowhide(1)" style="padding-left:0px">
-                            <div class="icheckbox_square-blue" ms-class-1="checked:modelData.AllowLifeCycle" id="inlineCheck1">
-                                <input type="checkbox" id="inlineCheckbox1" ms-duplex-checked="modelData.AllowLifeCycle">
-                                <span class="iconfont icon-check"></span>
-                            </div>
-                            <label style="padding:0">是否可编辑生命周期</label>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+        <div class="form-group">
+            <label class="col-xs-2 control-label"><i>*</i>类型名称</label>
+            <div class="col-xs-6">
+                <input type="text" class="form-control szhl_require" ms-duplex="modelData.Title" />
+            </div>
         </div>
+
+        <div class="form-group">
+            <label class="col-xs-2 control-label"><i>*</i>排序</label>
+            <div class="col-xs-6">
+                <input type="text" class="form-control szhl_require" ms-duplex="modelData.DisplayOrder" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-2 control-label">简介</label>
+            <div class="col-xs-6">
+                <input type="text" class="form-control" ms-duplex="modelData.Comment" />
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label class="col-xs-2 control-label">生命周期</label>
+            <div class="col-xs-9">
+                <div class="checkbox checkbox-inline" ms-click="chkshowhide(1)" style="padding-left:0px">
+                    <div class="icheckbox_square-blue" ms-class-1="checked:modelData.AllowLifeCycle" id="inlineCheck1">
+                        <input type="checkbox" id="inlineCheckbox1" ms-duplex-checked="modelData.AllowLifeCycle">
+                        <span class="iconfont icon-check"></span>
+                    </div>
+                    <label style="padding:0">是否可编辑</label>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>
