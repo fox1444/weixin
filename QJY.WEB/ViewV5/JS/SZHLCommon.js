@@ -1341,6 +1341,8 @@
         { "ID": "20", "TypeName": "变更使用者" },
         { "ID": "30", "TypeName": "借出" },
         { "ID": "90", "TypeName": "报废" },
+        { "ID": "110", "TypeName": "打印机加粉" },
+        { "ID": "120", "TypeName": "打印机更换硒鼓" },
     ],  //资产生命周期类型
     FnFormat: function (str, fmt) { //格式化
         switch (fmt) {
