@@ -1336,13 +1336,13 @@
         { "ID": "60", "TypeName": "已报废" },
     ], //资产状态类型
     LifeCycleTypeData: [
-        { "ID": "0", "TypeName": "入库" },
-        { "ID": "10", "TypeName": "维修" },
-        { "ID": "20", "TypeName": "变更使用者" },
-        { "ID": "30", "TypeName": "借出" },
-        { "ID": "90", "TypeName": "报废" },
-        { "ID": "110", "TypeName": "打印机加粉" },
-        { "ID": "120", "TypeName": "打印机更换硒鼓" },
+        { "ID": "0", "TypeName": "入库", "Allowed": true},
+        { "ID": "10", "TypeName": "维修", "Allowed": true },
+        { "ID": "20", "TypeName": "变更使用者", "Allowed": true },
+        { "ID": "30", "TypeName": "借出", "Allowed": true },
+        { "ID": "90", "TypeName": "报废", "Allowed": true },
+        { "ID": "110", "TypeName": "打印机加粉", "Allowed": false },
+        { "ID": "120", "TypeName": "打印机更换硒鼓", "Allowed": false },
     ],  //资产生命周期类型
     FnFormat: function (str, fmt) { //格式化
         switch (fmt) {

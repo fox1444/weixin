@@ -3,7 +3,8 @@
         $id: "ZCGLTYPE",
         name: "资产类型",
         ColumnData: [],
-        modelData: { "Title": "", "Comment": "", "DisplayOrder": "0", "AllowLifeCycle": true },
+        allowlcData: ComFunJS.LifeCycleTypeData,
+        modelData: { "Title": "", "Comment": "", "DisplayOrder": "0", "AllowLifeCycle": true, "LifeCycleData": "" },
         //iswf: false,//是否属于流程表单
         inittemp: function (strId) {
             if (strId) {
@@ -12,35 +13,51 @@
                     if (resultData.ErrorMsg == "") {
                         resultData.Result.AllowLifeCycle = resultData.Result.AllowLifeCycle == 0 ? false : true;
                         tempmodel.modelData = resultData.Result;
+                        if (tempmodel.modelData.LifeCycleData != "") {
+                            tempmodel.allowlcData = JSON.parse(tempmodel.modelData.LifeCycleData);
+                        }
                         tempmodel.ShowHideLifeCycleType();
                         setTimeout(" ComFunJS.initForm()", 500);
                     }
                 })
             } else {
+                tempmodel.modelData.AllowLifeCycle = false;
                 ComFunJS.initForm();
-
             }
         },
-        chkshowhide: function (checkid) {
-            switch (checkid) {
-                case 1:
-                    tempmodel.modelData.AllowLifeCycle = !tempmodel.modelData.AllowLifeCycle;
-                    tempmodel.ShowHideLifeCycleType();
-                    break;
-            }
-        },
-        SaveData: function (callback) {
-            tempmodel.modelData.AllowLifeCycle = tempmodel.modelData.AllowLifeCycle ? 1 : 0;
-            var modelValue = JSON.stringify(tempmodel.modelData.$model)
-            $.post("/API/VIEWAPI.ashx?ACTION=ZCGL_ADDTYPE", { P1: modelValue }, function (result) {
-                return callback.call(this, result);
-            });
+        chkshowhide: function () {
+            tempmodel.modelData.AllowLifeCycle = !tempmodel.modelData.AllowLifeCycle;
+            tempmodel.ShowHideLifeCycleType();
         },
         ShowHideLifeCycleType: function () {
             if (tempmodel.modelData.AllowLifeCycle)
                 $('#LifeCycleType_List').show();
             else
                 $('#LifeCycleType_List').hide();
+        },
+        SaveData: function (callback) {
+            tempmodel.modelData.AllowLifeCycle = tempmodel.modelData.AllowLifeCycle ? 1 : 0;
+            if (tempmodel.modelData.AllowLifeCycle == 1) {
+                tempmodel.modelData.LifeCycleData = JSON.stringify(tempmodel.allowlcData);
+            }
+            var modelValue = JSON.stringify(tempmodel.modelData.$model)
+            $.post("/API/VIEWAPI.ashx?ACTION=ZCGL_ADDTYPE", { P1: modelValue }, function (result) {
+                return callback.call(this, result);
+            });
+        },
+        checkallowlc: function (lcID) {
+            for (var i = 0; i < tempmodel.allowlcData.length; i++) {
+                if (tempmodel.allowlcData[i]["ID"] == lcID)
+                    return tempmodel.allowlcData[i]["Allowed"];
+            }
+            
+            return false;
+        },
+        selectlc: function (lcID) {
+            for (var i = 0; i < tempmodel.allowlcData.length; i++) {
+                if (tempmodel.allowlcData[i]["ID"] == lcID)
+                    tempmodel.allowlcData[i]["Allowed"] = !tempmodel.allowlcData[i]["Allowed"];
+            }
         }
     });
 </script>
@@ -72,7 +89,7 @@
         <div class="form-group">
             <label class="col-xs-2 control-label">生命周期</label>
             <div class="col-xs-6">
-                <div class="checkbox checkbox-inline" ms-click="chkshowhide(1)" style="padding-left:0px">
+                <div class="checkbox checkbox-inline" ms-click="chkshowhide()" style="padding-left:0px">
                     <div class="icheckbox_square-blue" ms-class-1="checked:modelData.AllowLifeCycle" id="inlineCheck1">
                         <input type="checkbox" id="inlineCheckbox1" ms-duplex-checked="modelData.AllowLifeCycle">
                         <span class="iconfont icon-check"></span>
@@ -81,9 +98,9 @@
                 </div>
                 <div id="LifeCycleType_List" class="panel panel-default panpel" style="display:none;">
                     <div class="panel-body">
-                        <div ms-repeat-item="ComFunJS.LifeCycleTypeData" class="checkbox"  style="padding-left:0px">
-                            <div class="icheckbox_square-blue" id="inlineCheck{{item.ID}}">
-                                <input type="checkbox" id="inlineCheckbox{{item.ID}}" >
+                        <div ms-repeat-item="allowlcData" class="checkbox" ms-click="selectlc(item.ID)" style="padding-left:0px">
+                            <div class="icheckbox_square-blue" ms-class-1="checked:checkallowlc(item.ID)" id="inlineCheck{{item.ID}}">
+                                <input type="checkbox" id="inlineCheckbox{{item.ID}}" ms-duplex-checked="checkallowlc(item.ID)">
                                 <span class="iconfont icon-check"></span>
                             </div>
                             <label style="padding:0">{{item.TypeName}}</label>

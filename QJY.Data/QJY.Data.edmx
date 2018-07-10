@@ -1585,6 +1585,7 @@
           <Property Name="CRDate" Type="datetime" Nullable="false" />
           <Property Name="IsDel" Type="int" Nullable="false" />
           <Property Name="AllowLifeCycle" Type="int" Nullable="false" />
+          <Property Name="LifeCycleData" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="WX_Group">
           <Key>
@@ -3686,6 +3687,7 @@
           <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDel" Type="Int32" Nullable="false" />
           <Property Name="AllowLifeCycle" Type="Int32" Nullable="false" />
+          <Property Name="LifeCycleData" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SZHL_ZCGL_Location">
           <Key>
@@ -5548,6 +5550,7 @@
           <EntitySetMapping Name="SZHL_ZCGL_Type">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL_Type">
               <MappingFragment StoreEntitySet="SZHL_ZCGL_Type">
+                <ScalarProperty Name="LifeCycleData" ColumnName="LifeCycleData" />
                 <ScalarProperty Name="AllowLifeCycle" ColumnName="AllowLifeCycle" />
                 <ScalarProperty Name="IsDel" ColumnName="IsDel" />
                 <ScalarProperty Name="CRDate" ColumnName="CRDate" />

@@ -23,5 +23,6 @@ namespace QJY.Data
         public System.DateTime CRDate { get; set; }
         public int IsDel { get; set; }
         public int AllowLifeCycle { get; set; }
+        public string LifeCycleData { get; set; }
     }
 }
