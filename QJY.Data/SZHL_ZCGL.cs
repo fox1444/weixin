@@ -38,7 +38,7 @@ namespace QJY.Data
         public System.DateTime CRDate { get; set; }
         public int IsDel { get; set; }
         public string Managezhiwu { get; set; }
-        public string Description { get; set; }
+        public string Desc { get; set; }
         public string Situation { get; set; }
         public string Verify { get; set; }
         public Nullable<int> IndexID { get; set; }

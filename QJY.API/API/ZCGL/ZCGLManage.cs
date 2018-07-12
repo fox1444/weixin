@@ -72,7 +72,7 @@ namespace QJY.API
 
             DataTable dt = new DataTable();
 
-            dt = new SZHL_ZCGLB().GetDataPager("SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID left join SZHL_ZCGL_Location l on z.LocationID=l.ID left join JH_Auth_User u on z.UserName=u.UserName left join  JH_Auth_Branch b on b.DeptCode=z.BranchCode", "z.*, u.UserRealName, t.Title, l.Title as LocTitle", pagecount, page, "b.DeptShort desc, u.UserRealName asc, z.CRDate desc", strWhere, ref total);
+            dt = new SZHL_ZCGLB().GetDataPager("SZHL_ZCGL z left join SZHL_ZCGL_Type t on z.TypeID=t.ID left join SZHL_ZCGL_Location l on z.LocationID=l.ID left join JH_Auth_User u on z.UserName=u.UserName left join  JH_Auth_Branch b on b.DeptCode=z.BranchCode", "z.*, u.UserRealName, t.Title, l.Title as LocTitle, ISNULL(t.AllowLifeCycle,0) as AllowLifeCycle", pagecount, page, "b.DeptShort desc, u.UserRealName asc, z.CRDate desc", strWhere, ref total);
 
             msg.Result = dt;
             msg.Result1 = total;
@@ -175,6 +175,7 @@ namespace QJY.API
                 ZC.CRUser = UserInfo.User.UserName;
                 ZC.ComId = UserInfo.User.ComId.Value;
                 ZC.IsDel = 0;
+                ZC.IndexID = 0;
                 new SZHL_ZCGLB().Insert(ZC);
             }
             else
@@ -276,6 +277,19 @@ namespace QJY.API
             SZHL_ZCGL_Type model = new SZHL_ZCGL_TypeB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
             msg.Result = model;
         }
+
+        public void GETTYPEMODELBYZCGLID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int ZCGLId = int.Parse(P1);
+            string strWhere = " t.IsDel=0  and z.ID=" + ZCGLId;
+            string colNme = @"t.* ";
+            string tableName = string.Format(@" SZHL_ZCGL_Type t left join SZHL_ZCGL z on z.TypeID=t.ID and z.IsDel=0  ");
+
+            string strSql = string.Format("Select {0}  From {1} where {2} ", colNme, tableName, strWhere);
+            DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand(strSql);
+            msg.Result = dt;
+        }
+       
         /// <summary>
         /// 添加资产类型
         /// </summary>
@@ -520,7 +534,7 @@ namespace QJY.API
                 msg.ErrorMsg = "日期不能为空！";
                 return;
             }
-            if (ZCLC.TypeID < 0)
+            if (ZCLC.TypeID <= 0)
             {
                 msg.ErrorMsg = "请选择类型！";
                 return;

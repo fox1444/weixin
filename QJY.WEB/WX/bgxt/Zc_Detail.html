@@ -28,11 +28,13 @@
         .lookright-box, .crm-dt {
             font-size: 0.7rem;
         }
-        .c666{
-            color:#666!important;
+
+        .c666 {
+            color: #666 !important;
         }
+
         .c999 {
-            color: #999!important;
+            color: #999 !important;
         }
     </style>
 </head>
@@ -40,7 +42,7 @@
     <div class="page-group">
         <div class="page page-current" id="pageindex1">
             <div class="buttons-tab">
-                <a href="#" class="tab-link button external"><!--资产详情-->{{model.TitleInfo}}</a>
+                <a href="#" class="tab-link button external">{{model.TitleInfo}}</a>
             </div>
             <div class="content infinite-scroll infinite-scroll-bottom" data-distance="50" style="margin-top:2rem" id="touchcontent">
                 <div class="list-container">
@@ -76,8 +78,8 @@
                                 <div class="crm-dt-cont">
                                     <div class="m5">
                                         <p class="c666">
-                                            <b>【{{ComFunJS.FnFormat(item.TypeID,"lfcytype")|html}}】</b>> <span>{{item.Title}}</span>
-                                            <div style="padding-left:8px;">{{CheckType(item)}}</div>
+                                            <!--<b>【{{ComFunJS.FnFormat(item.TypeID,"lfcytype")|html}}】</b>> <span>{{item.Title}}</span>-->
+                                            <div style="padding-left:8px;">{{ComFunJS.CheckType(item)}}</div>
                                         </p>
                                         <h3 class="c999" style="padding-left:10px;">{{ComFunJS.bqhContent(item.Comment)|html}}</h3>
                                     </div>
@@ -104,7 +106,7 @@
             modelData: {},
             ShowColumns: [],
             LCData: [],
-            TitleInfo:"",
+            TitleInfo: "",
             strId: ComFunJS.getQueryString("ID"),
             covtitle: function (title) {
                 return ComFunJS.convstr($("<div>" + title + "</div>").text(), 25);
@@ -117,8 +119,10 @@
                             if (resultData.Result.length > 0) {
                                 model.modelData = resultData.Result[0];
                             }
-                            //$("title").html(model.modelData.UserRealName + '-' + model.modelData.Name);
-                            model.TitleInfo = model.modelData.UserRealName + '-' + model.modelData.Name
+                            if (model.modelData.UserRealName != "")
+                                model.TitleInfo = model.modelData.UserRealName + ' - ' + model.modelData.Name
+                            else
+                                model.TitleInfo = model.modelData.Name
                             setTimeout(" ComFunJS.initForm()", 500)
                         }
                     })
@@ -135,38 +139,6 @@
                     })
                 }
             },
-            CheckType: function (el) {
-                switch (el.TypeID) {
-                    case 0://入库
-                        {
-                            return ComFunJS.FnFormat(el.FromDate, "dateformat") + "入库分配给" + el.FromUser;
-                        }
-                        break;
-                    case 10://维修
-                        {
-                            return "从" + ComFunJS.FnFormat(el.FromDate, "dateformat") + "至" + ComFunJS.FnFormat(el.ToDate, "dateformat") + "进行维修";
-                        }
-                        break;
-                    case 20://变更
-                        {
-                            return ComFunJS.FnFormat(el.FromDate, "dateformat") + "由" + el.FromUser + "变更为" + el.ToUser;
-                        }
-                        break;
-                    case 30://借出
-                        {
-                            return ComFunJS.FnFormat(el.FromDate, "dateformat") + "至" + ComFunJS.FnFormat(el.ToDate, "dateformat") + "借出给" + el.FromUser;
-                        }
-                        break;
-                    case 90://报废
-                        {
-                            return ComFunJS.FnFormat(el.FromDate, "dateformat") + "报废";
-                        }
-                        break;
-                    default: {
-                        return "";
-                    }
-                }
-            },
         })
 
         avalon.ready(function () {
@@ -179,7 +151,7 @@
                     { "ColName": "Status", "ColText": "使用状态", "IsSel": true, "class": "width50", "format": "zcstatus" },
                     { "ColName": "Qty", "ColText": "数量", "IsSel": true, "class": "width50" },
                     //{ "ColName": "DeptName", "ColText": "公司", "IsSel": true, "class": "width50" },
-                    { "ColName": "zhiwu", "ColText": "使用部门", "IsSel": true, "class": "width50" },
+                    { "ColName": "UserGW", "ColText": "使用部门", "IsSel": true, "class": "width50" },
                     { "ColName": "UserRealName", "ColText": "使用人", "IsSel": true, "class": "width50" },
                     { "ColName": "LocTitle", "ColText": "存放地点", "IsSel": true, "class": "width50" },
                     { "ColName": "Tag", "ColText": "标签", "IsSel": true, "class": "width50" },

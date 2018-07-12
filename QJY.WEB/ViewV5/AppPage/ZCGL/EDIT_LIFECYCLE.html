@@ -37,7 +37,7 @@
                     <label class="add-item-label"><i>*</i>类型</label>
                     <div class="add-ic">
                         <select name="conType" id="conType" ms-duplex="modelData.TypeID" class="form-control szhl_require" ms-change="ChangeType(this.value)">
-                            <option ms-repeat-item="ComFunJS.LifeCycleTypeData" ms-attr-value="item.ID" ms-attr-selected="item.ID==modelData.TypeID?'selected':''">{{item.TypeName}}</option>
+                            <option ms-repeat-item="allowlcData"  ms-attr-value="item.ID" ms-attr-selected="item.ID==modelData.TypeID?'selected':''">{{item.TypeName}}</option>
                         </select>
                     </div>
                 </li>
@@ -99,7 +99,9 @@
             $id: "LIFECYCLE",
             LCID: ComFunJS.getQueryString("LCID", 0), //生命周期Id
             GWData: [],  //部门
-            modelData: { "ComId": "0", "ID": "0", "Title": "", "TypeID": "0", "ZCGLID": "0", "FromDate": "", "ToDate": "", "FromUser": "", "ToUser": "", "Comment": "", "CRUser": ComFunJS.getnowuser(), "CRDate": ComFunJS.getnowdate('yyyy-mm-dd hh:mm'), "IsDel": "0" },
+            ZCGLId: window.parent.GetZCGLID(),
+            allowlcData: ComFunJS.LifeCycleTypeData,
+            modelData: { "ComId": "0", "ID": "0", "Title": "", "TypeID": "0", "ZCGLID": "0", "FromDate": "", "ToDate": "", "FromUser": "", "ToUser": "", "Comment": "", "CRUser": ComFunJS.getnowuser(), "CRDate": ComFunJS.getnowdate('yyyy-mm-dd hh:mm'), "IsDel": "0", "AllowLifeCycle": 0,"LifeCycleData":"" },
             GetModelData: function () {
                 if (model.LCID) {
                     //编辑加载数据
@@ -109,6 +111,20 @@
                                 model.modelData = resultData.Result[0];
                                 model.ChangeType(model.modelData.TypeID);
                             }
+                            
+                            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETTYPEMODELBYZCGLID', { P1: model.ZCGLId }, function (r) {
+                                if (r.ErrorMsg == "") {
+                                    if (r.Result.length > 0) {
+                                        var rsl = JSON.parse(r.Result[0].LifeCycleData);
+                                        model.allowlcData.clear();
+                                        for (var i = 0; i < rsl.length; i++) {
+                                            if (rsl[i]["Allowed"]) {
+                                                model.allowlcData.push(rsl[i]);
+                                            }
+                                        }
+                                    }
+                                }
+                            });
                         }
                     })
                 }
@@ -116,7 +132,7 @@
 
             },
             ChangeType: function (val) {
-                if (val == '0') {//入库
+                if (val == '10') {//入库
                     $('#dt_title').html('时间');
                     $('#dt_sep').hide();
                     $('#dt_todate').hide();
@@ -125,7 +141,7 @@
                     $('#ry_sep').hide();
                     $('#ry_touser').hide();
                 }
-                else if (val == '10') {//维修
+                else if (val == '20') {//维修
                     $('#dt_title').html('起止时间');
                     $('#dt_sep').show();
                     $('#dt_todate').show();
@@ -134,7 +150,7 @@
                     $('#ry_sep').hide();
                     $('#ry_touser').hide();
                 }
-                else if (val == '20') {//变更
+                else if (val == '30') {//变更
                     $('#dt_title').html('时间');
                     $('#dt_sep').hide();
                     $('#dt_todate').hide();
@@ -143,7 +159,7 @@
                     $('#ry_sep').show();
                     $('#ry_touser').show();
                 }
-                else if (val == '30') {//借出
+                else if (val == '40') {//借出
                     $('#dt_title').html('时间');
                     $('#dt_sep').hide();
                     $('#dt_todate').hide();
@@ -157,6 +173,24 @@
                     $('#dt_sep').hide();
                     $('#dt_todate').hide();
                     $('#ry_block').hide();
+                    $('#ry_title').html('人员');
+                    $('#ry_sep').hide();
+                    $('#ry_touser').hide();
+                }
+                else if (val == '110') {//打印机加粉
+                    $('#dt_title').html('时间');
+                    $('#dt_sep').hide();
+                    $('#dt_todate').hide();
+                    $('#ry_block').show();
+                    $('#ry_title').html('人员');
+                    $('#ry_sep').hide();
+                    $('#ry_touser').hide();
+                }
+                else if (val == '120') {//打印机更换硒鼓
+                    $('#dt_title').html('时间');
+                    $('#dt_sep').hide();
+                    $('#dt_todate').hide();
+                    $('#ry_block').show();
                     $('#ry_title').html('人员');
                     $('#ry_sep').hide();
                     $('#ry_touser').hide();

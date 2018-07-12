@@ -244,7 +244,7 @@
                 }
             })
         },
-        modelData: { "ComId": "0", "ID": "0", "Name": "", "Code": "", "EPCode": "", "FactoryCode": "", "Tag": "", "BranchCode": "", "UserGW": "", "UserName": "", "LocationID": "0", "Location": "", "Status": "0", "TypeID": "", "Comment": "", "OrginalPrice": "0", "PresentPrice": "0", "Qty": "1", "RegistDate": "", "Depreciation": "0", "CRUser": ComFunJS.getnowuser(), "CRDate": ComFunJS.getnowdate('yyyy-mm-dd hh:mm'), "IsDel": "0","Managezhiwu":""},
+        modelData: { "ComId": "0", "ID": "0", "Name": "", "Code": "", "EPCode": "", "FactoryCode": "", "Tag": "", "BranchCode": "", "UserGW": "", "UserName": "", "LocationID": "0", "Location": "", "Status": "0", "TypeID": "", "Comment": "", "OrginalPrice": "0", "PresentPrice": "0", "Qty": "1", "RegistDate": "", "Depreciation": "0", "CRUser": ComFunJS.getnowuser(), "CRDate": ComFunJS.getnowdate('yyyy-mm-dd hh:mm'), "IsDel": "0", "Managezhiwu": "", "Desc": "","Situation": "","Verify": "","IndexID": 0},
         SaveData: function (callback) {
             $.post("/API/VIEWAPI.ashx?ACTION=ZCGL_ADDZCGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
                 return callback.call(this, result);

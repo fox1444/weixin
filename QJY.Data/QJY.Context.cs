@@ -112,7 +112,7 @@ namespace QJY.Data
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<SZHL_ZCGL_Type> SZHL_ZCGL_Type { get; set; }
         public virtual DbSet<SZHL_ZCGL_Location> SZHL_ZCGL_Location { get; set; }
-        public virtual DbSet<SZHL_ZCGL> SZHL_ZCGL { get; set; }
         public virtual DbSet<SZHL_ZCGL_LifeCycle> SZHL_ZCGL_LifeCycle { get; set; }
+        public virtual DbSet<SZHL_ZCGL> SZHL_ZCGL { get; set; }
     }
 }

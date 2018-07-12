@@ -1532,7 +1532,7 @@
           <Property Name="CRDate" Type="datetime" Nullable="false" />
           <Property Name="IsDel" Type="int" Nullable="false" />
           <Property Name="Managezhiwu" Type="varchar" MaxLength="50" />
-          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Desc" Type="varchar(max)" />
           <Property Name="Situation" Type="varchar(max)" />
           <Property Name="Verify" Type="varchar(max)" />
           <Property Name="IndexID" Type="int" />
@@ -1971,8 +1971,8 @@
           <EntitySet Name="Messages" EntityType="QJY_SaaSModel.Message" />
           <EntitySet Name="SZHL_ZCGL_Type" EntityType="QJY_SaaSModel.SZHL_ZCGL_Type" />
           <EntitySet Name="SZHL_ZCGL_Location" EntityType="QJY_SaaSModel.SZHL_ZCGL_Location" />
-          <EntitySet Name="SZHL_ZCGL" EntityType="QJY_SaaSModel.SZHL_ZCGL" />
           <EntitySet Name="SZHL_ZCGL_LifeCycle" EntityType="QJY_SaaSModel.SZHL_ZCGL_LifeCycle" />
+          <EntitySet Name="SZHL_ZCGL" EntityType="QJY_SaaSModel.SZHL_ZCGL" />
         </EntityContainer>
         <EntityType Name="FT_File">
           <Key>
@@ -3704,6 +3704,26 @@
           <Property Name="IsDel" Type="Int32" Nullable="false" />
           <Property Name="BranchCode" Type="Int32" />
         </EntityType>
+        <EntityType Name="SZHL_ZCGL_LifeCycle">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ZCGLID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="FromDate" Type="DateTime" Precision="3" />
+          <Property Name="ToDate" Type="DateTime" Precision="3" />
+          <Property Name="FromUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ToUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDel" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="SZHL_ZCGL">
           <Key>
             <PropertyRef Name="ID" />
@@ -3732,30 +3752,10 @@
           <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDel" Type="Int32" Nullable="false" />
           <Property Name="Managezhiwu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Situation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Verify" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IndexID" Type="Int32" />
-        </EntityType>
-        <EntityType Name="SZHL_ZCGL_LifeCycle">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ComId" Type="Int32" Nullable="false" />
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ZCGLID" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TypeID" Type="Int32" Nullable="false" />
-          <Property Name="FromDate" Type="DateTime" Precision="3" />
-          <Property Name="ToDate" Type="DateTime" Precision="3" />
-          <Property Name="FromUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ToUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="IsDel" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5579,13 +5579,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SZHL_ZCGL_LifeCycle">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL_LifeCycle">
+              <MappingFragment StoreEntitySet="SZHL_ZCGL_LifeCycle">
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ToUser" ColumnName="ToUser" />
+                <ScalarProperty Name="FromUser" ColumnName="FromUser" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ZCGLID" ColumnName="ZCGLID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="SZHL_ZCGL">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL">
               <MappingFragment StoreEntitySet="SZHL_ZCGL">
                 <ScalarProperty Name="IndexID" ColumnName="IndexID" />
                 <ScalarProperty Name="Verify" ColumnName="Verify" />
                 <ScalarProperty Name="Situation" ColumnName="Situation" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Desc" ColumnName="Desc" />
                 <ScalarProperty Name="Managezhiwu" ColumnName="Managezhiwu" />
                 <ScalarProperty Name="IsDel" ColumnName="IsDel" />
                 <ScalarProperty Name="CRDate" ColumnName="CRDate" />
@@ -5608,27 +5629,6 @@
                 <ScalarProperty Name="EPCode" ColumnName="EPCode" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ComId" ColumnName="ComId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SZHL_ZCGL_LifeCycle">
-            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL_LifeCycle">
-              <MappingFragment StoreEntitySet="SZHL_ZCGL_LifeCycle">
-                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
-                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
-                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="ToUser" ColumnName="ToUser" />
-                <ScalarProperty Name="FromUser" ColumnName="FromUser" />
-                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
-                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
-                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ZCGLID" ColumnName="ZCGLID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ComId" ColumnName="ComId" />
               </MappingFragment>

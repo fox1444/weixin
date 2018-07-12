@@ -65,7 +65,7 @@
                 <div class="tab-kh nav-bt">
                     <span class="cur"><i class="iconfont icon-bookmark"></i>生命周期信息</span>
                     <div class="pr20" style="float: right;">
-                        <button class="btn btn-info" ms-click="EditLifeCycle(0,'添加')">添加</button>
+                        <button class="btn btn-info"  ms-click="EditLifeCycle(0,'添加')">添加</button>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                                 <b>【{{ComFunJS.FnFormat(item.TypeID,"lfcytype")|html}}】</b>> <span>{{item.Title}}</span>
                                 <!--<span class="pull-right">{{item.FromDate|date("yy年M月d日 H:mm")}} - {{item.ToDate|date("yy年M月d日 H:mm")}}</span>
                                 <div style="padding-left:10px;">{{item.FromUser}}{{item.ToUser}}</div>-->
-                                <span class="pull-right">{{CheckType(item)}}</span>
+                                <span class="pull-right">{{ComFunJS.CheckType(item)}}</span>
                             </p>
                             <h3 class="crm-xg ft14 mt5 c999" style="padding-left:10px;">{{ComFunJS.bqhContent(item.Comment)|html}}</h3>
                             <div style="text-align:right;">
@@ -132,7 +132,7 @@
                 }
             },
             EditLifeCycle: function (lcID, title) {
-                ComFunJS.winbtnwin("/ViewV5/AppPage/ZCGL/EDIT_LIFECYCLE.html?LCID=" + lcID + "&r=" + Math.random(), title + "生命周期", 600, 550, {}, function (layero, inx) {
+                ComFunJS.winbtnwin("/ViewV5/AppPage/ZCGL/EDIT_LIFECYCLE.html?LCID=" + lcID + "&r=" + Math.random(), title + "生命周期", 600, 500, {}, function (layero, inx) {
                     var frameid = $("iframe", $(layero)).attr('id');
                     var lcnr = ComFunJS.isIE() ? window.frames[frameid].getLC() : window.frames[frameid].contentWindow.getLC();
                   
@@ -166,22 +166,22 @@
             },
             CheckType: function (el) {
                 switch (el.TypeID) {
-                    case 0://入库
+                    case 10://入库
                         {
                             return ComFunJS.FnFormat(el.FromDate, "dateformat") + "入库分配给" + el.FromUser;
                         }
                         break;
-                    case 10://维修
+                    case 20://维修
                         {
                             return "从" + ComFunJS.FnFormat(el.FromDate, "dateformat") + "至" + ComFunJS.FnFormat(el.ToDate, "dateformat") + "进行维修";
                         }
                         break;
-                    case 20://变更
+                    case 30://变更
                         {
                             return ComFunJS.FnFormat(el.FromDate, "dateformat") + "由" + el.FromUser + "变更为" + el.ToUser;
                         }
                         break;
-                    case 30://借出
+                    case 40://借出
                         {
                             return ComFunJS.FnFormat(el.FromDate, "dateformat") + "至" + ComFunJS.FnFormat(el.ToDate, "dateformat") + "借出给" + el.FromUser;
                         }
@@ -216,6 +216,11 @@
             model.GetModelData();
             model.GetLfCyList();
         })
+
+        function GetZCGLID()
+        {
+            return model.strId;
+        }
     </script>
 </body>
 </html>

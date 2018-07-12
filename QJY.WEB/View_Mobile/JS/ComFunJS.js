@@ -1747,7 +1747,66 @@ var ComFunJS = {
             ComFunJS.winwarning("请求失败！");
         })
     },
-
+    ZCStatusData: [
+        { "ID": "0", "TypeName": "完好" },
+        { "ID": "10", "TypeName": "维修" },
+        { "ID": "20", "TypeName": "丢失" },
+        { "ID": "30", "TypeName": "闲置" },
+        { "ID": "40", "TypeName": "损坏" },
+        { "ID": "50", "TypeName": "待报废" },
+        { "ID": "60", "TypeName": "已报废" },
+    ], //资产状态类型
+    LifeCycleTypeData: [
+        { "ID": "10", "TypeName": "入库", "Allowed": true },
+        { "ID": "20", "TypeName": "维修", "Allowed": true },
+        { "ID": "30", "TypeName": "变更使用者", "Allowed": true },
+        { "ID": "40", "TypeName": "借出", "Allowed": true },
+        { "ID": "90", "TypeName": "报废", "Allowed": true },
+        { "ID": "110", "TypeName": "打印机加粉", "Allowed": false },
+        { "ID": "120", "TypeName": "打印机更换硒鼓", "Allowed": false },
+    ],  //资产生命周期类型
+    CheckType: function (el) {
+        switch (el.TypeID) {
+            case 10://入库
+                {
+                    return ComFunJS.FnFormat(el.FromDate, "dateformat") + "入库分配给" + el.FromUser;
+                }
+                break;
+            case 0://维修
+                {
+                    return "从" + ComFunJS.FnFormat(el.FromDate, "dateformat") + "至" + ComFunJS.FnFormat(el.ToDate, "dateformat") + "进行维修";
+                }
+                break;
+            case 30://变更
+                {
+                    return ComFunJS.FnFormat(el.FromDate, "dateformat") + "由" + el.FromUser + "变更为" + el.ToUser;
+                }
+                break;
+            case 40://借出
+                {
+                    return ComFunJS.FnFormat(el.FromDate, "dateformat") + "至" + ComFunJS.FnFormat(el.ToDate, "dateformat") + "借出给" + el.FromUser;
+                }
+                break;
+            case 90://报废
+                {
+                    return ComFunJS.FnFormat(el.FromDate, "dateformat") + "报废";
+                }
+                break;
+            case 110://打印机加粉
+                {
+                    return ComFunJS.FnFormat(el.FromDate, "dateformat") + " " + el.FromUser + "给打印机加粉";
+                }
+                break;
+            case 120://打印机更换硒鼓
+                {
+                    return ComFunJS.FnFormat(el.FromDate, "dateformat") + " " + el.FromUser + "给打印机更换硒鼓";
+                }
+                break;
+            default: {
+                return "";
+            }
+        }
+    },
     FnFormat: function (str, fmt) { //格式化
         switch (fmt) {
             case "dateformat":
@@ -1755,23 +1814,24 @@ var ComFunJS = {
                     return ComFunJS.getnowdate("yyyy-mm-dd hh:mm", str);
                 }
                 break;
-            case "zcstatus":     //物品状态
+            case "zcstatus":     //资产状态
                 {
-                    if (str == "0") return "完好";
-                    else if (str == "10") return "维修";
-                    else if (str == "20") return "丢失";
-                    else if (str == "30") return "闲置";
-                    else if (str == "40") return "损坏";
-                    else if (str == "50") return "待报废";
-                    else if (str == "60") return "已报废";
+                    for (var i = 0; i < ComFunJS.ZCStatusData.length; i++) {
+                        if (ComFunJS.ZCStatusData[i]["ID"] == str) {
+                            return ComFunJS.ZCStatusData[i]["TypeName"];
+                        }
+                    }
+                    return "";
                 }
+                break;
             case "lfcytype":     //资产生命周期类型
                 {
-                    if (str == "0") return "入库";
-                    else if (str == "10") return "维修";
-                    else if (str == "20") return "变更使用者";
-                    else if (str == "30") return "借出";
-                    else if (str == "90") return "报废";
+                    for (var i = 0; i < ComFunJS.LifeCycleTypeData.length; i++) {
+                        if (ComFunJS.LifeCycleTypeData[i]["ID"] == str) {
+                            return ComFunJS.LifeCycleTypeData[i]["TypeName"];
+                        }
+                    }
+                    return "";
                 }
                 break;
             case "text":

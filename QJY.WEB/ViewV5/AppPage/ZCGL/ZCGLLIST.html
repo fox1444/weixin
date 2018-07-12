@@ -63,8 +63,8 @@
                             <a class="cz-btn ft18 sc-color tip" data-toggle="tooltip" title="删除" ms-click="Del(el,$event)">
                                 <i class="iconfont icon-shanchu"></i>
                             </a>
-                            <a title="生命周期" class="lk" ms-click="LifeCycle(el.UserGW + el.UserRealName + el.Name + '生命周期管理',el.ID,$event)">
-                                生命周期
+                            <a title="生命周期" class="lk" ms-if="el.AllowLifeCycle==1" ms-click="LifeCycle(el.UserGW + el.UserRealName + el.Name + '生命周期管理',el.ID,$event)">
+                                生命周期 
                             </a>
                         </span>
                     </td>

@@ -204,7 +204,7 @@
                 model.UserInfo = resultData.Result;
                 model.UserData = resultData.Result.User;
                 model.CompanyData = resultData.Result.QYinfo;
-                $(document).attr("title", model.CompanyData.QYName + "-协同办公平台");//修改title值
+                $(document).attr("title", model.CompanyData.QYName);//修改title值
                 model.GetCompanyAuth();
                 ComFunJS.setCookie('fileapi', resultData.Result.QYinfo.FileServerUrl);
             }
@@ -582,6 +582,14 @@
                         switch (str) {
                             case "0": str = '启用'; break;
                             case "1": str = '禁用'; break;
+                        }
+                    }
+                    break;
+                case "allowed":
+                    {
+                        switch (str) {
+                            case "0": str = '否'; break;
+                            case "1": str = '是'; break;
                         }
                     }
                     break;
