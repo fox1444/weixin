@@ -7,7 +7,7 @@
     <div class="tab-filter-type">
         <div class="oh" style="margin-bottom:15px;">
             <h5 class="pull-left tr">所属公司：</h5>
-            <select name="conBranchs" id="conBranchs" ms-change="SelectBranch(this.value)" style="font-size:80%;">
+            <select name="conBranchs" id="conBranchs" ms-change="SelectBranch(this.value)" class="narrow-select">
                 <option value="">所有</option>
                 <option ms-repeat-item="BranchData" ms-attr-value="item.DeptCode">{{item.DeptName}}</option>
             </select>

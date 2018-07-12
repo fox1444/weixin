@@ -3,10 +3,10 @@
     <div class="tab-filter-type">
         <div class="oh" style="margin-bottom:15px;">
             <h5 class="pull-left tr">所属部门：</h5>
-            <select name="conBranch" id="conBranch" ms-change="SelectBranch(this.value)" style="font-size:82%;">
+            <select name="conBranch" id="conBranch" ms-change="SelectBranch(this.value)" class="narrow-select">
                 <option ms-repeat-item="BranchData" ms-attr-value="item.DeptCode">{{item.DeptName}}</option>
             </select>
-            <select name="conGWs" id="conGWs" ms-change="SelectUSERGW(this.value)" style="font-size:82%;">
+            <select name="conGWs" id="conGWs" ms-change="SelectUSERGW(this.value)" class="narrow-select">
                 <option value="">所有部门</option>
                 <option ms-repeat-item="GWData" ms-attr-value="item.UserGW">{{item.UserGW}}({{item.ZCNum}})</option>
             </select>

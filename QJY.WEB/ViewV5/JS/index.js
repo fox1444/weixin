@@ -84,7 +84,7 @@
     selmenulev2: function (item, dom) {
         model.isiframe = item.isiframe;
         if (model.isiframe == 'Y') {
-            $("#main").attr("src", item.PageCode + ".html").css("min-height", (window.innerHeight - 150) + 'px');
+            $("#main").attr("src", item.PageCode + ".html?r=" + Math.random()).css("min-height", (window.innerHeight - 150) + 'px');
         } else {
             var nowTime = new Date().getTime();
             var clickTime = $("body").data("me2time");
