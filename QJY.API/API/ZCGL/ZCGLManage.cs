@@ -30,31 +30,37 @@ namespace QJY.API
             int.TryParse(context.Request["pagecount"] ?? "10", out pagecount);//页数
             page = page == 0 ? 1 : page;
             int total = 0;
+
             string strWhere = " z.IsDel=0 ";
 
             string typeid = context.Request["typeid"] ?? "";
             string branchcode = context.Request["branchcode"] ?? "";
             string usergw = context.Request["usergw"] ?? "";
             string locationid = context.Request["locationid"] ?? "";
+            string status = context.Request["status"] ?? "";
+            string searchstr = context.Request["searchstr"] ?? "";
+            searchstr = searchstr.TrimEnd();
 
-            if (typeid != "")
+            if (!string.IsNullOrEmpty(typeid))
             {
                 strWhere += string.Format(" And z.TypeID='{0}' ", typeid);
             }
-            if (branchcode != "")
+            if (!string.IsNullOrEmpty(branchcode))
             {
                 strWhere += string.Format(" And z.BranchCode='{0}' ", branchcode);
             }
-            if (usergw != "")
+            if (!string.IsNullOrEmpty(usergw))
             {
                 strWhere += string.Format(" And z.UserGW='{0}' ", usergw);
             }
-            if (locationid != "")
+            if (!string.IsNullOrEmpty(locationid))
             {
                 strWhere += string.Format(" And z.LocationID='{0}' ", locationid);
             }
-            string searchstr = context.Request["searchstr"] ?? "";
-            searchstr = searchstr.TrimEnd();
+            if (!string.IsNullOrEmpty(status))
+            {
+                strWhere += string.Format(" And z.Status='{0}' ", status);
+            }
             if (searchstr != "")
             {
                 strWhere += string.Format(" And ( z.Name like '%{0}%'  or z.Code like '%{0}%')", searchstr);
@@ -202,7 +208,12 @@ namespace QJY.API
             string where = "";
             if (!string.IsNullOrEmpty(P2))
             {
-                where = " and z.TypeID='" + P2 + "' ";
+                where += " and z.TypeID='" + P2 + "' ";
+            }
+            string status = context.Request["status"] ?? "";
+            if (!string.IsNullOrEmpty(status))
+            {
+                where += string.Format(" And z.Status='{0}' ", status);
             }
             DataTable dt = new JH_Auth_BranchB().GetDTByCommand("select distinct(UserGW),(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.UserGW=u.UserGW " + where + ") as ZCNum from JH_Auth_User u  where branchcode='" + P1 + "' and IsUse ='Y' and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.UserGW=u.UserGW " + where + ")>0 order by UserGW");
             msg.Result = dt;
@@ -227,7 +238,16 @@ namespace QJY.API
             string where = "";
             if (!string.IsNullOrEmpty(P1))
             {
-                where = " and z.UserGW='" + P1 + "' ";
+                where += " and z.UserGW='" + P1 + "' ";
+            }
+            if (!string.IsNullOrEmpty(P2))
+            {
+                where += " and z.BranchCode='" + P2 + "' ";
+            }
+            string status = context.Request["status"] ?? "";
+            if (!string.IsNullOrEmpty(status))
+            {
+                where += string.Format(" And z.Status='{0}' ", status);
             }
             DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0" + where + " and z.TypeID=t.ID) as ZCNum from dbo.SZHL_ZCGL_Type t where IsDel=0 and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0" + where + " and z.TypeID=t.ID)>0 order by DisplayOrder");
             msg.Result = dt;
@@ -240,7 +260,16 @@ namespace QJY.API
             string where = "";
             if (!string.IsNullOrEmpty(P1))
             {
-                where = " and z.LocationID='" + P1 + "' ";
+                where += " and z.LocationID='" + P1 + "' ";
+            }
+            if (!string.IsNullOrEmpty(P2))
+            {
+                where += " and z.BranchCode='" + P2 + "' ";
+            }
+            string status = context.Request["status"] ?? "";
+            if (!string.IsNullOrEmpty(status))
+            {
+                where += string.Format(" And z.Status='{0}' ", status);
             }
             DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0" + where + " and z.TypeID=t.ID) as ZCNum from dbo.SZHL_ZCGL_Type t where IsDel=0 and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0" + where + " and z.TypeID=t.ID)>0 order by DisplayOrder");
             msg.Result = dt;
@@ -251,7 +280,6 @@ namespace QJY.API
         public void GETZCGLTYPELIST_PAGE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             string strWhere = " cc.ComId=" + UserInfo.User.ComId;
-            //strWhere += string.Format(" And cc.CRUser='{0}' ", UserInfo.User.UserName);
             if (P1 != "")
             {
                 strWhere += string.Format(" And cc.Title like '%{0}%'", P1);
@@ -259,8 +287,8 @@ namespace QJY.API
 
             int page = 0;
             int pagecount = 10;
-            int.TryParse(context.Request.QueryString["p"] ?? "1", out page);
-            int.TryParse(context.Request.QueryString["pagecount"] ?? "10", out pagecount);//页数
+            int.TryParse(context.Request["p"] ?? "1", out page);
+            int.TryParse(context.Request["pagecount"] ?? "10", out pagecount);//页数
             page = page == 0 ? 1 : page;
             int total = 0;
             DataTable dt = new SZHL_ZCGL_TypeB().GetDataPager(" SZHL_ZCGL_Type cc", "cc.*", pagecount, page, " cc.DisplayOrder", strWhere, ref total);
@@ -289,7 +317,7 @@ namespace QJY.API
             DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand(strSql);
             msg.Result = dt;
         }
-       
+
         /// <summary>
         /// 添加资产类型
         /// </summary>
@@ -370,11 +398,16 @@ namespace QJY.API
             string where = "";
             if (!string.IsNullOrEmpty(P1))
             {
-                where = " and z.TypeID='" + P1 + "' ";
+                where += " and z.TypeID='" + P1 + "' ";
             }
             if (!string.IsNullOrEmpty(P2))
             {
-                where = " and z.BranchCode='" + P2 + "' ";
+                where += " and z.BranchCode='" + P2 + "' ";
+            }
+            string status = context.Request["status"] ?? "";
+            if (!string.IsNullOrEmpty(status))
+            {
+                where += string.Format(" And z.Status='{0}' ", status);
             }
             DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ") as ZCNum  from dbo.SZHL_ZCGL_LOCATION l where IsDel=0  and BranchCode='" + P2 + "' and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ")>0 order by DisplayOrder");
             msg.Result = dt;
@@ -399,8 +432,8 @@ namespace QJY.API
 
             int page = 0;
             int pagecount = 10;
-            int.TryParse(context.Request.QueryString["p"] ?? "1", out page);
-            int.TryParse(context.Request.QueryString["pagecount"] ?? "10", out pagecount);//页数
+            int.TryParse(context.Request["p"] ?? "1", out page);
+            int.TryParse(context.Request["pagecount"] ?? "10", out pagecount);//页数
             page = page == 0 ? 1 : page;
             int total = 0;
 

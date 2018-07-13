@@ -13,16 +13,18 @@
             <i class="iconfont icon-tuodong  mr5"></i>职务列表
             <i class="iconfont icon-jiahao ft12 pull-right mt5 pl20" ms-click="RoleEdit(1)" title="添加职务" style="cursor: pointer"></i>
         </p>
-        <ul class="jg-list-box">
-            <li ms-repeat-item="RoleListData" ms-click="GetUserList(item,$index)">
-                <div class="jg-item" ms-class="active:item.RoleCode==SelRoleItem.RoleCode"  >
-                    <b class="ml15">
-                        <i class="iconfont icon-group"></i>
-                        <span class="jg-name" ms-title="{{item.RoleName}}">{{ComFunJS.convstr(item.RoleName, 9)}}</span><i class="jg-number ft12 c999">（{{item.userCount}}）</i>
-                    </b>
-                </div>
-            </li>
-        </ul>
+        <div style="overflow-y:scroll; height:1760px;">
+            <ul class="jg-list-box">
+                <li ms-repeat-item="RoleListData" ms-click="GetUserList(item,$index)">
+                    <div class="jg-item" ms-class="active:item.RoleCode==SelRoleItem.RoleCode">
+                        <b class="ml15">
+                            <i class="iconfont icon-group"></i>
+                            <span class="jg-name" ms-title="{{item.RoleName}}">{{ComFunJS.convstr(item.RoleName, 9)}}</span><i class="jg-number ft12 c999">（{{item.userCount}}）</i>
+                        </b>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="jg-right pt20 ft14">
         <div class="btn-add">
@@ -174,14 +176,14 @@
         DelRole: function () {
             top.ComFunJS.winconfirm("确认要删除“" + tempindex.SelRoleItem.RoleName + "”吗？", function () {
                 $.post("/API/VIEWAPI.ashx", { Action: "XTGL_DELROLE", P1: tempindex.SelRoleItem.RoleCode },
-                function (result) {
-                    if ($.trim(result.ErrorMsg) == "") {
-                  
-                        top.ComFunJS.winsuccess("删除" + tempindex.SelRoleItem.$model.RoleName + "成功")
-                        tempindex.RoleListData.removeAt(tempindex.selRoleIndex);
-                        tempindex.SelRoleItem = tempindex.RoleListData[0];
-                    }
-                });
+                    function (result) {
+                        if ($.trim(result.ErrorMsg) == "") {
+
+                            top.ComFunJS.winsuccess("删除" + tempindex.SelRoleItem.$model.RoleName + "成功")
+                            tempindex.RoleListData.removeAt(tempindex.selRoleIndex);
+                            tempindex.SelRoleItem = tempindex.RoleListData[0];
+                        }
+                    });
             })
         },
         MenuModel: [],
@@ -273,26 +275,26 @@
             var modelValue = JSON.stringify(tempindex.RoleFunData.$model);
 
             $.post("/API/VIEWAPI.ashx", { Action: "XTGL_ADDROLEFUN", P1: tempindex.SelRoleItem.RoleCode, P2: modelValue },
-               function (result) {
-                   if ($.trim(result.ErrorMsg) == "") {
-                     
-                       top.ComFunJS.winsuccess("操作成功");
-                   }
-               });
+                function (result) {
+                    if ($.trim(result.ErrorMsg) == "") {
+
+                        top.ComFunJS.winsuccess("操作成功");
+                    }
+                });
         },
         DelRoleUser: function (item) {
             top.ComFunJS.winconfirm("确认要删除从角色中删除此用户吗？", function () {
                 $.post("/API/VIEWAPI.ashx", { Action: "XTGL_DELROLEUSER", P1: item.RoleCode, P2: item.UserName },
-                function (result) {
-                    if ($.trim(result.ErrorMsg) != "") {
-                        top.ComFunJS.winwarning(result.ErrorMsg);
-                    } else {
-                        top.ComFunJS.winsuccess("删除成功");
-                        tempindex.RoleUser.remove(item);
-                        tempindex.RoleListData[tempindex.selRoleIndex].userCount--;
-                        // tempindex.GetUserList(tempindex.RoleListData.$model[0], 0);
-                    }
-                });
+                    function (result) {
+                        if ($.trim(result.ErrorMsg) != "") {
+                            top.ComFunJS.winwarning(result.ErrorMsg);
+                        } else {
+                            top.ComFunJS.winsuccess("删除成功");
+                            tempindex.RoleUser.remove(item);
+                            tempindex.RoleListData[tempindex.selRoleIndex].userCount--;
+                            // tempindex.GetUserList(tempindex.RoleListData.$model[0], 0);
+                        }
+                    });
             })
         },
         setRoleQX: function (item) {
@@ -357,31 +359,31 @@
             }
             var modelValue = JSON.stringify(tempindex.RoleData.$model);
             $.post("/API/VIEWAPI.ashx", { Action: "XTGL_EditRole", P1: modelValue, P2: tempindex.strRoleUser },
-            function (result) {
-                if ($.trim(result.ErrorMsg) != "") {
-                    parent.ComFunJS.winwarning(result.ErrorMsg);
-                } else {
-                    parent.ComFunJS.winsuccess("操作成功");
-                    if (tempindex.RoleData.RoleCode) {
-                        tempindex.RoleData = result.Result;
-                        tempindex.RoleListData.set(tempindex.selRoleIndex, tempindex.RoleData);
-                        tempindex.RoleListData[tempindex.selRoleIndex].userCount = tempindex.strRoleUser.split(',').length;
-                        tempindex.RoleUserData = tempindex.RoleListData[tempindex.selRoleIndex];
-                        tempindex.RoleUser.clear();
-                        tempindex.strRoleUser.split(',').forEach(function (item) {
-                            var roleModel = { "UserName": "", "RoleCode": "" };
-                            roleModel.UserName = item;
-                            roleModel.RoleCode = tempindex.RoleData.RoleCode;
-                            tempindex.RoleUser.push(roleModel);
-                        })
+                function (result) {
+                    if ($.trim(result.ErrorMsg) != "") {
+                        parent.ComFunJS.winwarning(result.ErrorMsg);
                     } else {
-                        tempindex.RoleData = result.Result;
-                        tempindex.RoleListData.push(tempindex.RoleData);
-                        tempindex.RoleListData[tempindex.selRoleIndex].userCount = tempindex.strRoleUser.split(',').length;
+                        parent.ComFunJS.winsuccess("操作成功");
+                        if (tempindex.RoleData.RoleCode) {
+                            tempindex.RoleData = result.Result;
+                            tempindex.RoleListData.set(tempindex.selRoleIndex, tempindex.RoleData);
+                            tempindex.RoleListData[tempindex.selRoleIndex].userCount = tempindex.strRoleUser.split(',').length;
+                            tempindex.RoleUserData = tempindex.RoleListData[tempindex.selRoleIndex];
+                            tempindex.RoleUser.clear();
+                            tempindex.strRoleUser.split(',').forEach(function (item) {
+                                var roleModel = { "UserName": "", "RoleCode": "" };
+                                roleModel.UserName = item;
+                                roleModel.RoleCode = tempindex.RoleData.RoleCode;
+                                tempindex.RoleUser.push(roleModel);
+                            })
+                        } else {
+                            tempindex.RoleData = result.Result;
+                            tempindex.RoleListData.push(tempindex.RoleData);
+                            tempindex.RoleListData[tempindex.selRoleIndex].userCount = tempindex.strRoleUser.split(',').length;
+                        }
+                        $('#EditRoleModal').modal('hide');
                     }
-                    $('#EditRoleModal').modal('hide');
-                }
-            });
+                });
         }
     });
 

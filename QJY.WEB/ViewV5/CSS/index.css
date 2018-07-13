@@ -4,7 +4,7 @@
 .rightlayout{margin-left: 210px;padding-left: 20px;position: relative;}
 .index-right{/*height: 1000px;background-color: #fff;*/width: 290px;position: absolute;right: 0;top:0;}
 .index-center{margin-right: 310px;}
-.narrow-select { font-size: 85%; height:28px;}
+.narrow-select { font-size: 80%; height:28px;}
 /*替换bootstrap样式*/
 .form-control {border: 1px solid #e5e5e5;box-shadow:none!important;}
 .input-group-addon {color: #FFF;background-color: #12B8F6;border:none;border-radius: 0px;cursor: pointer;}

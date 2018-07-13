@@ -94,6 +94,7 @@
             tempindex.GetLIST();
         },
         SelectBranch: function (val) {
+            $('#large-link').hide();
             tempindex.curBranch = val;
             tempindex.curUSERGW = '';
             tempindex.GWData.clear();
@@ -137,7 +138,7 @@
             tempindex.LoadBranch();
         },
         GetTYPE: function () {
-            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELISTWITHNUM', { P1: tempindex.curUSERGW }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELISTWITHNUM', { P1: tempindex.curUSERGW, P2: tempindex.curBranch}, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.TypeData = resultData.Result;
                 }

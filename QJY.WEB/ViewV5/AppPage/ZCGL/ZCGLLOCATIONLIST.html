@@ -82,7 +82,6 @@
 <script>
     var tempindex = avalon.define({
         $id: "LOCATIONLIST",
-        curXJType: "",
         tmpListData: [],
         BranchData: [],
         curBranch: "",
@@ -92,10 +91,6 @@
         },
         SelectType: function (type) {
             model.search.seartype = type;
-            tempindex.GetLIST();
-        },
-        SelectXJType: function (type) {
-            tempindex.curXJType = type;
             tempindex.GetLIST();
         },
         selNum: function (item) {    //选择显示的条数
@@ -129,7 +124,7 @@
         GetLIST: function () {
             model.page.pageindex = 1;
             tempindex.tmpListData.clear();
-            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLIST_PAGE', { p: 1, P1: model.search.searchcontent, P2: model.search.seartype, pagecount: model.page.pagecount, Content: model.search.searchcontent, lb: tempindex.curXJType, branchcode: tempindex.curBranch }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLIST_PAGE&r=' + Math.random(), { p: 1, P1: model.search.searchcontent, P2: model.search.seartype, pagecount: model.page.pagecount, Content: model.search.searchcontent, branchcode: tempindex.curBranch }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.tmpListData = resultData.Result;
                     if (tempindex.tmpListData.size() == 0) { model.isnull = true; } else { model.isnull = false; }
@@ -141,7 +136,7 @@
                         skin: 'molv',
                         jump: function (e) { //触发分页后的回调
                             if (e.curr != model.page.pageindex) {
-                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLIST_PAGE', { p: e.curr, P1: model.search.searchcontent, P2: model.search.seartype, pagecount: model.page.pagecount, Content: model.search.searchcontent, lb: tempindex.curXJType, branchcode: tempindex.curBranch }, function (resultData) {
+                                $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLIST_PAGE&r=' + Math.random(), { p: e.curr, P1: model.search.searchcontent, P2: model.search.seartype, pagecount: model.page.pagecount, Content: model.search.searchcontent, branchcode: tempindex.curBranch }, function (resultData) {
                                     if (resultData.ErrorMsg == "") {
                                         tempindex.tmpListData = resultData.Result;
                                     }
