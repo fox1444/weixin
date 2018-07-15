@@ -211,6 +211,7 @@
     <Content Include="ViewV5\AppPage\YCGL\YCGLVIEW.html" />
     <Content Include="ViewV5\AppPage\ZCGL\LOCATION.html" />
     <Content Include="ViewV5\AppPage\ZCGL\EDIT_LIFECYCLE.html" />
+    <Content Include="ViewV5\AppPage\ZCGL\ZCLCTJ.html" />
     <Content Include="ViewV5\AppPage\ZCGL\ZCCDTJ.html" />
     <Content Include="ViewV5\AppPage\ZCGL\ZCBMTJ.html" />
     <Content Include="ViewV5\AppPage\ZCGL\ZCGLLOCATIONLIST.html" />

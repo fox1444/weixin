@@ -19,8 +19,8 @@
         <div class="oh">
             <h5 class="pull-left tr">资产类型：</h5>
             <ul class="tab-type ft14">
-                <li ms-click="SelectTYPE('')"><span class="active">全部</span></li>
-                <li ms-repeat-el="TypeData" ms-click="SelectTYPE(el.ID)"><span>{{el.Title}}({{el.ZCNum}})</span></li>
+                <li ms-click="SelectTYPE('')"><span ms-class-1="active:curTYPE==''">全部</span></li>
+                <li ms-repeat-el="TypeData" ms-click="SelectTYPE(el.ID)"><span ms-class-1="active:curTYPE==el.ID">{{el.Title}}({{el.ZCNum}})</span></li>
             </ul>
         </div>
         <div class="oh">

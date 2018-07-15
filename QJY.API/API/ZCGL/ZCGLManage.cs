@@ -38,6 +38,7 @@ namespace QJY.API
             string usergw = context.Request["usergw"] ?? "";
             string locationid = context.Request["locationid"] ?? "";
             string status = context.Request["status"] ?? "";
+            string lifecycleid = context.Request["lifecycleid"] ?? "";
             string searchstr = context.Request["searchstr"] ?? "";
             searchstr = searchstr.TrimEnd();
 
@@ -61,9 +62,13 @@ namespace QJY.API
             {
                 strWhere += string.Format(" And z.Status='{0}' ", status);
             }
-            if (searchstr != "")
+            if (!string.IsNullOrEmpty(searchstr))
             {
                 strWhere += string.Format(" And ( z.Name like '%{0}%'  or z.Code like '%{0}%')", searchstr);
+            }
+            if (!string.IsNullOrEmpty(lifecycleid))
+            {
+                 strWhere += string.Format("  and z.ID in ( select ZCGLID from SZHL_ZCGL_LifeCycle where TypeID= '{0}' and IsDel=0 )", lifecycleid);
             }
             //int DataID = -1;
             //int.TryParse(context.Request.QueryString["ID"] ?? "-1", out DataID);//记录Id
@@ -257,21 +262,39 @@ namespace QJY.API
         /// </summary>
         public void GETZCGLTYPELISTBYLOCATIONWITHNUM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            string where = "";
+            string where = " z.IsDel=0 ";
             if (!string.IsNullOrEmpty(P1))
             {
                 where += " and z.LocationID='" + P1 + "' ";
             }
             if (!string.IsNullOrEmpty(P2))
             {
-                where += " and z.BranchCode='" + P2 + "' ";
+                where += " and z.BranchCode= '" + P2 + "' ";
             }
             string status = context.Request["status"] ?? "";
             if (!string.IsNullOrEmpty(status))
             {
                 where += string.Format(" And z.Status='{0}' ", status);
             }
-            DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0" + where + " and z.TypeID=t.ID) as ZCNum from dbo.SZHL_ZCGL_Type t where IsDel=0 and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0" + where + " and z.TypeID=t.ID)>0 order by DisplayOrder");
+            DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where " + where + " and z.TypeID=t.ID) as ZCNum from dbo.SZHL_ZCGL_Type t where IsDel=0 and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where " + where + " and z.TypeID=t.ID)>0 order by DisplayOrder");
+            msg.Result = dt;
+        }
+        /// <summary>
+        /// 根据生命周期获取所有资产类型列表，并展示资产数量
+        /// </summary>
+        public void GETZCGLTYPELISTBYLIFECYCLEWITHNUM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string where = " z.IsDel=0 ";
+            if (!string.IsNullOrEmpty(P1))
+            {
+                where += " and z.ID in ( select ZCGLID from SZHL_ZCGL_LifeCycle where TypeID= '" + P1 + "' and IsDel=0 ) ";
+            }
+            string status = context.Request["status"] ?? "";
+            if (!string.IsNullOrEmpty(status))
+            {
+                where += string.Format(" And z.Status='{0}' ", status);
+            }
+            DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where " + where + " and z.TypeID=t.ID) as ZCNum from dbo.SZHL_ZCGL_Type t where IsDel=0 and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where " + where + " and z.TypeID=t.ID)>0 order by DisplayOrder");
             msg.Result = dt;
         }
         /// <summary>
@@ -394,7 +417,7 @@ namespace QJY.API
         /// </summary>
         public void GETZCGLLOCATIONLISTWITHNUM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            string where = "";
+            string where = " z.IsDel=0 ";
             if (!string.IsNullOrEmpty(P1))
             {
                 where += " and z.TypeID='" + P1 + "' ";
@@ -408,7 +431,7 @@ namespace QJY.API
             {
                 where += string.Format(" And z.Status='{0}' ", status);
             }
-            DataTable dt = new SZHL_ZCGL_LocationB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ") as ZCNum  from dbo.SZHL_ZCGL_LOCATION l where IsDel=0  and BranchCode='" + P2 + "' and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ")>0 order by DisplayOrder");
+            DataTable dt = new SZHL_ZCGL_LocationB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where " + where + " and z.LocationID=l.ID) as ZCNum  from dbo.SZHL_ZCGL_LOCATION l where IsDel=0  and BranchCode='" + P2 + "' and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where " + where + " and z.LocationID=l.ID)>0 order by DisplayOrder");
             msg.Result = dt;
         }
         /// <summary>
@@ -416,7 +439,7 @@ namespace QJY.API
         /// </summary>
         public void GETZCGLSTATUSLISTBYLOCATIONWITHNUM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            string where = "";
+            string where = " z.IsDel=0 ";
             if (!string.IsNullOrEmpty(P1))
             {
                 where += " and z.TypeID='" + P1 + "' ";
@@ -440,11 +463,10 @@ namespace QJY.API
             {
                 tmpS += " insert into " + tmpTable + " values ('" + e.ID + "','" + e.TypeName + "')";
             }
-            tmpS += " select s.*, (select count(0) from  dbo.SZHL_ZCGL z where z.IsDel=0 and z.Status=s.ID " + where + ") as ZCNum from " + tmpTable + " s where (select count(0) from  dbo.SZHL_ZCGL z where z.IsDel=0 and z.Status=s.ID " + where + ")>0 ";
+            tmpS += " select s.*, (select count(0) from  dbo.SZHL_ZCGL z where " + where + " and z.Status=s.ID ) as ZCNum from " + tmpTable + " s where (select count(0) from  dbo.SZHL_ZCGL z where " + where + " and z.Status=s.ID )>0 ";
             tmpS += " drop table " + tmpTable;
             DataTable dt = new SZHL_ZCGL_LocationB().GetDTByCommand(tmpS);
             msg.Result = dt;
-
         }
         /// <summary>
         /// 资产类型分页列表
@@ -624,7 +646,70 @@ namespace QJY.API
             }
             msg.Result = ZCLC;
         }
+        /// <summary>
+        /// 生命周期分类列表，并展示资产数量
+        /// </summary>
+        public void GETZCGLLIFECYCLELISTWITHNUM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string where = " z.IsDel=0 ";
+            if (!string.IsNullOrEmpty(P1))
+            {
+                where += " and z.TypeID='" + P1 + "' ";
+            }
+            string status = context.Request["status"] ?? "";
+            if (!string.IsNullOrEmpty(status))
+            {
+                where += string.Format(" And z.Status='{0}' ", status);
+            }
+            where += " and z.ID in ( select ZCGLID from SZHL_ZCGL_LifeCycle where TypeID= s.ID and IsDel=0 ) ";
 
+            string tmpTable = "#LifeCycleData" + DateTime.Now.ToString("yyMMddhhmmss");
+            string lifecycledata = context.Request["lifecycledata"] ?? "";
+            List<ExtentionData> ExDataList = JsonConvert.DeserializeObject<List<ExtentionData>>(lifecycledata);
+            string tmpS = " create table " + tmpTable + "(ID int NOT NULL, TypeName varchar(50) NOT NULL) ";
+            foreach (ExtentionData e in ExDataList)
+            {
+                tmpS += " insert into " + tmpTable + " values ('" + e.ID + "','" + e.TypeName + "')";
+            }
+            tmpS += " select s.*, (select count(0) from  dbo.SZHL_ZCGL z where " + where + ") as ZCNum from " + tmpTable + " s where (select count(0) from  dbo.SZHL_ZCGL z where " + where + ")>0 ";
+            tmpS += " drop table " + tmpTable;
+            DataTable dt = new SZHL_ZCGL_LocationB().GetDTByCommand(tmpS);
+            msg.Result = dt;
+        }
+        /// <summary>
+        /// 所有资产状态列表，并展示资产数量
+        /// </summary>
+        public void GETZCGLSTATUSLISTBYLIFECYCLEWITHNUM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string where = " z.IsDel=0 ";
+            if (!string.IsNullOrEmpty(P1))
+            {
+                where += " and z.TypeID='" + P1 + "' ";
+            }
+            if (!string.IsNullOrEmpty(P2))
+            {
+                where += " and z.ID in ( select ZCGLID from SZHL_ZCGL_LifeCycle where TypeID= '" + P2 + "' and IsDel=0 ) ";
+            }
+            string location = context.Request["location"] ?? "";
+            if (!string.IsNullOrEmpty(location))
+            {
+                where += string.Format(" And z.LocationID='{0}' ", location);
+            }
+
+            string tmpTable = "#StatusData" + DateTime.Now.ToString("yyMMddhhmmss");
+            string statusdata = context.Request["statusdata"] ?? "";
+            List<ExtentionData> ExDataList = JsonConvert.DeserializeObject<List<ExtentionData>>(statusdata);
+
+            string tmpS = " create table " + tmpTable + "(ID int NOT NULL, TypeName varchar(50) NOT NULL) ";
+            foreach (ExtentionData e in ExDataList)
+            {
+                tmpS += " insert into " + tmpTable + " values ('" + e.ID + "','" + e.TypeName + "')";
+            }
+            tmpS += " select s.*, (select count(0) from  dbo.SZHL_ZCGL z where " + where + " and z.Status=s.ID ) as ZCNum from " + tmpTable + " s where (select count(0) from  dbo.SZHL_ZCGL z where " + where + " and z.Status=s.ID)>0 ";
+            tmpS += " drop table " + tmpTable;
+            DataTable dt = new SZHL_ZCGL_LocationB().GetDTByCommand(tmpS);
+            msg.Result = dt;
+        }
         /// <summary>
         /// 获取生命周期列表根据资产ID
         /// </summary>
