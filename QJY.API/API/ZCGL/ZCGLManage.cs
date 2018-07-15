@@ -386,13 +386,12 @@ namespace QJY.API
         public void GETZCGLLOCATIONLIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             //var list = new SZHL_ZCGL_TypeB().GetEntities(p => p.IsDel == 0);
-            DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select * from dbo.SZHL_ZCGL_LOCATION where IsDel=0 and ComId=" + UserInfo.User.ComId + " order by DisplayOrder");
+            DataTable dt = new SZHL_ZCGL_LocationB().GetDTByCommand("select * from dbo.SZHL_ZCGL_LOCATION where IsDel=0 and ComId=" + UserInfo.User.ComId + " order by DisplayOrder");
             msg.Result = dt;
         }
         /// <summary>
         /// 所有资产类型列表，并展示资产数量
         /// </summary>
-
         public void GETZCGLLOCATIONLISTWITHNUM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             string where = "";
@@ -409,8 +408,43 @@ namespace QJY.API
             {
                 where += string.Format(" And z.Status='{0}' ", status);
             }
-            DataTable dt = new SZHL_ZCGL_TypeB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ") as ZCNum  from dbo.SZHL_ZCGL_LOCATION l where IsDel=0  and BranchCode='" + P2 + "' and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ")>0 order by DisplayOrder");
+            DataTable dt = new SZHL_ZCGL_LocationB().GetDTByCommand("select *,(select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ") as ZCNum  from dbo.SZHL_ZCGL_LOCATION l where IsDel=0  and BranchCode='" + P2 + "' and ComId=" + UserInfo.User.ComId + " and (select COUNT(0) from dbo.SZHL_ZCGL z where z.IsDel=0 and z.LocationID=l.ID " + where + ")>0 order by DisplayOrder");
             msg.Result = dt;
+        }
+        /// <summary>
+        /// 所有资产状态列表，并展示资产数量
+        /// </summary>
+        public void GETZCGLSTATUSLISTBYLOCATIONWITHNUM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string where = "";
+            if (!string.IsNullOrEmpty(P1))
+            {
+                where += " and z.TypeID='" + P1 + "' ";
+            }
+            if (!string.IsNullOrEmpty(P2))
+            {
+                where += " and z.BranchCode='" + P2 + "' ";
+            }
+            string location = context.Request["location"] ?? "";
+            if (!string.IsNullOrEmpty(location))
+            {
+                where += string.Format(" And z.LocationID='{0}' ", location);
+            }
+
+            string tmpTable = "#StatusData" + DateTime.Now.ToString("yyMMddhhmmss");
+            string statusdata = context.Request["statusdata"] ?? "";
+            List<ExtentionData> ExDataList = JsonConvert.DeserializeObject<List<ExtentionData>>(statusdata);
+
+            string tmpS = " create table " + tmpTable + "(ID int NOT NULL, TypeName varchar(50) NOT NULL) ";
+            foreach (ExtentionData e in ExDataList)
+            {
+                tmpS += " insert into " + tmpTable + " values ('" + e.ID + "','" + e.TypeName + "')";
+            }
+            tmpS += " select s.*, (select count(0) from  dbo.SZHL_ZCGL z where z.IsDel=0 and z.Status=s.ID " + where + ") as ZCNum from " + tmpTable + " s where (select count(0) from  dbo.SZHL_ZCGL z where z.IsDel=0 and z.Status=s.ID " + where + ")>0 ";
+            tmpS += " drop table " + tmpTable;
+            DataTable dt = new SZHL_ZCGL_LocationB().GetDTByCommand(tmpS);
+            msg.Result = dt;
+
         }
         /// <summary>
         /// 资产类型分页列表
@@ -437,7 +471,7 @@ namespace QJY.API
             page = page == 0 ? 1 : page;
             int total = 0;
 
-            DataTable dt = new SZHL_ZCGL_TypeB().GetDataPager(" SZHL_ZCGL_LOCATION cc left join JH_Auth_Branch b on cc.BranchCode=b.DeptCode", "cc.* , b.DeptName", pagecount, page, " cc.DisplayOrder", strWhere, ref total);
+            DataTable dt = new SZHL_ZCGL_LocationB().GetDataPager(" SZHL_ZCGL_LOCATION cc left join JH_Auth_Branch b on cc.BranchCode=b.DeptCode", "cc.* , b.DeptName", pagecount, page, " cc.DisplayOrder", strWhere, ref total);
 
             msg.Result = dt;
             msg.Result1 = total;
@@ -610,5 +644,16 @@ namespace QJY.API
             new SZHL_ZCGL_LifeCycleB().Update(model);
         }
         #endregion
+    }
+
+    public class ExtentionData
+    {
+        public int ID { get; set; }
+        public string TypeName { get; set; }
+    }
+
+    public class ExtentionDataList
+    {
+        public List<ExtentionData> Items { get; set; }
     }
 }

@@ -100,7 +100,7 @@
             tempindex.GWData.clear();
             tempindex.LoadUSERGW();
             $('#conGWs').val('');
-            tempindex.GetTYPE();
+            tempindex.LoadTYPE();
             tempindex.GetLIST();
         },
         SelectUSERGW: function (val) {
@@ -114,7 +114,7 @@
                 ComFunJS.DrawEWMcancas('cvs', model.EWMcode, val + '资产信息', '', '查看二维码');
             }//生成部门二维码
 
-            tempindex.GetTYPE();
+            tempindex.LoadTYPE();
             tempindex.GetLIST();
         },
         selNum: function (item) {    //选择显示的条数
@@ -134,10 +134,10 @@
                 { "ColName": "Status", "ColText": "使用状态", "IsSel": true, "format": "zcstatus" },
             ]);
             //类型数据
-            tempindex.GetTYPE();
+            tempindex.LoadTYPE();
             tempindex.LoadBranch();
         },
-        GetTYPE: function () {
+        LoadTYPE: function () {
             $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELISTWITHNUM', { P1: tempindex.curUSERGW, P2: tempindex.curBranch}, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.TypeData = resultData.Result;

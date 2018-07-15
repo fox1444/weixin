@@ -26,6 +26,16 @@
         exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
         document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
     },
+    setCookieMinute: function (name, value, m) {
+        var Minutes = 60;//默认1小时
+        var exp = new Date();
+        if (m) {
+            exp.setTime(exp.getTime() + parseInt(m) * 60 * 1000);
+        } else {
+            exp.setTime(exp.getTime() + Minutes * 60 * 1000);
+        }
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
+    },
     getCookie: function (name) {
         var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
 
@@ -1333,7 +1343,7 @@
         { "ID": "30", "TypeName": "闲置" },
         { "ID": "40", "TypeName": "损坏" },
         { "ID": "50", "TypeName": "待报废" },
-        { "ID": "60", "TypeName": "已报废" },
+        { "ID": "60", "TypeName": "已报废" }
     ], //资产状态类型
     LifeCycleTypeData: [
         { "ID": "10", "TypeName": "入库", "Allowed": true },
@@ -1415,7 +1425,7 @@
                 break;
             case "text":
                 {
-                    var len = fmt.len || 20;
+                    var len = fmt.len || 22;
                     return ComFunJS.convstr(str + "", len);
                 }
                 break;

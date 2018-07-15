@@ -27,7 +27,7 @@
             <h5 class="pull-left tr">资产状态：</h5>
             <ul class="tab-type ft14">
                 <li ms-click="SelectStatus('')"><span class="active">全部</span></li>
-                <li ms-repeat-el="ComFunJS.ZCStatusData" ms-click="SelectStatus(el.ID)"><span>{{el.TypeName}}</span></li>
+                <li ms-repeat-el="StatusData" ms-click="SelectStatus(el.ID)"><span>{{el.TypeName}}({{el.ZCNum}})</span></li>
             </ul>
         </div>
         <!-- 搜索 -->
@@ -95,10 +95,12 @@
         TypeData: [],
         BranchData: [],
         LOCATIONData: [],
+        StatusData:[],
         tmpListData: [],
         SelectTYPE: function (type) {
             tempindex.curTYPE = type;
             tempindex.LoadLOCATION();
+            tempindex.LoadStatus();
             tempindex.GetLIST();
         },
         SelectBranch: function (val) {
@@ -108,7 +110,8 @@
             tempindex.LOCATIONData.clear();
             tempindex.LoadLOCATION();
             $('#conLOCs').val('');
-            tempindex.GetTYPE();
+            tempindex.LoadTYPE();
+            tempindex.LoadStatus();
             tempindex.GetLIST();
         },
         SelectLOCATION: function (el) {
@@ -127,13 +130,14 @@
                 model.EWMcode = "http://qr.liantu.com/api.php?text=" + ComFunJS.yuming + "/WX/bgxt/loczc_List.html?locationid=" + checkValue + "&bg=ffffff&fg=007457&w=600&logo=" + ComFunJS.yuming + "/View_Mobile/images/tobacco-logo-icon.png";
                 ComFunJS.DrawEWMcancas('cvs', model.EWMcode, checkText + '资产信息', '', '查看二维码');//生成场地二维码
             }
-            tempindex.GetTYPE();
+            tempindex.LoadTYPE();
+            tempindex.LoadStatus();
             tempindex.GetLIST();
         },
         SelectStatus: function (st) {
             tempindex.curStatus = st;
             tempindex.LoadLOCATION();
-            tempindex.GetTYPE();
+            tempindex.LoadTYPE();
             tempindex.GetLIST();
         },
         selNum: function (item) {    //选择显示的条数
@@ -153,10 +157,11 @@
                 { "ColName": "Status", "ColText": "使用状态", "IsSel": true, "format": "zcstatus" },
             ]);
             //类型数据
-            tempindex.GetTYPE();
+            tempindex.LoadTYPE();
             tempindex.LoadBranch();
+            tempindex.LoadStatus();
         },
-        GetTYPE: function () {
+        LoadTYPE: function () {
             $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELISTBYLOCATIONWITHNUM&r=' + Math.random(), { P1: tempindex.curLOCATION, P2: tempindex.curBranch, status: tempindex.curStatus  }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.TypeData = resultData.Result;
@@ -177,6 +182,13 @@
             $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLLOCATIONLISTWITHNUM&r=' + Math.random(), { P1: tempindex.curTYPE, P2: tempindex.curBranch, status: tempindex.curStatus }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.LOCATIONData = resultData.Result;
+                }
+            })
+        },
+        LoadStatus: function () {
+            $.post('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLSTATUSLISTBYLOCATIONWITHNUM&r=' + Math.random(), { P1: tempindex.curTYPE, P2: tempindex.curBranch, location: tempindex.curLOCATION, statusdata: JSON.stringify(ComFunJS.ZCStatusData) }, function (resultData) {
+                if (resultData.ErrorMsg == "") {
+                    tempindex.StatusData = resultData.Result;
                 }
             })
         },
