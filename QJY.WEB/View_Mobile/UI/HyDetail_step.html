@@ -14,23 +14,25 @@
 </head>
 <body ms-controller="Hydetail">
     <div class="wrapper">
-        <div class="hy_menu">
+        <div class="hy_menu" id="item-1">
             <div class="title">
                 <span><strong>&nbsp;目&nbsp;&nbsp;录&nbsp;</strong></span>
             </div>
             <div class="content">
                 <div class="hy_menu_list">
-                    <a href="#" ms-on-click="gostart()" class="tab-link button external" ms-class-1="active:type=='1'"><i>1</i>会议公告</a>
-                    <a href="#" ms-on-click="getdata(2)" class="tab-link button external" ms-class-1="active:type=='2'"><i>2</i>会议须知</a>
-                    <a href="#" ms-on-click="getdata(3)" class="tab-link button external" ms-class-1="active:type=='3'"><i>3</i>服务指南</a>
-                    <a href="#" ms-on-click="getdata(4)" class="tab-link button external" ms-class-1="active:type=='4'"><i>4</i>日程安排</a>
-                    <a href="#" ms-on-click="getdata(5)" class="tab-link button external" ms-class-1="active:type=='5'"><i>5</i>座位引导</a>
-                    <a href="#" ms-on-click="getdata(6)" class="tab-link button external" ms-class-1="active:type=='6'"><i>6</i>参会代表</a>
-                    <a href="#" ms-on-click="getdata(7)" class="tab-link button external" ms-class-1="active:type=='7'"><i>7</i>资料下载</a>
+                    <a href="#" ms-on-click="gostart()" class="tab-link button external"><i>1</i>会议公告</a>
+                    <a href="#" ms-on-click="getdata(2)" class="tab-link button external"><i>2</i>会议须知</a>
+                    <a href="#" ms-on-click="getdata(3)" class="tab-link button external"><i>3</i>服务指南</a>
+                    <a href="#" ms-on-click="getdata(4)" class="tab-link button external"><i>4</i>日程安排</a>
+                    <a href="#" ms-on-click="getdata(5)" class="tab-link button external"><i>5</i>座位引导</a>
+                    <a href="#" ms-on-click="getdata(6)" class="tab-link button external"><i>6</i>参会代表</a>
+                    <a href="#" ms-on-click="getdata(7)" class="button external" ms-class-1="tab-link:modelData.ZSAP!=''" ms-if="modelData.ZSAP!=''"><i>7</i>住宿安排</a>
+                    <a href="#" ms-on-click="getdata(8)" class="button external" ms-class-1="tab-link:modelData.FZQK!=''" ms-if="modelData.FZQK!=''"><i>8</i>分组情况</a>
+                    <a href="#" ms-on-click="getdata(9)" class="tab-link button external"><i>9</i>资料下载</a>
                 </div>
             </div>
         </div>
-        <div class="hy_menu">
+        <div class="hy_menu" id="item-2">
             <div class="title">
                 <span><strong>&nbsp;会议须知&nbsp;</strong></span>
             </div>
@@ -38,7 +40,7 @@
                 {{modelData.HYXZ|html}}
             </div>
         </div>
-        <div class="hy_menu" style="padding-bottom:20px;">
+        <div class="hy_menu" id="item-3" style="padding-bottom:20px;">
             <div class="title">
                 <span><strong>&nbsp;服务指南&nbsp;</strong></span>
             </div>
@@ -46,7 +48,7 @@
                 {{modelData.HYFW|html}}
             </div>
         </div>
-        <div class="hy_menu" style="padding-bottom:20px;">
+        <div class="hy_menu" id="item-4" style="padding-bottom:20px;">
             <div class="title">
                 <span><strong>&nbsp;日程安排&nbsp;</strong></span>
             </div>
@@ -54,7 +56,7 @@
                 {{modelData.Details|html}}
             </div>
         </div>
-        <div class="hy_menu bg-white">
+        <div class="hy_menu bg-white" id="item-5">
             <div class="title title-black" style="margin-top:0px; padding-top:10px;">
                 <span><strong>&nbsp;座位引导&nbsp;</strong></span>
             </div>
@@ -65,6 +67,8 @@
                 </div>
                 <div class="zcb-title">尊敬的{{currentuser.UserRealName}}，您的座位在<br /><span style="color:#ff4700" class="attention">红色位置区域</span></div>
                 <!--{{modelData.ZCB|html}}-->
+                ai
+
                 <div class="chairmen-wrapper">
                     <div class="room-chairmen">
                         <!--<ul><li ms-repeat-el="ZCUserNames"><span>{{el.UserRealName}}</span></li></ul>-->
@@ -78,7 +82,7 @@
                 <div style="text-align:center;">请左右滑动查找您的座位</div>
             </div>
         </div>
-        <div class="hy_menu" style="padding-bottom:70px;">
+        <div class="hy_menu" id="item-6" style="padding-bottom:70px;">
             <div class="title">
                 <span><strong>&nbsp;参会代表&nbsp;</strong></span>
             </div>
@@ -86,9 +90,29 @@
 
                 {{ComFunJS.convusers_branch(modelData.CYUser)|html}}
                 <!--{{tempmodel.allusers }}-->
+                <
+                v>
+            </div>
+            <
+            v>
+        </div>
+        <div class="hy_menu" id="item-7" ms-if="modelData.ZSAP!=''" style="padding-bottom:20px;">
+            <div class="title">
+                <span><strong>&nbsp;住宿安排&nbsp;</strong></span>
+            </div>
+            <div class="content bg-white">
+                {{modelData.ZSAP|html}}
             </div>
         </div>
-        <div class="hy_menu zldownload">
+        <div class="hy_menu" id="item-8" ms-if="modelData.FZQK!=''" style="padding-bottom:20px;">
+            <div class="title">
+                <span><strong>&nbsp;分组情况&nbsp;</strong></span>
+            </div>
+            <div class="content bg-white">
+                {{modelData.FZQK|html}}
+            </div>
+        </div>
+        <div class="hy_menu zldownload" id="item-9">
             <div class="title">
                 <span><strong>&nbsp;资料下载&nbsp;</strong></span>
             </div>
@@ -99,7 +123,7 @@
 
         <ul class="up-and-down">
             <li>
-                <div class="arrow-up" ms-on-click="getdata(tempmodel.stepindex-1)">
+                <div class="arrow-up" ms-on-click="getpredata(tempmodel.stepindex)">
                     <span><</span>
                 </div>
             </li>
@@ -109,7 +133,7 @@
                 </div>
             </li>
             <li>
-                <div class="arrow-down" ms-on-click="getdata(tempmodel.stepindex+1)">
+                <div class="arrow-down" ms-on-click="getnextdata(tempmodel.stepindex)">
                     <span>></span>
                 </div>
             </li>
@@ -147,7 +171,8 @@
                 if (index) {
                     tempmodel.stepindex = index;
                     $('.hy_menu').hide();
-                    $('.hy_menu').eq(index - 1).show();
+                    //$('.hy_menu').eq(index - 1).show();
+                    $('#item-' + index).show();
 
                     if (index == 1) {
                         $('.up-and-down').hide();
@@ -162,9 +187,20 @@
                     }
                 }
             },
-
+            getpredata: function (index) {
+                $('.hy_menu').hide();
+                var id = $("#item-" + index).prev().attr('id');
+                id = id.replace('item-', '');
+                tempmodel.getdata(id);
+            },
+            getnextdata: function (index) {
+                $('.hy_menu').hide();
+                var id = $("#item-" + index).next().attr('id');
+                id = id.replace('item-', '');
+                tempmodel.getdata(id);
+            },
             inittemp: function (strId) {
-                tempmodel.getdata(1);
+
                 var users = window.localStorage.getItem("alluserinfo");
                 var Expirytime = window.localStorage.getItem("alluserinfo_expirytime");
 
@@ -193,7 +229,6 @@
                                     tempmodel.isjl = "1";
                                 }
                             }
-
                             var pn = ComFunJS.getCookie("userphonenumber");
                             if (pn && pn != null && pn != undefined && pn != '') {
                                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETUSERBYPHONENUMBER&r=" + Math.random(), { P1: pn }, function (r) {
@@ -211,6 +246,8 @@
                                 tempmodel.gostart();
                             }
                             setTimeout(" ComFunJS.initForm()", 500);
+                            tempmodel.SetNumber();
+
                         }
                     })
                 }
@@ -230,7 +267,17 @@
                     ComFunJS.initForm();
                 }
 
+
             },//初始化
+            SetNumber: function () {
+                var k = 1;
+                $(".tab-link").each(function () {
+                    $(this).children("i").html(k);
+                    k++;
+                });
+
+                tempmodel.getdata(1);
+            },
             LoadAllUser: function () {
                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_WXINITALLUSER&r=" + Math.random(), {}, function (r) {
                     if (r.ErrorMsg == "") {
@@ -239,12 +286,10 @@
                         $(usersarr).each(function (index, ele) {
                             returnmsg.push({ 'UserName': ele.UserName, 'UserRealName': ele.UserRealName, 'mobphone': ele.mobphone, 'BranchCode': ele.BranchCode, 'DeptName': ele.DeptName, 'UserGW': ele.UserGW, 'zhiwu': ele.zhiwu, 'DeptRoot': ele.DeptRoot });
                         })
-
                         var tmp = returnmsg;
                         window.localStorage.setItem("alluserinfo", JSON.stringify(tmp));
                         window.localStorage.setItem("alluserinfo_expirytime", new Date());
                     }
-
                 })
             },
             LoadRoom: function () {
@@ -310,7 +355,9 @@
         });
 
         avalon.ready(function () {
+            $('.hy_menu').hide();
             tempmodel.inittemp();
+
         })
 
         $(window).on("load resize", function () {

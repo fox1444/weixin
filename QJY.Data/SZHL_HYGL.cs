@@ -45,5 +45,7 @@ namespace QJY.Data
         public string ZCB { get; set; }
         public string SubTitle { get; set; }
         public string TitleTime { get; set; }
+        public string ZSAP { get; set; }
+        public string FZQK { get; set; }
     }
 }

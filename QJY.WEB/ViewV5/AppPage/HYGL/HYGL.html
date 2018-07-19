@@ -1,127 +1,158 @@
 ﻿<div class="form-horizontal" ms-controller="HYGL">
     <div style="margin: 0 80px;">
-        <div>
-            <!--<div class="fg-item"><span>基本信息</span></div>-->
-            <ul class="clearfix" style="display: block;padding:0">
-                <li class="add-item add-width">
-                    <label>申请人:</label>
-                    <label>{{ComFunJS.convertuser(modelData.FQUser)}}</label>
-                </li>
-                <li class="add-item add-width fl-left">
-                    <label class="add-item-label"><i>*</i>会议主题</label>
-                    <div class="add-ic">
-                        <input type="text" autofocus="autofocus" class="form-control szhl_require" ms-duplex="modelData.Title" />
-                    </div>
-                </li>
-                <li class="add-item add-width fl-right">
-                    <label class="add-item-label">副标题</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.SubTitle" />
-                    </div>
-                </li>
-                <li class="add-item add-width fl-left">
-                    <label class="add-item-label">标题时间</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.TitleTime" />
-                    </div>
-                </li>
-                <li class="add-item add-width fl-right">
-                    <label class="add-item-label"><i>*</i>起止时间</label>
-                    <div style="display:block;">
-                        <div class="add-ic fl-left" style="width: 45%;">
-                            <input type="text" class="form-control szhl_form_date_time szhl_require" ms-duplex="modelData.StartTime">
-                        </div>
-                        <div class="add-ic" style="float: left; line-height: 30px; width: 10%; text-align: center;">：</div>
-                        <div class="add-ic fl-right" style="width: 45%;">
-                            <input type="text" class="form-control szhl_form_date_time szhl_require" ms-duplex="modelData.EndTime">
-                        </div>
-                    </div>
-                </li>
-
-                <li class="add-item add-width fl-left">
-                    <label class="add-item-label"><i>*</i>会议室</label>
-                    <div class="add-ic">
-                        <select name="conType" id="conType" ms-duplex="modelData.RoomID" class="form-control szhl_require">
-                            <option ms-repeat-item="CLData" ms-attr-value="item.ID">{{item.Name}}</option>
-                        </select>
-                    </div>
-                </li>
-                <li class="add-item add-width fl-right">
-                    <label class="add-item-label"><i>*</i>会议前提醒(分钟)</label>
-                    <div class="add-ic">
-                        <select class="form-control" ms-duplex="modelData.TXSJ">
-                            <option value="-1">不提醒</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                            <option value="40">40</option>
-                            <option value="50">50</option>
-                            <option value="60">60</option>
-                            <option value="90">90</option>
-                            <option value="120">120</option>
-                        </select>
-                    </div>
-                </li>
-                <li class="add-item add-widthall">
-                    <label class="add-item-label"><i>*</i>参会人</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control szhl_require szhl_getPeoples" ms-duplex="modelData.CYUser" />
-                    </div>
-                </li>
-                <!--<li class="add-item add-widthall">
-                    <div class="add-ic">
-                        <input type="text" class="form-control roomuserData" ms-duplex="modelData.ZCB" style="display:none;" />
-                        <a href="javascript:void(0)" class="btn-upload btn-link btn-seat">编辑座次表</a>
-                    </div>
-                </li>-->
-                <li class="add-item add-widthall">
-                    <label class="add-item-label">会议内容/日程安排</label>
-                    <div class="add-ic">
-                        <textarea class="szhl_UEEDIT" id="hycontent" umheight="250" ms-duplex="modelData.Details"></textarea>
-                    </div>
-                </li>
-                <li class="add-item add-widthall">
-                    <label class="add-item-label">会议须知</label>
-                    <div class="add-ic">
-                        <textarea class="szhl_UEEDIT" id="hyxuzhi" umheight="250" ms-duplex="modelData.HYXZ"></textarea>
-                    </div>
-                </li>
-            </ul>
+        <div class="detail-nav">
+            <div class="tab-kh nav-bt">
+                <span ms-class-1="cur:seltype==1" ms-click="selecttype(1)"><i class="iconfont icon-bookmark"></i>基本信息</span>
+                <span ms-class-1="cur:seltype==2" ms-click="selecttype(2)"><i class="iconfont icon-bookmark"></i>日程安排</span>
+                <span ms-class-1="cur:seltype==3" ms-click="selecttype(3)"><i class="iconfont icon-bookmark"></i>会议须知</span>
+                <span ms-class-1="cur:seltype==4" ms-click="selecttype(4)"><i class="iconfont icon-bookmark"></i>服务指南</span>
+                <span ms-class-1="cur:seltype==5" ms-click="selecttype(5)"><i class="iconfont icon-bookmark"></i>住宿安排</span>
+                <span ms-class-1="cur:seltype==6" ms-click="selecttype(6)"><i class="iconfont icon-bookmark"></i>分组情况</span>
+            </div>
         </div>
-        <div>
-            <div class="fg-item"><span>其他信息</span><i id="btnOtherInfo"></i></div>
-            <ul class="clearfix" style="padding:0" id="OtherInfo">
-                <li class="add-item add-widthall">
-                    <label class="add-item-label">服务指南</label>
-                    <div class="add-ic">
-                        <textarea class="szhl_UEEDIT" id="hyservice" umheight="200" ms-duplex="modelData.HYFW"></textarea>
-                    </div>
-                </li>
-                <li class="add-item add-widthall">
-                    <label class="add-item-label">主持人</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.ZCUser" />
-                    </div>
-                </li>
-                <li class="add-item add-widthall">
-                    <label class="add-item-label">纪要人</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.JLUser" />
-                    </div>
-                </li>
-                <li class="add-item add-widthall">
-                    <label class="add-item-label">摄像人</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.SXUser" />
-                    </div>
-                </li>
-                <li class="add-item add-widthall">
-                    <label class="add-item-label">附件</label>
-                    <div class="add-ic">
-                        <input type="text" value="" class="span2 szhl_Upload form-control" ms-duplex="modelData.Files" />
-                    </div>
-                </li>
-            </ul>
+        <div ms-visible="seltype==1">
+            <div>
+                <!--<div class="fg-item"><span>基本信息</span></div>-->
+                <ul class="clearfix" style="display: block;padding:0">
+                    <li class="add-item add-width">
+                        <label>申请人:</label>
+                        <label>{{ComFunJS.convertuser(modelData.FQUser)}}</label>
+                    </li>
+                    <li class="add-item add-width fl-left">
+                        <label class="add-item-label"><i>*</i>会议主题</label>
+                        <div class="add-ic">
+                            <input type="text" autofocus="autofocus" class="form-control szhl_require" ms-duplex="modelData.Title" />
+                        </div>
+                    </li>
+                    <li class="add-item add-width fl-right">
+                        <label class="add-item-label">副标题</label>
+                        <div class="add-ic">
+                            <input type="text" class="form-control" ms-duplex="modelData.SubTitle" />
+                        </div>
+                    </li>
+                    <li class="add-item add-width fl-left">
+                        <label class="add-item-label">标题时间</label>
+                        <div class="add-ic">
+                            <input type="text" class="form-control" ms-duplex="modelData.TitleTime" />
+                        </div>
+                    </li>
+                    <li class="add-item add-width fl-right">
+                        <label class="add-item-label"><i>*</i>起止时间</label>
+                        <div style="display:block;">
+                            <div class="add-ic fl-left" style="width: 45%;">
+                                <input type="text" class="form-control szhl_form_date_time szhl_require" ms-duplex="modelData.StartTime">
+                            </div>
+                            <div class="add-ic" style="float: left; line-height: 30px; width: 10%; text-align: center;">：</div>
+                            <div class="add-ic fl-right" style="width: 45%;">
+                                <input type="text" class="form-control szhl_form_date_time szhl_require" ms-duplex="modelData.EndTime">
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="add-item add-width fl-left">
+                        <label class="add-item-label"><i>*</i>会议室</label>
+                        <div class="add-ic">
+                            <select name="conType" id="conType" ms-duplex="modelData.RoomID" class="form-control szhl_require">
+                                <option ms-repeat-item="CLData" ms-attr-value="item.ID">{{item.Name}}</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li class="add-item add-width fl-right">
+                        <label class="add-item-label"><i>*</i>会议前提醒(分钟)</label>
+                        <div class="add-ic">
+                            <select class="form-control" ms-duplex="modelData.TXSJ">
+                                <option value="-1">不提醒</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                                <option value="60">60</option>
+                                <option value="90">90</option>
+                                <option value="120">120</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li class="add-item add-widthall">
+                        <label class="add-item-label"><i>*</i>参会人</label>
+                        <div class="add-ic">
+                            <input type="text" class="form-control szhl_require szhl_getPeoples" ms-duplex="modelData.CYUser" />
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div>
+                <div class="fg-item"><span>其他信息</span><i id="btnOtherInfo"></i></div>
+                <ul class="clearfix" style="padding:0" id="OtherInfo">
+
+                    <li class="add-item add-widthall">
+                        <label class="add-item-label">主持人</label>
+                        <div class="add-ic">
+                            <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.ZCUser" />
+                        </div>
+                    </li>
+                    <li class="add-item add-widthall">
+                        <label class="add-item-label">纪要人</label>
+                        <div class="add-ic">
+                            <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.JLUser" />
+                        </div>
+                    </li>
+                    <li class="add-item add-widthall">
+                        <label class="add-item-label">摄像人</label>
+                        <div class="add-ic">
+                            <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.SXUser" />
+                        </div>
+                    </li>
+                    <li class="add-item add-widthall">
+                        <label class="add-item-label">附件</label>
+                        <div class="add-ic">
+                            <input type="text" value="" class="span2 szhl_Upload form-control" ms-duplex="modelData.Files" />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div ms-visible="seltype==2">
+            <div>
+                <label class="add-item-label">会议内容/日程安排</label>
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hycontent" umheight="400" ms-duplex="modelData.Details"></textarea>
+                </div>
+            </div>
+        </div>
+        <div ms-visible="seltype==3">
+            <div>
+                <label class="add-item-label">会议须知</label>
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyxuzhi" umheight="400" ms-duplex="modelData.HYXZ"></textarea>
+                </div>
+            </div>
+
+        </div>
+        <div ms-visible="seltype==4">
+            <div>
+                <label class="add-item-label">服务指南</label>
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyservice" umheight="400" ms-duplex="modelData.HYFW"></textarea>
+                </div>
+            </div>
+        </div>
+        <div ms-visible="seltype==5">
+            <div>
+                <label class="add-item-label">住宿安排</label>
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hysit" umheight="400" ms-duplex="modelData.ZSAP"></textarea>
+                </div>
+            </div>
+        </div>
+        <div ms-visible="seltype==6">
+            <div>
+                <label class="add-item-label">分组情况</label>
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hygroup" umheight="400" ms-duplex="modelData.FZQK"></textarea>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -130,6 +161,7 @@
         $id: "HYGL",
         ColumnData: [],
         name: "会议管理",
+        seltype: 1,
         CLData: [],
         TypeId: ComFunJS.getQueryString("typeId"),
         iswf: true,//是否属于流程表单
@@ -181,11 +213,14 @@
             //    })
             //})
         },//初始化
-        modelData: { "ID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "" },
+        modelData: { "ID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "","ZSAP":"","FZQK":"" },
         SaveData: function (callback) {
             $.post("/API/VIEWAPI.ashx?ACTION=HYGL_ADDHYGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
                 return callback.call(this, result);
             });
+        },
+        selecttype: function (type) {
+            tempmodel.seltype = type;
         }
     });
 </script>
