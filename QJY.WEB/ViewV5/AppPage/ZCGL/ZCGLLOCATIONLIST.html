@@ -8,7 +8,6 @@
         <div class="oh" style="margin-bottom:15px;">
             <h5 class="pull-left tr">所属公司：</h5>
             <select name="conBranchs" id="conBranchs" ms-change="SelectBranch(this.value)" class="narrow-select">
-                <option value="">所有</option>
                 <option ms-repeat-item="BranchData" ms-attr-value="item.DeptCode">{{item.DeptName}}</option>
             </select>
         </div>
@@ -112,12 +111,14 @@
 
         //    model.GetTypeData("1");
             tempindex.LoadBranch();
-            tempindex.GetLIST();
+           
         },
         LoadBranch: function () {
-            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLBRANCH&r=' + Math.random(), { }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETTHISUSERBRANCHLIST&r=' + Math.random(), { }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.BranchData = resultData.Result;
+                    tempindex.curBranch = resultData.Result1;
+                    tempindex.GetLIST();
                 }
             })
         },

@@ -189,7 +189,7 @@ namespace QJY.API
         /// </summary>
         public void GETALLGWBYBRANCHCODE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            DataTable dt = new JH_Auth_BranchB().GetDTByCommand("select distinct(UserGW) from JH_Auth_User where branchcode='" + P1 + "' and IsUse ='Y'");
+            DataTable dt = new JH_Auth_BranchB().GetDTByCommand("select distinct(UserGW) from JH_Auth_User where branchcode='" + P1 + "' and  isnull(UserGW,'')<>'' and IsUse ='Y'");
             msg.Result = dt;
         }
         #endregion

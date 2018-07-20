@@ -22,16 +22,17 @@
             }
         },
         LoadBranch: function (bcode) {
-            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLBRANCH&r=' + Math.random(), {}, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETTHISUSERBRANCHLIST&r=' + Math.random(), {}, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempmodel.BranchData = resultData.Result;
+                    tempmodel.modelData.BranchCode = resultData.Result1;
                     if (resultData.Result.length > 0) {
                         if (bcode) {
                             tempmodel.modelData.BranchCode = bcode;
                         }
-                        if (!tempmodel.modelData.BranchCode) {
-                            tempmodel.modelData.BranchCode = resultData.Result[0].DeptCode;
-                        };
+                        //if (!tempmodel.modelData.BranchCode) {
+                        //    tempmodel.modelData.BranchCode = resultData.Result[0].DeptCode;
+                        //};
                     }
                 }
             })
