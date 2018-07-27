@@ -5,7 +5,7 @@
 }
 
 body, html {
-    background: #007457;
+    background: #fff;
     margin: 0;
     padding: 0;
     font-size: 1em;
@@ -13,16 +13,15 @@ body, html {
 
 .hy_wrap {
     margin: 0 auto;
-    margin: 14px 0 0 0;
-    padding: 0 0 30px 0;
+    /*margin: 14px 0 0 0;
+    padding: 0 0 30px 0;*/
     text-align: center;
-    background: url(/View_Mobile/Images/index-bg.png) bottom right no-repeat #fff;
-    background-size: 100%;
-    height: auto;
+    background: url(/View_Mobile/Images/index-bg-3.png) bottom center no-repeat #fff;
+    /*background-size: 100%;
+    height: auto;*/
 }
 
 .invitation {
-    color: #007457;
     height: 14px;
     line-height: 12px;
     padding-top: 1px;
@@ -33,23 +32,30 @@ body, html {
 }
 
 .logo {
-    background: url(/View_Mobile/Images/tobacco-logo2.jpg) top center no-repeat;
-    background-size: 55%;
-    height: 100px;
-    margin: 5px auto;
+    
+    height: 150px;
+    margin: 0px auto;
 }
+    .logo::after {
+        content: "";
+        width:100%;
+        height:150px;
+        display:block;
+        background: url(/View_Mobile/Images/tobacco-logo2.jpg) bottom center no-repeat;
+        background-size: 60%;
+        margin:0 0 0 0;
+    }
 
-.title {
-    font-weight: bold;
-    font-size: 140%;
-    width: 80%;
-    margin: 0 auto;
-    margin-bottom:26px;
-    line-height: 160%;
-}
+    .title {
+        font-weight: bold;
+        font-size: 140%;
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 35px;
+        line-height: 160%;
+    }
 .subtitle
 {
-    color:#fff;
     position:fixed;
     width:100%;
     text-align:center;
@@ -77,11 +83,11 @@ body, html {
     margin: 55px auto;
 }
     .gobutton span {
-        color: #fff;
-        border: solid 1px #fff;
+        color: #000;
+        border: solid 1px #000;
         display: inline;
         text-decoration: none;
-        font-weight:bold;
+        font-weight: bold;
         border-radius: 3px;
         width: 27%;
         margin: 0 10px;
@@ -90,8 +96,8 @@ body, html {
     }
 
 .gobutton2 span {
-    color: #fff;
-    border: solid 1px #fff;
+    color: #000;
+    border: solid 1px #000;
     display: block;
     font-weight: bold;
     text-decoration: none;
