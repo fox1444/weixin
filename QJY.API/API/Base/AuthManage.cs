@@ -468,11 +468,6 @@ namespace QJY.API
         /// <summary>
         /// 根据用户名获取用户信息
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void GETUSERBYUSERNAME(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             //如果获取当前用户信息，直接返回，否则按用户名查找
@@ -501,11 +496,6 @@ namespace QJY.API
         /// <summary>
         /// 根据用手机号获取用户信息
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void GETUSERBYPHONENUMBER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             if (P1 != "")
@@ -542,11 +532,6 @@ namespace QJY.API
         /// <summary>
         /// 根据部门编号获取部门人员
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="strUserName"></param>
         public void GETUSERBYCODENEW(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int deptCode = 0;
@@ -558,7 +543,7 @@ namespace QJY.API
             msg.Result = dtUser;
         }
         /// <summary>
-        /// 根据用户名字符串获取人员列表
+        /// 根据用户名字符串获取人员列表，按用户真实姓名排序
         /// </summary>
         public void GETUSERBYUSERNAMES(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
@@ -566,13 +551,16 @@ namespace QJY.API
             msg.Result = dtUser;
         }
         /// <summary>
+        /// 根据用户名字符串获取人员部分信息列表，按公司、部门排序
+        /// </summary>
+        public void GETSMALLUSERBYUSERNAMES(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            DataTable dtUsers = new JH_Auth_UserB().GetDTByCommand(" SELECT u.UserName,u.UserRealName,u.mobphone, u.UserGW, u.zhiwu,b.DeptName, b.DeptRoot, u.BranchCode FROM JH_Auth_User u left join JH_Auth_Branch b on u.BranchCode = b.DeptCode where userName in (select items from dbo.split('" + P1 + "', ',')) order by b.DeptShort DESC, u.UserOrder, u.UserRealName");
+            msg.Result = dtUsers;
+        }
+        /// <summary>
         /// 根据部门编号获取部门人员列表分页
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="strUserName"></param>
         public void GETUSERBYCODENEW_PAGE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int deptCode = 0;
@@ -617,11 +605,6 @@ namespace QJY.API
         /// <summary>
         /// 根据部门编号获取可用人员
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="strUserName"></param>
         public void GETYUSERBYCODE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int deptCode = 0;
@@ -635,11 +618,6 @@ namespace QJY.API
         /// <summary>
         /// 根据角色获取用户列表
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void GETUSERBYROLECODE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int roleCode = int.Parse(P1);
@@ -1262,7 +1240,9 @@ namespace QJY.API
                 //}
             }
         }
-
+        /// <summary>
+        /// 所有人员信息
+        /// </summary>
         public void WXINITALLUSER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             DataTable dtUsers = new JH_Auth_UserB().GetDTByCommand(" SELECT u.UserName,u.UserRealName,u.mobphone, u.UserGW, u.zhiwu,b.DeptName, b.DeptRoot, u.BranchCode FROM JH_Auth_User u left join JH_Auth_Branch b on u.BranchCode = b.DeptCode order by b.DeptShort DESC, u.UserOrder, u.UserRealName");

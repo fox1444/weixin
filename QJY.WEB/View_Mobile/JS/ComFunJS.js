@@ -1375,7 +1375,6 @@ var ComFunJS = {
                         }
                     }
                 })
-
             });
         }
 
@@ -1384,12 +1383,10 @@ var ComFunJS = {
 
     convusers_branchuser: function (str, branchcode) {
         var username = '';
-
         if (str) {
             var users = JSON.parse(window.localStorage.getItem("alluserinfo"));
             $(users).each(function (index, ele) {
                 $(str.split(',')).each(function (inx, el) {
-
                     if (ele.UserName == el && ele.BranchCode == branchcode) {
                         username += '<div class="list_child_node"><span class="child_title">' + ele.UserRealName + '</span>';
                         username += '<span class="child_ext" >';
@@ -1399,7 +1396,6 @@ var ComFunJS = {
                         username += ele.zhiwu + '</span></div> ';
                     }
                 })
-
             });
         }
         return username;
