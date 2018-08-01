@@ -37,7 +37,6 @@ namespace QJY.Data
         public string Status { get; set; }
         public string CRUser { get; set; }
         public Nullable<System.DateTime> CRDate { get; set; }
-        public int intProcessStanceid { get; set; }
         public Nullable<int> IsDel { get; set; }
         public string DelUser { get; set; }
         public Nullable<System.DateTime> DelDate { get; set; }
@@ -47,5 +46,6 @@ namespace QJY.Data
         public string TitleTime { get; set; }
         public string ZSAP { get; set; }
         public string FZQK { get; set; }
+        public Nullable<int> intProcessStanceid { get; set; }
     }
 }

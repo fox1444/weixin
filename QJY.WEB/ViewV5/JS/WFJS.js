@@ -177,7 +177,6 @@
                     });
                     //将新的表单数据存到草稿中去
                     pmodel.SaveDraft(result1.Result.ID);
-
                 }
                 else {
                     if (pmodel.isPC) {

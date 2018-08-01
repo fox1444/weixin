@@ -989,7 +989,6 @@
           <Property Name="Status" Type="varchar" MaxLength="50" />
           <Property Name="CRUser" Type="varchar" MaxLength="50" />
           <Property Name="CRDate" Type="datetime" />
-          <Property Name="intProcessStanceid" Type="int" Nullable="false" />
           <Property Name="IsDel" Type="int" />
           <Property Name="DelUser" Type="varchar" MaxLength="50" />
           <Property Name="DelDate" Type="datetime" />
@@ -999,6 +998,7 @@
           <Property Name="TitleTime" Type="varchar(max)" />
           <Property Name="ZSAP" Type="varchar(max)" />
           <Property Name="FZQK" Type="varchar(max)" />
+          <Property Name="intProcessStanceid" Type="int" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_QD">
           <Key>
@@ -1957,7 +1957,6 @@
           <EntitySet Name="SZHL_CRM_GJJL" EntityType="QJY_SaaSModel.SZHL_CRM_GJJL" />
           <EntitySet Name="SZHL_CRM_HTGL" EntityType="QJY_SaaSModel.SZHL_CRM_HTGL" />
           <EntitySet Name="SZHL_CRM_KHGL" EntityType="QJY_SaaSModel.SZHL_CRM_KHGL" />
-          <EntitySet Name="SZHL_HYGL" EntityType="QJY_SaaSModel.SZHL_HYGL" />
           <EntitySet Name="SZHL_HYGL_QD" EntityType="QJY_SaaSModel.SZHL_HYGL_QD" />
           <EntitySet Name="SZHL_HYGL_QR" EntityType="QJY_SaaSModel.SZHL_HYGL_QR" />
           <EntitySet Name="SZHL_HYGL_ROOM" EntityType="QJY_SaaSModel.SZHL_HYGL_ROOM" />
@@ -1975,6 +1974,7 @@
           <EntitySet Name="SZHL_ZCGL_Location" EntityType="QJY_SaaSModel.SZHL_ZCGL_Location" />
           <EntitySet Name="SZHL_ZCGL_LifeCycle" EntityType="QJY_SaaSModel.SZHL_ZCGL_LifeCycle" />
           <EntitySet Name="SZHL_ZCGL" EntityType="QJY_SaaSModel.SZHL_ZCGL" />
+          <EntitySet Name="SZHL_HYGL" EntityType="QJY_SaaSModel.SZHL_HYGL" />
         </EntityContainer>
         <EntityType Name="FT_File">
           <Key>
@@ -3424,44 +3424,6 @@
           <Property Name="Attach1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Attach2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="SZHL_HYGL">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ComId" Type="Int32" />
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoomID" Type="Int32" />
-          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="StartTime" Type="DateTime" Precision="3" />
-          <Property Name="EndTime" Type="DateTime" Precision="3" />
-          <Property Name="CYUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="FQUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="JLUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ZCUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SXUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Desp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Files" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IsTX" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TXSJ" Type="Int32" />
-          <Property Name="HYJL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="HYFW" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="JLFiles" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CRDate" Type="DateTime" Precision="3" />
-          <Property Name="intProcessStanceid" Type="Int32" Nullable="false" />
-          <Property Name="IsDel" Type="Int32" />
-          <Property Name="DelUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DelDate" Type="DateTime" Precision="3" />
-          <Property Name="HYXZ" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ZCB" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="SubTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="TitleTime" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ZSAP" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="FZQK" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="SZHL_HYGL_QD">
           <Key>
             <PropertyRef Name="ID" />
@@ -3760,6 +3722,44 @@
           <Property Name="Situation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Verify" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IndexID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SZHL_HYGL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoomID" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="CYUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FQUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="JLUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ZCUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SXUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Desp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Files" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsTX" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TXSJ" Type="Int32" />
+          <Property Name="HYJL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="HYFW" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="JLFiles" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDel" Type="Int32" />
+          <Property Name="DelUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DelDate" Type="DateTime" Precision="3" />
+          <Property Name="HYXZ" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ZCB" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SubTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TitleTime" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ZSAP" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FZQK" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="intProcessStanceid" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5286,45 +5286,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SZHL_HYGL">
-            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL">
-              <MappingFragment StoreEntitySet="SZHL_HYGL">
-                <ScalarProperty Name="FZQK" ColumnName="FZQK" />
-                <ScalarProperty Name="ZSAP" ColumnName="ZSAP" />
-                <ScalarProperty Name="TitleTime" ColumnName="TitleTime" />
-                <ScalarProperty Name="SubTitle" ColumnName="SubTitle" />
-                <ScalarProperty Name="ZCB" ColumnName="ZCB" />
-                <ScalarProperty Name="HYXZ" ColumnName="HYXZ" />
-                <ScalarProperty Name="DelDate" ColumnName="DelDate" />
-                <ScalarProperty Name="DelUser" ColumnName="DelUser" />
-                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
-                <ScalarProperty Name="intProcessStanceid" ColumnName="intProcessStanceid" />
-                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
-                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="JLFiles" ColumnName="JLFiles" />
-                <ScalarProperty Name="HYFW" ColumnName="HYFW" />
-                <ScalarProperty Name="HYJL" ColumnName="HYJL" />
-                <ScalarProperty Name="TXSJ" ColumnName="TXSJ" />
-                <ScalarProperty Name="IsTX" ColumnName="IsTX" />
-                <ScalarProperty Name="Files" ColumnName="Files" />
-                <ScalarProperty Name="Desp" ColumnName="Desp" />
-                <ScalarProperty Name="SXUser" ColumnName="SXUser" />
-                <ScalarProperty Name="ZCUser" ColumnName="ZCUser" />
-                <ScalarProperty Name="JLUser" ColumnName="JLUser" />
-                <ScalarProperty Name="FQUser" ColumnName="FQUser" />
-                <ScalarProperty Name="CYUser" ColumnName="CYUser" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="Details" ColumnName="Details" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ComId" ColumnName="ComId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SZHL_HYGL_QD">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL_QD">
               <MappingFragment StoreEntitySet="SZHL_HYGL_QD">
@@ -5635,6 +5596,45 @@
                 <ScalarProperty Name="EPCode" ColumnName="EPCode" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SZHL_HYGL">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL">
+              <MappingFragment StoreEntitySet="SZHL_HYGL">
+                <ScalarProperty Name="intProcessStanceid" ColumnName="intProcessStanceid" />
+                <ScalarProperty Name="FZQK" ColumnName="FZQK" />
+                <ScalarProperty Name="ZSAP" ColumnName="ZSAP" />
+                <ScalarProperty Name="TitleTime" ColumnName="TitleTime" />
+                <ScalarProperty Name="SubTitle" ColumnName="SubTitle" />
+                <ScalarProperty Name="ZCB" ColumnName="ZCB" />
+                <ScalarProperty Name="HYXZ" ColumnName="HYXZ" />
+                <ScalarProperty Name="DelDate" ColumnName="DelDate" />
+                <ScalarProperty Name="DelUser" ColumnName="DelUser" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="JLFiles" ColumnName="JLFiles" />
+                <ScalarProperty Name="HYFW" ColumnName="HYFW" />
+                <ScalarProperty Name="HYJL" ColumnName="HYJL" />
+                <ScalarProperty Name="TXSJ" ColumnName="TXSJ" />
+                <ScalarProperty Name="IsTX" ColumnName="IsTX" />
+                <ScalarProperty Name="Files" ColumnName="Files" />
+                <ScalarProperty Name="Desp" ColumnName="Desp" />
+                <ScalarProperty Name="SXUser" ColumnName="SXUser" />
+                <ScalarProperty Name="ZCUser" ColumnName="ZCUser" />
+                <ScalarProperty Name="JLUser" ColumnName="JLUser" />
+                <ScalarProperty Name="FQUser" ColumnName="FQUser" />
+                <ScalarProperty Name="CYUser" ColumnName="CYUser" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ComId" ColumnName="ComId" />
               </MappingFragment>

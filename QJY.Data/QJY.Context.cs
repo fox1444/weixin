@@ -96,7 +96,6 @@ namespace QJY.Data
         public virtual DbSet<SZHL_CRM_GJJL> SZHL_CRM_GJJL { get; set; }
         public virtual DbSet<SZHL_CRM_HTGL> SZHL_CRM_HTGL { get; set; }
         public virtual DbSet<SZHL_CRM_KHGL> SZHL_CRM_KHGL { get; set; }
-        public virtual DbSet<SZHL_HYGL> SZHL_HYGL { get; set; }
         public virtual DbSet<SZHL_HYGL_QD> SZHL_HYGL_QD { get; set; }
         public virtual DbSet<SZHL_HYGL_QR> SZHL_HYGL_QR { get; set; }
         public virtual DbSet<SZHL_HYGL_ROOM> SZHL_HYGL_ROOM { get; set; }
@@ -114,5 +113,6 @@ namespace QJY.Data
         public virtual DbSet<SZHL_ZCGL_Location> SZHL_ZCGL_Location { get; set; }
         public virtual DbSet<SZHL_ZCGL_LifeCycle> SZHL_ZCGL_LifeCycle { get; set; }
         public virtual DbSet<SZHL_ZCGL> SZHL_ZCGL { get; set; }
+        public virtual DbSet<SZHL_HYGL> SZHL_HYGL { get; set; }
     }
 }

@@ -282,7 +282,7 @@ namespace QJY.API
             string userName = UserInfo.User.UserName;
             string strWhere = " hy.IsDel=0 and hy.ComId=" + UserInfo.User.ComId;
 
-            string leibie = context.Request.QueryString["lb"] ?? "";
+            string leibie = context.Request["lb"] ?? "";
             if (leibie != "")
             {
                 strWhere += string.Format(" And hy.RoomID='{0}' ", leibie);
@@ -866,7 +866,7 @@ namespace QJY.API
             //new SZHL_HYGLB().Delete(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
         }
         #endregion
-    
+
         #region 会议日历视图
         /// <summary>
         /// 会议日历视图
@@ -997,7 +997,7 @@ namespace QJY.API
                 {
                     //发送消息
                     string content = user.UserRealName + "邀请您参加会议：" + model.Title;
-                    new JH_Auth_User_CenterB().SendMsg(UserInfo, "HYGL", content, model.ID.ToString(), jsr, "B", model.intProcessStanceid, tx.ISCS);
+                    new JH_Auth_User_CenterB().SendMsg(UserInfo, "HYGL", content, model.ID.ToString(), jsr, "B", model.intProcessStanceid.Value, tx.ISCS);
 
                     WXHelp wx = new WXHelp(UserInfo.QYinfo);
                     wx.SendTH(al, "HYGL", "A", jsr);
@@ -1102,7 +1102,7 @@ namespace QJY.API
 
                 ////发送消息
                 string content = ar0.Description;
-                new JH_Auth_User_CenterB().SendMsg(UserInfo, "HYGL", content, model.ID.ToString(), jsr, "B", model.intProcessStanceid, tx.ISCS);
+                new JH_Auth_User_CenterB().SendMsg(UserInfo, "HYGL", content, model.ID.ToString(), jsr, "B", model.intProcessStanceid.Value, tx.ISCS);
                 if (!string.IsNullOrEmpty(jsr))
                 {
                     WXHelp wx = new WXHelp(UserInfo.QYinfo);

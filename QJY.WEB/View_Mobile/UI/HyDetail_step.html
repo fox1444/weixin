@@ -215,7 +215,7 @@
             LoadAllUser: function () {
                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETSMALLUSERBYUSERNAMES&r=" + Math.random(), { P1: tempmodel.modelData.CYUser }, function (r) {
                     if (r.ErrorMsg == "") {
-                        tempmodel.CYUserStr = tempmodel.convusers_branch(tempmodel.modelData.CYUser, r.Result);
+                        tempmodel.CYUserStr = ComFunJS.convusers_branch(tempmodel.modelData.CYUser, r.Result);
                     }
                 })
             },
@@ -290,45 +290,7 @@
                 }
             },
             modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "" },
-            convusers_branch: function (str, users) {
-                var branchtmp = '';
-                var branchcodes = '';
-                if (str) {
-                    $(users).each(function (index, ele) {
-                        $(str.split(',')).each(function (inx, el) {
-                            if (ele.UserName == el) {
-                                if (branchcodes.indexOf(ele.BranchCode + ',') == -1) {
-
-                                    branchtmp += '<div class="list_parent_node" onclick="ComFunJS.showchild(this)"><span class="parent_title">' + ele.DeptName + '</span>';
-                                    branchtmp += '<div class="list_child_block">' + tempmodel.convusers_branchuser(str, ele.BranchCode, users) + '</div>';
-                                    branchtmp += '</div>';
-                                    branchcodes += ele.BranchCode + ',';
-                                }
-                            }
-                        })
-                    });
-                }
-
-                return branchtmp;
-            },//获取部门
-            convusers_branchuser: function (str, branchcode, users) {
-                var username = '';
-                if (str) {
-                    $(users).each(function (index, ele) {
-                        $(str.split(',')).each(function (inx, el) {
-                            if (ele.UserName == el && ele.BranchCode == branchcode) {
-                                username += '<div class="list_child_node"><span class="child_title">' + ele.UserRealName + '</span>';
-                                username += '<span class="child_ext" >';
-                                if (ele.DeptRoot == "-1") {
-                                    username += ele.UserGW.replace('领导班子', '');
-                                }
-                                username += ele.zhiwu + '</span></div> ';
-                            }
-                        })
-                    });
-                }
-                return username;
-            }
+            
         });
 
         avalon.ready(function () {

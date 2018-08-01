@@ -268,7 +268,6 @@
                 code = pcode + "_" + code;
             }
             ComFunJS.winviewform("/ViewV5/AppPage/APP_ADD_WF.html?FormCode=" + code + "&ID=" + ID + "&r=" + Math.random(), Name, "1000");
-
         }
     },//添加表格
 

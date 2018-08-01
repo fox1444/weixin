@@ -76,7 +76,6 @@
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_CRM_GJJL" Width="1.5" PointX="19.375" PointY="28.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_CRM_HTGL" Width="1.5" PointX="29.375" PointY="0.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_CRM_KHGL" Width="1.5" PointX="29.375" PointY="6.75" />
-        <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_HYGL" Width="1.5" PointX="9.375" PointY="29.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_HYGL_QD" Width="1.5" PointX="11.375" PointY="29.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_HYGL_QR" Width="1.5" PointX="29.375" PointY="13.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_HYGL_ROOM" Width="1.5" PointX="13.375" PointY="29.75" />
@@ -94,6 +93,7 @@
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_ZCGL_Location" Width="1.5" PointX="31.375" PointY="10.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_ZCGL_LifeCycle" Width="1.5" PointX="31.375" PointY="0.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_ZCGL" Width="1.5" PointX="31.375" PointY="14.75" />
+        <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_HYGL" Width="1.5" PointX="31.375" PointY="22.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

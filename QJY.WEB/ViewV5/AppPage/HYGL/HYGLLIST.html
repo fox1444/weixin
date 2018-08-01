@@ -136,6 +136,7 @@
                 { "ColName": "HYFW", "ColText": "会议服务", "width": "5%", "IsSel": false, "format": "text" }
             ]);
             //类型数据
+            model.search.seartype = 0;
             tempindex.GetHYS();
             tempindex.GetLIST();
         },
@@ -143,7 +144,6 @@
             $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETKYHYSLIST', {}, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.TypeData = resultData.Result;
-                    tempindex.curHYS = "";
                 }
             })
         },

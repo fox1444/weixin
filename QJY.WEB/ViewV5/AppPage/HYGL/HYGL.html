@@ -1,13 +1,14 @@
 ﻿<div class="form-horizontal" ms-controller="HYGL">
-    <div style="margin: 0 80px;">
+    <div style="margin: 0 20px;">
         <div class="detail-nav">
             <div class="tab-kh nav-bt">
                 <span ms-class-1="cur:seltype==1" ms-click="selecttype(1)"><i class="iconfont icon-bookmark"></i>基本信息</span>
-                <span ms-class-1="cur:seltype==2" ms-click="selecttype(2)"><i class="iconfont icon-bookmark"></i>日程安排</span>
-                <span ms-class-1="cur:seltype==3" ms-click="selecttype(3)"><i class="iconfont icon-bookmark"></i>会议须知</span>
-                <span ms-class-1="cur:seltype==4" ms-click="selecttype(4)"><i class="iconfont icon-bookmark"></i>服务指南</span>
-                <span ms-class-1="cur:seltype==5" ms-click="selecttype(5)"><i class="iconfont icon-bookmark"></i>住宿安排</span>
-                <span ms-class-1="cur:seltype==6" ms-click="selecttype(6)"><i class="iconfont icon-bookmark"></i>分组情况</span>
+                <span ms-class-1="cur:seltype==2" ms-click="selecttype(2)"><i class="iconfont icon-bookmark"></i>外部参会人</span>
+                <span ms-class-1="cur:seltype==3" ms-click="selecttype(3)"><i class="iconfont icon-bookmark"></i>日程安排</span>
+                <span ms-class-1="cur:seltype==4" ms-click="selecttype(4)"><i class="iconfont icon-bookmark"></i>会议须知</span>
+                <span ms-class-1="cur:seltype==5" ms-click="selecttype(5)"><i class="iconfont icon-bookmark"></i>服务指南</span>
+                <span ms-class-1="cur:seltype==6" ms-click="selecttype(6)"><i class="iconfont icon-bookmark"></i>住宿安排</span>
+                <span ms-class-1="cur:seltype==7" ms-click="selecttype(7)"><i class="iconfont icon-bookmark"></i>分组情况</span>
             </div>
         </div>
         <div ms-visible="seltype==1">
@@ -74,9 +75,9 @@
                         </div>
                     </li>
                     <li class="add-item add-widthall">
-                        <label class="add-item-label"><i>*</i>参会人</label>
+                        <label class="add-item-label">企业内部参会人</label>
                         <div class="add-ic">
-                            <input type="text" class="form-control szhl_require szhl_getPeoples" ms-duplex="modelData.CYUser" />
+                            <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.CYUser" />
                         </div>
                     </li>
 
@@ -85,14 +86,13 @@
             <div>
                 <div class="fg-item"><span>其他信息</span><i id="btnOtherInfo"></i></div>
                 <ul class="clearfix" style="padding:0" id="OtherInfo">
-
                     <li class="add-item add-widthall">
                         <label class="add-item-label">主持人</label>
                         <div class="add-ic">
                             <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.ZCUser" />
                         </div>
                     </li>
-                    <li class="add-item add-widthall">
+                    <!--<li class="add-item add-widthall">
                         <label class="add-item-label">纪要人</label>
                         <div class="add-ic">
                             <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.JLUser" />
@@ -103,7 +103,7 @@
                         <div class="add-ic">
                             <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.SXUser" />
                         </div>
-                    </li>
+                    </li>-->
                     <li class="add-item add-widthall">
                         <label class="add-item-label">附件</label>
                         <div class="add-ic">
@@ -114,14 +114,16 @@
             </div>
         </div>
         <div ms-visible="seltype==2">
+        </div>
+        <div ms-visible="seltype==3">
             <div>
-                <label class="add-item-label">会议内容/日程安排</label>
+                <label class="add-item-label">日程安排</label>
                 <div class="add-ic">
                     <textarea class="szhl_UEEDIT" id="hycontent" umheight="400" ms-duplex="modelData.Details"></textarea>
                 </div>
             </div>
         </div>
-        <div ms-visible="seltype==3">
+        <div ms-visible="seltype==4">
             <div>
                 <label class="add-item-label">会议须知</label>
                 <div class="add-ic">
@@ -130,7 +132,7 @@
             </div>
 
         </div>
-        <div ms-visible="seltype==4">
+        <div ms-visible="seltype==5">
             <div>
                 <label class="add-item-label">服务指南</label>
                 <div class="add-ic">
@@ -138,7 +140,7 @@
                 </div>
             </div>
         </div>
-        <div ms-visible="seltype==5">
+        <div ms-visible="seltype==6">
             <div>
                 <label class="add-item-label">住宿安排</label>
                 <div class="add-ic">
@@ -146,7 +148,7 @@
                 </div>
             </div>
         </div>
-        <div ms-visible="seltype==6">
+        <div ms-visible="seltype==7">
             <div>
                 <label class="add-item-label">分组情况</label>
                 <div class="add-ic">
@@ -191,29 +193,8 @@
                 pmodel.isDraft = true;
                 ComFunJS.initForm();
             }
-
-            //编辑座次表
-            //$('.btn-seat').bind('click', function () {
-            //    var $btnSel = $(this);
-            //    var $roomuserData = $(".roomuserData");
-            //    top.$("body").data("checkvalue", tempmodel.modelData.CYUser);
-            //    top.$("body").data("hyid", tempmodel.modelData.ID);
-            //    top.$("body").data("roomwidth", tempmodel.modelData.RoomWidth);
-            //    top.$("body").data("roomlength", tempmodel.modelData.RoomLength);
-            //    top.$("body").data("roomuserData", $(".roomuserData").val());
-            //    top.ComFunJS.winbtnwin("/ViewV5/AppPage/SEAT/SEAT.html?issignle=", "座次表", 900, 470, {}, function (layero, index) {
-            //        var frameid = $("iframe", $(layero)).attr('id');
-            //        var zcb = ComFunJS.isIE() ? top.window.frames[frameid].getZCB() : top.window.frames[frameid].contentWindow.getZCB();
-
-            //        $roomuserData.data("zcb", zcb).val(JSON.stringify(zcb));
-            //        $btnSel.parent().find(".label-info").remove();
-            //        var $peo = zcb;
-
-            //        layero.close(index);
-            //    })
-            //})
         },//初始化
-        modelData: { "ID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "","ZSAP":"","FZQK":"" },
+        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "" },
         SaveData: function (callback) {
             $.post("/API/VIEWAPI.ashx?ACTION=HYGL_ADDHYGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
                 return callback.call(this, result);

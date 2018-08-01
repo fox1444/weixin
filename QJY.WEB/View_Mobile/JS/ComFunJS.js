@@ -1351,18 +1351,59 @@ var ComFunJS = {
             }
         }
     },
-    convusers_branch: function (str) {
+    //convusers_branch: function (str) {
+    //    var branchtmp = '';
+    //    var branchcodes = '';
+    //    if (str) {
+    //        var users = JSON.parse(window.localStorage.getItem("alluserinfo"));
+    //        $(users).each(function (index, ele) {
+    //            $(str.split(',')).each(function (inx, el) {
+    //                if (ele.UserName == el) {
+    //                    if (branchcodes.indexOf(ele.BranchCode + ',') == -1) {
+
+    //                        branchtmp += '<div class="list_parent_node" onclick="ComFunJS.showchild(this)"><span class="parent_title">' + ele.DeptName + '</span>';
+    //                        branchtmp += '<div class="list_child_block">' + ComFunJS.convusers_branchuser(str, ele.BranchCode) + '</div>';
+    //                        branchtmp += '</div>';
+    //                        branchcodes += ele.BranchCode + ',';
+    //                    }
+    //                }
+    //            })
+    //        });
+    //    }
+
+    //    return branchtmp;
+    //},//获取部门
+    //convusers_branchuser: function (str, branchcode) {
+    //    var username = '';
+    //    if (str) {
+    //        var users = JSON.parse(window.localStorage.getItem("alluserinfo"));
+    //        $(users).each(function (index, ele) {
+    //            $(str.split(',')).each(function (inx, el) {
+    //                if (ele.UserName == el && ele.BranchCode == branchcode) {
+    //                    username += '<div class="list_child_node"><span class="child_title">' + ele.UserRealName + '</span>';
+    //                    username += '<span class="child_ext" >';
+    //                    if (ele.DeptRoot == "-1") {
+    //                        username += ele.UserGW.replace('领导班子','');
+    //                    }
+    //                    username += ele.zhiwu + '</span></div> ';
+    //                }
+    //            })
+    //        });
+    //    }
+    //    return username;
+    //},//获取部门员工
+
+    convusers_branch: function (str, users) {
         var branchtmp = '';
         var branchcodes = '';
         if (str) {
-            var users = JSON.parse(window.localStorage.getItem("alluserinfo"));
             $(users).each(function (index, ele) {
                 $(str.split(',')).each(function (inx, el) {
                     if (ele.UserName == el) {
                         if (branchcodes.indexOf(ele.BranchCode + ',') == -1) {
 
                             branchtmp += '<div class="list_parent_node" onclick="ComFunJS.showchild(this)"><span class="parent_title">' + ele.DeptName + '</span>';
-                            branchtmp += '<div class="list_child_block">' + ComFunJS.convusers_branchuser(str, ele.BranchCode) + '</div>';
+                            branchtmp += '<div class="list_child_block">' + ComFunJS.convusers_branchuser(str, ele.BranchCode, users) + '</div>';
                             branchtmp += '</div>';
                             branchcodes += ele.BranchCode + ',';
                         }
@@ -1370,21 +1411,18 @@ var ComFunJS = {
                 })
             });
         }
-
         return branchtmp;
-    },//获取部门
-
-    convusers_branchuser: function (str, branchcode) {
+    },//前台微信页面获取部门和员工
+    convusers_branchuser: function (str, branchcode, users) {
         var username = '';
         if (str) {
-            var users = JSON.parse(window.localStorage.getItem("alluserinfo"));
             $(users).each(function (index, ele) {
                 $(str.split(',')).each(function (inx, el) {
                     if (ele.UserName == el && ele.BranchCode == branchcode) {
                         username += '<div class="list_child_node"><span class="child_title">' + ele.UserRealName + '</span>';
                         username += '<span class="child_ext" >';
                         if (ele.DeptRoot == "-1") {
-                            username += ele.UserGW.replace('领导班子','');
+                            username += ele.UserGW.replace('领导班子', '');
                         }
                         username += ele.zhiwu + '</span></div> ';
                     }
@@ -1392,7 +1430,7 @@ var ComFunJS = {
             });
         }
         return username;
-    },//获取部门员工
+    },
     convusers: function (str) {
         var username = '';
         if (str) {
