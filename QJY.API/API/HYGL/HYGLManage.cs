@@ -45,7 +45,7 @@ namespace QJY.API
             {
                 strWhere += string.Format(" And  cc.IsDMT ='{0}'", P2);
             }
-            string TYY = context.Request["lb"] ?? "";
+            string TYY = context.Request.QueryString["lb"] ?? "";
             if (TYY != "")
             {
                 strWhere += string.Format(" And  cc.IsTYY ='{0}'", TYY);
@@ -282,12 +282,12 @@ namespace QJY.API
             string userName = UserInfo.User.UserName;
             string strWhere = " hy.IsDel=0 and hy.ComId=" + UserInfo.User.ComId;
 
-            string leibie = context.Request["lb"] ?? "";
+            string leibie = context.Request.QueryString["lb"] ?? "";
             if (leibie != "")
             {
                 strWhere += string.Format(" And hy.RoomID='{0}' ", leibie);
             }
-            string strContent = context.Request["Content"] ?? "";
+            string strContent = context.Request.QueryString["Content"] ?? "";
             strContent = strContent.TrimEnd();
             if (strContent != "")
             {

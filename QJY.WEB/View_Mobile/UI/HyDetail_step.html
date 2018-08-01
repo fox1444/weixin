@@ -142,7 +142,6 @@
             name: "会议管理",
             iswf: true,//是否属于流程表单
             tpData: [],
-            CYallUser:[],
             CYUserStr:"",
             currentuser: { "ID": "", "UserRealName": "", "mobphone": "" },//登录用户
             ZCUserNames: { "ID": "", "UserRealName": "", "UserName": "" },//主持人
@@ -197,9 +196,10 @@
                             tempmodel.modelData = resultData.Result[0];
                             tempmodel.tpData = resultData.Result1;
                             tempmodel.LoadNumber();
-                            tempmodel.LoadAllUser();
-                            tempmodel.LoadRoom();
-                            setTimeout(" ComFunJS.initForm()", 500);                            
+                            tempmodel.LoadAllUser();//参会人
+                            tempmodel.LoadRoom();//座次表
+                            ComFunJS.viewimg_for_view(tempmodel.tpData, '1');//文件下载
+                            //setTimeout(" ComFunJS.initForm()", 500);                            
                         }
                     })
                 }
@@ -215,8 +215,7 @@
             LoadAllUser: function () {
                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETSMALLUSERBYUSERNAMES&r=" + Math.random(), { P1: tempmodel.modelData.CYUser }, function (r) {
                     if (r.ErrorMsg == "") {
-                        tempmodel.CYallUser = r.Result;
-                        tempmodel.CYUserStr = tempmodel.convusers_branch(tempmodel.modelData.CYUser);
+                        tempmodel.CYUserStr = tempmodel.convusers_branch(tempmodel.modelData.CYUser, r.Result);
                     }
                 })
             },
@@ -226,7 +225,6 @@
                     $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETUSERBYPHONENUMBER&r=" + Math.random(), { P1: pn }, function (r) {
                         if (r.ErrorMsg == "") {
                             tempmodel.currentuser = r.Result;
-                            ComFunJS.viewimg_for_view(tempmodel.tpData, '1');
                             tempmodel.SetRoom();
                         }
                     });
@@ -292,18 +290,17 @@
                 }
             },
             modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "" },
-            convusers_branch: function (str) {
+            convusers_branch: function (str, users) {
                 var branchtmp = '';
                 var branchcodes = '';
                 if (str) {
-                    var users = tempmodel.CYallUser;
                     $(users).each(function (index, ele) {
                         $(str.split(',')).each(function (inx, el) {
                             if (ele.UserName == el) {
                                 if (branchcodes.indexOf(ele.BranchCode + ',') == -1) {
 
                                     branchtmp += '<div class="list_parent_node" onclick="ComFunJS.showchild(this)"><span class="parent_title">' + ele.DeptName + '</span>';
-                                    branchtmp += '<div class="list_child_block">' + tempmodel.convusers_branchuser(str, ele.BranchCode) + '</div>';
+                                    branchtmp += '<div class="list_child_block">' + tempmodel.convusers_branchuser(str, ele.BranchCode, users) + '</div>';
                                     branchtmp += '</div>';
                                     branchcodes += ele.BranchCode + ',';
                                 }
@@ -314,10 +311,9 @@
 
                 return branchtmp;
             },//获取部门
-            convusers_branchuser: function (str, branchcode) {
+            convusers_branchuser: function (str, branchcode, users) {
                 var username = '';
                 if (str) {
-                    var users = tempmodel.CYallUser;
                     $(users).each(function (index, ele) {
                         $(str.split(',')).each(function (inx, el) {
                             if (ele.UserName == el && ele.BranchCode == branchcode) {

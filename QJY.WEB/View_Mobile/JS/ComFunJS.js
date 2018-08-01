@@ -1011,29 +1011,22 @@ var ComFunJS = {
 
             html = '<li itemid="' + ele.ID + '" class="" >';
             html += '<div class="" ms-if="!ComFunJS.isPic(file.FileExtendName)"><span>' + ele.Name + "</span>";
-
-
             html += '<a href="' + ComFunJS.yuming + '/Tools/DownFile.aspx?fileId=' + ele.ID + '&szhlcode=' + ComFunJS.getCookie('szhlcode') + '"  class="down-icon">';
             //html += '<a href="/Upload/files/' + ele.Name + '.doc"  class="down-icon">';
             //html += '<img class="" onclick="javascript:ComFunJS.getfile(\'' + ele.YLUrl + '\')" src="/ViewV5/images/qywd/' + ele.FileExtendName + '.png"/>';
             //html += '<span  onclick="javascript:ComFunJS.getfile(\'' + ele.YLUrl + '\')" ></span>';
             html += '</a>';
-
             html += '</div>';
             html += '</li>';
-
             $html1 = $(html);
             $html1.appendTo($("#imglist1"));
-
-
             icount++;
         })
         if (icount == 0) {
             html = '<div style="color:#fff;">会议资料将会在会议结束上传。</div>';
             $(".viewimg_for_view").html(html);
         }
-
-    },
+    },//会议页面下载附件
     viewimg: function (tpdata, isDownload) {
         var zhtml = '<ul class="filelist" id="imglist1">'
             + '        </ul>'
