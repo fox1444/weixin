@@ -577,10 +577,10 @@ namespace QJY.API
         {
             int Id = int.Parse(P1);
             string strWhere = " hy.IsDel=0 and hy.ComId=" + UserInfo.User.ComId + " and hy.ID=" + Id;
-            string colNme = @"hy.*, hys.Name, hys.Width as RoomWidth, hys.Length as RoomLength, dbo.fn_PDStatus(hy.intProcessStanceid) AS StateName,case when hy.StartTime>getdate() then '即将开始' when hy.StartTime<=getdate() and hy.EndTime>=getdate() then '正在进行' when hy.EndTime<getdate() then '已结束' end as HLStatus ";
+            string colName = @"hy.*, hys.Name, hys.Width as RoomWidth, hys.Length as RoomLength, dbo.fn_PDStatus(hy.intProcessStanceid) AS StateName,case when hy.StartTime>getdate() then '即将开始' when hy.StartTime<=getdate() and hy.EndTime>=getdate() then '正在进行' when hy.EndTime<getdate() then '已结束' end as HLStatus ";
             string tableName = string.Format(@" SZHL_HYGL hy left join SZHL_HYGL_ROOM hys on hy.RoomID=hys.ID");
 
-            string strSql = string.Format("Select {0}  From {1} where {2} order by hy.CRDate desc", colNme, tableName, strWhere);
+            string strSql = string.Format("Select {0}  From {1} where {2} order by hy.CRDate desc", colName, tableName, strWhere);
             DataTable dt = new SZHL_HYGLB().GetDTByCommand(strSql);
 
 
@@ -852,6 +852,7 @@ namespace QJY.API
         }
         #endregion
 
+        #region 删除会议记录
         public void DELHYGLMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int Id = int.Parse(P1);
@@ -864,7 +865,8 @@ namespace QJY.API
             }
             //new SZHL_HYGLB().Delete(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
         }
-
+        #endregion
+    
         #region 会议日历视图
         /// <summary>
         /// 会议日历视图

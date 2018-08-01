@@ -158,8 +158,7 @@
             ]);
             //类型数据
             tempindex.LoadBranch();
-            tempindex.LoadTYPE();
-            tempindex.LoadStatus();
+            
         },
         LoadTYPE: function () {
             $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELISTBYLOCATIONWITHNUM&r=' + Math.random(), { P1: tempindex.curLOCATION, P2: tempindex.curBranch, status: tempindex.curStatus  }, function (resultData) {
@@ -174,6 +173,8 @@
                     tempindex.BranchData = resultData.Result;
                     tempindex.curBranch = resultData.Result1;
                     tempindex.LoadLOCATION();
+                    tempindex.LoadTYPE();
+                    tempindex.LoadStatus();
                     //tempindex.GetLIST();
                 }
             })

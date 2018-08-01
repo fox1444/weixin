@@ -131,9 +131,13 @@ namespace QJY.API
         /// <param name="branchCode">部门编号</param>
         /// <param name="strFilter">姓名，部门，手机号</param>
         /// <returns></returns>
-        public DataTable GetUserListbyUserNames(string _usernames, string strFilter)
+        public DataTable GetUserListbyUserNames(string _usernames, string colName)
         {
-            string strSQL = "select * from JH_Auth_User where userName in (select items from dbo.split('" + _usernames + "', ','))";
+            if(colName.Trim().Length<=0)
+            {
+                colName = "*";
+            }
+            string strSQL = "select "+ colName + " from JH_Auth_User where userName in (select items from dbo.split('" + _usernames + "', ','))";
             DataTable dt = new JH_Auth_UserB().GetDTByCommand(strSQL + " ORDER by UserRealName");
             return dt;
         }

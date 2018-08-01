@@ -134,9 +134,9 @@
                 { "ColName": "Status", "ColText": "使用状态", "IsSel": true, "format": "zcstatus" },
             ]);
             //类型数据
-            tempindex.LoadBranch();
-            tempindex.LoadTYPE();
             
+            
+            tempindex.LoadBranch();
         },
         LoadTYPE: function () {
             $.getJSON('/API/VIEWAPI.ashx?Action=ZCGL_GETZCGLTYPELISTWITHNUM', { P1: tempindex.curUSERGW, P2: tempindex.curBranch}, function (resultData) {
@@ -151,6 +151,7 @@
                     tempindex.BranchData = resultData.Result;
                     tempindex.curBranch = resultData.Result1;
                     tempindex.LoadUSERGW();
+                    tempindex.LoadTYPE();
                     //tempindex.GetLIST();
                 }
             })

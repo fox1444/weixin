@@ -84,9 +84,7 @@
                 <span><strong>&nbsp;参会代表&nbsp;</strong></span>
             </div>
             <div class="content">
-
-                {{ComFunJS.convusers_branch(modelData.CYUser)|html}}
-                <!--{{tempmodel.allusers }}-->
+                {{tempmodel.CYUserStr|html}}
             </div>
         </div>
         <div class="hy_menu" id="item-7" ms-if="modelData.ZSAP!=''" style="padding-bottom:20px;">
@@ -144,19 +142,13 @@
             name: "会议管理",
             iswf: true,//是否属于流程表单
             tpData: [],
-            currentuser: { "ID": "", "UserRealName": "", "mobphone": "" },
-            userpl: 0,
-            usertype: "",
-            isjl: "",
-            Name: "",
-            wximg: "",
+            CYallUser:[],
+            CYUserStr:"",
+            currentuser: { "ID": "", "UserRealName": "", "mobphone": "" },//登录用户
+            ZCUserNames: { "ID": "", "UserRealName": "", "UserName": "" },//主持人
             dataid: ComFunJS.getQueryString('id'),
-            isDeploy: 0,
             stepindex: "",
-            myname: "",
-            ZCUserNames: { "ID": "", "UserRealName": "", "UserName": "" },
             allusers: window.localStorage.getItem("alluserinfo"),
-            RoomID: ComFunJS.getQueryString("rid"),
             gostart: function (index) {
                 location.href = "/View_Mobile/UI/HyDetail_index.html?id=" + tempmodel.dataid + "&r=" + Math.random();
             },
@@ -193,99 +185,54 @@
                 tempmodel.getdata(id);
             },
             inittemp: function (strId) {
-
-                var users = window.localStorage.getItem("alluserinfo");
-                var Expirytime = window.localStorage.getItem("alluserinfo_expirytime");
-
-                if (Expirytime && Expirytime != "" && Expirytime != undefined && Expirytime != null) {
-                    var expirytime_diff = new Date() - new Date(Expirytime);
-                    if (expirytime_diff / (60 * 1000) > (24 * 60 * 3)) {//全体用户信息每几分钟自动更新
-                        tempmodel.LoadAllUser();
-                    }
+                var pn = ComFunJS.getCookie("userphonenumber");
+                if (!pn || pn == null || pn == undefined || pn == '')
+                {
+                    tempmodel.gostart();
                 }
-                else {
-                    tempmodel.LoadAllUser();
-                }
-
                 strId = tempmodel.dataid;
                 if (strId) {
                     $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELNOLOGIN', { P1: strId }, function (resultData) {
                         if (resultData.ErrorMsg == "") {
                             tempmodel.modelData = resultData.Result[0];
                             tempmodel.tpData = resultData.Result1;
-
-                            if (resultData.Result.JLUser) {
-                                var JLUserList = resultData.Result.JLUser.split(',');
-
-                                var un = ComFunJS.getCookie("username");
-                                if (JLUserList.indexOf(un) != -1 || resultData.Result.FQUser.split(',').indexOf(un) != -1) {
-                                    tempmodel.isjl = "1";
-                                }
-                            }
-                            var pn = ComFunJS.getCookie("userphonenumber");
-                            if (pn && pn != null && pn != undefined && pn != '') {
-                                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETUSERBYPHONENUMBER&r=" + Math.random(), { P1: pn }, function (r) {
-                                    if (r.ErrorMsg == "") {
-                                        tempmodel.currentuser = r.Result;
-                                        ComFunJS.viewimg_for_view(tempmodel.tpData, '1');
-                                        tempmodel.LoadRoom();
-                                    }
-                                    else {
-
-                                    }
-                                });
-                            }
-                            else {
-                                tempmodel.gostart();
-                            }
-                            setTimeout(" ComFunJS.initForm()", 500);
-                            tempmodel.SetNumber();
-
+                            tempmodel.LoadNumber();
+                            tempmodel.LoadAllUser();
+                            tempmodel.LoadRoom();
+                            setTimeout(" ComFunJS.initForm()", 500);                            
                         }
                     })
                 }
-                else {
-                    var dates = ComFunJS.getnowdate("yyyy-mm-dd-hh-mm").split('-');
-                    $("#StartTime").datetimePicker({
-                        value: [dates[0], dates[1], dates[2], dates[3], dates[4]]
-                    });
-                    $("#EndTime").datetimePicker({
-                        value: [dates[0], dates[1], dates[2], dates[3], dates[4]]
-                    });
-
-                    tempmodel.modelData.StartTime = dates[0] + "-" + dates[1] + "-" + dates[2] + " " + dates[3] + ":" + dates[4];
-                    tempmodel.modelData.EndTime = dates[0] + "-" + dates[1] + "-" + dates[2] + " " + dates[3] + ":" + dates[4];
-
-                    ComFunJS.uploadimgnew();
-                    ComFunJS.initForm();
-                }
-
-
             },//初始化
-            SetNumber: function () {
+            LoadNumber: function () {
                 var k = 1;
                 $(".tab-link").each(function () {
                     $(this).children("i").html(k);
                     k++;
                 });
-
                 tempmodel.getdata(1);
             },
             LoadAllUser: function () {
-                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_WXINITALLUSER&r=" + Math.random(), {}, function (r) {
+                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETSMALLUSERBYUSERNAMES&r=" + Math.random(), { P1: tempmodel.modelData.CYUser }, function (r) {
                     if (r.ErrorMsg == "") {
-                        var returnmsg = [];
-                        var usersarr = r.Result;
-                        $(usersarr).each(function (index, ele) {
-                            returnmsg.push({ 'UserName': ele.UserName, 'UserRealName': ele.UserRealName, 'mobphone': ele.mobphone, 'BranchCode': ele.BranchCode, 'DeptName': ele.DeptName, 'UserGW': ele.UserGW, 'zhiwu': ele.zhiwu, 'DeptRoot': ele.DeptRoot });
-                        })
-                        var tmp = returnmsg;
-                        window.localStorage.setItem("alluserinfo", JSON.stringify(tmp));
-                        window.localStorage.setItem("alluserinfo_expirytime", new Date());
+                        tempmodel.CYallUser = r.Result;
+                        tempmodel.CYUserStr = tempmodel.convusers_branch(tempmodel.modelData.CYUser);
                     }
                 })
             },
             LoadRoom: function () {
+                var pn = ComFunJS.getCookie("userphonenumber");
+                if (pn && pn != null && pn != undefined && pn != '') {
+                    $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETUSERBYPHONENUMBER&r=" + Math.random(), { P1: pn }, function (r) {
+                        if (r.ErrorMsg == "") {
+                            tempmodel.currentuser = r.Result;
+                            ComFunJS.viewimg_for_view(tempmodel.tpData, '1');
+                            tempmodel.SetRoom();
+                        }
+                    });
+                }
+            },
+            SetRoom: function () {
                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETUSERBYUSERNAMES&r=" + Math.random(), { P1: tempmodel.modelData.ZCUser }, function (rs) {
                     if (rs.ErrorMsg == "") {
                         tempmodel.ZCUserNames = rs.Result;
@@ -344,13 +291,54 @@
                     });
                 }
             },
-            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "" }
+            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "" },
+            convusers_branch: function (str) {
+                var branchtmp = '';
+                var branchcodes = '';
+                if (str) {
+                    var users = tempmodel.CYallUser;
+                    $(users).each(function (index, ele) {
+                        $(str.split(',')).each(function (inx, el) {
+                            if (ele.UserName == el) {
+                                if (branchcodes.indexOf(ele.BranchCode + ',') == -1) {
+
+                                    branchtmp += '<div class="list_parent_node" onclick="ComFunJS.showchild(this)"><span class="parent_title">' + ele.DeptName + '</span>';
+                                    branchtmp += '<div class="list_child_block">' + tempmodel.convusers_branchuser(str, ele.BranchCode) + '</div>';
+                                    branchtmp += '</div>';
+                                    branchcodes += ele.BranchCode + ',';
+                                }
+                            }
+                        })
+                    });
+                }
+
+                return branchtmp;
+            },//获取部门
+            convusers_branchuser: function (str, branchcode) {
+                var username = '';
+                if (str) {
+                    var users = tempmodel.CYallUser;
+                    $(users).each(function (index, ele) {
+                        $(str.split(',')).each(function (inx, el) {
+                            if (ele.UserName == el && ele.BranchCode == branchcode) {
+                                username += '<div class="list_child_node"><span class="child_title">' + ele.UserRealName + '</span>';
+                                username += '<span class="child_ext" >';
+                                if (ele.DeptRoot == "-1") {
+                                    username += ele.UserGW.replace('领导班子', '');
+                                }
+                                username += ele.zhiwu + '</span></div> ';
+                            }
+                        })
+                    });
+                }
+                return username;
+            }
         });
 
         avalon.ready(function () {
             $('.hy_menu').hide();
+            $('.up-and-down').hide();
             tempmodel.inittemp();
-
         })
 
         $(window).on("load resize", function () {
