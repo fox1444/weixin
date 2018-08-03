@@ -474,11 +474,11 @@ namespace QJY.API
                 msg.ErrorMsg = "会议主题不能为空";
                 return;
             }
-            if (string.IsNullOrWhiteSpace(HY.CYUser))
-            {
-                msg.ErrorMsg = "参会人不能为空";
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(HY.CYUser))
+            //{
+            //    msg.ErrorMsg = "内部参会人不能为空";
+            //    return;
+            //}
             if (HY.StartTime >= HY.EndTime)
             {
                 msg.ErrorMsg = "开始时间必须大于结束时间";

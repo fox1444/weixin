@@ -319,7 +319,7 @@
                             <option value="">选择审核人</option>
                             <option ms-repeat-item="USERDATA" ms-attr-value="item.UserName">{{item.UserRealName}}</option>
                         </select>
-                        <span class="input-group-btn">
+                        <div class="input-group-btn">
                             <button class="btn btn-danger btnqx" ms-click="qx()" style="width: 120px; height: 40px;">取消</button>
                             <button class="btn btn-success btnSucc" style="width: 120px; height: 40px; margin-left: 2px;" ms-click="SaveData(this,false)"><i class="fa fa-spinner fa-spin" style="display: none"></i>提交信息</button>
                             <div class="btn-group dropup" style="margin-left: 2px;" ms-if="isDraft">
@@ -332,7 +332,7 @@
                                     <li ms-repeat-el="DraftList" ms-click="SelDraft(el)"><a href="#">{{el.CRTime|date('MM-dd HH:mm')}} 草稿<span class="gb" ms-click="DelDraft(el,$event)">x</span></a></li>
                                 </ul>
                             </div>
-                        </span>
+                        </div>
                     </div>
                 </td>
             </tr>

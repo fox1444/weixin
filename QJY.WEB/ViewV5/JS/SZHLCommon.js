@@ -1492,7 +1492,7 @@ $(function () {
                 }
                 if (data.ErrorMsg) {
                     top.ComFunJS.winwarning(data.ErrorMsg);
-
+                    $('.btnSucc').attr("disabled", false).find(".fa").hide();//提交按钮恢复正常
                     return;
                 }
                 fn.success(data, textStatus);
