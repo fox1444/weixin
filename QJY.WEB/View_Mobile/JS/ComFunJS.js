@@ -1336,6 +1336,7 @@ var ComFunJS = {
             $(users).each(function (index, ele) {
                 if (ele.UserName == str) {
                     username = ele.UserRealName;
+                    break;
                 }
             });
         }
@@ -1444,6 +1445,7 @@ var ComFunJS = {
                         else {
                             username = ele.UserRealName;
                         }
+                        break;
                     }
                 })
 
@@ -1456,10 +1458,8 @@ var ComFunJS = {
         if (str) {
             $.ajaxSettings.async = false;
             $.getJSON('/API/VIEWAPI.ashx?Action=CRM_GETKHGLMODEL', { P1: str }, function (resultData) {
-
                 if (resultData.ErrorMsg == "") {
                     username = resultData.Result[0].KHName;
-
                 }
             })
         }

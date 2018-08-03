@@ -232,13 +232,14 @@
                 <div ms-repeat-seluser="SelUsers" style="min-width: 80px">
                     <div class="pCard">
                         <!--<span class="badge" ms-click="DelSelUser(seluser)">X</span>-->
-                        <div class="pName" style="padding-top: 5px">
+                        <div class="pName" style="padding-top: 5px" ms-title="{{seluser.DeptName+seluser.UserRealName}}">
                             {{seluser.UserRealName}}
                         </div>
+                        <input class="deptName" type="hidden"  ms-duplex="seluser.DeptName" />
                     </div>
                     <div class="pWidthLength">
                         <input class="form-control length-val" type="text" />-<input class="form-control width-val" type="text" />
-                        <input class="" type="text" style="display:none;" ms-duplex="seluser.ID" />
+                        <input class="" type="hidden"  ms-duplex="seluser.ID" />
                     </div>
                 </div>
             </div>
@@ -263,20 +264,12 @@
     <script src="/ViewV5/JS/zTree_v3/js/jquery.ztree.excheck-3.5.js"></script>
 
     <script>
-        var zNodes = null;
-        var zTreeObj = null;
-        var zNodesRole = null;
-        var zTreeObjRole = null;
         var model = avalon.define({
             $id: "UserSelect",
             HyId: ComFunJS.getQueryString("id"),
-            isSignle: ComFunJS.getQueryString("issignle") ? ComFunJS.getQueryString("issignle") : "N",
-            roomblockwidth: "",
-            isAll: ComFunJS.getQueryString("isall"), //是否加载所有人，N:根据当前用户所在部门加载，Y:加载所有人员
-            selBM: "",//已选择部门
             SelUsers: [],//已选择用户
-            render: function () {
-            },
+            widthRecord: "",
+            lengthRecord: "",
             inittemp: function () {
                 //编辑加载数据
                 $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETHYGLMODEL', { P1: model.HyId }, function (resultData) {
@@ -345,8 +338,6 @@
                     model.ReBindInputData();
                 }
             }, //同时绑定输入框
-            widthRecord: "",
-            lengthRecord: "",
             InputBlur: function () {
                 $('.pWidthLength input').on({
                     focus: function () {
@@ -364,7 +355,7 @@
                 var length_p = $(obj).parent().children("input").eq(0).val();
                 var width_p = $(obj).parent().children("input").eq(1).val();
                 var sel_id = $(obj).parent().children("input").eq(2).val();
-
+        
                 if (length_p != '' && width_p != '') {
                     var currentseat = $('.seat_' + length_p + '_' + width_p).children('span').eq(1);
                     if (currentseat.length > 0) {
@@ -409,7 +400,7 @@
                     var _wp = $(obj).children("input").eq(1).val();
                     var _sid = $(obj).children("input").eq(2).val();
                     var _sname = $(obj).parent().children(".pCard").children(".pName").html();
-
+                    
                     var _cs = $('.seat_' + _lp + '_' + _wp).children('span').eq(1);
                     var _csid = $('.seat_' + _lp + '_' + _wp).children('span').eq(2);
                     if (_cs.length > 0) {
@@ -444,9 +435,9 @@
                 var _wp = $(obj).children("input").eq(1).val();
                 var _sid = $(obj).children("input").eq(2).val();
                 var _sname = $(obj).parent().children(".pCard").children(".pName").html();
-
+                var _deptname = $(obj).parent().children(".pCard").children(".deptName").val();
                 if (_lp.length > 0 && _wp.length > 0) {
-                    var elezcb = { 'userid': _sid, 'userrealname': _sname, 'xcode': _lp, 'ycode': _wp };
+                    var elezcb = { 'userid': _sid, 'userrealname': _sname, 'xcode': _lp, 'ycode': _wp, 'deptname': _deptname };
                     zcb.push(elezcb);
                 }
             });
