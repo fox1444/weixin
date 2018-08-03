@@ -135,9 +135,9 @@ namespace QJY.API
         {
             if(colName.Trim().Length<=0)
             {
-                colName = "*";
+                colName = "u.*,b.DeptName";
             }
-            string strSQL = "select "+ colName + " from JH_Auth_User where userName in (select items from dbo.split('" + _usernames + "', ','))";
+            string strSQL = "select "+ colName + " from JH_Auth_User u left join JH_Auth_Branch b on u.BranchCode=b.DeptCode where u.userName in (select items from dbo.split('" + _usernames + "', ','))";
             DataTable dt = new JH_Auth_UserB().GetDTByCommand(strSQL + " ORDER by UserRealName");
             return dt;
         }
