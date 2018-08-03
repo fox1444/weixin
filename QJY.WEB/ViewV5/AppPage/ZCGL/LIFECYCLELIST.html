@@ -138,13 +138,13 @@
                   
                     if (lcnr) {
                         $.post('/API/VIEWAPI.ashx?Action=ZCGL_UPDATELIFECYCLE&r=' + Math.random(), { P1: lcID, P2: lcnr, zcglID: model.strId }, function (resultData) {
-                            layer.close(inx);
                             if (resultData.ErrorMsg == "") {
+                                layer.close(inx);
                                 model.GetLfCyList();
                                 top.ComFunJS.winsuccess("操作成功！！");
                             }
                             else {
-                                top.ComFunJS.winwarning("操作失败！！");
+                                top.ComFunJS.winwarning(resultData.ErrorMsg);
                             }
                         })
                     }

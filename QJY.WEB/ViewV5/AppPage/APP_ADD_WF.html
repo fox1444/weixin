@@ -10,9 +10,9 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title></title>
     <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="/ViewV5/CSS/bootstrap3.3.5/css/bootstrap.css">
+    <link href="/ViewV5/CSS/bootstrap3.3.5/css/bootstrap.css" rel="stylesheet" />
     <link href="/ViewV5/CSS/BootOver.css" rel="stylesheet" />
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_eedtp7mde99q9f6r.css">
+    <link href="/ViewV5/CSS/font_icon.css" rel="stylesheet" />
     <link href="/ViewV5/JS/chosen/chosen.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -54,12 +54,32 @@
         }
 
         .fa-spin {
-            -webkit-animation: fa-spin 2s infinite linear;
+            /*-webkit-animation: fa-spin 2s infinite linear;
             animation: fa-spin 2s infinite linear;
+            width: 15px;
+            float: left;
+            height: 15px;
+            display: block;
+            background: red;*/
+            display: inline-block;
+            min-width: 2px;
+            min-height: 2px;
+            box-shadow: 2px 0 currentColor, 6px 0 currentColor, 10px 0 currentColor; /* for IE9+, ..., 3个点 */
+            animation: fa-spin 2s infinite step-start both; /* for IE10+, ... */
+            -webkit-animation: fa-spin 2s infinite step-start both; /* for IE10+, ... */
+            *zoom: expression(this.innerHTML = '...');
         }
 
+            .fa-spin:before {
+                content: '...';
+            }
+
+            .fa-spin::before {
+                content: '';
+            }
+
         @-webkit-keyframes fa-spin {
-            0% {
+            /*0% {
                 -webkit-transform: rotate(0deg);
                 transform: rotate(0deg);
             }
@@ -67,11 +87,23 @@
             100% {
                 -webkit-transform: rotate(359deg);
                 transform: rotate(359deg);
+            }*/
+
+            25% {
+                box-shadow: none;
+            }
+            /* 0个点 */
+            50% {
+                box-shadow: 2px 0 currentColor;
+            }
+            /* 1个点 */
+            75% {
+                box-shadow: 2px 0 currentColor, 6px 0 currentColor; /* 2个点 */
             }
         }
 
         @keyframes fa-spin {
-            0% {
+            /*0% {
                 -webkit-transform: rotate(0deg);
                 transform: rotate(0deg);
             }
@@ -79,6 +111,18 @@
             100% {
                 -webkit-transform: rotate(359deg);
                 transform: rotate(359deg);
+            }*/
+
+            25% {
+                box-shadow: none;
+            }
+            /* 0个点 */
+            50% {
+                box-shadow: 2px 0 currentColor;
+            }
+            /* 1个点 */
+            75% {
+                box-shadow: 2px 0 currentColor, 6px 0 currentColor; /* 2个点 */
             }
         }
 
@@ -267,7 +311,7 @@
 <body ms-controller="APP_ADD" ms-keypress="jptj(event,$(this))">
     <div class="container-fluid" style="margin-top: 20px; margin-bottom: 150px">
         <div ms-include-src="/ViewV5/AppPage/{{PathCode}}.html" data-include-rendered='render'></div>
-        <div ms-if="ExtData.size()>0" id="extdiv" >
+        <div ms-if="ExtData.size()>0" id="extdiv">
             <div>
                 <!--<div class="fg-item"><span>{{FormCode=='LCSP'?'表单信息':'扩展信息'}}</span></div>-->
                 <ul class="clearfix" style="padding: 0" id="ExtDiv">
@@ -321,7 +365,7 @@
                         </select>
                         <div class="input-group-btn">
                             <button class="btn btn-danger btnqx" ms-click="qx()" style="width: 120px; height: 40px;">取消</button>
-                            <button class="btn btn-success btnSucc" style="width: 120px; height: 40px; margin-left: 2px;" ms-click="SaveData(this,false)"><i class="fa fa-spinner fa-spin" style="display: none"></i>提交信息</button>
+                            <button class="btn btn-success btnSucc" style="width: 120px; height: 40px; margin-left: 2px;" ms-click="SaveData(this,false)">提交信息<i class="fa fa-spinner fa-spin" style="display:none;"></i></button>
                             <div class="btn-group dropup" style="margin-left: 2px;" ms-if="isDraft">
                                 <button type="button" class="btn btn-info" style="width: 100px; height: 40px;" ms-click="SaveDraft('')">存草稿</button>
                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 40px; background-color: #1595C5;" ms-visible="DraftList.size()>0">
