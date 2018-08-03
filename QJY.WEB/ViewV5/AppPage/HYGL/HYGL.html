@@ -197,7 +197,6 @@
         modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "" },
         SaveData: function (callback) {
             $.post("/API/VIEWAPI.ashx?ACTION=HYGL_ADDHYGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
-
                 return callback.call(this, result);
             });
         },
