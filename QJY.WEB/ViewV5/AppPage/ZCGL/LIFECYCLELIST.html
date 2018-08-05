@@ -10,28 +10,6 @@
     <link rel="stylesheet" type="text/css" href="/ViewV5/CSS/animate.css">
     <link rel="stylesheet" type="text/css" href="/ViewV5/CSS/index.css">
     <link rel="stylesheet" type="text/css" href="/ViewV5/CSS/default.css">
-    <style>
-        .table-wrap {
-            padding: 10px;
-        }
-
-        .table-con {
-            width: 100%;
-            border-top: solid 1px #ccc;
-            border-left: solid 1px #ccc;
-        }
-
-            .table-con th {
-                color: #666;
-            }
-
-            .table-con th, .table-con td {
-                text-align: center;
-                padding: 3px;
-                border-right: solid 1px #ccc;
-                border-bottom: solid 1px #ccc;
-            }
-    </style>
 </head>
 
 <body style="background-color: #F8F8F8; height: 100%;" ms-controller="LifeCycle">
@@ -137,7 +115,7 @@
                     var lcnr = ComFunJS.isIE() ? window.frames[frameid].getLC() : window.frames[frameid].contentWindow.getLC();
                   
                     if (lcnr) {
-                        $.post('/API/VIEWAPI.ashx?Action=ZCGL_UPDATELIFECYCLE&r=' + Math.random(), { P1: lcID, P2: lcnr, zcglID: model.strId }, function (resultData) {
+                        $.post('/API/VIEWAPI.ashx?Action=ZCGL_UPDATELIFECYCLE&r=' + Math.random(), { P1: model.strId , P2: lcnr}, function (resultData) {
                             if (resultData.ErrorMsg == "") {
                                 layer.close(inx);
                                 model.GetLfCyList();

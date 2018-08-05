@@ -13,6 +13,8 @@
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
 </head>
 <body ms-controller="Hydetail">
+    <div class="index-html">
+    </div>
     <div class="wrapper">
         <div class="hy_menu" id="item-1">
             <div class="title">
@@ -21,51 +23,60 @@
             <div class="content">
                 <div class="hy_menu_list">
                     <a href="#" ms-on-click="gostart()" class="tab-link button external"><i>1</i>会议公告</a>
-                    <a href="#" ms-on-click="getdata(2)" class="tab-link button external"><i>2</i>会议须知</a>
-                    <a href="#" ms-on-click="getdata(3)" class="tab-link button external"><i>3</i>服务指南</a>
-                    <a href="#" ms-on-click="getdata(4)" class="tab-link button external"><i>4</i>日程安排</a>
+                    <a href="#" ms-on-click="getdata(2)" class="button external" ms-class-1="tab-link:modelData.HYXZ!=''" ms-if="modelData.HYXZ!=''"><i>2</i>会议须知</a>
+                    <a href="#" ms-on-click="getdata(3)" class="button external" ms-class-1="tab-link:modelData.HYFW!=''" ms-if="modelData.HYFW!=''"><i>3</i>服务指南</a>
+                    <a href="#" ms-on-click="getdata(4)" class="button external" ms-class-1="tab-link:modelData.Details!=''" ms-if="modelData.Details!=''"><i>4</i>日程安排</a>
                     <a href="#" ms-on-click="getdata(5)" class="tab-link button external"><i>5</i>座位引导</a>
                     <a href="#" ms-on-click="getdata(6)" class="tab-link button external"><i>6</i>参会代表</a>
-                    <a href="#" ms-on-click="getdata(7)" class="button external" ms-class-1="tab-link:modelData.ZSAP!=''" ms-if="modelData.ZSAP!=''"><i>7</i>住宿安排</a>
-                    <a href="#" ms-on-click="getdata(8)" class="button external" ms-class-1="tab-link:modelData.FZQK!=''" ms-if="modelData.FZQK!=''"><i>8</i>分组情况</a>
-                    <a href="#" ms-on-click="getdata(9)" class="tab-link button external"><i>9</i>资料下载</a>
+                    <a href="#" ms-on-click="getdata(7)" class="button external" ms-class-1="tab-link:modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''" ms-if="modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''"><i>7</i>出行安排</a>
+                    <a href="#" ms-on-click="getdata(8)" class="button external" ms-class-1="tab-link:modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''" ms-if="modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''"><i>8</i>住宿安排</a>
+                    <a href="#" ms-on-click="getdata(9)" class="button external" ms-class-1="tab-link:modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''" ms-if="modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''"><i>9</i>用餐安排</a>
+                    <a href="#" ms-on-click="getdata(10)" class="button external" ms-class-1="tab-link:modelData.Files!=''" ms-if="modelData.Files!=''"><i>10</i>资料下载</a>
                 </div>
             </div>
         </div>
-        <div class="hy_menu" id="item-2">
+
+        <!--会议须知-->
+        <div class="hy_menu" id="item-2" ms-if="modelData.HYXZ!=''">
             <div class="title">
                 <span><strong>&nbsp;会议须知&nbsp;</strong></span>
             </div>
-            <div class="content font-white">
+            <div class="content font-white inlist">
                 {{modelData.HYXZ|html}}
             </div>
         </div>
-        <div class="hy_menu" id="item-3" style="padding-bottom:20px;">
+
+        <!--服务指南-->
+        <div class="hy_menu" id="item-3" ms-if="modelData.HYFW!=''" style="padding-bottom:20px;">
             <div class="title">
                 <span><strong>&nbsp;服务指南&nbsp;</strong></span>
             </div>
-            <div class="content bg-white">
+            <div class="content bg-holder">
                 {{modelData.HYFW|html}}
             </div>
         </div>
-        <div class="hy_menu" id="item-4" style="padding-bottom:20px;">
+
+        <!--日程安排-->
+        <div class="hy_menu" id="item-4" ms-if="modelData.Details!=''" style="padding-bottom:20px;">
             <div class="title">
                 <span><strong>&nbsp;日程安排&nbsp;</strong></span>
             </div>
-            <div class="content bg-white">
+            <div class="content bg-holder inlist">
                 {{modelData.Details|html}}
             </div>
         </div>
+
+        <!--座位引导-->
         <div class="hy_menu bg-white" id="item-5">
             <div class="title title-black" style="margin-top:0px; padding-top:10px;">
                 <span><strong>&nbsp;座位引导&nbsp;</strong></span>
             </div>
-            <div class="content zcb-content">
+            <div class="content zcb-content" style=" padding:0 15px;">
                 <div style="text-align:center;">
                     {{modelData.StartTime|date('M月d日H:mm')}} - {{modelData.EndTime|date('M月d日H:mm')}}
                     <br />{{modelData.Name}}
                 </div>
-                <div class="zcb-title">尊敬的{{currentuser.UserRealName}}，您的座位在<br /><span style="color:#ff4700" class="attention">红色位置区域</span></div>
+                <div class="zcb-title">尊敬的{{currentuser.Name}}，您的座位在<br /><span style="color:#ff4700" class="attention">红色位置区域</span></div>
                 <div class="chairmen-wrapper">
                     <div class="room-chairmen">
                         <!--<ul><li ms-repeat-el="ZCUserNames"><span>{{el.UserRealName}}</span></li></ul>-->
@@ -74,11 +85,14 @@
                 </div>
                 <div class="room-block-hold">
                     <div class="room-block">
+
                     </div>
                 </div>
                 <div style="text-align:center;">请左右滑动查找您的座位</div>
             </div>
         </div>
+
+        <!--参会代表-->
         <div class="hy_menu" id="item-6" style="padding-bottom:70px;">
             <div class="title">
                 <span><strong>&nbsp;参会代表&nbsp;</strong></span>
@@ -87,23 +101,102 @@
                 {{tempmodel.CYUserStr|html}}
             </div>
         </div>
-        <div class="hy_menu" id="item-7" ms-if="modelData.ZSAP!=''" style="padding-bottom:20px;">
+
+        <!--出行安排-->
+        <div class="hy_menu" id="item-7" ms-if="modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''">
+            <div class="title">
+                <span><strong>&nbsp;出行安排&nbsp;</strong></span>
+            </div>
+            <div class="content bg-holder">
+                <div class="inlist" ms-if="modelData.CXQK!=''">
+                    <span class="parent_title">
+                        参观线路
+                    </span>
+                    <div class="item-con ">
+                        {{modelData.CXQK|html}}
+                    </div>
+                </div>
+                <div class="inlist" ms-if="tempmodel.currentuser.BoardingTime!=''">
+                    <span class="parent_title">
+                        上车时间
+                    </span>
+                    <div class="item-con ">
+                        {{tempmodel.currentuser.BoardingTime}}
+                    </div>
+                </div>
+                <div class="inlist" ms-if="tempmodel.currentuser.CarNumber!=''">
+                    <span class="parent_title">
+                        车牌号
+                    </span>
+                    <div class="item-con ">
+                        {{tempmodel.currentuser.CarNumber}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--住宿安排-->
+        <div class="hy_menu" id="item-8" ms-if="modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''">
             <div class="title">
                 <span><strong>&nbsp;住宿安排&nbsp;</strong></span>
             </div>
-            <div class="content bg-white">
-                {{modelData.ZSAP|html}}
+            <div class="content bg-holder">
+                <div class="inlist" ms-if="modelData.ZSAP!=''">
+                    <span class="parent_title">
+                        酒店
+                    </span>
+                    <div class="item-con ">
+                        {{modelData.ZSAP|html}}
+                    </div>
+                </div>
+
+                <div class="inlist" ms-if="tempmodel.currentuser.RoomNumber!=''">
+                    <span class="parent_title">
+                        房间号
+                    </span>
+                    <div class="item-con ">
+                        {{tempmodel.currentuser.RoomNumber}}
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="hy_menu" id="item-8" ms-if="modelData.FZQK!=''" style="padding-bottom:20px;">
+
+        <!--用餐安排-->
+        <div class="hy_menu" id="item-9" ms-if="modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''">
             <div class="title">
-                <span><strong>&nbsp;分组情况&nbsp;</strong></span>
+                <span><strong>&nbsp;用餐安排&nbsp;</strong></span>
             </div>
-            <div class="content bg-white">
-                {{modelData.FZQK|html}}
+            <div class="content bg-holder">
+                <div class="inlist" ms-if="modelData.YCQK!=''">
+                    <span class="parent_title">
+                        用餐安排
+                    </span>
+                    <div class="item-con ">
+                        {{modelData.YCQK|html}}
+                    </div>
+                </div>
+
+                <div class="inlist" ms-if="tempmodel.currentuser.YCTIME!=''">
+                    <span class="parent_title">
+                        用餐时间
+                    </span>
+                    <div class="item-con ">
+                        &nbsp;&nbsp;{{tempmodel.currentuser.YCTIME}}
+                    </div>
+                </div>
+                <div class="inlist" ms-if="tempmodel.currentuser.YCLOCATION!=''">
+                    <span class="parent_title">
+                        用餐地点
+                    </span>
+                    <div class="item-con ">
+                        &nbsp;&nbsp;{{tempmodel.currentuser.YCLOCATION}}
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="hy_menu zldownload" id="item-9">
+
+        <!--资料下载-->
+        <div class="hy_menu zldownload" id="item-10" ms-if="modelData.Files!=''">
             <div class="title">
                 <span><strong>&nbsp;资料下载&nbsp;</strong></span>
             </div>
@@ -142,12 +235,11 @@
             name: "会议管理",
             iswf: true,//是否属于流程表单
             tpData: [],
-            CYUserStr:"",
-            currentuser: { "ID": "", "UserRealName": "", "mobphone": "" },//登录用户
-            ZCUserNames: { "ID": "", "UserRealName": "", "UserName": "" },//主持人
+            CYUserStr: "",
+            currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, },//手机登录用户
+            //ZCUserNames: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "" },//主持人
             dataid: ComFunJS.getQueryString('id'),
             stepindex: "",
-            allusers: window.localStorage.getItem("alluserinfo"),
             gostart: function (index) {
                 location.href = "/View_Mobile/UI/HyDetail_index.html?id=" + tempmodel.dataid + "&r=" + Math.random();
             },
@@ -165,7 +257,8 @@
                         $('.up-and-down').show();
                         $('.arrow-up').show();
                         $('.arrow-down').show();
-                        if (index == $('.hy_menu').length) {
+                        var i = $('.hy_menu').index($('#item-' + index)) + 1;
+                        if ($('.hy_menu').length == i) {
                             $('.arrow-down').hide();
                         }
                     }
@@ -185,8 +278,7 @@
             },
             inittemp: function (strId) {
                 var pn = ComFunJS.getCookie("userphonenumber");
-                if (!pn || pn == null || pn == undefined || pn == '')
-                {
+                if (!pn || pn == null || pn == undefined || pn == '') {
                     tempmodel.gostart();
                 }
                 strId = tempmodel.dataid;
@@ -199,11 +291,18 @@
                             tempmodel.LoadAllUser();//参会人
                             tempmodel.LoadRoom();//座次表
                             ComFunJS.viewimg_for_view(tempmodel.tpData, '1');//文件下载
-                            //setTimeout(" ComFunJS.initForm()", 500);                            
+                            //setTimeout(" ComFunJS.initForm()", 500);
                         }
                     })
                 }
             },//初始化
+            LoadAllUser: function () {
+                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERLISTBYHYGLID&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: 1 }, function (r) {
+                    if (r.ErrorMsg == "") {
+                        tempmodel.CYUserStr = ComFunJS.convusers_branch(r.Result);
+                    }
+                })
+            },
             LoadNumber: function () {
                 var k = 1;
                 $(".tab-link").each(function () {
@@ -212,30 +311,23 @@
                 });
                 tempmodel.getdata(1);
             },
-            LoadAllUser: function () {
-                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETSMALLUSERBYUSERNAMES&r=" + Math.random(), { P1: tempmodel.modelData.CYUser }, function (r) {
-                    if (r.ErrorMsg == "") {
-                        tempmodel.CYUserStr = ComFunJS.convusers_branch(tempmodel.modelData.CYUser, r.Result);
-                    }
-                })
-            },
             LoadRoom: function () {
                 var pn = ComFunJS.getCookie("userphonenumber");
                 if (pn && pn != null && pn != undefined && pn != '') {
-                    $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETUSERBYPHONENUMBER&r=" + Math.random(), { P1: pn }, function (r) {
+                    $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: pn }, function (r) {
                         if (r.ErrorMsg == "") {
-                            tempmodel.currentuser = r.Result;
+                            tempmodel.currentuser = r.Result[0];
                             tempmodel.SetRoom();
                         }
                     });
                 }
             },
             SetRoom: function () {
-                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETUSERBYUSERNAMES&r=" + Math.random(), { P1: tempmodel.modelData.ZCUser }, function (rs) {
-                    if (rs.ErrorMsg == "") {
-                        tempmodel.ZCUserNames = rs.Result;
-                    }
-                });
+                //$.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETUSERBYUSERNAMES&r=" + Math.random(), { P1: tempmodel.modelData.ZCUser }, function (rs) {
+                //    if (rs.ErrorMsg == "") {
+                //        tempmodel.ZCUserNames = rs.Result;
+                //    }
+                //});
                 if (tempmodel.modelData.RoomWidth && tempmodel.modelData.RoomLength) {
                     var rw = parseInt(tempmodel.modelData.RoomWidth);
                     var rl = parseInt(tempmodel.modelData.RoomLength);
@@ -280,17 +372,21 @@
                         }
                     });
                 }
-                if (tempmodel.modelData.ZCUser.trim() != "") {
-                    $.each(tempmodel.modelData.ZCUser.split(','), function (i, n) {
-                        if (n == tempmodel.currentuser.UserName) {
-                            $('.attention').html('主席台区域');
-                            $('.attention').css('color', '#007457');
-                        }
-                    });
+                //if (tempmodel.modelData.ZCUser.trim() != "") {
+                //    $.each(tempmodel.modelData.ZCUser.split(','), function (i, n) {
+                //        if (n == tempmodel.currentuser.UserName) {
+                //            $('.attention').html('主席台区域');
+                //            $('.attention').css('color', '#007457');
+                //        }
+                //    });
+                //}
+                if (tempmodel.currentuser.Type == 2) {
+                    $('.attention').html('主席台区域');
+                    $('.attention').css('color', '#007457');
                 }
             },
-            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "" },
-            
+            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "" },
+
         });
 
         avalon.ready(function () {

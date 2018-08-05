@@ -999,6 +999,33 @@
           <Property Name="ZSAP" Type="varchar(max)" />
           <Property Name="FZQK" Type="varchar(max)" />
           <Property Name="intProcessStanceid" Type="int" />
+          <Property Name="CXQK" Type="varchar(max)" />
+          <Property Name="YCQK" Type="varchar(max)" />
+          <Property Name="YCTIME" Type="varchar" MaxLength="100" />
+          <Property Name="YCLOCATION" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="SZHL_HYGL_OUTUSER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="int" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="HYGLID" Type="int" />
+          <Property Name="Type" Type="int" />
+          <Property Name="OutDeptName" Type="varchar" MaxLength="200" />
+          <Property Name="Zhiwu" Type="varchar" MaxLength="200" />
+          <Property Name="Mobphone" Type="varchar" MaxLength="20" />
+          <Property Name="RoomNumber" Type="varchar" MaxLength="200" />
+          <Property Name="BoardingTime" Type="varchar" MaxLength="200" />
+          <Property Name="CarNumber" Type="varchar" MaxLength="200" />
+          <Property Name="YCTIME" Type="varchar" MaxLength="200" />
+          <Property Name="YCLOCATION" Type="varchar" MaxLength="200" />
+          <Property Name="ServiceUser" Type="int" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="DisplayOrder" Type="int" />
+          <Property Name="CRUser" Type="varchar" MaxLength="100" />
+          <Property Name="CRDate" Type="datetime" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_QD">
           <Key>
@@ -1054,6 +1081,18 @@
           <Property Name="DelDate" Type="datetime" />
           <Property Name="Width" Type="int" />
           <Property Name="Length" Type="int" />
+        </EntityType>
+        <EntityType Name="SZHL_HYGL_SERVICE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="int" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Mobphone" Type="varchar" MaxLength="100" />
+          <Property Name="HYGLID" Type="int" />
+          <Property Name="CRUser" Type="varchar" MaxLength="100" />
+          <Property Name="CRDate" Type="datetime" />
         </EntityType>
         <EntityType Name="SZHL_JFBX">
           <Key>
@@ -1841,9 +1880,11 @@
           <EntitySet Name="SZHL_GZGL_JCSZ" EntityType="Self.SZHL_GZGL_JCSZ" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_GZGL_WXYJ" EntityType="Self.SZHL_GZGL_WXYJ" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_HYGL" EntityType="Self.SZHL_HYGL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SZHL_HYGL_OUTUSER" EntityType="Self.SZHL_HYGL_OUTUSER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_HYGL_QD" EntityType="Self.SZHL_HYGL_QD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_HYGL_QR" EntityType="Self.SZHL_HYGL_QR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_HYGL_ROOM" EntityType="Self.SZHL_HYGL_ROOM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SZHL_HYGL_SERVICE" EntityType="Self.SZHL_HYGL_SERVICE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_JFBX" EntityType="Self.SZHL_JFBX" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_JFBXITEM" EntityType="Self.SZHL_JFBXITEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_KQBC" EntityType="Self.SZHL_KQBC" Schema="dbo" store:Type="Tables" />
@@ -1974,7 +2015,9 @@
           <EntitySet Name="SZHL_ZCGL_Location" EntityType="QJY_SaaSModel.SZHL_ZCGL_Location" />
           <EntitySet Name="SZHL_ZCGL_LifeCycle" EntityType="QJY_SaaSModel.SZHL_ZCGL_LifeCycle" />
           <EntitySet Name="SZHL_ZCGL" EntityType="QJY_SaaSModel.SZHL_ZCGL" />
+          <EntitySet Name="SZHL_HYGL_SERVICE" EntityType="QJY_SaaSModel.SZHL_HYGL_SERVICE" />
           <EntitySet Name="SZHL_HYGL" EntityType="QJY_SaaSModel.SZHL_HYGL" />
+          <EntitySet Name="SZHL_HYGL_OUTUSER" EntityType="QJY_SaaSModel.SZHL_HYGL_OUTUSER" />
         </EntityContainer>
         <EntityType Name="FT_File">
           <Key>
@@ -3723,6 +3766,18 @@
           <Property Name="Verify" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IndexID" Type="Int32" />
         </EntityType>
+        <EntityType Name="SZHL_HYGL_SERVICE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Mobphone" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HYGLID" Type="Int32" />
+          <Property Name="CRUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="SZHL_HYGL">
           <Key>
             <PropertyRef Name="ID" />
@@ -3760,6 +3815,33 @@
           <Property Name="ZSAP" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="FZQK" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="intProcessStanceid" Type="Int32" />
+          <Property Name="CXQK" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="YCQK" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="YCTIME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="YCLOCATION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SZHL_HYGL_OUTUSER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HYGLID" Type="Int32" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="OutDeptName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Zhiwu" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Mobphone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RoomNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="BoardingTime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CarNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="YCTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="YCLOCATION" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceUser" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Precision="3" />
+          <Property Name="DisplayOrder" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5601,9 +5683,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SZHL_HYGL_SERVICE">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL_SERVICE">
+              <MappingFragment StoreEntitySet="SZHL_HYGL_SERVICE">
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="HYGLID" ColumnName="HYGLID" />
+                <ScalarProperty Name="Mobphone" ColumnName="Mobphone" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="SZHL_HYGL">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL">
               <MappingFragment StoreEntitySet="SZHL_HYGL">
+                <ScalarProperty Name="YCLOCATION" ColumnName="YCLOCATION" />
+                <ScalarProperty Name="YCTIME" ColumnName="YCTIME" />
+                <ScalarProperty Name="YCQK" ColumnName="YCQK" />
+                <ScalarProperty Name="CXQK" ColumnName="CXQK" />
                 <ScalarProperty Name="intProcessStanceid" ColumnName="intProcessStanceid" />
                 <ScalarProperty Name="FZQK" ColumnName="FZQK" />
                 <ScalarProperty Name="ZSAP" ColumnName="ZSAP" />
@@ -5635,6 +5734,30 @@
                 <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SZHL_HYGL_OUTUSER">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL_OUTUSER">
+              <MappingFragment StoreEntitySet="SZHL_HYGL_OUTUSER">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ServiceUser" ColumnName="ServiceUser" />
+                <ScalarProperty Name="YCLOCATION" ColumnName="YCLOCATION" />
+                <ScalarProperty Name="YCTIME" ColumnName="YCTIME" />
+                <ScalarProperty Name="CarNumber" ColumnName="CarNumber" />
+                <ScalarProperty Name="BoardingTime" ColumnName="BoardingTime" />
+                <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
+                <ScalarProperty Name="Mobphone" ColumnName="Mobphone" />
+                <ScalarProperty Name="Zhiwu" ColumnName="Zhiwu" />
+                <ScalarProperty Name="OutDeptName" ColumnName="OutDeptName" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="HYGLID" ColumnName="HYGLID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ComId" ColumnName="ComId" />
               </MappingFragment>

@@ -3,12 +3,13 @@
         <div class="detail-nav">
             <div class="tab-kh nav-bt">
                 <span ms-class-1="cur:seltype==1" ms-click="selecttype(1)"><i class="iconfont icon-bookmark"></i>基本信息</span>
-                <span ms-class-1="cur:seltype==2" ms-click="selecttype(2)"><i class="iconfont icon-bookmark"></i>外部参会人</span>
-                <span ms-class-1="cur:seltype==3" ms-click="selecttype(3)"><i class="iconfont icon-bookmark"></i>会议安排</span>
-                <span ms-class-1="cur:seltype==4" ms-click="selecttype(4)"><i class="iconfont icon-bookmark"></i>出行</span>
-                <span ms-class-1="cur:seltype==5" ms-click="selecttype(5)"><i class="iconfont icon-bookmark"></i>住宿</span>
-                <span ms-class-1="cur:seltype==6" ms-click="selecttype(6)"><i class="iconfont icon-bookmark"></i>餐饮</span>
-                <span ms-class-1="cur:seltype==7" ms-click="selecttype(7)"><i class="iconfont icon-bookmark"></i>一键服务</span>
+                <span ms-class-1="cur:seltype==2" ms-if="HYGLID>0" ms-click="selecttype(2)"><i class="iconfont icon-bookmark"></i>主持人</span>
+                <span ms-class-1="cur:seltype==3" ms-if="HYGLID>0" ms-click="selecttype(3)"><i class="iconfont icon-bookmark"></i>参会人</span>
+                <span ms-class-1="cur:seltype==4" ms-click="selecttype(4)"><i class="iconfont icon-bookmark"></i>会议安排</span>
+                <span ms-class-1="cur:seltype==5" ms-click="selecttype(5)"><i class="iconfont icon-bookmark"></i>出行</span>
+                <span ms-class-1="cur:seltype==6" ms-click="selecttype(6)"><i class="iconfont icon-bookmark"></i>住宿</span>
+                <span ms-class-1="cur:seltype==7" ms-click="selecttype(7)"><i class="iconfont icon-bookmark"></i>用餐</span>
+                <span ms-class-1="cur:seltype==8" ms-if="HYGLID>0" ms-click="selecttype(8)"><i class="iconfont icon-bookmark"></i>一键服务</span>
             </div>
         </div>
         <div ms-visible="seltype==1">
@@ -74,25 +75,24 @@
                             </select>
                         </div>
                     </li>
-                    <li class="add-item add-widthall">
+                    <!--<li class="add-item add-widthall">
                         <label class="add-item-label">企业内部参会人</label>
                         <div class="add-ic">
                             <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.CYUser" />
                         </div>
-                    </li>
-
+                    </li>-->
                 </ul>
             </div>
             <div>
-                <div class="fg-item"><span>其他信息</span><i id="btnOtherInfo"></i></div>
+                <div class="fg-item"><span>其他信息</span><i></i></div>
                 <ul class="clearfix" style="padding:0" id="OtherInfo">
-                    <li class="add-item add-widthall">
+                    <!--<li class="add-item add-widthall">
                         <label class="add-item-label">主持人</label>
                         <div class="add-ic">
                             <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.ZCUser" />
                         </div>
                     </li>
-                    <!--<li class="add-item add-widthall">
+                    <li class="add-item add-widthall">
                         <label class="add-item-label">纪要人</label>
                         <div class="add-ic">
                             <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.JLUser" />
@@ -114,50 +114,165 @@
             </div>
         </div>
         <div ms-visible="seltype==2">
+
+            <div class="add-item add-widthall">
+                <div class="pr20">
+                    <button class="btn btn-info" ms-click="EditZCUser(0,'添加')">添加</button>
+                </div>
+            </div>
+
+            <table class="table-con">
+                <tr>
+                    <th>单位名称</th>
+                    <th>姓名</th>
+                    <th>联系电话</th>
+                    <th>职务</th>
+                    <th>房间号</th>
+                    <th>上车时间</th>
+                    <th>车牌号</th>
+                    <th>用餐时间</th>
+                    <th>用餐地点</th>
+                    <th>序号</th>
+                    <th>服务人员</th>
+                    <th>操作</th>
+                </tr>
+                <tr ms-repeat-el="ZCUserData">
+                    <td>{{el.OutDeptName}}</td>
+                    <td>{{el.Name}}</td>
+                    <td>{{el.Mobphone}}</td>
+                    <td>{{el.Zhiwu}}</td>
+                    <td>{{el.RoomNumber}}</td>
+                    <td>{{el.BoardingTime}}</td>
+                    <td>{{el.CarNumber}}</td>
+                    <td>{{el.YCTIME}}</td>
+                    <td>{{el.YCLOCATION}}</td>
+                    <td>{{el.DisplayOrder}}</td>
+                    <td>{{el.ServiceName}}</td>
+                    <td>
+                        <a class="lk" ms-click="EditZCUser(el.ID,'编辑')">编辑</a>&nbsp;|
+                        <a class="lk" ms-click="DelZCUser(el,$event)">删除</a>
+                    </td>
+                </tr>
+            </table>
+
         </div>
         <div ms-visible="seltype==3">
+
             <div class="add-item add-widthall">
-                <label class="add-item-label">会议须知</label>
+                <div class="pr20">
+                    <button class="btn btn-info" ms-click="EditOutUser(0,'添加')">添加</button>
+                </div>
+            </div>
+
+            <table class="table-con">
+                <tr>
+                    <th>单位名称</th>
+                    <th>姓名</th>
+                    <th>联系电话</th>
+                    <th>职务</th>
+                    <th>房间号</th>
+                    <th>上车时间</th>
+                    <th>车牌号</th>
+                    <th>用餐时间</th>
+                    <th>用餐地点</th>
+                    <th>序号</th>
+                    <th>服务人员</th>
+                    <th>操作</th>
+                </tr>
+                <tr ms-repeat-el="OutUserData">
+                    <td>{{el.OutDeptName}}</td>
+                    <td>{{el.Name}}</td>
+                    <td>{{el.Mobphone}}</td>
+                    <td>{{el.Zhiwu}}</td>
+                    <td>{{el.RoomNumber}}</td>
+                    <td>{{el.BoardingTime}}</td>
+                    <td>{{el.CarNumber}}</td>
+                    <td>{{el.YCTIME}}</td>
+                    <td>{{el.YCLOCATION}}</td>
+                    <td>{{el.DisplayOrder}}</td>
+                    <td>{{el.ServiceName}}</td>
+                    <td>
+                        <a class="lk" ms-click="EditOutUser(el.ID,'编辑',1)">编辑</a>&nbsp;|
+                        <a class="lk" ms-click="DelOutUser(el,$event)">删除</a>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <div ms-visible="seltype==4">
+            <div class="fg-item"><span>会议须知</span><i></i></div>
+            <div class="add-item add-widthall">
                 <div class="add-ic">
                     <textarea class="szhl_UEEDIT" id="hyxuzhi" umheight="280" ms-duplex="modelData.HYXZ"></textarea>
                 </div>
             </div>
-            <div class="fg-item"><span></span><i id="btnOtherInfo"></i></div>
+            <div class="fg-item"><span>服务指南</span><i></i></div>
             <div class="add-item add-widthall">
-                <label class="add-item-label">服务指南</label>
                 <div class="add-ic">
                     <textarea class="szhl_UEEDIT" id="hyservice" umheight="280" ms-duplex="modelData.HYFW"></textarea>
                 </div>
             </div>
-            <div class="fg-item"><span></span><i id="btnOtherInfo"></i></div>
+            <div class="fg-item"><span>日程安排</span><i></i></div>
             <div class="add-item add-widthall">
-                <label class="add-item-label">日程安排</label>
                 <div class="add-ic">
                     <textarea class="szhl_UEEDIT" id="hycontent" umheight="280" ms-duplex="modelData.Details"></textarea>
                 </div>
             </div>
         </div>
-        <div ms-visible="seltype==4">
+        <div ms-visible="seltype==5">
+            <div class="fg-item"><span>参观线路</span><i></i></div>
             <div class="add-item add-widthall">
-                <label class="add-item-label">分组情况</label>
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hychuxing" umheight="280" ms-duplex="modelData.CXQK"></textarea>
+                </div>
+            </div>
+            <!--<div class="fg-item"><span>分组情况</span><i></i></div>
+            <div class="add-item add-widthall">
                 <div class="add-ic">
                     <textarea class="szhl_UEEDIT" id="hygroup" umheight="280" ms-duplex="modelData.FZQK"></textarea>
                 </div>
-            </div>
+            </div>-->
         </div>
-        <div ms-visible="seltype==5">
+        <div ms-visible="seltype==6">
+            <div class="fg-item"><span>住宿宾馆</span><i></i></div>
             <div class="add-item add-widthall">
-                <label class="add-item-label">住宿安排</label>
                 <div class="add-ic">
                     <textarea class="szhl_UEEDIT" id="hysit" umheight="280" ms-duplex="modelData.ZSAP"></textarea>
                 </div>
             </div>
         </div>
-        <div ms-visible="seltype==6">
-           
-        </div>
         <div ms-visible="seltype==7">
-            
+            <div class="fg-item"><span>用餐安排</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyyongcan" umheight="280" ms-duplex="modelData.YCQK"></textarea>
+                </div>
+            </div>
+        </div>
+        <div ms-visible="seltype==8">
+            <div class="fg-item"><span>服务人员</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="pr20">
+                    <button class="btn btn-info" ms-click="EditService(0,'添加')">添加</button>
+                </div>
+            </div>
+
+            <table class="table-con">
+                <tr>
+                    <th>姓名</th>
+                    <th>联系电话</th>
+                    <th>操作</th>
+                </tr>
+                <tr ms-repeat-el="ServiceData">
+                    <td>{{el.Name}}</td>
+                    <td>{{el.Mobphone}}</td>
+                    <td>
+                        <a class="lk" ms-click="EditService(el.ID,'编辑')">编辑</a>&nbsp;|
+                        <a class="lk" ms-click="DelService(el,$event)">删除</a>
+                    </td>
+                </tr>
+            </table>
+
         </div>
     </div>
 </div>
@@ -168,20 +283,24 @@
         name: "会议管理",
         seltype: 1,
         CLData: [],
+        ServiceData: [],
+        OutUserData: [],
+        ZCUserData: [],
         TypeId: ComFunJS.getQueryString("typeId"),
+        HYGLID: ComFunJS.getQueryString("ID"),//会议ID
         iswf: true,//是否属于流程表单
         inittemp: function (strId) {
             $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETKYHYSLIST', {}, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempmodel.CLData = resultData.Result;
-                    if (resultData.Result.length > 0) {
-                        if (tempmodel.TypeId) {
-                            tempmodel.modelData.RoomID = tempmodel.TypeId;
-                        }
-                        if (!tempmodel.modelData.RoomID) {
-                            tempmodel.modelData.RoomID = resultData.Result[0].ID;
-                        };
-                    }
+                    //if (resultData.Result.length > 0) {
+                    //    if (tempmodel.TypeId) {
+                    //        tempmodel.modelData.RoomID = tempmodel.TypeId;
+                    //    }
+                    //    if (!tempmodel.modelData.RoomID) {
+                    //        tempmodel.modelData.RoomID = resultData.Result[0].ID;
+                    //    };
+                    //}
                 }
             })
             if (strId) {
@@ -189,23 +308,168 @@
                 $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETHYGLMODEL', { P1: strId }, function (resultData) {
                     if (resultData.ErrorMsg == "") {
                         tempmodel.modelData = resultData.Result[0];
+                        tempmodel.GetServiceList(strId);
+                        tempmodel.GetZCUserList(strId);
+                        tempmodel.GetOutUserList(strId);
                         setTimeout(" ComFunJS.initForm()", 500);
                     }
                 })
             } else {
-                pmodel.isDraft = true;
+                //pmodel.isDraft = true;
                 ComFunJS.initForm();
             }
         },//初始化
         modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "" },
         SaveData: function (callback) {
             $.post("/API/VIEWAPI.ashx?ACTION=HYGL_ADDHYGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
-
                 return callback.call(this, result);
             });
         },
         selecttype: function (type) {
             tempmodel.seltype = type;
-        }
+        },
+        EditService: function (ServiceID, title) {
+            ComFunJS.winbtnwin("/ViewV5/AppPage/HYGL/EDIT_Service.html?ServiceID=" + ServiceID + "&r=" + Math.random(), title + "服务人员", 600, 400, {}, function (layero, inx) {
+                var frameid = $("iframe", $(layero)).attr('id');
+                var sernr = ComFunJS.isIE() ? window.frames[frameid].getService() : window.frames[frameid].contentWindow.getService();
+                if (sernr) {
+                    $.post('/API/VIEWAPI.ashx?Action=HYGL_UPDATESERVICE&r=' + Math.random(), { P1: tempmodel.HYGLID, P2: sernr }, function (resultData) {
+                        if (resultData.ErrorMsg == "") {
+                            layer.close(inx);
+                            tempmodel.GetServiceList(tempmodel.HYGLID);
+                            top.ComFunJS.winsuccess("操作成功！！");
+                        }
+                        else {
+                            top.ComFunJS.winwarning(resultData.ErrorMsg);
+                        }
+                    })
+                }
+            })
+        },
+        DelService: function (el, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            ComFunJS.winconfirm("确认要删除吗？", function () {
+                $.getJSON("/API/VIEWAPI.ashx?Action=HYGL_DELSERVICE", { P1: el.ID }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        tempmodel.ServiceData.remove(el);
+                        ComFunJS.winsuccess("操作成功");
+                    }
+                })
+            }, function () { })
+        },
+        GetServiceList: function (strId) {
+            if (strId) {
+                $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETSERVICELISTBYHYGLID', { P1: strId }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        if (resultData.Result.length > 0) {
+                            tempmodel.ServiceData = resultData.Result;
+                        }
+                    }
+                })
+            }
+        },
+        EditOutUser: function (OutUserID, title) {
+            //type=1 参会人，=2主持人
+            ComFunJS.winbtnwin("/ViewV5/AppPage/HYGL/EDIT_OutUser.html?OutUserID=" + OutUserID + "&type=1&r=" + Math.random(), title + "参会人员", 750, 500, {}, function (layero, inx) {
+                var frameid = $("iframe", $(layero)).attr('id');
+                var outusernr = ComFunJS.isIE() ? window.frames[frameid].getOutUser() : window.frames[frameid].contentWindow.getOutUser();
+                var otmodel = JSON.parse(outusernr);
+                if (!(/^[0-9]*$/.test(otmodel.DisplayOrder))) {
+                    top.ComFunJS.winwarning("序号必须是数字");
+                    return;
+                }
+                if (outusernr) {
+                    $.post('/API/VIEWAPI.ashx?Action=HYGL_UPDATEOUTUSER&r=' + Math.random(), { P1: tempmodel.HYGLID, P2: outusernr, type: 1 }, function (resultData) {
+                        if (resultData.ErrorMsg == "") {
+                            layer.close(inx);
+                            tempmodel.GetOutUserList(tempmodel.HYGLID);
+                            top.ComFunJS.winsuccess("操作成功！！");
+                        }
+                        else {
+                            top.ComFunJS.winwarning(resultData.ErrorMsg);
+                        }
+                    })
+                }
+            })
+        },
+        DelOutUser: function (el, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            ComFunJS.winconfirm("确认要删除吗？", function () {
+                $.getJSON("/API/VIEWAPI.ashx?Action=HYGL_DELOUTUSER", { P1: el.ID }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        tempmodel.OutUserData.remove(el);
+                        ComFunJS.winsuccess("操作成功");
+                    }
+                })
+            }, function () { })
+        },
+        GetOutUserList: function (strId) {
+            if (strId) {
+                $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETOUTUSERLISTBYHYGLID', { P1: strId, P2: 1 }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        if (resultData.Result.length > 0) {
+                            tempmodel.OutUserData = resultData.Result;
+                        }
+                    }
+                })
+            }
+        },
+
+        EditZCUser: function (OutUserID, title) {
+            //type=1 参会人，=2主持人
+            ComFunJS.winbtnwin("/ViewV5/AppPage/HYGL/EDIT_OutUser.html?OutUserID=" + OutUserID + "&type=2&r=" + Math.random(), title + "主持人", 750, 500, {}, function (layero, inx) {
+                var frameid = $("iframe", $(layero)).attr('id');
+                var outusernr = ComFunJS.isIE() ? window.frames[frameid].getOutUser() : window.frames[frameid].contentWindow.getOutUser();
+                var otmodel = JSON.parse(outusernr);
+                if (!(/^[0-9]*$/.test(otmodel.DisplayOrder))) {
+                    top.ComFunJS.winwarning("序号必须是数字");
+                    return;
+                }
+                if (outusernr) {
+                    $.post('/API/VIEWAPI.ashx?Action=HYGL_UPDATEOUTUSER&r=' + Math.random(), { P1: tempmodel.HYGLID, P2: outusernr, type: 2 }, function (resultData) {
+                        if (resultData.ErrorMsg == "") {
+                            layer.close(inx);
+                            tempmodel.GetZCUserList(tempmodel.HYGLID);
+                            top.ComFunJS.winsuccess("操作成功！！");
+                        }
+                        else {
+                            top.ComFunJS.winwarning(resultData.ErrorMsg);
+                        }
+                    })
+                }
+            })
+        },
+        DelZCUser: function (el, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            ComFunJS.winconfirm("确认要删除吗？", function () {
+                $.getJSON("/API/VIEWAPI.ashx?Action=HYGL_DELOUTUSER", { P1: el.ID }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        tempmodel.ZCUserData.remove(el);
+                        ComFunJS.winsuccess("操作成功");
+                    }
+                })
+            }, function () { })
+        },
+        GetZCUserList: function (strId) {
+            if (strId) {
+                $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETOUTUSERLISTBYHYGLID', { P1: strId, P2: 2 }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        if (resultData.Result.length > 0) {
+                            tempmodel.ZCUserData = resultData.Result;
+                        }
+                    }
+                })
+            }
+        },
     });
+
+    function GetHYGLID() {
+        return tempmodel.HYGLID;
+    }
 </script>

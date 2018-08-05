@@ -47,5 +47,9 @@ namespace QJY.Data
         public string ZSAP { get; set; }
         public string FZQK { get; set; }
         public Nullable<int> intProcessStanceid { get; set; }
+        public string CXQK { get; set; }
+        public string YCQK { get; set; }
+        public string YCTIME { get; set; }
+        public string YCLOCATION { get; set; }
     }
 }

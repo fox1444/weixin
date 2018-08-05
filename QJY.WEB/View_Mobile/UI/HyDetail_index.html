@@ -13,7 +13,9 @@
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
 </head>
 <body ms-controller="Hydetail">
-    <div class="hy_wrap">
+    <div class="index-html">
+    </div>
+    <div class="hy_wrap" id="hy_wrap">
         <div class="invitation">
             INVITATION
         </div>
@@ -30,10 +32,15 @@
         </div>
         <div class="default_block">
             <div class="infomation">
-                尊敬的<span style="color:#ff4700">{{tempmodel.currentuser.UserRealName}}</span>，欢迎您参加本次会议
+                尊敬的<span style="color:#ff4700">{{currentuser.Name}}</span>，欢迎您参加本次会议
             </div>
             <div class="gobutton">
-                <span ms-on-click="re_input()">重新输入</span><span ms-on-click="view_detail()">进入会议</span>
+                <div class="fl-left">
+                    <span ms-on-click="re_input()" style="float:right;">重新输入</span>
+                </div>
+                <div class="fl-right">
+                    <span ms-on-click="view_detail()" style="float:left;">进入会议</span>
+                </div>
             </div>
         </div>
         <div class="input_block">
@@ -50,7 +57,7 @@
     </div>
     <script src="/View_Mobile/js/layer/layer.m.js"></script>
     <script src="/View_Mobile/js/zepto.min.js"></script>
-    <script src="/View_Mobile/JS/avalon1.47.js"></script>
+    <script src="/View_Mobile/JS/avalon.mobile.js"></script>
     <script src="/View_Mobile/JS/raty/jquery.raty.js?v=1.3"></script>
     <script src="/View_Mobile/js/ComFunJS.js"></script>
     <script>
@@ -62,7 +69,7 @@
             tpData: [],
             userpl: 0,
             usertype: "",
-            currentuser: { "ID": "", "UserRealName": "", "mobphone": "", "UserGW": "" },
+            currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "DisplayOrder": 0, "Zhiwu": "" },
             isjl: "",
             Name: "",
             wximg: "",
@@ -107,7 +114,6 @@
                 }
 
                 $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELWITHPHONE', { P1: tempmodel.dataid, P2: tempmodel.phonenumber }, function (resultData) {
-
                     if (resultData.ErrorMsg == "") {
                         if (resultData.Result[0]) {
                             tempmodel.phonebackData = resultData.Result[0];
@@ -115,9 +121,9 @@
                             ComFunJS.setCookieMinute("userphonenumber", tempmodel.phonenumber, 60);
                             var pn = tempmodel.phonenumber;
                             if (pn && pn != null && pn != undefined && pn != '') {
-                                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETUSERBYPHONENUMBER&r=" + Math.random(), { P1: pn }, function (r) {
+                                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
                                     if (r.ErrorMsg == "") {
-                                        tempmodel.currentuser = r.Result;
+                                        tempmodel.currentuser = r.Result[0];
                                     }
                                 });
                             }
@@ -133,9 +139,6 @@
                             return;
                         }
                     }
-                    else {
-
-                    }
                 })
             },
             inittemp: function (strId) {
@@ -148,9 +151,9 @@
 
                             var pn = ComFunJS.getCookie("userphonenumber");
                             if (pn && pn != null && pn != undefined && pn != '') {
-                                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETUSERBYPHONENUMBER&r=" + Math.random(), { P1: pn }, function (r) {
+                                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
                                     if (r.ErrorMsg == "") {
-                                        tempmodel.currentuser = r.Result;
+                                        tempmodel.currentuser = r.Result[0];
                                         $('.input_block').hide();
                                         $('.default_block').show();
                                     }
@@ -161,15 +164,15 @@
                                 $('.default_block').hide();
                             }
 
-                            if (resultData.Result.JLUser) {
-                                var JLUserList = resultData.Result.JLUser.split(',');
+                            //if (resultData.Result.JLUser) {
+                            //    var JLUserList = resultData.Result.JLUser.split(',');
 
-                                var un = ComFunJS.getCookie("username");
-                                if (JLUserList.indexOf(un) != -1 || resultData.Result.FQUser.split(',').indexOf(un) != -1) {
-                                    tempmodel.isjl = "1";
-                                }
-                            }
-                            setTimeout(" ComFunJS.initForm()", 500)
+                            //    var un = ComFunJS.getCookie("username");
+                            //    if (JLUserList.indexOf(un) != -1 || resultData.Result.FQUser.split(',').indexOf(un) != -1) {
+                            //        tempmodel.isjl = "1";
+                            //    }
+                            //}
+                            //setTimeout(" ComFunJS.initForm()", 500)
                         }
                     })
                 }
@@ -208,8 +211,10 @@
 
         $(window).on("load resize", function () {
             var h = document.documentElement.clientHeight || window.innerHeight;
-            $(".hy_wrap").css("height", h);
+            $(".index-html").css("height", h);
         });
+
+
     </script>
 </body>
 </html>

@@ -605,12 +605,11 @@ namespace QJY.API
         /// <param name="UserInfo"></param>
         public void UPDATELIFECYCLE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            int LCId = int.Parse(P1);
+            int ZCGLid = int.Parse(P1);
             SZHL_ZCGL_LifeCycle ZCLC = JsonConvert.DeserializeObject<SZHL_ZCGL_LifeCycle>(P2);
-            string ZCGLid = context.Request["zcglID"] ?? "";
-            if (ZCLC == null || ZCGLid == "" || ZCGLid == "0")
+            if (ZCGLid <= 0)
             {
-                msg.ErrorMsg = "添加失败";
+                msg.ErrorMsg = "资产不存在！";
                 return;
             }
             if (string.IsNullOrWhiteSpace(ZCLC.Title))
@@ -629,9 +628,9 @@ namespace QJY.API
                 return;
             }
 
-            if (LCId == 0)
+            if (ZCLC.ID == 0)
             {
-                ZCLC.ZCGLID = int.Parse(ZCGLid);
+                ZCLC.ZCGLID = ZCGLid;
                 ZCLC.CRDate = DateTime.Now;
                 ZCLC.CRUser = UserInfo.User.UserName;
                 ZCLC.ComId = UserInfo.User.ComId.Value;

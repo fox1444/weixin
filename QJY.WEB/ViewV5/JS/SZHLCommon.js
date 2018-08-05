@@ -1361,7 +1361,7 @@
                     return ComFunJS.FnFormat(el.FromDate, "dateformat") + "入库分配给" + el.FromUser;
                 }
                 break;
-            case 0://维修
+            case 20://维修
                 {
                     return "从" + ComFunJS.FnFormat(el.FromDate, "dateformat") + "至" + ComFunJS.FnFormat(el.ToDate, "dateformat") + "进行维修";
                 }

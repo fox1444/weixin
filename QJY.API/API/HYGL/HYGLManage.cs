@@ -272,11 +272,6 @@ namespace QJY.API
         /// <summary>
         /// 会议列表
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void GETHYGLLIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             string userName = UserInfo.User.UserName;
@@ -455,11 +450,6 @@ namespace QJY.API
         /// <summary>
         /// 添加会议
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void ADDHYGL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             SZHL_HYGL HY = JsonConvert.DeserializeObject<SZHL_HYGL>(P1);
@@ -542,37 +532,12 @@ namespace QJY.API
             }
             msg.Result = HY;
         }
-
-        public void UPDATEHYGLZCB(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
-        {
-
-            SZHL_HYGL HY = JsonConvert.DeserializeObject<SZHL_HYGL>(P1);
-
-            if (HY.ID != 0)
-            {
-                HY.ZCB = P2;
-                if (new SZHL_HYGLB().Update(HY))
-                    msg.Result = "";
-                else
-                    msg.Result = "操作失败！！";
-            }
-            else
-            {
-                msg.Result = "操作失败！！";
-            }
-
-        }
         #endregion
 
         #region 会议详细信息
         /// <summary>
         /// 会议详细信息
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void GETHYGLMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int Id = int.Parse(P1);
@@ -705,17 +670,17 @@ namespace QJY.API
         {
             int Id = int.Parse(P1);
             string PhoneNumber = P2;
-            string strWhere = " hy.IsDel=0 and hy.ID=" + Id + " and (CHARINDEX((select UserName FROM JH_Auth_User where mobphone=N'" + PhoneNumber + "')+',',CYUser+',')>0 " +
-                " or CHARINDEX((select UserName FROM JH_Auth_User where mobphone=N'" + PhoneNumber + "')+',',ZCUser+',')>0 " +
-                " or CHARINDEX((select UserName FROM JH_Auth_User where mobphone=N'" + PhoneNumber + "')+',',JLUser+',')>0 " +
-                " or CHARINDEX((select UserName FROM JH_Auth_User where mobphone=N'" + PhoneNumber + "')+',',SXUser+',')>0 )";
+            //string strWhere = " hy.IsDel=0 and hy.ID=" + Id + " and (CHARINDEX((select UserName FROM JH_Auth_User where mobphone=N'" + PhoneNumber + "')+',',CYUser+',')>0 " +
+            //    " or CHARINDEX((select UserName FROM JH_Auth_User where mobphone=N'" + PhoneNumber + "')+',',ZCUser+',')>0 " +
+            //    " or CHARINDEX((select UserName FROM JH_Auth_User where mobphone=N'" + PhoneNumber + "')+',',JLUser+',')>0 " +
+            //    " or CHARINDEX((select UserName FROM JH_Auth_User where mobphone=N'" + PhoneNumber + "')+',',SXUser+',')>0 )";
+
+            string strWhere = " hy.IsDel=0 and hy.ID=" + Id + " and hy.Id in (select HYGLID from SZHL_HYGL_OUTUSER where Mobphone=N'" + PhoneNumber + "')";
             string colNme = @"hy.*,hys.Name ,dbo.fn_PDStatus(hy.intProcessStanceid) AS StateName,case when hy.StartTime>getdate() then '即将开始' when hy.StartTime<=getdate() and hy.EndTime>=getdate() then '正在进行' when hy.EndTime<getdate() then '已结束' end as HLStatus ";
             string tableName = string.Format(@" SZHL_HYGL hy left join SZHL_HYGL_ROOM hys on hy.RoomID=hys.ID");
 
             string strSql = string.Format("Select {0}  From {1} where {2} order by hy.CRDate desc", colNme, tableName, strWhere);
             DataTable dt = new SZHL_HYGLB().GetDTByCommand(strSql);
-
-
             msg.Result = dt;
             if (dt.Rows.Count > 0)
             {
@@ -730,7 +695,6 @@ namespace QJY.API
                 //msg.Result2 = new SZHL_HYGL_QRB().GetEntities(p => p.Status == "0" && p.HYID == model.ID && p.IsDel == 0);
                 //msg.Result3 = new SZHL_HYGL_QDB().GetEntities(p => p.IsDel == 0 && p.HYID == model.ID);
                 var strid = dt.Rows[0]["ID"].ToString();
-
 
                 //打开会议即已阅
                 //Msg_Result msg2 = new Msg_Result();
@@ -911,6 +875,210 @@ namespace QJY.API
             msg.Result1 = total;
         }
         #endregion
+
+        #region 会议座次表
+        /// <summary>
+        /// 保存座次表
+        /// </summary>
+        public void UPDATEHYGLZCB(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            SZHL_HYGL HY = JsonConvert.DeserializeObject<SZHL_HYGL>(P1);
+
+            if (HY.ID != 0)
+            {
+                HY.ZCB = P2;
+                if (new SZHL_HYGLB().Update(HY))
+                    msg.Result = "";
+                else
+                    msg.Result = "操作失败！！";
+            }
+            else
+            {
+                msg.Result = "操作失败！！";
+            }
+        }
+        #endregion
+        #endregion
+
+        #region 外部参会人管理
+        /// <summary>
+        /// 查询外部参会人列表
+        /// </summary>
+        public void GETOUTUSERLISTBYHYGLID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            int type = 0;
+            try
+            {
+                type = int.Parse(P2);
+            }
+            catch
+            {
+
+            }
+            string strWhere = " u.HYGLID=" + Id;
+            if (type > 0)
+            {
+                strWhere += " and u.type=" + type;
+            }
+            msg.Result = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.*, s.Name as ServiceName from dbo.SZHL_HYGL_OUTUSER u left join  SZHL_HYGL_SERVICE s on u.ServiceUser=s.ID where " + strWhere + " order by u.type desc, u.Name, u.CRDate desc");
+        }
+
+        /// <summary>
+        /// 新加、编辑外部参会人
+        /// </summary>
+        public void UPDATEOUTUSER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int HYGLId = int.Parse(P1);
+            string type = context.Request["type"] ?? "1";
+            SZHL_HYGL_OUTUSER HYOutuser = JsonConvert.DeserializeObject<SZHL_HYGL_OUTUSER>(P2);
+            if (HYGLId <= 0)
+            {
+                msg.ErrorMsg = "会议不存在！";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(HYOutuser.Name))
+            {
+                msg.ErrorMsg = "姓名不能为空！";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(HYOutuser.Mobphone))
+            {
+                msg.ErrorMsg = "电话不能为空！";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(HYOutuser.OutDeptName))
+            {
+                msg.ErrorMsg = "单位不能为空！";
+                return;
+            }
+            if (HYOutuser.ID == 0)
+            {
+                HYOutuser.HYGLID = HYGLId;
+                HYOutuser.CRDate = DateTime.Now;
+                HYOutuser.CRUser = UserInfo.User.UserName;
+                HYOutuser.ComId = UserInfo.User.ComId.Value;
+                HYOutuser.Type = int.Parse(type);
+                new SZHL_HYGL_OUTUSERB().Insert(HYOutuser);
+            }
+            else
+            {
+                new SZHL_HYGL_OUTUSERB().Update(HYOutuser);
+            }
+            msg.Result = HYOutuser;
+        }
+
+        /// <summary>
+        /// 外部参会人信息
+        /// </summary>
+        public void GETOUTUSERMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            string strWhere = " ID=" + Id;
+            string colNme = @"* ";
+            string tableName = string.Format(@" SZHL_HYGL_OUTUSER ");
+
+            string strSql = string.Format("Select {0}  From {1} where {2} ", colNme, tableName, strWhere);
+            DataTable dt = new SZHL_HYGL_OUTUSERB().GetDTByCommand(strSql);
+            msg.Result = dt;
+        }
+
+        /// <summary>
+        /// 根据电话获取外部参会人信息
+        /// </summary>
+        public void GETOUTUSERMODELBYPHONENUMBER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+
+            string strWhere = " HYGLID=" + Id + " and Mobphone='" + P2 + "'";
+            string colNme = @"* ";
+            string tableName = string.Format(@" SZHL_HYGL_OUTUSER ");
+
+            string strSql = string.Format("Select {0}  From {1} where {2} ", colNme, tableName, strWhere);
+            DataTable dt = new SZHL_HYGL_OUTUSERB().GetDTByCommand(strSql);
+            msg.Result = dt;
+        }
+        /// <summary>
+        /// 删除外部参会人
+        /// </summary>
+        public void DELOUTUSER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            SZHL_HYGL_OUTUSER model = new SZHL_HYGL_OUTUSERB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
+            new SZHL_HYGL_OUTUSERB().Delete(model);
+        }
+        #endregion
+
+        #region 会议服务人管理
+        /// <summary>
+        /// 查询服务人员列表
+        /// </summary>
+        public void GETSERVICELISTBYHYGLID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            msg.Result = new SZHL_HYGL_SERVICEB().GetDTByCommand("select * from dbo.SZHL_HYGL_SERVICE where HYGLID=" + Id + " order by CRDate desc");
+        }
+
+        /// <summary>
+        /// 新加、编辑服务人员
+        /// </summary>
+        public void UPDATESERVICE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int HYGLId = int.Parse(P1);
+            SZHL_HYGL_SERVICE HYService = JsonConvert.DeserializeObject<SZHL_HYGL_SERVICE>(P2);
+            if (HYGLId <= 0)
+            {
+                msg.ErrorMsg = "会议不存在！";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(HYService.Name))
+            {
+                msg.ErrorMsg = "姓名不能为空！";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(HYService.Mobphone))
+            {
+                msg.ErrorMsg = "联系电话不能为空！";
+                return;
+            }
+            if (HYService.ID == 0)
+            {
+                HYService.HYGLID = HYGLId;
+                HYService.CRDate = DateTime.Now;
+                HYService.CRUser = UserInfo.User.UserName;
+                HYService.ComId = UserInfo.User.ComId.Value;
+                new SZHL_HYGL_SERVICEB().Insert(HYService);
+            }
+            else
+            {
+                new SZHL_HYGL_SERVICEB().Update(HYService);
+            }
+            msg.Result = HYService;
+        }
+
+        /// <summary>
+        /// 会议服务人员信息
+        /// </summary>
+        public void GETSERVICEMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            string strWhere = " ID=" + Id;
+            string colNme = @"* ";
+            string tableName = string.Format(@" SZHL_HYGL_SERVICE ");
+
+            string strSql = string.Format("Select {0}  From {1} where {2} ", colNme, tableName, strWhere);
+            DataTable dt = new SZHL_HYGL_SERVICEB().GetDTByCommand(strSql);
+            msg.Result = dt;
+        }
+        /// <summary>
+        /// 删除会议服务人员信息
+        /// </summary>
+        public void DELSERVICE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            SZHL_HYGL_SERVICE model = new SZHL_HYGL_SERVICEB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
+            new SZHL_HYGL_SERVICEB().Delete(model);
+        }
         #endregion
 
         #region 会议信息管理

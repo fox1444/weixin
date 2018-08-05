@@ -219,6 +219,9 @@
     <Compile Include="SZHL_HYGL.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>
+    <Compile Include="SZHL_HYGL_OUTUSER.cs">
+      <DependentUpon>QJY.tt</DependentUpon>
+    </Compile>
     <Compile Include="SZHL_HYGL_QD.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>
@@ -226,6 +229,9 @@
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>
     <Compile Include="SZHL_HYGL_ROOM.cs">
+      <DependentUpon>QJY.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SZHL_HYGL_SERVICE.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>
     <Compile Include="SZHL_JFBX.cs">

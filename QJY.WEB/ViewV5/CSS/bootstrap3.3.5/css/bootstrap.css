@@ -7290,3 +7290,15 @@ ul,li{list-style: none;margin:0;padding: 0}
 .ms-controller, .ms-important, [ms-controller], [ms-important] {
     visibility: hidden;
 }
+
+.table-wrap {padding: 10px;}
+.table-con {width: 100%;border-top: solid 1px #ccc;border-left: solid 1px #ccc;}
+.table-con th {color: #666;}
+.table-con th, .table-con td {text-align: center;padding: 3px;border-right: solid 1px #ccc;border-bottom: solid 1px #ccc;}
+.fl-left {
+    float: left;
+}
+
+.fl-right {
+    float: right;
+}
