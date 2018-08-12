@@ -11,27 +11,85 @@
     <link href="/View_Mobile/CSS/add.css?ver=2" rel="stylesheet" />
     <link href="/View_Mobile/CSS/szhlextend.css?ver=20160904" rel="stylesheet" />
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
+
+    <!--日历-->
 </head>
 <body ms-controller="Hydetail">
-    <div class="index-html">
+    <div class="index-html" style="display:none;">
     </div>
     <div class="wrapper">
         <div class="hy_menu" id="item-1">
-            <div class="title">
-                <span><strong>&nbsp;目&nbsp;&nbsp;录&nbsp;</strong></span>
+            <div class="banner">
+                {{modelData.Title|html}}
             </div>
             <div class="content">
                 <div class="hy_menu_list">
-                    <a href="#" ms-on-click="gostart()" class="tab-link button external"><i>1</i>会议公告</a>
-                    <a href="#" ms-on-click="getdata(2)" class="button external" ms-class-1="tab-link:modelData.HYXZ!=''" ms-if="modelData.HYXZ!=''"><i>2</i>会议须知</a>
-                    <a href="#" ms-on-click="getdata(3)" class="button external" ms-class-1="tab-link:modelData.HYFW!=''" ms-if="modelData.HYFW!=''"><i>3</i>服务指南</a>
-                    <a href="#" ms-on-click="getdata(4)" class="button external" ms-class-1="tab-link:modelData.Details!=''" ms-if="modelData.Details!=''"><i>4</i>日程安排</a>
-                    <a href="#" ms-on-click="getdata(5)" class="tab-link button external"><i>5</i>座位引导</a>
-                    <a href="#" ms-on-click="getdata(6)" class="tab-link button external"><i>6</i>参会代表</a>
-                    <a href="#" ms-on-click="getdata(7)" class="button external" ms-class-1="tab-link:modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''" ms-if="modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''"><i>7</i>出行安排</a>
-                    <a href="#" ms-on-click="getdata(8)" class="button external" ms-class-1="tab-link:modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''" ms-if="modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''"><i>8</i>住宿安排</a>
-                    <a href="#" ms-on-click="getdata(9)" class="button external" ms-class-1="tab-link:modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''" ms-if="modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''"><i>9</i>用餐安排</a>
-                    <a href="#" ms-on-click="getdata(10)" class="button external" ms-class-1="tab-link:modelData.Files!=''" ms-if="modelData.Files!=''"><i>10</i>资料下载</a>
+                    <a href="#" ms-on-click="gostart()" class="tab-link button external">
+                        <img src="/View_Mobile/Images/icon/XXFB.png">
+                        <span>
+                            会议公告
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(2)" class="button external" ms-class-1="tab-link:modelData.HYXZ!=''" ms-if="modelData.HYXZ!=''">
+                        <img src="/View_Mobile/Images/icon/ZHBG.jpg">
+                        <span>
+                            会议须知
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(3)" class="button external" ms-class-1="tab-link:modelData.HYFW!=''" ms-if="modelData.HYFW!=''">
+                        <img src="/View_Mobile/Images/icon/WQQD.png">
+                        <span>
+                            服务指南
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(4)" class="button external" ms-class-1="tab-link:modelData.Details!=''" ms-if="modelData.Details!=''">
+                        <img src="/View_Mobile/Images/icon/NOTE.png">
+                        <span>
+                            日程安排
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(5)" class="tab-link button external">
+                        <img src="/View_Mobile/Images/icon/HYGL.png">
+                        <span>
+                            座位引导
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(6)" class="tab-link button external">
+                        <img src="/View_Mobile/Images/icon/QYIM.png">
+                        <span>
+                            参会代表
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(7)" class="button external" ms-class-1="tab-link:modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''" ms-if="modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''">
+                        <img src="/View_Mobile/Images/icon/YCGL.png">
+                        <span>
+                            出行安排
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(8)" class="button external" ms-class-1="tab-link:modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''" ms-if="modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''">
+                        <img src="/View_Mobile/Images/icon/Info.jpg">
+                        <span>
+                            住宿安排
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(9)" class="button external" ms-class-1="tab-link:modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''" ms-if="modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''">
+                        <img src="/View_Mobile/Images/icon/DCGL.png">
+                        <span>
+                            用餐安排
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(10)" class="button external" ms-class-1="tab-link:modelData.Files!=''" ms-if="modelData.Files!=''">
+                        <img src="/View_Mobile/Images/icon/KSGL.png">
+                        <span>
+                            资料下载
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(11)" class="tab-link button external">
+                        <img src="/View_Mobile/Images/icon/JSFW.png">
+                        <span>
+                            接送服务
+                        </span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -90,11 +148,13 @@
                 </div>
                 <div style="text-align:center;">请左右滑动查找您的座位</div>
             </div>
+            /d
+            di
         </div>
 
         <!--参会代表-->
         <div class="hy_menu" id="item-6" style="padding-bottom:70px;">
-            <div class="title">
+            <div class="title title-g">
                 <span><strong>&nbsp;参会代表&nbsp;</strong></span>
             </div>
             <div class="content">
@@ -138,12 +198,12 @@
         <!--住宿安排-->
         <div class="hy_menu" id="item-8" ms-if="modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''">
             <div class="title">
-                <span><strong>&nbsp;住宿服务&nbsp;</strong></span>
+                <span><strong>&nbsp;住宿安排&nbsp;</strong></span>
             </div>
             <div class="content bg-holder">
                 <div class="inlist" ms-if="modelData.ZSAP!=''">
                     <span class="parent_title">
-                        酒店
+                        住宿服务
                     </span>
                     <div class="item-con ">
                         {{modelData.ZSAP|html}}
@@ -205,6 +265,79 @@
             </div>
         </div>
 
+        <!--接送服务-->
+        <div class="hy_menu" id="item-11">
+            <div class="title">
+                <span><strong>&nbsp;接送服务&nbsp;</strong></span>
+            </div>
+            <div class="content bg-holder">
+                <div class="inlist">
+                    <span class="parent_title">
+                        接机服务
+                    </span>
+                    <div class="item-con ">
+                        <ul class="item-con-list">
+                            <li>
+                                交通工具
+                            </li>
+                            <li>
+                                <select ms-duplex="currentuser.PickupType">
+                                    <option value="">请选择</option>
+                                    <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==currentuser.PickupType?'selected':''">{{item.TypeName}}</option>
+                                </select>
+                            </li>
+                            <li>
+                                航班号
+                            </li>
+                            <li>
+                                <input ms-duplex="currentuser.PickupNumber" />
+                            </li>
+                            <li>
+                                到达日期
+                            </li>
+                            <li>
+                                <input ms-duplex="currentuser.PickupDate" />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="inlist">
+                    <span class="parent_title">
+                        送机服务
+                    </span>
+                    <div class="item-con ">
+                        <ul class="item-con-list">
+                            <li>
+                                交通工具
+                            </li>
+                            <li>
+                                <select ms-duplex="currentuser.SendoffType">
+                                    <option value="">请选择</option>
+                                    <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==currentuser.SendoffType?'selected':''">{{item.TypeName}}</option>
+                                </select>
+                            </li>
+                            <li>
+                                航班号
+                            </li>
+                            <li>
+                                <input ms-duplex="currentuser.SendoffNumber" />
+                            </li>
+                            <li>
+                                出发日期
+                            </li>
+                            <li>
+                                <input ms-duplex="currentuser.SendoffDate" />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="gobutton2">
+                    <span id="phone_input_submit" ms-on-click="go_detail()" style="margin-top:20px; letter-spacing: 8px;">保存</span>
+                </div>
+            </div>
+        </div>
+
         <ul class="up-and-down">
             <li>
                 <div class="arrow-up" ms-on-click="getpredata(tempmodel.stepindex)">
@@ -228,6 +361,8 @@
     <script src="/View_Mobile/js/zepto.min.js"></script>
     <script src="/View_Mobile/JS/avalon1.47.js"></script>
     <script src="/View_Mobile/js/ComFunJS.js"></script>
+
+   
     <script>
         var tempmodel = avalon.define({
             $id: "Hydetail",
@@ -236,7 +371,7 @@
             iswf: true,//是否属于流程表单
             tpData: [],
             CYUserStr: "",
-            currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, },//手机登录用户
+            currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "PickupType": 0, "PickupNumber": "", "PickupDate": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "" },//手机登录用户
             //ZCUserNames: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "" },//主持人
             dataid: ComFunJS.getQueryString('id'),
             stepindex: "",
@@ -251,9 +386,16 @@
                     $('#item-' + index).show();
 
                     if (index == 1) {
+                        $('.index-html').hide();
                         $('.up-and-down').hide();
                     }
                     else {
+                        if (index == 5) { //座次表不需要背景
+                            $('.index-html').hide();
+                        }
+                        else {
+                            $('.index-html').show();
+                        }
                         $('.up-and-down').show();
                         $('.arrow-up').show();
                         $('.arrow-down').show();
@@ -309,7 +451,7 @@
                     $(this).children("i").html(k);
                     k++;
                 });
-                tempmodel.getdata(1);
+                tempmodel.getdata(11);
             },
             LoadRoom: function () {
                 var pn = ComFunJS.getCookie("userphonenumber");
@@ -399,6 +541,7 @@
             var h = document.documentElement.clientHeight || window.innerHeight;
             $(".wrapper").css("height", h);
         });
+
     </script>
 </body>
 </html>

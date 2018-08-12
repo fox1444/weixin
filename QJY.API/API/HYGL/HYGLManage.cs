@@ -902,7 +902,7 @@ namespace QJY.API
 
         #region 外部参会人管理
         /// <summary>
-        /// 查询外部参会人列表
+        /// 查询外部参会人列表，微信前/后端使用，不登录
         /// </summary>
         public void GETOUTUSERLISTBYHYGLID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
@@ -921,11 +921,11 @@ namespace QJY.API
             {
                 strWhere += " and u.type=" + type;
             }
-            msg.Result = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.*, s.Name as ServiceName from dbo.SZHL_HYGL_OUTUSER u left join  SZHL_HYGL_SERVICE s on u.ServiceUser=s.ID where " + strWhere + " order by u.type desc, u.Name, u.CRDate desc");
+            msg.Result = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.*, s.Name as ServiceName from dbo.SZHL_HYGL_OUTUSER u left join  SZHL_HYGL_SERVICE s on u.ServiceUser=s.ID where " + strWhere + " order by u.type desc, u.OutDeptName, u.DisplayOrder, u.Name, u.CRDate desc");
         }
 
         /// <summary>
-        /// 新加、编辑外部参会人
+        /// 新加、编辑外部参会人，微信前端使用，不登录
         /// </summary>
         public void UPDATEOUTUSER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
@@ -969,12 +969,12 @@ namespace QJY.API
         }
 
         /// <summary>
-        /// 外部参会人信息
+        /// 外部参会人信息，微信前端使用，不登录
         /// </summary>
         public void GETOUTUSERMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int Id = int.Parse(P1);
-            string strWhere = " ID=" + Id;
+            string strWhere = " ID=" + Id ;
             string colNme = @"* ";
             string tableName = string.Format(@" SZHL_HYGL_OUTUSER ");
 
@@ -984,7 +984,7 @@ namespace QJY.API
         }
 
         /// <summary>
-        /// 根据电话获取外部参会人信息
+        /// 根据电话获取外部参会人信息，微信前端使用，不登录
         /// </summary>
         public void GETOUTUSERMODELBYPHONENUMBER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {

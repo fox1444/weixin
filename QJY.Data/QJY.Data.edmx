@@ -1023,9 +1023,15 @@
           <Property Name="YCLOCATION" Type="varchar" MaxLength="200" />
           <Property Name="ServiceUser" Type="int" />
           <Property Name="Comment" Type="varchar(max)" />
-          <Property Name="DisplayOrder" Type="int" />
           <Property Name="CRUser" Type="varchar" MaxLength="100" />
           <Property Name="CRDate" Type="datetime" />
+          <Property Name="PickupType" Type="int" />
+          <Property Name="PickupNumber" Type="varchar" MaxLength="400" />
+          <Property Name="PickupDate" Type="datetime" />
+          <Property Name="SendoffType" Type="int" />
+          <Property Name="SendoffNumber" Type="varchar" MaxLength="400" />
+          <Property Name="SendoffDate" Type="datetime" />
+          <Property Name="DisplayOrder" Type="int" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_QD">
           <Key>
@@ -3841,6 +3847,12 @@
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CRUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CRDate" Type="DateTime" Precision="3" />
+          <Property Name="PickupType" Type="Int32" />
+          <Property Name="PickupNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="PickupDate" Type="DateTime" Precision="3" />
+          <Property Name="SendoffType" Type="Int32" />
+          <Property Name="SendoffNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="SendoffDate" Type="DateTime" Precision="3" />
           <Property Name="DisplayOrder" Type="Int32" />
         </EntityType>
         </Schema>
@@ -5743,6 +5755,12 @@
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL_OUTUSER">
               <MappingFragment StoreEntitySet="SZHL_HYGL_OUTUSER">
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="SendoffDate" ColumnName="SendoffDate" />
+                <ScalarProperty Name="SendoffNumber" ColumnName="SendoffNumber" />
+                <ScalarProperty Name="SendoffType" ColumnName="SendoffType" />
+                <ScalarProperty Name="PickupDate" ColumnName="PickupDate" />
+                <ScalarProperty Name="PickupNumber" ColumnName="PickupNumber" />
+                <ScalarProperty Name="PickupType" ColumnName="PickupType" />
                 <ScalarProperty Name="CRDate" ColumnName="CRDate" />
                 <ScalarProperty Name="CRUser" ColumnName="CRUser" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />

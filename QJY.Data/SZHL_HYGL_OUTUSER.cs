@@ -31,6 +31,12 @@ namespace QJY.Data
         public string Comment { get; set; }
         public string CRUser { get; set; }
         public Nullable<System.DateTime> CRDate { get; set; }
+        public Nullable<int> PickupType { get; set; }
+        public string PickupNumber { get; set; }
+        public Nullable<System.DateTime> PickupDate { get; set; }
+        public Nullable<int> SendoffType { get; set; }
+        public string SendoffNumber { get; set; }
+        public Nullable<System.DateTime> SendoffDate { get; set; }
         public Nullable<int> DisplayOrder { get; set; }
     }
 }

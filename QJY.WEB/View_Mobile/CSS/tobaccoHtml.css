@@ -9,15 +9,19 @@ body, html {
     padding: 0;
     font-size: 1em;
 }
+
 .index-html {
-    background: url(/View_Mobile/Images/index-bg-4.jpg) bottom center no-repeat;
-    width:100%;
-    height:100%;
-    position:fixed;
-    z-index:-99;
+    background: url(/View_Mobile/Images/index-bg-2.png) top no-repeat #019FE8;
+    background-size: 100%;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: -99;
 }
+
 .hy_wrap {
     margin: 0 auto;
+    color: #fff;
     /*margin: 14px 0 0 0;
     padding: 0 0 30px 0;*/
     text-align: center;
@@ -36,7 +40,6 @@ body, html {
 }
 
 .logo {
-    
     margin: 0px auto;
 }
 
@@ -45,7 +48,7 @@ body, html {
         width: 100%;
         height: 120px;
         display: block;
-        background: url(/View_Mobile/Images/tobacco-logo3.jpg) bottom center no-repeat;
+        background: url(/View_Mobile/Images/tobacco-logo-icon.png) center center no-repeat;
         background-size: 55%;
         margin: 0 0 0 0;
     }
@@ -88,57 +91,66 @@ body, html {
     margin: 0 auto;
     margin-top: 50px;
 }
+
     .gobutton .fl-left {
         float: left;
-        width:46%;
+        width: 46%;
     }
-        .gobutton .fl-right {
-            float: right;
-            width: 46%;
-        }
+
+    .gobutton .fl-right {
+        float: right;
+        width: 46%;
+    }
+
     .gobutton span {
-        color: #000;
-        border: solid 1px #000;
+        color: #019FE8;
         display: block;
         text-decoration: none;
         font-weight: bold;
         border-radius: 3px;
         width: 60%;
         margin: 0px 0px 50px 0px;
-        padding: 8px;
-        font-size: 90%;
+        padding: 9px 0;
+        letter-spacing: 1px;
+        font-size: 100%;
+        background: #fff;
     }
 
 .gobutton2 span {
-    color: #000;
-    border: solid 1px #000;
+    color: #019FE8;
     display: block;
     font-weight: bold;
+    text-align: center;
     text-decoration: none;
     border-radius: 3px;
     width: 50%;
     margin: 0 auto;
     margin-top: 50px;
     margin-bottom: 50px;
-    padding: 6px 0;
-    font-size: 90%;
+    padding: 9px 0;
+    letter-spacing: 1px;
+    font-size: 100%;
+    background: #fff;
 }
+
 .gobutton::after {
     content: " ";
     clear: both;
 }
+
 .default_block {
     display: none;
 }
-    .input_block {
-        margin-top: 40px;
-        display: none;
-    }
+
+.input_block {
+    margin-top: 40px;
+    display: none;
+}
 
     .input_block .phonenumber {
-        background-color: #000;
-        opacity: 0.45;
-        filter: alpha(opacity=45);
+        background-color: #fff;
+        /*opacity: 0.45;
+        filter: alpha(opacity=45);*/
         font-size: 90%;
         font-size: 150%;
         font-weight: bold;
@@ -146,10 +158,10 @@ body, html {
         height: 50px;
         line-height: 50px;
         font-family: Aharoni;
-        border-radius: 25px;
-        box-shadow: #111 0 0 5px 2px;
+        border-radius: 6px;
+        /*box-shadow: #111 0 0 5px 2px;*/
         text-align: center;
-        color: #8cd800;
+        color: #019FE8;
         margin: 0 auto;
     }
 
@@ -160,12 +172,28 @@ body, html {
             line-height: 30px;
             border: none;
             background: none;
-            color: #fff;
+            color: #333;
             font-size: 90%;
         }
 
+/*.input_block .phonenumber input::-webkit-input-placeholder {
+                color: #019FE8;
+            }
+
+            .input_block .phonenumber input::-moz-placeholder { 
+                color: #019FE8;
+            }
+
+            .input_block .phonenumber input:-moz-placeholder { 
+                color: #019FE8;
+            }
+
+            .input_block .phonenumber input:-ms-input-placeholder { 
+                color: #019FE8;
+            }*/
+
 .wrapper {
-    color:#000;
+    color: #fff;
     height: 100%;
     margin: 0 auto;
 }
@@ -177,11 +205,17 @@ body, html {
         padding: 30px 0 0 0;
         font-weight: bold;
         width: 100%;
-        color: #000;
+    }
+
+    .wrapper .banner {
+        font-size: 110%;
+        text-align: center;
+        padding: 10px;
+        background: #019FE8;
     }
 
     .wrapper .content {
-        margin: 30px auto;
+        margin: 20px auto;
         width: 90%;
         line-height: 180%;
     }
@@ -192,29 +226,30 @@ body, html {
         }
 
     .wrapper .font-white {
-        color: #000;
+        color: #fff;
     }
 
     .wrapper .bg-white {
         background: #fff;
         padding: 15px;
     }
+
     .wrapper .bg-holder {
         padding: 15px 10px;
     }
+
     .wrapper .title span {
         padding: 0 100px;
         position: relative;
     }
 
         .wrapper .title span strong {
-            color:#212121;
             z-index: 99;
             position: relative;
         }
 
         .wrapper .title span:before {
-            border-bottom: solid 1px #ccc;
+            border-bottom: solid 1px #fff;
             height: 0px;
             position: absolute;
             left: 0;
@@ -226,7 +261,7 @@ body, html {
         }
 
         .wrapper .title span:after {
-            border-bottom: solid 1px #ccc;
+            border-bottom: solid 1px #fff;
             height: 0px;
             position: absolute;
             right: 0;
@@ -238,20 +273,21 @@ body, html {
         }
 
     .wrapper .title-black {
-        color: #000;
     }
 
         .wrapper .title-black span strong {
             background-color: #fff;
+            color: #000;
         }
 
-        .wrapper .title-black span:after {
+        .wrapper .title-black span:before, .wrapper .title-black span:after {
             border-bottom: solid 1px #000;
         }
 
     .wrapper .hy_menu_list {
         text-align: center;
         clear: both;
+        color: #fff;
     }
 
         .wrapper .hy_menu_list:after {
@@ -260,11 +296,12 @@ body, html {
         }
 
         .wrapper .hy_menu_list a {
-            color: #000;
+            float: left;
+            width: 33%;
             text-decoration: none;
             display: block;
             margin: 20px 0;
-            font-size: 120%;
+            text-align: center;
         }
 
         .wrapper .hy_menu_list i {
@@ -277,7 +314,18 @@ body, html {
             margin-right: 16px;
         }
 
+        .wrapper .hy_menu_list img {
+            border-radius: 50px;
+            width: 40%;
+        }
+
+        .wrapper .hy_menu_list span {
+            display: block;
+            color: #000;
+        }
+
 .zcb-content {
+    color: #000;
     padding: 0;
     background: #fff;
     margin: 7px;
@@ -285,6 +333,7 @@ body, html {
 }
 
 .content .zcb-title {
+    color: #000;
     padding: 10px;
     text-align: center;
     background: #eee;
@@ -304,7 +353,8 @@ body, html {
     border-radius: 25px;
     box-shadow: #111 0 0 5px 2px;
     text-align: center;
-    color: #8cd800;
+    /*color: #00C7FF;*/
+    color: #fff;
     transform: rotate(90deg);
     -ms-transform: rotate(90deg); /* IE 9 */
     -moz-transform: rotate(90deg); /* Firefox */
@@ -378,34 +428,41 @@ body, html {
             font-family: 'Glyphicons Halflings';
             font-style: normal;
             font-weight: normal;
-            color: #000;
             float: right;
             display: block;
             margin-top: -40px;
+            font-size: 90%;
+            color: #fff;
         }
-.inlist{
-    margin-bottom:15px;
+
+.inlist {
+    margin-bottom: 15px;
 }
 
 .list_parent_node {
     /*border: solid 1px #efefef;*/
-    border: solid 1px #007655;
     padding: 15px 20px;
     margin: 0 0 7px 0;
-    color: #007655;
+    background: #fff;
 }
 
 .parent_title {
-    color: #007655;
+    color: #fff;
     font-size: 120%;
-    background: url(/View_Mobile/Images/arrow.png) no-repeat left center;
-    background-size: 20px;
-    padding-left: 35px;
+    background: url(/View_Mobile/Images/arrow-w.png) no-repeat left center;
+    background-size: 33px;
+    padding-left: 33px;
     display: block;
     white-space: nowrap;
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.title_cyuser {
+    color: #007655;
+    background: url(/View_Mobile/Images/arrow-g.png) no-repeat left center;
+    background-size: 25px;
 }
 
 .list_parent_node .list_child_block {
@@ -424,9 +481,43 @@ body, html {
     float: right;
     display: block;
 }
-.item-con{
-    padding:0 10px 0 10px;
+
+.item-con {
+    padding: 10px;
 }
+
+    .item-con::after {
+        content: "";
+        clear: both;
+        display: block;
+    }
+
+.item-con-list li:nth-child(2n+1) {
+    float: left;
+    margin: 4px 0;
+    height: 40px;
+    display: block;
+    line-height:40px;
+    width: 40%;
+}
+
+.item-con-list li:nth-child(2n) {
+    float: right;
+    margin: 4px 0;
+    height: 40px;
+    display:block;
+    width: 60%;
+}
+.item-con-list input, .item-con-list select{
+    border-radius: 3px;
+    border: none;
+    padding: 0 4px;
+    margin: 4px 0 0 0;
+    font-size: 16px;
+    height: 32px;
+    width: 100%;
+}
+
 .room-width-index li {
     padding: 3px 0px;
     margin: 0;
@@ -493,7 +584,7 @@ body, html {
     margin: 10px auto;
     padding: 3px 10px 3px 10px;
     line-height: 20px;
-    background: #007457;
+    background: #019FE8;
     font-size: 120%;
     text-align: center;
 }

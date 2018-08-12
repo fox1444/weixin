@@ -1356,7 +1356,7 @@ var ComFunJS = {
         if (users) {
             $(users).each(function (index, ele) {
                 if (branchcodes.indexOf(ele.OutDeptName + ',') == -1) {
-                    branchtmp += '<div class="list_parent_node" onclick="ComFunJS.showchild(this)"><span class="parent_title">' + ele.OutDeptName + '</span>';
+                    branchtmp += '<div class="list_parent_node" onclick="ComFunJS.showchild(this)"><span class="parent_title title_cyuser">' + ele.OutDeptName + '</span>';
                     branchtmp += '<div class="list_child_block">' + ComFunJS.convusers_branchuser(ele.OutDeptName, users) + '</div>';
                     branchtmp += '</div>';
                     branchcodes += ele.OutDeptName + ',';
@@ -1816,7 +1816,12 @@ var ComFunJS = {
                 return str;
             }
         }
-    }
+    },
+    TravelType: [
+        { "ID": "10", "TypeName": "飞机" },
+        { "ID": "20", "TypeName": "火车" },
+        { "ID": "30", "TypeName": "汽车" },
+    ], 
 }
 
 ComFunJS.initsetajax();
