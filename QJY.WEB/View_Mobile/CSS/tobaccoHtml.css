@@ -214,13 +214,13 @@ body, html {
         background: #019FE8;
     }
 
-    .wrapper .content {
+    .wrapper .content-bg {
         margin: 20px auto;
         width: 90%;
         line-height: 180%;
     }
 
-        .wrapper .content img {
+        .wrapper .content-bg img {
             vertical-align: middle;
             margin-bottom: 5px;
         }
@@ -332,7 +332,7 @@ body, html {
     width: 95%;
 }
 
-.content .zcb-title {
+.content-bg .zcb-title {
     color: #000;
     padding: 10px;
     text-align: center;

@@ -974,7 +974,7 @@ namespace QJY.API
         public void GETOUTUSERMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int Id = int.Parse(P1);
-            string strWhere = " ID=" + Id ;
+            string strWhere = " ID=" + Id;
             string colNme = @"* ";
             string tableName = string.Format(@" SZHL_HYGL_OUTUSER ");
 
@@ -998,6 +998,7 @@ namespace QJY.API
             DataTable dt = new SZHL_HYGL_OUTUSERB().GetDTByCommand(strSql);
             msg.Result = dt;
         }
+
         /// <summary>
         /// 删除外部参会人
         /// </summary>
@@ -1007,6 +1008,48 @@ namespace QJY.API
             SZHL_HYGL_OUTUSER model = new SZHL_HYGL_OUTUSERB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
             new SZHL_HYGL_OUTUSERB().Delete(model);
         }
+
+        /// <summary>
+        /// 保存接送机信息
+        /// </summary>
+        public void UPDATEPICKUPSENDOFF(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            SZHL_HYGL_OUTUSER HYOutuser = JsonConvert.DeserializeObject<SZHL_HYGL_OUTUSER>(P1);
+            if (HYOutuser.ID <= 0)
+            {
+                msg.ErrorMsg = "登录信息已过期！";
+                return;
+            }
+
+            new SZHL_HYGL_OUTUSERB().Update(HYOutuser);
+
+            //string Updatestr = "update SZHL_HYGL_OUTUSER set ";
+            //if (HYOutuser.PickupType > 0)
+            //    Updatestr += " PickupType=" + HYOutuser.PickupType + ",";
+            //if (HYOutuser.PickupNumber.Trim().Length > 0)
+            //    Updatestr += " PickupNumber=" + HYOutuser.PickupNumber + ",";
+            //if (HYOutuser.PickupDate != null)
+            //    Updatestr += " PickupDate=" + HYOutuser.PickupDate + ",";
+
+            //if (HYOutuser.SendoffType > 0)
+            //    Updatestr += " SendoffType=" + HYOutuser.SendoffType + ",";
+            //if (HYOutuser.SendoffNumber.Trim().Length > 0)
+            //    Updatestr += " SendoffNumber=" + HYOutuser.SendoffNumber + ",";
+            //if (HYOutuser.SendoffDate != null)
+            //    Updatestr += " SendoffDate=" + HYOutuser.SendoffDate + ",";
+
+            //Updatestr += " where ID=" + HYOutuser.ID;
+            //try
+            //{
+            //    new SZHL_HYGL_OUTUSERB().ExsSql(Updatestr);
+            //}
+            //catch (Exception e)
+            //{
+            //    msg.ErrorMsg = e.ToString() + Updatestr + "保存失败！";
+            //    return;
+            //}
+        }
+
         #endregion
 
         #region 会议服务人管理

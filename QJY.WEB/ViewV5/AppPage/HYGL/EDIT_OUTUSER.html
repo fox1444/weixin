@@ -58,41 +58,47 @@
                     </div>
                 </li>
                 <li class="add-item add-width fl-right">
-                    <label class="add-item-label">房间号</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.RoomNumber" />
-                    </div>
-                </li>
-                <li class="add-item add-width fl-left">
-                    <label class="add-item-label">上车时间</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.BoardingTime" />
-                    </div>
-                </li>
-                <li class="add-item add-width fl-right">
-                    <label class="add-item-label">车牌号</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.CarNumber" />
-                    </div>
-                </li>
-                <li class="add-item add-width fl-left">
-                    <label class="add-item-label">用餐时间</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.YCTIME" />
-                    </div>
-                </li>
-                <li class="add-item add-width fl-right">
-                    <label class="add-item-label">用餐地点</label>
-                    <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.YCLOCATION" />
-                    </div>
-                </li>
-                <li class="add-item add-width fl-left">
                     <label class="add-item-label">服务人员</label>
                     <div class="add-ic">
                         <select name="conType" id="conType" ms-duplex="modelData.ServiceUser" class="form-control szhl_require">
                             <option ms-repeat-item="ServiceData" ms-attr-value="item.ID" ms-attr-selected="item.ID==modelData.ServiceUser?'selected':''">{{item.Name}}</option>
                         </select>
+                    </div>
+                </li>
+
+                <li class="add-item add-width fl-left">
+                    <label class="add-item-label">上车时间</label>
+                    <div class="add-ic">
+                        <textarea class="form-control" ms-duplex="modelData.BoardingTime" style="height:60px;resize:none"></textarea>
+                        <!--<input type="text" class="form-control" ms-duplex="modelData.BoardingTime" />-->
+                    </div>
+                </li>
+                <li class="add-item add-width fl-right">
+                    <label class="add-item-label">车牌号</label>
+                    <div class="add-ic">
+                        <textarea class="form-control" ms-duplex="modelData.CarNumber" style="height:60px;resize:none"></textarea>
+                        <!--<input type="text" class="form-control" ms-duplex="modelData.CarNumber" />-->
+                    </div>
+                </li>
+                <li class="add-item add-width fl-left">
+                    <label class="add-item-label">用餐时间</label>
+                    <div class="add-ic">
+                        <textarea class="form-control" ms-duplex="modelData.YCTIME" style="height:60px;resize:none"></textarea>
+                        <!--<input type="text" class="form-control" ms-duplex="modelData.YCTIME" />-->
+                    </div>
+                </li>
+                <li class="add-item add-width fl-right">
+                    <label class="add-item-label">用餐地点</label>
+                    <div class="add-ic">
+                        <textarea class="form-control" ms-duplex="modelData.YCLOCATION" style="height:60px;resize:none"></textarea>
+                        <!--<input type="text" class="form-control" ms-duplex="modelData.YCLOCATION" />-->
+                    </div>
+                </li>
+                <li class="add-item add-width fl-left">
+                    <label class="add-item-label">房间号</label>
+                    <div class="add-ic">
+                        <textarea class="form-control" ms-duplex="modelData.RoomNumber" style="height:60px;resize:none"></textarea>
+                        <!--<input type="text" class="form-control" ms-duplex="modelData.RoomNumber" />-->
                     </div>
                 </li>
             </ul>

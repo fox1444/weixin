@@ -223,7 +223,7 @@ var ComFunJS = {
     winsuccess: function (msg) {
         layer.open({
             content: msg,
-            style: 'background-color:#09C1FF; color:#fff; border:none;',
+            style: 'background-color:#65ff64; color:#fff; border:none;',
             time: 2
         });
 
