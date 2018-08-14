@@ -47,7 +47,7 @@ body, html {
         content: "";
         width: 100%;
         min-height: 80px;
-        max-height:100px;
+        max-height: 100px;
         display: block;
         background: url(/View_Mobile/Images/tobacco-logo4.png) 15px 15px no-repeat;
         background-size: 35%;
@@ -55,7 +55,7 @@ body, html {
     }
 
 .title {
-    font-weight: bold;  
+    font-weight: bold;
     font-size: 140%;
     margin: 20px auto;
     margin-bottom: 35px;
@@ -73,7 +73,7 @@ body, html {
 .infomation {
     font-size: 110%;
     text-align: left;
-    width:85%;
+    width: 85%;
     margin: 16px auto;
 }
 
@@ -203,7 +203,7 @@ body, html {
         font-size: 130%;
         text-align: center;
         margin: 0 auto;
-        padding: 30px 0 0 0;
+        padding: 25px 0 20px 0;
         font-weight: bold;
         width: 100%;
     }
@@ -212,11 +212,13 @@ body, html {
         font-size: 110%;
         text-align: center;
         padding: 10px;
+        margin-bottom: 20px;
         background: #019FE8;
+        color:#fff;
     }
 
     .wrapper .content-bg {
-        margin: 20px auto;
+        margin: 0px auto;
         width: 90%;
         line-height: 180%;
     }
@@ -233,6 +235,7 @@ body, html {
     .wrapper .bg-white {
         background: #fff;
         padding: 15px;
+        color:#000;
     }
 
     .wrapper .bg-holder {
@@ -254,7 +257,7 @@ body, html {
             height: 0px;
             position: absolute;
             left: 0;
-            top: 12px;
+            top: 14px;
             content: "";
             margin: 0 auto;
             width: 32%;
@@ -266,71 +269,73 @@ body, html {
             height: 0px;
             position: absolute;
             right: 0;
-            top: 12px;
+            top: 14px;
             content: "";
             margin: 0 auto;
             width: 32%;
             z-index: 0;
         }
 
-    .wrapper .title-black {
-    }
+.wrapper .hy_menu_list {
+    text-align: center;
+    clear: both;
+    color: #fff;
+}
 
-        .wrapper .title-black span strong {
-            background-color: #fff;
-            color: #000;
-        }
-
-        .wrapper .title-black span:before, .wrapper .title-black span:after {
-            border-bottom: solid 1px #000;
-        }
-
-    .wrapper .hy_menu_list {
-        text-align: center;
+    .wrapper .hy_menu_list:after {
         clear: both;
-        color: #fff;
+        content: " ";
     }
 
-        .wrapper .hy_menu_list:after {
-            clear: both;
-            content: " ";
-        }
+    .wrapper .hy_menu_list a {
+        float: left;
+        width: 33%;
+        text-decoration: none;
+        display: block;
+        margin: 20px 0;
+        text-align: center;
+    }
 
-        .wrapper .hy_menu_list a {
-            float: left;
-            width: 33%;
-            text-decoration: none;
-            display: block;
-            margin: 20px 0;
-            text-align: center;
-        }
+    .wrapper .hy_menu_list i {
+        border: solid 1px #111;
+        border-radius: 14px;
+        line-height: 14px;
+        padding: 0 5px;
+        font-size: 80%;
+        font-style: normal;
+        margin-right: 16px;
+    }
 
-        .wrapper .hy_menu_list i {
-            border: solid 1px #111;
-            border-radius: 14px;
-            line-height: 14px;
-            padding: 0 5px;
-            font-size: 80%;
-            font-style: normal;
-            margin-right: 16px;
-        }
+    .wrapper .hy_menu_list img {
+        border-radius: 50px;
+        width: 40%;
+    }
 
-        .wrapper .hy_menu_list img {
-            border-radius: 50px;
-            width: 40%;
-        }
+    .wrapper .hy_menu_list span {
+        display: block;
+        color: #000;
+    }
 
-        .wrapper .hy_menu_list span {
-            display: block;
-            color: #000;
-        }
+.bg-white .title {
+    margin-top: 0px;
+    padding-top: 10px;
+}
 
+    .bg-white .title span strong {
+        background-color: #fff;
+        color: #000;
+    }
+
+    .bg-white .title span:before, .bg-white .title span:after {
+        border-bottom: solid 1px #000;
+    }
 .zcb-content {
     color: #000;
     padding: 0;
     background: #fff;
     margin: 7px;
     width: 95%;
+    padding: 0 15px;
 }
 
 .content-bg .zcb-title {
@@ -448,7 +453,6 @@ body, html {
 }
 
 .parent_title {
-    color: #fff;
     font-size: 120%;
     background: url(/View_Mobile/Images/arrow-w.png) no-repeat left center;
     background-size: 33px;
@@ -498,7 +502,7 @@ body, html {
     margin: 4px 0;
     height: 40px;
     display: block;
-    line-height:40px;
+    line-height: 40px;
     width: 40%;
 }
 
@@ -506,10 +510,11 @@ body, html {
     float: right;
     margin: 4px 0;
     height: 40px;
-    display:block;
+    display: block;
     width: 60%;
 }
-.item-con-list input, .item-con-list select{
+
+.item-con-list input, .item-con-list select {
     border-radius: 3px;
     border: none;
     padding: 0 4px;

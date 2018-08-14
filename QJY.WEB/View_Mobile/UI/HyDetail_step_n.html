@@ -11,7 +11,7 @@
     <link href="/View_Mobile/CSS/add.css?ver=2" rel="stylesheet" />
     <link href="/View_Mobile/CSS/szhlextend.css?ver=20160904" rel="stylesheet" />
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
-    <link href="/View_Mobile/JS/JqueryDate/css/mobiscroll.custom-2.6.2.min.css" rel="stylesheet" />
+    <link href="/View_Mobile/JS/Date/FT_Date.min.css" rel="stylesheet" />
     <style type="text/css">
         .header {
             border: 1px solid #333;
@@ -70,7 +70,7 @@
     <div class="index-html" style="display:none;">
     </div>
     <div class="wrapper">
-        <div class="hy_menu" id="item-1">
+        <div class="hy_menu bg-white" id="item-1" style="padding:0;">
             <div class="banner">
                 {{modelData.Title|html}}
             </div>
@@ -167,7 +167,7 @@
         </div>
 
         <!--日程安排-->
-        <div class="hy_menu" id="item-4" ms-if="modelData.Details!=''" style="padding-bottom:20px;">
+        <div class="hy_menu bg-white" id="item-4" ms-if="modelData.Details!=''" style="padding-bottom:20px;">
             <div class="title">
                 <span><strong>&nbsp;日程安排&nbsp;</strong></span>
             </div>
@@ -178,10 +178,10 @@
 
         <!--座位引导-->
         <div class="hy_menu bg-white" id="item-5">
-            <div class="title title-black" style="margin-top:0px; padding-top:10px;">
+            <div class="title">
                 <span><strong>&nbsp;座位引导&nbsp;</strong></span>
             </div>
-            <div class="content-bg zcb-content" style=" padding:0 15px;">
+            <div class="content-bg zcb-content" >
                 <div style="text-align:center;">
                     {{modelData.StartTime|date('M月d日H:mm')}} - {{modelData.EndTime|date('M月d日H:mm')}}
                     <br />{{modelData.Name}}
@@ -200,8 +200,6 @@
                 </div>
                 <div style="text-align:center;">请左右滑动查找您的座位</div>
             </div>
-            /d
-            di
         </div>
 
         <!--参会代表-->
@@ -334,7 +332,7 @@
                             </li>
                             <li>
                                 <select ms-duplex="currentuser.PickupType" ms-change="ChangeType(this.value,'PickupTitle','Pickup')">
-                                    <option value="">请选择</option>
+                                    <option value="">无</option>
                                     <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==currentuser.PickupType?'selected':''">{{item.TypeName}}</option>
                                 </select>
                             </li>
@@ -365,12 +363,12 @@
                             </li>
                             <li>
                                 <select ms-duplex="currentuser.SendoffType" ms-change="ChangeType(this.value,'SendoffTitle','Sendoff')">
-                                    <option value="">请选择</option>
+                                    <option value="">无</option>
                                     <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==currentuser.SendoffType?'selected':''">{{item.TypeName}}</option>
                                 </select>
                             </li>
                             <li class="Sendoff">
-                                <span id="Sendoff">航班号</span>
+                                <span id="SendoffTitle">航班号</span>
                             </li>
                             <li class="Sendoff">
                                 <input id="SendoffNumber" ms-duplex="currentuser.SendoffNumber" />
@@ -425,6 +423,7 @@
             iswf: true,//是否属于流程表单
             tpData: [],
             CYUserStr: "",
+            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "" },
             currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "PickupType": 0, "PickupNumber": "", "PickupDate": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "" },//手机登录用户
             //ZCUserNames: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "" },//主持人
             dataid: ComFunJS.getQueryString('id'),
@@ -439,17 +438,17 @@
                     //$('.hy_menu').eq(index - 1).show();
                     $('#item-' + index).show();
 
-                    if (index == 1) {
+                    if ($('#item-' + index).attr('class').indexOf('bg-white') != -1) {
                         $('.index-html').hide();
+                    }
+                    else {
+                        $('.index-html').show();
+                    }
+
+                    if (index == 1) {
                         $('.up-and-down').hide();
                     }
                     else {
-                        if (index == 5) { //座次表不需要背景
-                            $('.index-html').hide();
-                        }
-                        else {
-                            $('.index-html').show();
-                        }
                         $('.up-and-down').show();
                         $('.arrow-up').show();
                         $('.arrow-down').show();
@@ -505,7 +504,7 @@
                     $(this).children("i").html(k);
                     k++;
                 });
-                tempmodel.getdata(1);
+                tempmodel.getdata(11);
             },
             LoadRoom: function () {
                 var pn = ComFunJS.getCookie("userphonenumber");
@@ -515,6 +514,7 @@
                             tempmodel.currentuser = r.Result[0];
                             tempmodel.currentuser.PickupDate = tempmodel.convertDate(tempmodel.currentuser.PickupDate);
                             tempmodel.currentuser.SendoffDate = tempmodel.convertDate(tempmodel.currentuser.SendoffDate);
+                            tempmodel.SetCalendar();
                             tempmodel.ChangeType(tempmodel.currentuser.PickupType, 'PickupTitle', 'Pickup');
                             tempmodel.ChangeType(tempmodel.currentuser.SendoffType, 'SendoffTitle', 'Sendoff');
                             tempmodel.SetRoom();
@@ -585,7 +585,7 @@
                     $('.attention').css('color', '#007457');
                 }
             },
-            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "" },
+            
             //接送服务按钮
             ChangeType: function (val, label, cla) {
                 if (val == 10) {
@@ -607,6 +607,23 @@
             },
             //保存接送服务
             SaveType: function () {
+                ComFunJS.showload();
+                if (tempmodel.currentuser.PickupType > 0) {
+                    tempmodel.currentuser.PickupDate = $('#PickupDate').val();
+                    tempmodel.currentuser.PickupNumber = $('#PickupNumber').val();                    
+                }
+                else {
+                    tempmodel.currentuser.PickupNumber = '';
+                    tempmodel.currentuser.PickupDate = '';
+                }
+                if (tempmodel.currentuser.SendoffType > 0) {
+                    tempmodel.currentuser.SendoffDate = $('#SendoffDate').val();
+                    tempmodel.currentuser.SendoffNumber = $('#SendoffNumber').val();       
+                }
+                else {
+                    tempmodel.currentuser.SendoffNumber = '';
+                    tempmodel.currentuser.SendoffDate = '';
+                }
                 $.post('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_UPDATEPICKUPSENDOFF&r=' + Math.random(), { P1: JSON.stringify(tempmodel.currentuser.$model) }, function (r) {
                     if (r.ErrorMsg == null || r.ErrorMsg == "" || r.ErrorMsg == "undefined") {
                         ComFunJS.winsuccess('保存成功！');
@@ -615,6 +632,7 @@
                         ComFunJS.winwarning('保存失败！');
                     }
                 })
+                ComFunJS.closeAll();
             },
             convertDate: function (date) {
                 if (date != null && date != '') {
@@ -635,11 +653,42 @@
                     if (minute < 10) {
                         minute = '0' + minute;
                     }
-                    //var r = d.getFullYear() + '-' + month + '-' + day + ' ' + hour + ":" + minute;
-                    var r = day + '/' + month + '/' + d.getFullYear() + ' ' + hour + ":" + minute;
+                    var r = d.getFullYear() + '-' + month + '-' + day + ' ' + hour + ":" + minute;
+                    //var r = day + '/' + month + '/' + d.getFullYear() + ' ' + hour + ":" + minute;
                     return r;
                 }
                 return date;
+            },
+            SetCalendar: function () {
+                var currYear = (new Date()).getFullYear();
+                var opt = {
+                    date: { preset: 'date' },
+                    datetime: { preset: 'datetime' },
+                    time: { preset: 'time' },
+                    defaultopi: {
+                        theme: 'default', //皮肤样式
+                        display: 'bottom', //显示方式 
+                        mode: 'scroller', //日期选择模式
+                        lang: 'zh',
+                        startYear: currYear, //开始年份
+                        endYear: currYear + 2, //结束年份
+                        onShow: function (html, valueText, inst) {
+                        }
+                    },
+
+                };
+              
+                if (tempmodel.currentuser.PickupDate != '') {
+                    var d = new Date(tempmodel.currentuser.PickupDate);
+                    $("#PickupDate").scroller($.extend(opt['datetime'], opt['defaultopi'])).scroller('setDate', d, true);
+                }
+                if (tempmodel.currentuser.SendoffDate != '') {
+                    var d = new Date(tempmodel.currentuser.SendoffDate);
+                    $("#SendoffDate").scroller($.extend(opt['datetime'], opt['defaultopi'])).scroller('setDate', d, true);
+                }
+                //var optDateTime = $.extend(opt['datetime'], opt['defaultopi']);
+                //var PickupDATE = $("#PickupDate").mobiscroll(optDateTime).datetime(optDateTime);
+                //var SendoffDATE = $("#SendoffDate").mobiscroll(optDateTime).datetime(optDateTime);
             }
         });
 
@@ -652,38 +701,6 @@
         $(window).on("load resize", function () {
             var h = document.documentElement.clientHeight || window.innerHeight;
             $(".wrapper").css("height", h);
-        });
-
-        function ShowCalendar(id, date) {
-            var curr = new Date(date).getFullYear();
-            var opt = {
-            }
-            opt.datetime = { preset: 'datetime', minDate: new Date(2018, 0, 1, 0, 0), maxDate: new Date(2020, 11, 31, 23, 59), stepMinute: 5 };
-            $('#' + id).scroller($.extend(opt['datetime'], { theme: 'default', mode: 'scroller', display: 'bottom', lang: 'zh' }));
-        }
-
-
-        $(function () {
-            var currYear = (new Date()).getFullYear();
-            var opt = {
-                date: { preset: 'date' },
-                datetime: { preset: 'datetime' },
-                time: { preset: 'time' },
-                defaultopi: {
-                    theme: 'default', //皮肤样式
-                    display: 'bottom', //显示方式 
-                    mode: 'scroller', //日期选择模式
-                    lang: 'zh',
-                    startYear: currYear - 2, //开始年份
-                    endYear: currYear + 2, //结束年份
-                    onShow: function (html, valueText, inst) {
-                    }
-                },
-
-            };
-           var optDateTime = $.extend(opt['datetime'], opt['defaultopi']);
-           var PickupDATE = $("#PickupDate").mobiscroll(optDateTime).datetime(optDateTime);
-           var SendoffDATE = $("#SendoffDate").mobiscroll(optDateTime).datetime(optDateTime);
         });
     </script>
 </body>

@@ -83,7 +83,7 @@
                 },
 
             };
-            $("#appDate").scroller($.extend(opt['date'], opt['defaultopi'])).scroller('setDate', new Date(2014, 5, 14), true);
+            $("#appDate").scroller($.extend(opt['datetime'], opt['defaultopi'])).scroller('setDate', new Date(2020, 5, 14), true);
             var optDateTime = $.extend(opt['datetime'], opt['defaultopi']);
             var optTime = $.extend(opt['time'], opt['defaultopi']);
             //var SDAT = $("#appDateTime").mobiscroll(optDateTime).datetime(optDateTime).scroller('setDate', getDate("2012-9-20 23:59:00"), true);
@@ -144,7 +144,7 @@
         </div>
         <div class="demos">
             <label for="appDateTime">日期时间</label>
-            <input type="text" name="appDateTime" id="appDateTime"  />
+            <input type="text" name="appDateTime" id="appDateTime" value="2020-10-22 05:30"  />
         </div>
         <div class="demos">
             <label for="appTime">时间</label>

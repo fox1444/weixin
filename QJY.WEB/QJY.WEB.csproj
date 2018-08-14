@@ -243,10 +243,7 @@
     <Content Include="View_Mobile\Images\tobacco-logo.png" />
     <Content Include="View_Mobile\Images\tobacco-logo2.jpg" />
     <Content Include="View_Mobile\Images\wrap-bg.jpg" />
-    <Content Include="View_Mobile\JS\JqueryDate\css\mobiscroll.custom-2.6.2.min.css" />
-    <Content Include="View_Mobile\JS\JqueryDate\css\wp_icons.png" />
-    <Content Include="View_Mobile\JS\JqueryDate\css\wp_icons_light.png" />
-    <Content Include="View_Mobile\JS\JqueryDate\js\mobiscroll.custom-2.6.2.min.js" />
+    <Content Include="View_Mobile\JS\Date\FT_Date.min - 复制.js" />
     <Content Include="View_Mobile\JS\jweixin-1.1.0.js" />
     <Content Include="View_Mobile\JS\sm-extend.min.js" />
     <Content Include="View_Mobile\JS\sm.min.js" />

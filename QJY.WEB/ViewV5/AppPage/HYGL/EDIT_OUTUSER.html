@@ -24,7 +24,7 @@
 
 </head>
 <body ms-controller="HYGLOUTUSER">
-    <div class="form-horizontal" style="margin: 8px 80px;">
+    <div class="form-horizontal" style="margin: 8px 50px 200px 50px;">
         <div>
             <ul class="clearfix" style="display: block;padding:0">
                 <li class="add-item add-width fl-left">
@@ -65,7 +65,6 @@
                         </select>
                     </div>
                 </li>
-
                 <li class="add-item add-width fl-left">
                     <label class="add-item-label">上车时间</label>
                     <div class="add-ic">
@@ -99,6 +98,53 @@
                     <div class="add-ic">
                         <textarea class="form-control" ms-duplex="modelData.RoomNumber" style="height:60px;resize:none"></textarea>
                         <!--<input type="text" class="form-control" ms-duplex="modelData.RoomNumber" />-->
+                    </div>
+                </li>
+            </ul>
+
+            <ul style="border-top:solid 1px #ccc; padding-top:10px; margin-top:20px;">
+                <li class="add-item add-width fl-left">
+                    <label class="add-item-label">接机类型</label>
+                    <div class="add-ic">
+                        <select class="form-control" >
+                            <option value="">无</option>
+                            <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==modelData.PickupType?'selected':''">{{item.TypeName}}</option>
+                        </select>
+                    </div>
+                </li>
+                <li class="add-item add-width fl-right">
+                    <label class="add-item-label">航班号</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.PickupNumber" readonly="readonly"/>
+                    </div>
+                </li>
+                <li class="add-item add-width fl-left">
+                    <label class="add-item-label">到达日期</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.PickupDate" readonly="readonly"/>
+                    </div>
+                </li>
+            </ul>
+            <ul style="clear:both;">
+                <li class="add-item add-width fl-left">
+                    <label class="add-item-label">送机类型</label>
+                    <div class="add-ic">
+                        <select class="form-control" >
+                            <option value="">无</option>
+                            <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==modelData.SendoffType?'selected':''">{{item.TypeName}}</option>
+                        </select>
+                    </div>
+                </li>
+                <li class="add-item add-width fl-right">
+                    <label class="add-item-label">航班号</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.SendoffNumber" readonly="readonly" />
+                    </div>
+                </li>
+                <li class="add-item add-width fl-left">
+                    <label class="add-item-label">到达日期</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.SendoffDate" readonly="readonly" />
                     </div>
                 </li>
             </ul>
