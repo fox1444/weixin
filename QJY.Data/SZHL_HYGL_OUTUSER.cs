@@ -22,6 +22,7 @@ namespace QJY.Data
         public string OutDeptName { get; set; }
         public string Zhiwu { get; set; }
         public string Mobphone { get; set; }
+        public Nullable<int> DisplayOrder { get; set; }
         public string RoomNumber { get; set; }
         public string BoardingTime { get; set; }
         public string CarNumber { get; set; }
@@ -33,10 +34,9 @@ namespace QJY.Data
         public Nullable<System.DateTime> CRDate { get; set; }
         public Nullable<int> PickupType { get; set; }
         public string PickupNumber { get; set; }
-        public Nullable<System.DateTime> PickupDate { get; set; }
+        public string PickupDate { get; set; }
         public Nullable<int> SendoffType { get; set; }
         public string SendoffNumber { get; set; }
-        public Nullable<System.DateTime> SendoffDate { get; set; }
-        public Nullable<int> DisplayOrder { get; set; }
+        public string SendoffDate { get; set; }
     }
 }

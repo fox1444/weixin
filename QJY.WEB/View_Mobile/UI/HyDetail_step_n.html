@@ -333,21 +333,21 @@
                                 交通工具
                             </li>
                             <li>
-                                <select ms-duplex="currentuser.PickupType" ms-change="ChangeType(this.value,'PickupTitle','PickupNumber')">
+                                <select ms-duplex="currentuser.PickupType" ms-change="ChangeType(this.value,'PickupTitle','Pickup')">
                                     <option value="">请选择</option>
                                     <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==currentuser.PickupType?'selected':''">{{item.TypeName}}</option>
                                 </select>
                             </li>
-                            <li class="PickupNumber">
+                            <li class="Pickup">
                                 <span id="PickupTitle">航班号</span>
                             </li>
-                            <li class="PickupNumber">
+                            <li class="Pickup">
                                 <input id="PickupNumber" ms-duplex="currentuser.PickupNumber" />
                             </li>
-                            <li>
+                            <li class="Pickup PickupDate">
                                 到达日期
                             </li>
-                            <li>
+                            <li class="Pickup PickupDate">
                                 <input ms-duplex="currentuser.PickupDate" id="PickupDate" onclick="ShowCalendar('PickupDate',$(this).val())" />
                             </li>
                         </ul>
@@ -364,21 +364,21 @@
                                 交通工具
                             </li>
                             <li>
-                                <select ms-duplex="currentuser.SendoffType" ms-change="ChangeType(this.value,'SendoffTitle','SendoffNumber')">
+                                <select ms-duplex="currentuser.SendoffType" ms-change="ChangeType(this.value,'SendoffTitle','Sendoff')">
                                     <option value="">请选择</option>
                                     <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==currentuser.SendoffType?'selected':''">{{item.TypeName}}</option>
                                 </select>
                             </li>
-                            <li class="SendoffNumber">
-                                <span id="SendoffTitle">航班号</span>
+                            <li class="Sendoff">
+                                <span id="Sendoff">航班号</span>
                             </li>
-                            <li class="SendoffNumber">
+                            <li class="Sendoff">
                                 <input id="SendoffNumber" ms-duplex="currentuser.SendoffNumber" />
                             </li>
-                            <li>
+                            <li class="Sendoff SendoffDate">
                                 出发日期
                             </li>
-                            <li>
+                            <li class="Sendoff SendoffDate">
                                 <input ms-duplex="currentuser.SendoffDate" />
                             </li>
                         </ul>
@@ -411,7 +411,7 @@
     </div>
 
     <script src="/View_Mobile/js/layer/layer.m.js"></script>
-    <script src="/View_Mobile/js/zepto.min.js"></script>
+    <script src="/View_Mobile/js/zepto.js"></script>
     <script src="/View_Mobile/JS/avalon.min.js"></script>
     <script src="/View_Mobile/js/ComFunJS.js"></script>
     <script src="/View_Mobile/js/Jquery2.1.js"></script>
@@ -515,8 +515,8 @@
                             tempmodel.currentuser = r.Result[0];
                             tempmodel.currentuser.PickupDate = tempmodel.convertDate(tempmodel.currentuser.PickupDate);
                             tempmodel.currentuser.SendoffDate = tempmodel.convertDate(tempmodel.currentuser.SendoffDate);
-                            tempmodel.ChangeType(tempmodel.currentuser.PickupType, 'PickupTitle', 'PickupNumber');
-                            tempmodel.ChangeType(tempmodel.currentuser.SendoffType, 'SendoffTitle', 'SendoffNumber');
+                            tempmodel.ChangeType(tempmodel.currentuser.PickupType, 'PickupTitle', 'Pickup');
+                            tempmodel.ChangeType(tempmodel.currentuser.SendoffType, 'SendoffTitle', 'Sendoff');
                             tempmodel.SetRoom();
                         }
                     });
@@ -593,7 +593,11 @@
                     $('.' + cla).show();
                 }
                 else if (val == 20) {
-                    $('#' + label).html('车次');
+                    $('#' + label).html('火车车次');
+                    $('.' + cla).show();
+                }
+                else if (val == 30) {
+                    $('#' + label).html('汽车站');
                     $('.' + cla).show();
                 }
                 else {

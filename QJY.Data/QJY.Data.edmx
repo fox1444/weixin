@@ -1016,6 +1016,7 @@
           <Property Name="OutDeptName" Type="varchar" MaxLength="200" />
           <Property Name="Zhiwu" Type="varchar" MaxLength="200" />
           <Property Name="Mobphone" Type="varchar" MaxLength="20" />
+          <Property Name="DisplayOrder" Type="int" />
           <Property Name="RoomNumber" Type="varchar" MaxLength="200" />
           <Property Name="BoardingTime" Type="varchar" MaxLength="200" />
           <Property Name="CarNumber" Type="varchar" MaxLength="200" />
@@ -1027,11 +1028,10 @@
           <Property Name="CRDate" Type="datetime" />
           <Property Name="PickupType" Type="int" />
           <Property Name="PickupNumber" Type="varchar" MaxLength="400" />
-          <Property Name="PickupDate" Type="datetime" />
+          <Property Name="PickupDate" Type="varchar" MaxLength="50" />
           <Property Name="SendoffType" Type="int" />
           <Property Name="SendoffNumber" Type="varchar" MaxLength="400" />
-          <Property Name="SendoffDate" Type="datetime" />
-          <Property Name="DisplayOrder" Type="int" />
+          <Property Name="SendoffDate" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_QD">
           <Key>
@@ -3838,6 +3838,7 @@
           <Property Name="OutDeptName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Zhiwu" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Mobphone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayOrder" Type="Int32" />
           <Property Name="RoomNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="BoardingTime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="CarNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -3849,11 +3850,10 @@
           <Property Name="CRDate" Type="DateTime" Precision="3" />
           <Property Name="PickupType" Type="Int32" />
           <Property Name="PickupNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="PickupDate" Type="DateTime" Precision="3" />
+          <Property Name="PickupDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="SendoffType" Type="Int32" />
           <Property Name="SendoffNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="SendoffDate" Type="DateTime" Precision="3" />
-          <Property Name="DisplayOrder" Type="Int32" />
+          <Property Name="SendoffDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5754,7 +5754,6 @@
           <EntitySetMapping Name="SZHL_HYGL_OUTUSER">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL_OUTUSER">
               <MappingFragment StoreEntitySet="SZHL_HYGL_OUTUSER">
-                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="SendoffDate" ColumnName="SendoffDate" />
                 <ScalarProperty Name="SendoffNumber" ColumnName="SendoffNumber" />
                 <ScalarProperty Name="SendoffType" ColumnName="SendoffType" />
@@ -5770,6 +5769,7 @@
                 <ScalarProperty Name="CarNumber" ColumnName="CarNumber" />
                 <ScalarProperty Name="BoardingTime" ColumnName="BoardingTime" />
                 <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Mobphone" ColumnName="Mobphone" />
                 <ScalarProperty Name="Zhiwu" ColumnName="Zhiwu" />
                 <ScalarProperty Name="OutDeptName" ColumnName="OutDeptName" />
