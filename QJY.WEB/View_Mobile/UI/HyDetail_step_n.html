@@ -348,7 +348,7 @@
                                 到达日期
                             </li>
                             <li class="Pickup PickupDate">
-                                <input ms-duplex="currentuser.PickupDate" id="PickupDate" onclick="ShowCalendar('PickupDate',$(this).val())" />
+                                <input ms-duplex="currentuser.PickupDate" id="PickupDate" />
                             </li>
                         </ul>
                     </div>
@@ -379,7 +379,7 @@
                                 出发日期
                             </li>
                             <li class="Sendoff SendoffDate">
-                                <input ms-duplex="currentuser.SendoffDate" />
+                                <input ms-duplex="currentuser.SendoffDate" id="SendoffDate"/>
                             </li>
                         </ul>
                     </div>
@@ -415,7 +415,7 @@
     <script src="/View_Mobile/JS/avalon.min.js"></script>
     <script src="/View_Mobile/js/ComFunJS.js"></script>
     <script src="/View_Mobile/js/Jquery2.1.js"></script>
-    <script src="/View_Mobile/JS/JqueryDate/js/mobiscroll.custom-2.6.2.min.js"></script>
+    <script src="/View_Mobile/js/Date/FT_Date.min.js"></script>
 
     <script>
         var tempmodel = avalon.define({
@@ -661,6 +661,30 @@
             opt.datetime = { preset: 'datetime', minDate: new Date(2018, 0, 1, 0, 0), maxDate: new Date(2020, 11, 31, 23, 59), stepMinute: 5 };
             $('#' + id).scroller($.extend(opt['datetime'], { theme: 'default', mode: 'scroller', display: 'bottom', lang: 'zh' }));
         }
+
+
+        $(function () {
+            var currYear = (new Date()).getFullYear();
+            var opt = {
+                date: { preset: 'date' },
+                datetime: { preset: 'datetime' },
+                time: { preset: 'time' },
+                defaultopi: {
+                    theme: 'default', //皮肤样式
+                    display: 'bottom', //显示方式 
+                    mode: 'scroller', //日期选择模式
+                    lang: 'zh',
+                    startYear: currYear - 2, //开始年份
+                    endYear: currYear + 2, //结束年份
+                    onShow: function (html, valueText, inst) {
+                    }
+                },
+
+            };
+           var optDateTime = $.extend(opt['datetime'], opt['defaultopi']);
+           var PickupDATE = $("#PickupDate").mobiscroll(optDateTime).datetime(optDateTime);
+           var SendoffDATE = $("#SendoffDate").mobiscroll(optDateTime).datetime(optDateTime);
+        });
     </script>
 </body>
 </html>
