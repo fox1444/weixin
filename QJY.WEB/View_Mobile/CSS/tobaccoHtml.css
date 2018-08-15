@@ -118,7 +118,7 @@ body, html {
     }
 
 /*白色按钮*/
-.gobutton2 span {  
+.gobutton2 span {
     color: #019FE8;
     display: block;
     font-weight: bold;
@@ -235,7 +235,8 @@ body, html {
     .wrapper .content-bg {
         margin: 0px auto;
         width: 90%;
-        line-height: 180%;
+        line-height: 150%;
+
     }
 
         .wrapper .content-bg img {
@@ -354,96 +355,139 @@ body, html {
     padding: 10px 0 10px 18px;
     text-align: left;
     background: #fff;
-    border-bottom: solid 1px #eee;
+    border-bottom: solid 1px #e1e1e1;
     font-size: 100%;
     font-weight: normal;
 }
 
 .bg-grey .content-bg {
     width: 100%;
+    margin-bottom:30px;
 }
-    .bg-grey .content-bg .item-con-list {
+
+    .bg-grey .content-bg .item-con-list, .bg-grey .content-bg .item-wall-list {
         padding: 0 0 0 15px;
-        border-top: solid 1px #eee;
-        border-bottom: solid 1px #eee;
+        border-top: solid 1px #e1e1e1;
+        border-bottom: solid 1px #e1e1e1;
         background: #fff;
     }
-        .bg-grey .content-bg .item-con-list::after{
-            content:"";
-            display:block;
-            clear:both;
+
+        .bg-grey .content-bg .item-con-list::after {
+            content: "";
+            display: block;
+            clear: both;
         }
-        .bg-grey .content-bg .item-con-list li {
-            border-bottom: solid 1px #eee;
-            margin:0;
+
+        .bg-grey .content-bg .item-con-list li, .bg-grey .content-bg .item-wall-list li {
+            border-bottom: solid 1px #e1e1e1;
+            margin: 0;
         }
-            .bg-grey .content-bg .item-con-list li:last-child, .bg-grey .content-bg .item-con-list li:nth-last-child(2) {
+
+            .bg-grey .content-bg .item-con-list li:last-child, .bg-grey .content-bg .item-con-list li:nth-last-child(2), .bg-grey .content-bg .item-wall-list li:last-child {
                 border-bottom: none;
             }
-        .bg-grey .item-title {
-            padding: 3px 15px;
-        }
+
+    .bg-grey .content-bg .item-wall-list {
+        margin-top: 10px;
+    }
+
+.bg-grey .item-title {
+    padding: 3px 15px;
+}
+
+.bg-grey .item-bg {
+    padding: 0 15px 0px 15px;
+    margin-bottom:30px;
+    border-top: solid 1px #e1e1e1;
+    border-bottom: solid 1px #e1e1e1;
+    background: #fff;
+}
+
+    .bg-grey .item-bg .item-description {
+        padding: 10px 0 10px 0;
+        line-height: 180%;
+    }
+
+    .bg-grey .item-bg .title {
+        padding-left: 0px;
+    }
+
+.hyxuzhi .title i {
+    background: url(/View_Mobile/Images/icon/ZHBG.jpg) center center no-repeat;
+}
 
 .picksend .title i {
     background: url(/View_Mobile/Images/icon/JSFW.png) center center no-repeat;
-    width: 27px;
-    height: 27px;
-    background-size: 100%;
-    border-radius: 10px;
+}
+
+.hyfuwu .title i {
+    background: url(/View_Mobile/Images/icon/WQQD.png) center center no-repeat;
+}
+
+.hyrich .title i {
+    background: url(/View_Mobile/Images/icon/NOTE.png) center center no-repeat;
+}
+
+.hyzuowei .title i {
+    background: url(/View_Mobile/Images/icon/HYGL.png) center center no-repeat;
+}
+
+.hychuxing .title i {
+    background: url(/View_Mobile/Images/icon/YCGL.png) center center no-repeat;
+}
+
+.hyzhusu .title i {
+    background: url(/View_Mobile/Images/icon/Info.jpg) center center no-repeat;
+}
+
+.hyyongcan .title i {
+    background: url(/View_Mobile/Images/icon/DCGL.png) center center no-repeat;
+}
+
+.zldownload .title i {
+    background: url(/View_Mobile/Images/icon/KSGL.png) center center no-repeat;
+}
+
+.hydaibiao .title i {
+    background: url(/View_Mobile/Images/icon/QYIM.png) center center no-repeat;
+}
+
+.bg-grey .title i {
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
     display: block;
     float: left;
     margin-right: 10px;
+    background-size: 100%;
 }
 
 .zcb-content {
     color: #000;
-    padding: 0;
     background: #fff;
-    margin: 7px;
     width: 95%;
-    padding: 0 15px;
+    padding: 10px 15px 0 15px;
 }
 
-.content-bg .zcb-title {
-    color: #000;
-    padding: 10px;
-    text-align: center;
-    background: #eee;
-}
+    .zcb-content .zcb-title {
+        color: #000;
+        padding: 10px;
+        margin-top: 10px;
+        text-align: center;
+        background: #eee;
+    }
 
 .arrow-up, .back-away, .arrow-down {
-    background-color: #000;
-    opacity: 0.35;
-    filter: alpha(opacity=35);
-    font-size: 90%;
-    font-size: 150%;
-    font-weight: bold;
     width: 50px;
-    height: 50px;
-    line-height: 50px;
-    font-family: Aharoni;
-    border-radius: 25px;
-    box-shadow: #111 0 0 5px 2px;
     text-align: center;
-    /*color: #00C7FF;*/
-    color: #fff;
-    transform: rotate(90deg);
-    -ms-transform: rotate(90deg); /* IE 9 */
-    -moz-transform: rotate(90deg); /* Firefox */
-    -webkit-transform: rotate(90deg); /* Safari 和 Chrome */
-    -o-transform: rotate(90deg);
+    color: #019FE8;
     margin: 0 auto;
 }
 
 .back-away {
     font-weight: normal;
     width: auto;
-    font-size: 100%;
-    transform: rotate(0);
-    -ms-transform: rotate(0); /* IE 9 */
-    -moz-transform: rotate(0); /* Firefox */
-    -webkit-transform: rotate(0); /* Safari 和 Chrome */
-    -o-transform: rotate(0);
+   
 }
 
 .up-and-down {
@@ -452,22 +496,27 @@ body, html {
     padding: 0;
     list-style: none;
     width: 100%;
-    height: 50px;
+    bottom: 0px;
     position: fixed;
-    bottom: 25px;
     border: none;
+    font-size: 75%;
+    padding: 10px 0;
+    background: #fff;
+    border-top: solid 1px #e1e1e1;
 }
 
     .up-and-down li {
         float: left;
+        border-right: solid 1px #e1e1e1;
         width: 32%;
-        height: 50px;
+        height: 15px;
+        line-height: 15px;
     }
 
-.zldownload {
-    width: 90%;
-    margin: 0 auto;
-}
+        .up-and-down li:last-child {
+            border-right: none;
+           
+        }
 
 .hy_filelist {
     display: block;
@@ -479,11 +528,9 @@ body, html {
     .hy_filelist li {
         line-height: 40px;
         height: 40px;
-        font-size: 120%;
     }
 
         .hy_filelist li span {
-            text-decoration: underline;
             white-space: nowrap;
             display: block;
             width: 90%;
@@ -503,26 +550,26 @@ body, html {
             float: right;
             display: block;
             margin-top: -40px;
+            margin-right: 15px;
             font-size: 90%;
-            color: #fff;
+            color: #000;
         }
 
 .inlist {
-    margin-bottom: 15px;
+    padding: 8px 0;
 }
 
 .list_parent_node {
     /*border: solid 1px #efefef;*/
-    padding: 15px 20px;
-    margin: 0 0 7px 0;
+    padding: 15px 15px;
     background: #fff;
+    border-bottom: solid 1px #e1e1e1;
 }
 
 .parent_title {
-    font-size: 120%;
-    background: url(/View_Mobile/Images/arrow-w.png) no-repeat left center;
-    background-size: 33px;
-    padding-left: 33px;
+    background: url(/View_Mobile/Images/arrow-b.png) no-repeat left center;
+    background-size: 20px;
+    padding-left: 30px;
     display: block;
     white-space: nowrap;
     width: 100%;
@@ -533,7 +580,7 @@ body, html {
 .title_cyuser {
     color: #007655;
     background: url(/View_Mobile/Images/arrow-g.png) no-repeat left center;
-    background-size: 25px;
+    background-size: 20px;
 }
 
 .list_parent_node .list_child_block {
@@ -554,7 +601,7 @@ body, html {
 }
 
 .item-con {
-    padding: 10px;
+    padding: 4px 0 4px 8px;
 }
 
     .item-con::after {

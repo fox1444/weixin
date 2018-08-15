@@ -94,168 +94,182 @@
         </div>
 
         <!--会议须知-->
-        <div class="hy_menu" id="item-2" ms-if="modelData.HYXZ!=''">
-            <div class="title">
-                <span><strong>&nbsp;会议须知&nbsp;</strong></span>
-            </div>
-            <div class="content-bg font-white inlist">
-                {{modelData.HYXZ|html}}
+        <div class="hy_menu bg-white bg-grey hyxuzhi " id="item-2" ms-if="modelData.HYXZ!=''">
+            <div class="item-bg">
+                <div class="title">
+                    <i></i>会议须知
+                </div>
+                <div class="item-description">
+                    {{modelData.HYXZ|html}}
+                </div>
             </div>
         </div>
 
         <!--服务指南-->
-        <div class="hy_menu" id="item-3" ms-if="modelData.HYFW!=''" style="padding-bottom:20px;">
-            <div class="title">
-                <span><strong>&nbsp;服务指南&nbsp;</strong></span>
-            </div>
-            <div class="content-bg bg-holder">
-                {{modelData.HYFW|html}}
+        <div class="hy_menu  bg-white bg-grey hyfuwu" id="item-3" ms-if="modelData.HYFW!=''" style="padding-bottom:20px;">
+            <div class="item-bg">
+                <div class="title">
+                    <i></i>服务指南
+                </div>
+                <div class="item-description">
+                    {{modelData.HYFW|html}}
+                </div>
             </div>
         </div>
 
         <!--日程安排-->
-        <div class="hy_menu bg-white" id="item-4" ms-if="modelData.Details!=''" style="padding-bottom:20px;">
-            <div class="title">
-                <span><strong>&nbsp;日程安排&nbsp;</strong></span>
-            </div>
-            <div class="content-bg bg-holder inlist">
-                {{modelData.Details|html}}
+        <div class="hy_menu bg-white bg-grey hyrich" id="item-4" ms-if="modelData.Details!=''" style="padding-bottom:20px;">
+            <div class="item-bg">
+                <div class="title">
+                    <i></i>日程安排
+                </div>
+                <div class="item-description">
+                    {{modelData.Details|html}}
+                </div>
             </div>
         </div>
 
         <!--座位引导-->
-        <div class="hy_menu bg-white" id="item-5">
+        <div class="hy_menu bg-white bg-grey hyzuowei" id="item-5">
             <div class="title">
-                <span><strong>&nbsp;座位引导&nbsp;</strong></span>
+                <i></i>座位引导
             </div>
-            <div class="content-bg zcb-content">
-                <div style="text-align:center;">
-                    {{modelData.StartTime|date('M月d日H:mm')}} - {{modelData.EndTime|date('M月d日H:mm')}}
-                    <br />{{modelData.Name}}
-                </div>
-                <div class="zcb-title">尊敬的{{currentuser.Name}}，您的座位在<br /><span style="color:#ff4700" class="attention">红色位置区域</span></div>
-                <div class="chairmen-wrapper">
-                    <div class="room-chairmen">
-                        <!--<ul><li ms-repeat-el="ZCUserNames"><span>{{el.UserRealName}}</span></li></ul>-->
-                        主席台
+            <div class="item-bg" style="margin-top:10px;">
+                <div class="zcb-content">
+                    <div style="text-align:center;">
+                        {{modelData.StartTime|date('M月d日H:mm')}} - {{modelData.EndTime|date('M月d日H:mm')}}
+                        <br />{{modelData.Name}}
                     </div>
-                </div>
-                <div class="room-block-hold">
-                    <div class="room-block">
+                    <div class="zcb-title">尊敬的{{currentuser.Name}}，您的座位在<br /><span style="color:#ff4700" class="attention">红色位置区域</span></div>
+                    <div class="chairmen-wrapper">
+                        <div class="room-chairmen">
+                            <!--<ul><li ms-repeat-el="ZCUserNames"><span>{{el.UserRealName}}</span></li></ul>-->
+                            主席台
+                        </div>
+                    </div>
+                    <div class="room-block-hold">
+                        <div class="room-block">
 
+                        </div>
                     </div>
+                    <div style="text-align:center;margin-bottom:10px;">请左右滑动查找您的座位</div>
                 </div>
-                <div style="text-align:center;">请左右滑动查找您的座位</div>
             </div>
         </div>
 
         <!--参会代表-->
-        <div class="hy_menu" id="item-6" style="padding-bottom:70px;">
+        <div class="hy_menu bg-white bg-grey hydaibiao" id="item-6" style="padding-bottom:70px;">
             <div class="title title-g">
-                <span><strong>&nbsp;参会代表&nbsp;</strong></span>
+                <i></i>参会代表
             </div>
-            <div class="content-bg">
+            <div class="content-bg" style="margin-top:10px;border-top:solid 1px #e1e1e1;">
                 {{tempmodel.CYUserStr|html}}
             </div>
         </div>
 
         <!--出行安排-->
-        <div class="hy_menu bg-white bg-grey" id="item-7" ms-if="modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''">
-            <div class="title">
-                <span><strong>&nbsp;出行安排&nbsp;</strong></span>
-            </div>
-            <div class="content-bg bg-holder">
-                <div class="inlist" ms-if="modelData.CXQK!=''">
-                    <span class="parent_title">
-                        出行安排
-                    </span>
-                    <div class="item-con ">
-                        {{modelData.CXQK|html}}
-                    </div>
+        <div class="hy_menu bg-white bg-grey hychuxing" id="item-7" ms-if="modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''">
+            <div class="item-bg">
+                <div class="title">
+                    <i></i>出行安排
                 </div>
-                <div class="inlist" ms-if="tempmodel.currentuser.BoardingTime!=''">
-                    <span class="parent_title">
-                        上车时间
-                    </span>
-                    <div class="item-con ">
-                        {{tempmodel.currentuser.BoardingTime|html}}
+                <div class="item-description">
+                    <div class="inlist" ms-if="modelData.CXQK!=''">
+                        <span class="parent_title">
+                            出行安排
+                        </span>
+                        <div class="item-con ">
+                            {{modelData.CXQK|html}}
+                        </div>
                     </div>
-                </div>
-                <div class="inlist" ms-if="tempmodel.currentuser.CarNumber!=''">
-                    <span class="parent_title">
-                        车牌号
-                    </span>
-                    <div class="item-con ">
-                        {{tempmodel.currentuser.CarNumber|html}}
+                    <div class="inlist" ms-if="tempmodel.currentuser.BoardingTime!=''">
+                        <span class="parent_title">
+                            上车时间
+                        </span>
+                        <div class="item-con ">
+                            {{tempmodel.FormatHTML(tempmodel.currentuser.BoardingTime)|html}}
+                        </div>
+                    </div>
+                    <div class="inlist" ms-if="tempmodel.currentuser.CarNumber!=''">
+                        <span class="parent_title">
+                            车牌号
+                        </span>
+                        <div class="item-con ">
+                            {{tempmodel.FormatHTML(tempmodel.currentuser.CarNumber)|html}}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!--住宿安排-->
-        <div class="hy_menu bg-white bg-grey" id="item-8" ms-if="modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''">
-            <div class="title">
-                <span><strong>&nbsp;住宿安排&nbsp;</strong></span>
-            </div>
-            <div class="content-bg bg-holder">
-                <div class="inlist" ms-if="modelData.ZSAP!=''">
-                    <span class="parent_title">
-                        住宿服务
-                    </span>
-                    <div class="item-con ">
-                        {{modelData.ZSAP|html}}
-                    </div>
+        <div class="hy_menu bg-white bg-grey hyzhusu" id="item-8" ms-if="modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''">
+            <div class="item-bg">
+                <div class="title">
+                    <i></i>住宿安排
                 </div>
+                <div class="item-description">
+                    <div class="inlist" ms-if="modelData.ZSAP!=''">
+                        <span class="parent_title ">
+                            住宿服务
+                        </span>
+                        <div class="item-con ">
+                            {{tempmodel.FormatHTML(modelData.ZSAP)|html}}
+                        </div>
+                    </div>
 
-                <div class="inlist" ms-if="tempmodel.currentuser.RoomNumber!=''">
-                    <span class="parent_title">
-                        房间号
-                    </span>
-                    <div class="item-con ">
-                        {{tempmodel.currentuser.RoomNumber|html}}
+                    <div class="inlist" ms-if="tempmodel.currentuser.RoomNumber!=''">
+                        <span class="parent_title">
+                            房间号
+                        </span>
+                        <div class="item-con ">
+                            {{tempmodel.FormatHTML(tempmodel.currentuser.RoomNumber)|html}}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!--用餐安排-->
-        <div class="hy_menu bg-white bg-grey" id="item-9" ms-if="modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''">
-            <div class="title">
-                <span><strong>&nbsp;用餐安排&nbsp;</strong></span>
-            </div>
-            <div class="content-bg bg-holder">
-                <div class="inlist" ms-if="modelData.YCQK!=''">
-                    <span class="parent_title">
-                        用餐安排
-                    </span>
-                    <div class="item-con ">
-                        {{modelData.YCQK|html}}
-                    </div>
+        <div class="hy_menu bg-white bg-grey hyyongcan" id="item-9" ms-if="modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''">
+            <div class="item-bg">
+                <div class="title">
+                    <i></i>用餐安排
                 </div>
+                <div class="item-description">
+                    <div class="inlist" ms-if="modelData.YCQK!=''">
+                        <span class="parent_title">
+                            用餐安排
+                        </span>
+                        <div class="item-con ">
+                            {{modelData.YCQK|html}}
+                        </div>
+                    </div>
 
-                <div class="inlist" ms-if="tempmodel.currentuser.YCTIME!=''">
-                    <span class="parent_title">
-                        用餐时间
-                    </span>
-                    <div class="item-con ">
-                        &nbsp;&nbsp;{{tempmodel.currentuser.YCTIME|html}}
+                    <div class="inlist" ms-if="tempmodel.currentuser.YCTIME!=''">
+                        <span class="parent_title">
+                            用餐时间
+                        </span>
+                        <div class="item-con ">
+                            &nbsp;&nbsp;{{tempmodel.FormatHTML(tempmodel.currentuser.YCTIME)}}
+                        </div>
                     </div>
-                </div>
-                <div class="inlist" ms-if="tempmodel.currentuser.YCLOCATION!=''">
-                    <span class="parent_title">
-                        用餐地点
-                    </span>
-                    <div class="item-con ">
-                        &nbsp;&nbsp;{{tempmodel.currentuser.YCLOCATION|html}}
+                    <div class="inlist" ms-if="tempmodel.currentuser.YCLOCATION!=''">
+                        <span class="parent_title">
+                            用餐地点
+                        </span>
+                        <div class="item-con ">
+                            &nbsp;&nbsp;{{tempmodel.FormatHTML(tempmodel.currentuser.YCLOCATION)}}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!--资料下载-->
-        <div class="hy_menu zldownload bg-white bg-grey" id="item-10" ms-if="modelData.Files!=''">
+        <div class="hy_menu bg-white bg-grey zldownload" id="item-10" ms-if="modelData.Files!=''">
             <div class="title">
-                <span><strong>&nbsp;资料下载&nbsp;</strong></span>
+                <i></i>资料下载
             </div>
             <div class="content-bg">
                 <div class="viewimg_for_view">{{modelData.Files}}</div>
@@ -367,7 +381,6 @@
                         <input ms-duplex="currentuser.PickupDate" id="PickupDate" />
                     </li>
                 </ul>
-
                 <div class="item-title">
                     送机
                 </div>
@@ -394,9 +407,8 @@
                         <input ms-duplex="currentuser.SendoffDate" id="SendoffDate" />
                     </li>
                 </ul>
-
                 <div class="gobutton-blue">
-                    <span id="phone_input_submit" ms-on-click="SaveType()" style="margin-top:30px;  margin-bottom:80px; letter-spacing: 8px;">保存</span>
+                    <span id="phone_input_submit" ms-on-click="SaveType()" style="margin-top:30px; ">保存</span>
                 </div>
             </div>
         </div>
@@ -404,17 +416,17 @@
         <ul class="up-and-down">
             <li>
                 <div class="arrow-up" ms-on-click="getpredata(tempmodel.stepindex)">
-                    <span><</span>
+                    <span>上一页</span>
                 </div>
             </li>
             <li>
                 <div class="back-away" ms-on-click="getdata(1)">
-                    <span>回到目录</span>
+                    <span>目录</span>
                 </div>
             </li>
             <li>
                 <div class="arrow-down" ms-on-click="getnextdata(tempmodel.stepindex)">
-                    <span>></span>
+                    <span>下一页</span>
                 </div>
             </li>
         </ul>
@@ -458,7 +470,7 @@
                     }
 
                     if ($('#item-' + index).attr('class').indexOf('bg-grey') != -1) {
-                        $('html').css('background','#f1f1f1');
+                        $('html').css('background', '#f1f1f1');
                     }
                     else {
                         $('html').css('background', '#fff');
@@ -523,7 +535,7 @@
                     $(this).children("i").html(k);
                     k++;
                 });
-                tempmodel.getdata(11);
+                tempmodel.getdata(1);
             },
             LoadRoom: function () {
                 var pn = ComFunJS.getCookie("userphonenumber");
@@ -542,11 +554,6 @@
                 }
             },
             SetRoom: function () {
-                //$.getJSON("/API/VIEWAPINOLOGIN.ashx?action=XTGL_GETUSERBYUSERNAMES&r=" + Math.random(), { P1: tempmodel.modelData.ZCUser }, function (rs) {
-                //    if (rs.ErrorMsg == "") {
-                //        tempmodel.ZCUserNames = rs.Result;
-                //    }
-                //});
                 if (tempmodel.modelData.RoomWidth && tempmodel.modelData.RoomLength) {
                     var rw = parseInt(tempmodel.modelData.RoomWidth);
                     var rl = parseInt(tempmodel.modelData.RoomLength);
@@ -591,14 +598,6 @@
                         }
                     });
                 }
-                //if (tempmodel.modelData.ZCUser.trim() != "") {
-                //    $.each(tempmodel.modelData.ZCUser.split(','), function (i, n) {
-                //        if (n == tempmodel.currentuser.UserName) {
-                //            $('.attention').html('主席台区域');
-                //            $('.attention').css('color', '#007457');
-                //        }
-                //    });
-                //}
                 if (tempmodel.currentuser.Type == 2) {
                     $('.attention').html('主席台区域');
                     $('.attention').css('color', '#007457');
@@ -696,18 +695,31 @@
                     },
 
                 };
-
+                var optDateTime = $.extend(opt['datetime'], opt['defaultopi']);
                 if (tempmodel.currentuser.PickupDate != '') {
                     var d = new Date(tempmodel.currentuser.PickupDate);
                     $("#PickupDate").scroller($.extend(opt['datetime'], opt['defaultopi'])).scroller('setDate', d, true);
+                }
+                else {
+                    var PickupDATE = $("#PickupDate").mobiscroll(optDateTime).datetime(optDateTime);
                 }
                 if (tempmodel.currentuser.SendoffDate != '') {
                     var d = new Date(tempmodel.currentuser.SendoffDate);
                     $("#SendoffDate").scroller($.extend(opt['datetime'], opt['defaultopi'])).scroller('setDate', d, true);
                 }
+                else {
+                    var SendoffDATE = $("#SendoffDate").mobiscroll(optDateTime).datetime(optDateTime);
+                }
                 //var optDateTime = $.extend(opt['datetime'], opt['defaultopi']);
                 //var PickupDATE = $("#PickupDate").mobiscroll(optDateTime).datetime(optDateTime);
                 //var SendoffDATE = $("#SendoffDate").mobiscroll(optDateTime).datetime(optDateTime);
+            },
+            FormatHTML: function (str) {
+                str = str.replace(/\n/g, '_@').replace(/\r/g, '_#');
+                str = str.replace(/_#_@/g, '<br/>');//IE7-8
+                str = str.replace(/_@/g, '<br/>');//IE9、FF、chrome
+                str = str.replace(/\s/g, '&nbsp;');//空格处理
+                return str;
             }
         });
 

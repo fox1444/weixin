@@ -1000,7 +1000,7 @@ var ComFunJS = {
         })
     },//打开微信聊天
     viewimg_for_view: function (tpdata, isDownload) {
-        var zhtml = '<ul class="hy_filelist" id="imglist1">'
+        var zhtml = '<ul class="hy_filelist item-wall-list" id="imglist1">'
             + '        </ul>'
             + '    <div style="clear:both"></div>'
 
@@ -1356,9 +1356,9 @@ var ComFunJS = {
         if (users) {
             $(users).each(function (index, ele) {
                 if (branchcodes.indexOf(ele.OutDeptName + ',') == -1) {
-                    branchtmp += '<div class="list_parent_node" onclick="ComFunJS.showchild(this)"><span class="parent_title title_cyuser">' + ele.OutDeptName + '</span>';
-                    branchtmp += '<div class="list_child_block">' + ComFunJS.convusers_branchuser(ele.OutDeptName, users) + '</div>';
-                    branchtmp += '</div>';
+                    branchtmp += '<ul class="list_parent_node " onclick="ComFunJS.showchild(this)"><span class="parent_title title_cyuser">' + ele.OutDeptName + '</span>';
+                    branchtmp += '<li class="list_child_block">' + ComFunJS.convusers_branchuser(ele.OutDeptName, users) + '</li>';
+                    branchtmp += '</ul>';
                     branchcodes += ele.OutDeptName + ',';
                 }
             });
