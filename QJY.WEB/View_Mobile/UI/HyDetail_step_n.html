@@ -12,59 +12,6 @@
     <link href="/View_Mobile/CSS/szhlextend.css?ver=20160904" rel="stylesheet" />
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
     <link href="/View_Mobile/JS/Date/FT_Date.min.css" rel="stylesheet" />
-    <style type="text/css">
-        .header {
-            border: 1px solid #333;
-            background: #111;
-            color: white;
-            font-weight: bold;
-            text-shadow: 0 -1px 1px black;
-            background-image: linear-gradient(#3C3C3C,#111);
-            background-image: -webkit-gradient(linear,left top,left bottom,from(#3C3C3C),to(#111));
-            background-image: -moz-linear-gradient(#3C3C3C,#111);
-        }
-
-            .header h1 {
-                text-align: center;
-                font-size: 16px;
-                margin: .6em 0;
-                padding: 0;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;
-            }
-
-        .content {
-            padding: 15px;
-            background: #fff;
-        }
-
-        .car {
-            position: relative;
-            height: 100%;
-        }
-
-            .car img {
-                height: 28px;
-                display: block;
-                margin: 0 auto;
-            }
-
-            .car .img-cont {
-                width: 80px;
-                height: 28px;
-                text-align: center;
-                float: left;
-                position: relative;
-                top: 50%;
-                margin-top: -14px;
-            }
-
-            .car span {
-                float: left;
-            }
-    </style>
-    <!--日历-->
 </head>
 <body ms-controller="Hydetail">
     <div class="index-html" style="display:none;">
@@ -181,7 +128,7 @@
             <div class="title">
                 <span><strong>&nbsp;座位引导&nbsp;</strong></span>
             </div>
-            <div class="content-bg zcb-content" >
+            <div class="content-bg zcb-content">
                 <div style="text-align:center;">
                     {{modelData.StartTime|date('M月d日H:mm')}} - {{modelData.EndTime|date('M月d日H:mm')}}
                     <br />{{modelData.Name}}
@@ -213,7 +160,7 @@
         </div>
 
         <!--出行安排-->
-        <div class="hy_menu" id="item-7" ms-if="modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''">
+        <div class="hy_menu bg-white bg-grey" id="item-7" ms-if="modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''">
             <div class="title">
                 <span><strong>&nbsp;出行安排&nbsp;</strong></span>
             </div>
@@ -246,7 +193,7 @@
         </div>
 
         <!--住宿安排-->
-        <div class="hy_menu" id="item-8" ms-if="modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''">
+        <div class="hy_menu bg-white bg-grey" id="item-8" ms-if="modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''">
             <div class="title">
                 <span><strong>&nbsp;住宿安排&nbsp;</strong></span>
             </div>
@@ -272,7 +219,7 @@
         </div>
 
         <!--用餐安排-->
-        <div class="hy_menu" id="item-9" ms-if="modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''">
+        <div class="hy_menu bg-white bg-grey" id="item-9" ms-if="modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''">
             <div class="title">
                 <span><strong>&nbsp;用餐安排&nbsp;</strong></span>
             </div>
@@ -306,7 +253,7 @@
         </div>
 
         <!--资料下载-->
-        <div class="hy_menu zldownload" id="item-10" ms-if="modelData.Files!=''">
+        <div class="hy_menu zldownload bg-white bg-grey" id="item-10" ms-if="modelData.Files!=''">
             <div class="title">
                 <span><strong>&nbsp;资料下载&nbsp;</strong></span>
             </div>
@@ -316,7 +263,7 @@
         </div>
 
         <!--接送服务-->
-        <div class="hy_menu" id="item-11">
+        <!--<div class="hy_menu" id="item-11">
             <div class="title">
                 <span><strong>&nbsp;接送服务&nbsp;</strong></span>
             </div>
@@ -387,6 +334,71 @@
                     <span id="phone_input_submit" ms-on-click="SaveType()" style="margin-top:20px;  margin-bottom:80px; letter-spacing: 8px;">保存</span>
                 </div>
             </div>
+        </div>-->
+
+        <div class="hy_menu bg-white bg-grey picksend" id="item-11">
+            <div class="title">
+                <i></i>接送服务
+            </div>
+            <div class="content-bg">
+                <div class="item-title">
+                    接机
+                </div>
+                <ul class="item-con-list">
+                    <li>
+                        交通工具
+                    </li>
+                    <li>
+                        <select ms-duplex="currentuser.PickupType" ms-change="ChangeType(this.value,'PickupTitle','Pickup')">
+                            <option value="">无</option>
+                            <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==currentuser.PickupType?'selected':''">{{item.TypeName}}</option>
+                        </select>
+                    </li>
+                    <li class="Pickup">
+                        <span id="PickupTitle">航班号</span>
+                    </li>
+                    <li class="Pickup">
+                        <input id="PickupNumber" ms-duplex="currentuser.PickupNumber" />
+                    </li>
+                    <li class="Pickup PickupDate">
+                        到达日期
+                    </li>
+                    <li class="Pickup PickupDate">
+                        <input ms-duplex="currentuser.PickupDate" id="PickupDate" />
+                    </li>
+                </ul>
+
+                <div class="item-title">
+                    送机
+                </div>
+                <ul class="item-con-list">
+                    <li>
+                        交通工具
+                    </li>
+                    <li>
+                        <select ms-duplex="currentuser.SendoffType" ms-change="ChangeType(this.value,'SendoffTitle','Sendoff')">
+                            <option value="">无</option>
+                            <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==currentuser.SendoffType?'selected':''">{{item.TypeName}}</option>
+                        </select>
+                    </li>
+                    <li class="Sendoff">
+                        <span id="SendoffTitle">航班号</span>
+                    </li>
+                    <li class="Sendoff">
+                        <input id="SendoffNumber" ms-duplex="currentuser.SendoffNumber" />
+                    </li>
+                    <li class="Sendoff SendoffDate">
+                        出发日期
+                    </li>
+                    <li class="Sendoff SendoffDate">
+                        <input ms-duplex="currentuser.SendoffDate" id="SendoffDate" />
+                    </li>
+                </ul>
+
+                <div class="gobutton-blue">
+                    <span id="phone_input_submit" ms-on-click="SaveType()" style="margin-top:30px;  margin-bottom:80px; letter-spacing: 8px;">保存</span>
+                </div>
+            </div>
         </div>
 
         <ul class="up-and-down">
@@ -443,6 +455,13 @@
                     }
                     else {
                         $('.index-html').show();
+                    }
+
+                    if ($('#item-' + index).attr('class').indexOf('bg-grey') != -1) {
+                        $('html').css('background','#f1f1f1');
+                    }
+                    else {
+                        $('html').css('background', '#fff');
                     }
 
                     if (index == 1) {
@@ -585,7 +604,7 @@
                     $('.attention').css('color', '#007457');
                 }
             },
-            
+
             //接送服务按钮
             ChangeType: function (val, label, cla) {
                 if (val == 10) {
@@ -610,7 +629,7 @@
                 ComFunJS.showload();
                 if (tempmodel.currentuser.PickupType > 0) {
                     tempmodel.currentuser.PickupDate = $('#PickupDate').val();
-                    tempmodel.currentuser.PickupNumber = $('#PickupNumber').val();                    
+                    tempmodel.currentuser.PickupNumber = $('#PickupNumber').val();
                 }
                 else {
                     tempmodel.currentuser.PickupNumber = '';
@@ -618,7 +637,7 @@
                 }
                 if (tempmodel.currentuser.SendoffType > 0) {
                     tempmodel.currentuser.SendoffDate = $('#SendoffDate').val();
-                    tempmodel.currentuser.SendoffNumber = $('#SendoffNumber').val();       
+                    tempmodel.currentuser.SendoffNumber = $('#SendoffNumber').val();
                 }
                 else {
                     tempmodel.currentuser.SendoffNumber = '';
@@ -667,7 +686,7 @@
                     time: { preset: 'time' },
                     defaultopi: {
                         theme: 'default', //皮肤样式
-                        display: 'bottom', //显示方式 
+                        display: 'bottom', //显示方式
                         mode: 'scroller', //日期选择模式
                         lang: 'zh',
                         startYear: currYear, //开始年份
@@ -677,7 +696,7 @@
                     },
 
                 };
-              
+
                 if (tempmodel.currentuser.PickupDate != '') {
                     var d = new Date(tempmodel.currentuser.PickupDate);
                     $("#PickupDate").scroller($.extend(opt['datetime'], opt['defaultopi'])).scroller('setDate', d, true);

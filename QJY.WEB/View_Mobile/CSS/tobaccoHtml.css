@@ -117,7 +117,8 @@ body, html {
         background: #fff;
     }
 
-.gobutton2 span {
+/*白色按钮*/
+.gobutton2 span {  
     color: #019FE8;
     display: block;
     font-weight: bold;
@@ -132,6 +133,20 @@ body, html {
     letter-spacing: 1px;
     font-size: 100%;
     background: #fff;
+}
+
+/*蓝色按钮*/
+.gobutton-blue span {
+    color: #fff;
+    display: block;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 3px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 9px 0;
+    letter-spacing: 1px;
+    background: #019FE8;
 }
 
 .gobutton::after {
@@ -214,7 +229,7 @@ body, html {
         padding: 10px;
         margin-bottom: 20px;
         background: #019FE8;
-        color:#fff;
+        color: #fff;
     }
 
     .wrapper .content-bg {
@@ -235,7 +250,12 @@ body, html {
     .wrapper .bg-white {
         background: #fff;
         padding: 15px;
-        color:#000;
+        color: #000;
+    }
+
+    .wrapper .bg-grey {
+        background: #f1f1f1;
+        padding: 0;
     }
 
     .wrapper .bg-holder {
@@ -276,45 +296,45 @@ body, html {
             z-index: 0;
         }
 
-.wrapper .hy_menu_list {
-    text-align: center;
-    clear: both;
-    color: #fff;
-}
-
-    .wrapper .hy_menu_list:after {
-        clear: both;
-        content: " ";
-    }
-
-    .wrapper .hy_menu_list a {
-        float: left;
-        width: 33%;
-        text-decoration: none;
-        display: block;
-        margin: 20px 0;
+    .wrapper .hy_menu_list {
         text-align: center;
+        clear: both;
+        color: #fff;
     }
 
-    .wrapper .hy_menu_list i {
-        border: solid 1px #111;
-        border-radius: 14px;
-        line-height: 14px;
-        padding: 0 5px;
-        font-size: 80%;
-        font-style: normal;
-        margin-right: 16px;
-    }
+        .wrapper .hy_menu_list:after {
+            clear: both;
+            content: " ";
+        }
 
-    .wrapper .hy_menu_list img {
-        border-radius: 50px;
-        width: 40%;
-    }
+        .wrapper .hy_menu_list a {
+            float: left;
+            width: 33%;
+            text-decoration: none;
+            display: block;
+            margin: 20px 0;
+            text-align: center;
+        }
 
-    .wrapper .hy_menu_list span {
-        display: block;
-        color: #000;
-    }
+        .wrapper .hy_menu_list i {
+            border: solid 1px #111;
+            border-radius: 14px;
+            line-height: 14px;
+            padding: 0 5px;
+            font-size: 80%;
+            font-style: normal;
+            margin-right: 16px;
+        }
+
+        .wrapper .hy_menu_list img {
+            border-radius: 50px;
+            width: 40%;
+        }
+
+        .wrapper .hy_menu_list span {
+            display: block;
+            color: #000;
+        }
 
 .bg-white .title {
     margin-top: 0px;
@@ -329,6 +349,52 @@ body, html {
     .bg-white .title span:before, .bg-white .title span:after {
         border-bottom: solid 1px #000;
     }
+
+.bg-grey .title {
+    padding: 10px 0 10px 18px;
+    text-align: left;
+    background: #fff;
+    border-bottom: solid 1px #eee;
+    font-size: 100%;
+    font-weight: normal;
+}
+
+.bg-grey .content-bg {
+    width: 100%;
+}
+    .bg-grey .content-bg .item-con-list {
+        padding: 0 0 0 15px;
+        border-top: solid 1px #eee;
+        border-bottom: solid 1px #eee;
+        background: #fff;
+    }
+        .bg-grey .content-bg .item-con-list::after{
+            content:"";
+            display:block;
+            clear:both;
+        }
+        .bg-grey .content-bg .item-con-list li {
+            border-bottom: solid 1px #eee;
+            margin:0;
+        }
+            .bg-grey .content-bg .item-con-list li:last-child, .bg-grey .content-bg .item-con-list li:nth-last-child(2) {
+                border-bottom: none;
+            }
+        .bg-grey .item-title {
+            padding: 3px 15px;
+        }
+
+.picksend .title i {
+    background: url(/View_Mobile/Images/icon/JSFW.png) center center no-repeat;
+    width: 27px;
+    height: 27px;
+    background-size: 100%;
+    border-radius: 10px;
+    display: block;
+    float: left;
+    margin-right: 10px;
+}
+
 .zcb-content {
     color: #000;
     padding: 0;
