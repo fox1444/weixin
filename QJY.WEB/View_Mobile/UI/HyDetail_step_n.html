@@ -654,6 +654,8 @@
             },
             convertDate: function (date) {
                 if (date != null && date != '') {
+                    date = date.replace(new RegExp(/-/gm), "/");
+                    date = date + ":00";
                     var d = new Date(date);
                     var month = d.getMonth() + 1;
                     var day = d.getDate();
@@ -697,14 +699,20 @@
                 };
                 var optDateTime = $.extend(opt['datetime'], opt['defaultopi']);
                 if (tempmodel.currentuser.PickupDate != '') {
-                    var d = new Date(tempmodel.currentuser.PickupDate);
+                    var date = tempmodel.currentuser.PickupDate;
+                    date = date.replace(new RegExp(/-/gm), "/");
+                    date = date + ":00";
+                    var d = new Date(date);
                     $("#PickupDate").scroller($.extend(opt['datetime'], opt['defaultopi'])).scroller('setDate', d, true);
                 }
                 else {
                     var PickupDATE = $("#PickupDate").mobiscroll(optDateTime).datetime(optDateTime);
                 }
                 if (tempmodel.currentuser.SendoffDate != '') {
-                    var d = new Date(tempmodel.currentuser.SendoffDate);
+                    var date = tempmodel.currentuser.SendoffDate;
+                    date = date.replace(new RegExp(/-/gm), "/");
+                    date = date + ":00";
+                    var d = new Date(date);
                     $("#SendoffDate").scroller($.extend(opt['datetime'], opt['defaultopi'])).scroller('setDate', d, true);
                 }
                 else {
