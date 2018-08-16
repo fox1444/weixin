@@ -36,7 +36,7 @@
             </div>
             <div class="infomation">
                 您的联络员是<span style="color:green">{{currentuser.ServiceUserName}}</span>，
-                联络电话是<a href="tel:" style="color:#000; text-decoration:none;">{{currentuser.ServiceUserMobphone}}</a>
+                联络电话是<a id="suMob" style="color:#000; text-decoration:none;">{{currentuser.ServiceUserMobphone}}</a>
             </div>
             <div class="gobutton gobutton_r">
                 <div class="fl-left">
@@ -158,10 +158,12 @@
                                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
                                     if (r.ErrorMsg == "") {
                                         tempmodel.currentuser = r.Result[0];
+                                        $('#suMob').attr('href', 'tel:' + tempmodel.currentuser.ServiceUserMobphone);
                                         $('.input_block').hide();
                                         $('.default_block').show();
                                     }
                                 });
+
                             }
                             else {
                                 $('.input_block').show();

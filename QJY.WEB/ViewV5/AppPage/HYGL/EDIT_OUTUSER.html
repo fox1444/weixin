@@ -106,7 +106,7 @@
                 <li class="add-item add-width fl-left">
                     <label class="add-item-label">接机类型</label>
                     <div class="add-ic">
-                        <select class="form-control" >
+                        <select class="form-control"  ms-duplex="modelData.PickupType">
                             <option value="">无</option>
                             <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==modelData.PickupType?'selected':''">{{item.TypeName}}</option>
                         </select>
@@ -115,13 +115,37 @@
                 <li class="add-item add-width fl-right">
                     <label class="add-item-label">航班/列车/车站</label>
                     <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.PickupNumber" readonly="readonly"/>
+                        <input type="text" class="form-control" ms-duplex="modelData.PickupNumber"  />
                     </div>
                 </li>
                 <li class="add-item add-width fl-left">
                     <label class="add-item-label">到达日期</label>
                     <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.PickupDate" readonly="readonly"/>
+                        <input type="text" class="form-control szhl_form_date_time" ms-duplex="modelData.PickupDate"  />
+                    </div>
+                </li>
+                <li class="add-item add-width fl-right">
+                    <label class="add-item-label">接机人</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.PickupUser" />
+                    </div>
+                </li>
+                <li class="add-item add-width fl-left">
+                    <label class="add-item-label">接机人电话</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.PickupUserMob" />
+                    </div>
+                </li>
+                <li class="add-item add-width fl-right">
+                    <label class="add-item-label">车牌号</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.PickupCarNumber" />
+                    </div>
+                </li>
+                <li class="add-item add-width fl-left">
+                    <label class="add-item-label">上车地点</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.PickupLocation" />
                     </div>
                 </li>
             </ul>
@@ -129,7 +153,7 @@
                 <li class="add-item add-width fl-left">
                     <label class="add-item-label">送机类型</label>
                     <div class="add-ic">
-                        <select class="form-control" >
+                        <select class="form-control" ms-duplex="modelData.SendoffType">
                             <option value="">无</option>
                             <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==modelData.SendoffType?'selected':''">{{item.TypeName}}</option>
                         </select>
@@ -138,13 +162,37 @@
                 <li class="add-item add-width fl-right">
                     <label class="add-item-label">航班/列车/车站</label>
                     <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.SendoffNumber" readonly="readonly" />
+                        <input type="text" class="form-control" ms-duplex="modelData.SendoffNumber"  />
                     </div>
                 </li>
                 <li class="add-item add-width fl-left">
                     <label class="add-item-label">到达日期</label>
                     <div class="add-ic">
-                        <input type="text" class="form-control" ms-duplex="modelData.SendoffDate" readonly="readonly" />
+                        <input type="text" class="form-control szhl_form_date_time" ms-duplex="modelData.SendoffDate"  />
+                    </div>
+                </li>
+                <li class="add-item add-width fl-right">
+                    <label class="add-item-label">送机人</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.SendoffUser" />
+                    </div>
+                </li>
+                <li class="add-item add-width fl-left">
+                    <label class="add-item-label">送机人电话</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.SendoffUserMob" />
+                    </div>
+                </li>
+                <li class="add-item add-width fl-right">
+                    <label class="add-item-label">车牌号</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.SendoffCarNumber" />
+                    </div>
+                </li>
+                <li class="add-item add-width fl-left">
+                    <label class="add-item-label">上车地点</label>
+                    <div class="add-ic">
+                        <input type="text" class="form-control" ms-duplex="modelData.SendoffLocation" />
                     </div>
                 </li>
             </ul>
@@ -166,7 +214,6 @@
             ServiceData: [],
             modelData: { "ComId": "0", "ID": "0", "Name": "", "Mobphone": "", "HYGLID": window.parent.GetHYGLID(), "Type": 0, "Zhiwu": "", "DisplayOrder": 0, "OutDeptName": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "Comment": "", "CRUser": ComFunJS.getnowuser(), "CRDate": ComFunJS.getnowdate('yyyy-mm-dd hh:mm') },
             GetModelData: function () {
-
                 if (model.OutUserID) {
                     //编辑加载数据
                     $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETOUTUSERMODEL', { P1: model.OutUserID }, function (resultData) {
@@ -182,6 +229,8 @@
                                     }
                                 }
                             });
+
+                            setTimeout(" ComFunJS.initForm()", 500);
                         }
                     })
                 }

@@ -34,6 +34,10 @@
             <div class="infomation">
                 尊敬的<span style="color:#ff4700">{{currentuser.Name}}</span>，欢迎您参加本次会议
             </div>
+            <div class="infomation">
+                您的联络员是<span style="color:green">{{currentuser.ServiceUserName}}</span>，
+                联络电话是<a href="tel:{{currentuser.ServiceUserMobphone}}" style="color:#000; text-decoration:none;">{{currentuser.ServiceUserMobphone}}</a>
+            </div>
             <div class="gobutton">
                 <div class="fl-left">
                     <span ms-on-click="re_input()" style="float:right;">重新输入</span>
@@ -154,6 +158,7 @@
                                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
                                     if (r.ErrorMsg == "") {
                                         tempmodel.currentuser = r.Result[0];
+                                        $('#suMob').attr('href', 'tel:' + tempmodel.currentuser.ServiceUserMobphone);
                                         $('.input_block').hide();
                                         $('.default_block').show();
                                     }
@@ -207,6 +212,7 @@
 
         avalon.ready(function () {
             tempmodel.inittemp();
+            document.documentElement.style.fontSize = document.documentElement.clientWidth / 22 + 'px';
         })
 
         $(window).on("load resize", function () {

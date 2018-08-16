@@ -271,7 +271,7 @@
             <div class="title">
                 <i></i>资料下载
             </div>
-            <div class="content-bg">
+            <div class="content-bg" style="margin-top:10px;">
                 <div class="viewimg_for_view">{{modelData.Files}}</div>
             </div>
         </div>
@@ -307,6 +307,30 @@
                     <li class="Pickup PickupDate">
                         <input ms-duplex="currentuser.PickupDate" id="PickupDate" />
                     </li>
+                    <li ms-if="currentuser.PickupUser!=''">
+                        <span>接机人</span>
+                    </li>
+                    <li ms-if="currentuser.PickupUser!=''">
+                        <span>{{currentuser.PickupUser}}</span>
+                    </li>
+                    <li ms-if="currentuser.PickupUserMob!=''">
+                        <span>接机人电话</span>
+                    </li>
+                    <li ms-if="currentuser.PickupUserMob!=''">
+                        <span><a class="pUserMob">{{currentuser.PickupUserMob}}</a></span>
+                    </li>
+                    <li ms-if="currentuser.PickupCarNumber!=''">
+                        <span>车牌号</span>
+                    </li>
+                    <li ms-if="currentuser.PickupCarNumber!=''">
+                        <span>{{currentuser.PickupCarNumber}}</span>
+                    </li>
+                    <li ms-if="currentuser.PickupLocation!=''">
+                        <span>上车地点</span>
+                    </li>
+                    <li ms-if="currentuser.PickupLocation!=''">
+                        <span>{{currentuser.PickupLocation}}</span>
+                    </li>
                 </ul>
                 <div class="item-title">
                     送机
@@ -333,9 +357,33 @@
                     <li class="Sendoff SendoffDate">
                         <input ms-duplex="currentuser.SendoffDate" id="SendoffDate" />
                     </li>
+                    <li ms-if="currentuser.SendoffUser!=''">
+                        <span>送机人</span>
+                    </li>
+                    <li ms-if="currentuser.SendoffUser!=''">
+                        <span>{{currentuser.SendoffUser}}</span>
+                    </li>
+                    <li ms-if="currentuser.SendoffUserMob!=''">
+                        <span>送机人电话</span>
+                    </li>
+                    <li ms-if="currentuser.SendoffUserMob!=''">
+                        <span><a class="sUserMob">{{currentuser.SendoffUserMob}}</a></span>
+                    </li>
+                    <li ms-if="currentuser.SendoffCarNumber!=''">
+                        <span>车牌号</span>
+                    </li>
+                    <li ms-if="currentuser.SendoffCarNumber!=''">
+                        <span>{{currentuser.SendoffCarNumber}}</span>
+                    </li>
+                    <li ms-if="currentuser.SendoffLocation!=''">
+                        <span>上车地点</span>
+                    </li>
+                    <li ms-if="currentuser.SendoffLocation!=''">
+                        <span>{{currentuser.SendoffLocation}}</span>
+                    </li>
                 </ul>
-                <div class="gobutton-blue">
-                    <span id="phone_input_submit" ms-on-click="SaveType()" style="margin-top:30px; ">保存</span>
+                <div class="gobutton-blue" style="padding-top:30px;  padding-bottom:50px;">
+                    <span id="phone_input_submit" ms-on-click="SaveType()">保存</span>
                 </div>
             </div>
         </div>
@@ -375,8 +423,7 @@
             tpData: [],
             CYUserStr: "",
             modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "" },
-            currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "PickupType": 0, "PickupNumber": "", "PickupDate": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "" },//手机登录用户
-            //ZCUserNames: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "" },//主持人
+            currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "" },
             dataid: ComFunJS.getQueryString('id'),
             stepindex: "",
             gostart: function (index) {
@@ -472,6 +519,8 @@
                             tempmodel.currentuser = r.Result[0];
                             tempmodel.currentuser.PickupDate = tempmodel.convertDate(tempmodel.currentuser.PickupDate);
                             tempmodel.currentuser.SendoffDate = tempmodel.convertDate(tempmodel.currentuser.SendoffDate);
+                            $('.pUserMob').attr('href', 'tel:' + tempmodel.currentuser.PickupUserMob);
+                            $('.sUserMob').attr('href', 'tel:' + tempmodel.currentuser.SendoffUserMob);
                             tempmodel.SetCalendar();
                             tempmodel.ChangeType(tempmodel.currentuser.PickupType, 'PickupTitle', 'Pickup');
                             tempmodel.ChangeType(tempmodel.currentuser.SendoffType, 'SendoffTitle', 'Sendoff');
@@ -536,22 +585,18 @@
                 if (val == 10) {
                     $('#' + label).html('航班号');
                     $('.' + cla).show();
-                    $('#'+ label).parent().parent('.item-con-list').removeClass('item-single-list');
                 }
                 else if (val == 20) {
                     $('#' + label).html('火车车次');
                     $('.' + cla).show();
-                    $('#' + label).parent().parent('.item-con-list').removeClass('item-single-list');
                 }
                 else if (val == 30) {
                     $('#' + label).html('汽车站');
                     $('.' + cla).show();
-                    $('#' + label).parent().parent('.item-con-list').removeClass('item-single-list');
                 }
                 else {
                     $('#' + cla).val('');
-                    $('.' + cla).hide();
-                    $('#' + label).parent().parent('.item-con-list').addClass('item-single-list');
+                    $('.' + cla).hide();                
                 }
             },
             //保存接送服务
