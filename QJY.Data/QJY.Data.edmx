@@ -1032,6 +1032,14 @@
           <Property Name="SendoffType" Type="int" />
           <Property Name="SendoffNumber" Type="varchar" MaxLength="400" />
           <Property Name="SendoffDate" Type="varchar" MaxLength="50" />
+          <Property Name="PickupUser" Type="varchar" MaxLength="50" />
+          <Property Name="PickupUserMob" Type="varchar" MaxLength="20" />
+          <Property Name="PickupCarNumber" Type="varchar" MaxLength="20" />
+          <Property Name="PickupLocation" Type="varchar" MaxLength="200" />
+          <Property Name="SendoffUser" Type="varchar" MaxLength="20" />
+          <Property Name="SendoffUserMob" Type="varchar" MaxLength="20" />
+          <Property Name="SendoffCarNumber" Type="varchar" MaxLength="20" />
+          <Property Name="SendoffLocation" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_QD">
           <Key>
@@ -3854,6 +3862,14 @@
           <Property Name="SendoffType" Type="Int32" />
           <Property Name="SendoffNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
           <Property Name="SendoffDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PickupUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PickupUserMob" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PickupCarNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PickupLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SendoffUser" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SendoffUserMob" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SendoffCarNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SendoffLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5754,6 +5770,14 @@
           <EntitySetMapping Name="SZHL_HYGL_OUTUSER">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL_OUTUSER">
               <MappingFragment StoreEntitySet="SZHL_HYGL_OUTUSER">
+                <ScalarProperty Name="SendoffLocation" ColumnName="SendoffLocation" />
+                <ScalarProperty Name="SendoffCarNumber" ColumnName="SendoffCarNumber" />
+                <ScalarProperty Name="SendoffUserMob" ColumnName="SendoffUserMob" />
+                <ScalarProperty Name="SendoffUser" ColumnName="SendoffUser" />
+                <ScalarProperty Name="PickupLocation" ColumnName="PickupLocation" />
+                <ScalarProperty Name="PickupCarNumber" ColumnName="PickupCarNumber" />
+                <ScalarProperty Name="PickupUserMob" ColumnName="PickupUserMob" />
+                <ScalarProperty Name="PickupUser" ColumnName="PickupUser" />
                 <ScalarProperty Name="SendoffDate" ColumnName="SendoffDate" />
                 <ScalarProperty Name="SendoffNumber" ColumnName="SendoffNumber" />
                 <ScalarProperty Name="SendoffType" ColumnName="SendoffType" />

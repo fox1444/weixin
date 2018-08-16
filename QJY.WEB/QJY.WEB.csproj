@@ -240,6 +240,7 @@
     <Content Include="View_Mobile\CSS\tobaccoHtml.css" />
     <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="View_Mobile\Images\arrow.png" />
+    <Content Include="View_Mobile\Images\index-bg-5.jpg" />
     <Content Include="View_Mobile\Images\tobacco-logo.png" />
     <Content Include="View_Mobile\Images\tobacco-logo2.jpg" />
     <Content Include="View_Mobile\Images\wrap-bg.jpg" />
@@ -247,7 +248,9 @@
     <Content Include="View_Mobile\JS\jweixin-1.1.0.js" />
     <Content Include="View_Mobile\JS\sm-extend.min.js" />
     <Content Include="View_Mobile\JS\sm.min.js" />
+    <Content Include="View_Mobile\UI\HyDetail_index_r.html" />
     <Content Include="View_Mobile\UI\HyDetail_index.html" />
+    <Content Include="View_Mobile\UI\HyDetail_step_r.html" />
     <Content Include="View_Mobile\UI\HyDetail_step_n.html" />
     <Content Include="View_Mobile\UI\HyDetail_step.html" />
     <Content Include="View_Mobile\JS\avalon1.47.js" />

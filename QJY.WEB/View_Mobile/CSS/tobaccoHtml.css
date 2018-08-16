@@ -9,7 +9,6 @@ body, html {
     padding: 0;
     font-size: 1em;
 }
-
 .index-html {
     background: url(/View_Mobile/Images/index-bg-2.png) top no-repeat #019FE8;
     background-size: 100%;
@@ -17,6 +16,10 @@ body, html {
     height: 100%;
     position: fixed;
     z-index: -99;
+}
+
+.index-html-r {
+    background: #f4ae00;
 }
 
 .hy_wrap {
@@ -27,6 +30,12 @@ body, html {
     text-align: center;
     /*background-size: 100%;
     height: auto;*/
+}
+
+.hy_wrap_r {
+    background: url(/View_Mobile/Images/index-bg-5.jpg) top right no-repeat #F4AE00;
+    background-size: auto 100%;
+    color: #000;
 }
 
 .invitation {
@@ -116,6 +125,10 @@ body, html {
         font-size: 100%;
         background: #fff;
     }
+.gobutton_r span {
+    color: #F4AE00;
+    border: solid 1px #F4AE00;  
+}
 
 /*白色按钮*/
 .gobutton2 span {
@@ -134,7 +147,10 @@ body, html {
     font-size: 100%;
     background: #fff;
 }
-
+.gobutton2_r span {
+    color: #F4AE00;
+    border: solid 1px #F4AE00;
+}
 /*蓝色按钮*/
 .gobutton-blue span {
     color: #fff;
@@ -190,8 +206,12 @@ body, html {
             background: none;
             color: #333;
             font-size: 90%;
+            outline: none;
         }
 
+    .input_block .phonenumber_r {
+        border: solid 1px #F4AE00;
+    }
 /*.input_block .phonenumber input::-webkit-input-placeholder {
                 color: #019FE8;
             }
@@ -207,7 +227,6 @@ body, html {
             .input_block .phonenumber input:-ms-input-placeholder { 
                 color: #019FE8;
             }*/
-
 .wrapper {
     color: #fff;
     height: 100%;
@@ -232,11 +251,14 @@ body, html {
         color: #fff;
     }
 
+    .wrapper .banner-r {
+        background: url(/View_Mobile/Images/index-bg-5.jpg) left top no-repeat;
+    }
+
     .wrapper .content-bg {
         margin: 0px auto;
         width: 90%;
         line-height: 150%;
-
     }
 
         .wrapper .content-bg img {
@@ -358,12 +380,12 @@ body, html {
     border-bottom: solid 1px #e1e1e1;
     font-size: 110%;
     font-weight: normal;
-    line-height:32px;
+    line-height: 32px;
 }
 
 .bg-grey .content-bg {
     width: 100%;
-    margin-bottom:30px;
+    margin-bottom: 30px;
 }
 
     .bg-grey .content-bg .item-con-list, .bg-grey .content-bg .item-wall-list {
@@ -398,7 +420,7 @@ body, html {
 
 .bg-grey .item-bg {
     padding: 0 15px 0px 15px;
-    margin-bottom:30px;
+    margin-bottom: 30px;
     border-bottom: solid 1px #e1e1e1;
     background: #fff;
 }
@@ -487,7 +509,6 @@ body, html {
 .back-away {
     font-weight: normal;
     width: auto;
-   
 }
 
 .up-and-down {
@@ -515,7 +536,6 @@ body, html {
 
         .up-and-down li:last-child {
             border-right: none;
-           
         }
 
 .hy_filelist {
@@ -578,12 +598,12 @@ body, html {
 }
 
 .title_cyuser {
-    color:#019FE8;
+    color: #019FE8;
     background: url(/View_Mobile/Images/arrow-b.png) no-repeat right center;
     background-size: 20px;
     padding-left: 0px;
-    padding-right:30px;
-    font-size:105%;
+    padding-right: 30px;
+    font-size: 105%;
 }
 
 .list_parent_node .list_child_block {

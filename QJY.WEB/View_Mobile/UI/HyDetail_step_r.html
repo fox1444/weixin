@@ -1,0 +1,696 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>会议详情</title>
+    <link href="/View_Mobile/js/layer/need/layer.css" rel="stylesheet" />
+    <link href="/View_Mobile/CSS/add.css?ver=2" rel="stylesheet" />
+    <link href="/View_Mobile/CSS/szhlextend.css?ver=20160904" rel="stylesheet" />
+    <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
+    <link href="/View_Mobile/JS/Date/FT_Date.min.css" rel="stylesheet" />
+</head>
+<body ms-controller="Hydetail">
+    <div class="index-html" style="display:none;">
+    </div>
+    <div class="wrapper">
+        <div class="hy_menu bg-white" id="item-1" style="padding:0;">
+            <div class="banner banner-r">
+                {{modelData.Title|html}}
+            </div>
+            <div class="content-bg">
+                <div class="hy_menu_list">
+                    <a href="#" ms-on-click="gostart()" class="tab-link button external">
+                        <img src="/View_Mobile/Images/icon/XXFB.png">
+                        <span>
+                            会议公告
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(2)" class="button external" ms-class-1="tab-link:modelData.HYXZ!=''" ms-if="modelData.HYXZ!=''">
+                        <img src="/View_Mobile/Images/icon/ZHBG.jpg">
+                        <span>
+                            会议须知
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(3)" class="button external" ms-class-1="tab-link:modelData.HYFW!=''" ms-if="modelData.HYFW!=''">
+                        <img src="/View_Mobile/Images/icon/WQQD.png">
+                        <span>
+                            服务指南
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(4)" class="button external" ms-class-1="tab-link:modelData.Details!=''" ms-if="modelData.Details!=''">
+                        <img src="/View_Mobile/Images/icon/NOTE.png">
+                        <span>
+                            日程安排
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(5)" class="tab-link button external">
+                        <img src="/View_Mobile/Images/icon/HYGL.png">
+                        <span>
+                            座位引导
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(6)" class="tab-link button external">
+                        <img src="/View_Mobile/Images/icon/QYIM.png">
+                        <span>
+                            参会代表
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(7)" class="button external" ms-class-1="tab-link:modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''" ms-if="modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''">
+                        <img src="/View_Mobile/Images/icon/YCGL.png">
+                        <span>
+                            出行安排
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(8)" class="button external" ms-class-1="tab-link:modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''" ms-if="modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''">
+                        <img src="/View_Mobile/Images/icon/Info.jpg">
+                        <span>
+                            住宿安排
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(9)" class="button external" ms-class-1="tab-link:modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''" ms-if="modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''">
+                        <img src="/View_Mobile/Images/icon/DCGL.png">
+                        <span>
+                            用餐安排
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(10)" class="button external" ms-class-1="tab-link:modelData.Files!=''" ms-if="modelData.Files!=''">
+                        <img src="/View_Mobile/Images/icon/KSGL.png">
+                        <span>
+                            资料下载
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(11)" class="tab-link button external">
+                        <img src="/View_Mobile/Images/icon/JSFW.png">
+                        <span>
+                            接送服务
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!--会议须知-->
+        <div class="hy_menu bg-white bg-grey hyxuzhi " id="item-2" ms-if="modelData.HYXZ!=''">
+            <div class="item-bg">
+                <div class="title">
+                    <i></i>会议须知
+                </div>
+                <div class="item-description">
+                    {{modelData.HYXZ|html}}
+                </div>
+            </div>
+        </div>
+
+        <!--服务指南-->
+        <div class="hy_menu  bg-white bg-grey hyfuwu" id="item-3" ms-if="modelData.HYFW!=''" style="padding-bottom:20px;">
+            <div class="item-bg">
+                <div class="title">
+                    <i></i>服务指南
+                </div>
+                <div class="item-description">
+                    {{modelData.HYFW|html}}
+                </div>
+            </div>
+        </div>
+
+        <!--日程安排-->
+        <div class="hy_menu bg-white bg-grey hyrich" id="item-4" ms-if="modelData.Details!=''" style="padding-bottom:20px;">
+            <div class="item-bg">
+                <div class="title">
+                    <i></i>日程安排
+                </div>
+                <div class="item-description">
+                    {{modelData.Details|html}}
+                </div>
+            </div>
+        </div>
+
+        <!--座位引导-->
+        <div class="hy_menu bg-white bg-grey hyzuowei" id="item-5">
+            <div class="title">
+                <i></i>座位引导
+            </div>
+            <div class="item-bg" style="margin-top:10px;">
+                <div class="zcb-content">
+                    <div style="text-align:center;">
+                        {{modelData.StartTime|date('M月d日H:mm')}} - {{modelData.EndTime|date('M月d日H:mm')}}
+                        <br />{{modelData.Name}}
+                    </div>
+                    <div class="zcb-title">尊敬的{{currentuser.Name}}，您的座位在<br /><span style="color:#ff4700" class="attention">红色位置区域</span></div>
+                    <div class="chairmen-wrapper">
+                        <div class="room-chairmen">
+                            <!--<ul><li ms-repeat-el="ZCUserNames"><span>{{el.UserRealName}}</span></li></ul>-->
+                            主席台
+                        </div>
+                    </div>
+                    <div class="room-block-hold">
+                        <div class="room-block">
+
+                        </div>
+                    </div>
+                    <div style="text-align:center;margin-bottom:10px;">请左右滑动查找您的座位</div>
+                </div>
+            </div>
+        </div>
+
+        <!--参会代表-->
+        <div class="hy_menu bg-white bg-grey hydaibiao" id="item-6" style="padding-bottom:70px;">
+            <div class="title title-g">
+                <i></i>参会代表
+            </div>
+            <div class="content-bg" style="margin-top:10px;border-top:solid 1px #e1e1e1;">
+                {{tempmodel.CYUserStr|html}}
+            </div>
+        </div>
+
+        <!--出行安排-->
+        <div class="hy_menu bg-white bg-grey hychuxing" id="item-7" ms-if="modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''">
+            <div class="item-bg">
+                <div class="title">
+                    <i></i>出行安排
+                </div>
+                <div class="item-description">
+                    <div class="inlist" ms-if="modelData.CXQK!=''">
+                        <span class="parent_title">
+                            出行安排
+                        </span>
+                        <div class="item-con ">
+                            {{modelData.CXQK|html}}
+                        </div>
+                    </div>
+                    <div class="inlist" ms-if="tempmodel.currentuser.BoardingTime!=''">
+                        <span class="parent_title">
+                            上车时间
+                        </span>
+                        <div class="item-con ">
+                            {{tempmodel.FormatHTML(tempmodel.currentuser.BoardingTime)|html}}
+                        </div>
+                    </div>
+                    <div class="inlist" ms-if="tempmodel.currentuser.CarNumber!=''">
+                        <span class="parent_title">
+                            车牌号
+                        </span>
+                        <div class="item-con ">
+                            {{tempmodel.FormatHTML(tempmodel.currentuser.CarNumber)|html}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--住宿安排-->
+        <div class="hy_menu bg-white bg-grey hyzhusu" id="item-8" ms-if="modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''">
+            <div class="item-bg">
+                <div class="title">
+                    <i></i>住宿安排
+                </div>
+                <div class="item-description">
+                    <div class="inlist" ms-if="modelData.ZSAP!=''">
+                        <span class="parent_title ">
+                            住宿服务
+                        </span>
+                        <div class="item-con ">
+                            {{tempmodel.FormatHTML(modelData.ZSAP)|html}}
+                        </div>
+                    </div>
+
+                    <div class="inlist" ms-if="tempmodel.currentuser.RoomNumber!=''">
+                        <span class="parent_title">
+                            房间号
+                        </span>
+                        <div class="item-con ">
+                            {{tempmodel.FormatHTML(tempmodel.currentuser.RoomNumber)|html}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--用餐安排-->
+        <div class="hy_menu bg-white bg-grey hyyongcan" id="item-9" ms-if="modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''">
+            <div class="item-bg">
+                <div class="title">
+                    <i></i>用餐安排
+                </div>
+                <div class="item-description">
+                    <div class="inlist" ms-if="modelData.YCQK!=''">
+                        <span class="parent_title">
+                            用餐安排
+                        </span>
+                        <div class="item-con ">
+                            {{modelData.YCQK|html}}
+                        </div>
+                    </div>
+
+                    <div class="inlist" ms-if="tempmodel.currentuser.YCTIME!=''">
+                        <span class="parent_title">
+                            用餐时间
+                        </span>
+                        <div class="item-con ">
+                            &nbsp;&nbsp;{{tempmodel.FormatHTML(tempmodel.currentuser.YCTIME)}}
+                        </div>
+                    </div>
+                    <div class="inlist" ms-if="tempmodel.currentuser.YCLOCATION!=''">
+                        <span class="parent_title">
+                            用餐地点
+                        </span>
+                        <div class="item-con ">
+                            &nbsp;&nbsp;{{tempmodel.FormatHTML(tempmodel.currentuser.YCLOCATION)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--资料下载-->
+        <div class="hy_menu bg-white bg-grey zldownload" id="item-10" ms-if="modelData.Files!=''">
+            <div class="title">
+                <i></i>资料下载
+            </div>
+            <div class="content-bg">
+                <div class="viewimg_for_view">{{modelData.Files}}</div>
+            </div>
+        </div>
+
+        <!--接送服务-->
+        <div class="hy_menu bg-white bg-grey picksend" id="item-11">
+            <div class="title">
+                <i></i>接送服务
+            </div>
+            <div class="content-bg">
+                <div class="item-title">
+                    接机
+                </div>
+                <ul class="item-con-list">
+                    <li>
+                        交通工具
+                    </li>
+                    <li>
+                        <select ms-duplex="currentuser.PickupType" ms-change="ChangeType(this.value,'PickupTitle','Pickup')">
+                            <option value="">无</option>
+                            <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==currentuser.PickupType?'selected':''">{{item.TypeName}}</option>
+                        </select>
+                    </li>
+                    <li class="Pickup">
+                        <span id="PickupTitle">航班号</span>
+                    </li>
+                    <li class="Pickup">
+                        <input id="PickupNumber" ms-duplex="currentuser.PickupNumber" placeholder="请填写" />
+                    </li>
+                    <li class="Pickup PickupDate">
+                        到达日期
+                    </li>
+                    <li class="Pickup PickupDate">
+                        <input ms-duplex="currentuser.PickupDate" id="PickupDate" placeholder="请选择" />
+                    </li>
+                    <li ms-if="currentuser.PickupUser!=''">
+                        <span>接机人</span>
+                    </li>
+                    <li ms-if="currentuser.PickupUser!=''">
+                        <span>{{currentuser.PickupUser}}</span>
+                    </li>
+                    <li ms-if="currentuser.PickupUserMob!=''">
+                        <span>接机人电话</span>
+                    </li>
+                    <li ms-if="currentuser.PickupUserMob!=''">
+                        <span>{{currentuser.PickupUserMob}}</span>
+                    </li>
+                    <li ms-if="currentuser.PickupCarNumber!=''">
+                        <span>车牌号</span>
+                    </li>
+                    <li ms-if="currentuser.PickupCarNumber!=''">
+                        <span>{{currentuser.PickupCarNumber}}</span>
+                    </li>
+                    <li ms-if="currentuser.PickupLocation!=''">
+                        <span>接机地点</span>
+                    </li>
+                    <li ms-if="currentuser.PickupLocation!=''">
+                        <span>{{currentuser.PickupLocation}}</span>
+                    </li>
+                </ul>
+                <div class="item-title">
+                    送机
+                </div>
+                <ul class="item-con-list">
+                    <li>
+                        交通工具
+                    </li>
+                    <li>
+                        <select ms-duplex="currentuser.SendoffType" ms-change="ChangeType(this.value,'SendoffTitle','Sendoff')">
+                            <option value="">无</option>
+                            <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==currentuser.SendoffType?'selected':''">{{item.TypeName}}</option>
+                        </select>
+                    </li>
+                    <li class="Sendoff">
+                        <span id="SendoffTitle">航班号</span>
+                    </li>
+                    <li class="Sendoff">
+                        <input id="SendoffNumber" ms-duplex="currentuser.SendoffNumber" placeholder="请填写" />
+                    </li>
+                    <li class="Sendoff SendoffDate">
+                        出发日期
+                    </li>
+                    <li class="Sendoff SendoffDate">
+                        <input ms-duplex="currentuser.SendoffDate" id="SendoffDate" placeholder="请选择" />
+                    </li>
+                </ul>
+                <div class="gobutton-blue">
+                    <span id="phone_input_submit" ms-on-click="SaveType()" style="margin-top:30px; ">保存</span>
+                </div>
+            </div>
+        </div>
+
+        <ul class="up-and-down">
+            <li>
+                <div class="arrow-up" ms-on-click="getpredata(tempmodel.stepindex)">
+                    <span>上一页</span>
+                </div>
+            </li>
+            <li>
+                <div class="back-away" ms-on-click="getdata(1)">
+                    <span>目录</span>
+                </div>
+            </li>
+            <li>
+                <div class="arrow-down" ms-on-click="getnextdata(tempmodel.stepindex)">
+                    <span>下一页</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script src="/View_Mobile/js/layer/layer.m.js"></script>
+    <script src="/View_Mobile/js/zepto.js"></script>
+    <script src="/View_Mobile/JS/avalon.min.js"></script>
+    <script src="/View_Mobile/js/ComFunJS.js"></script>
+    <script src="/View_Mobile/js/Jquery2.1.js"></script>
+    <script src="/View_Mobile/js/Date/FT_Date.min.js"></script>
+
+    <script>
+        var tempmodel = avalon.define({
+            $id: "Hydetail",
+            ColumnData: [],
+            name: "会议管理",
+            iswf: true,//是否属于流程表单
+            tpData: [],
+            CYUserStr: "",
+            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "" },
+            currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "" },//手机登录用户
+            dataid: ComFunJS.getQueryString('id'),
+            stepindex: "",
+            gostart: function (index) {
+                location.href = "/View_Mobile/UI/HyDetail_index_r.html?id=" + tempmodel.dataid + "&r=" + Math.random();
+            },
+            getdata: function (index) {
+                if (index) {
+                    tempmodel.stepindex = index;
+                    $('.hy_menu').hide();
+                    //$('.hy_menu').eq(index - 1).show();
+                    $('#item-' + index).show();
+
+                    if ($('#item-' + index).attr('class').indexOf('bg-white') != -1) {
+                        $('.index-html').hide();
+                    }
+                    else {
+                        $('.index-html').show();
+                    }
+
+                    if ($('#item-' + index).attr('class').indexOf('bg-grey') != -1) {
+                        $('html').css('background', '#f1f1f1');
+                    }
+                    else {
+                        $('html').css('background', '#fff');
+                    }
+
+                    if (index == 1) {
+                        $('.up-and-down').hide();
+                    }
+                    else {
+                        $('.up-and-down').show();
+                        $('.arrow-up').show();
+                        $('.arrow-down').show();
+                        var i = $('.hy_menu').index($('#item-' + index)) + 1;
+                        if ($('.hy_menu').length == i) {
+                            $('.arrow-down').hide();
+                        }
+                    }
+                }
+            },
+            getpredata: function (index) {
+                $('.hy_menu').hide();
+                var id = $("#item-" + index).prev().attr('id');
+                id = id.replace('item-', '');
+                tempmodel.getdata(id);
+            },
+            getnextdata: function (index) {
+                $('.hy_menu').hide();
+                var id = $("#item-" + index).next().attr('id');
+                id = id.replace('item-', '');
+                tempmodel.getdata(id);
+            },
+            inittemp: function (strId) {
+                var pn = ComFunJS.getCookie("userphonenumber");
+                if (!pn || pn == null || pn == undefined || pn == '') {
+                    tempmodel.gostart();
+                }
+                strId = tempmodel.dataid;
+                if (strId) {
+                    $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELNOLOGIN', { P1: strId }, function (resultData) {
+                        if (resultData.ErrorMsg == "") {
+                            tempmodel.modelData = resultData.Result[0];
+                            tempmodel.tpData = resultData.Result1;
+                            tempmodel.LoadNumber();
+                            tempmodel.LoadAllUser();//参会人
+                            tempmodel.LoadRoom();//座次表
+                            ComFunJS.viewimg_for_view(tempmodel.tpData, '1');//文件下载
+                            //setTimeout(" ComFunJS.initForm()", 500);
+                        }
+                    })
+                }
+            },//初始化
+            LoadAllUser: function () {
+                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERLISTBYHYGLID&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: 1 }, function (r) {
+                    if (r.ErrorMsg == "") {
+                        tempmodel.CYUserStr = ComFunJS.convusers_branch(r.Result);
+                    }
+                })
+            },
+            LoadNumber: function () {
+                var k = 1;
+                $(".tab-link").each(function () {
+                    $(this).children("i").html(k);
+                    k++;
+                });
+                tempmodel.getdata(11);
+            },
+            LoadRoom: function () {
+                var pn = ComFunJS.getCookie("userphonenumber");
+                if (pn && pn != null && pn != undefined && pn != '') {
+                    $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: pn }, function (r) {
+                        if (r.ErrorMsg == "") {
+                            tempmodel.currentuser = r.Result[0];
+                            tempmodel.currentuser.PickupDate = tempmodel.convertDate(tempmodel.currentuser.PickupDate);
+                            tempmodel.currentuser.SendoffDate = tempmodel.convertDate(tempmodel.currentuser.SendoffDate);
+                            tempmodel.SetCalendar();
+                            tempmodel.ChangeType(tempmodel.currentuser.PickupType, 'PickupTitle', 'Pickup');
+                            tempmodel.ChangeType(tempmodel.currentuser.SendoffType, 'SendoffTitle', 'Sendoff');
+                            tempmodel.SetRoom();
+                        }
+                    });
+                }
+            },
+            SetRoom: function () {
+                if (tempmodel.modelData.RoomWidth && tempmodel.modelData.RoomLength) {
+                    var rw = parseInt(tempmodel.modelData.RoomWidth);
+                    var rl = parseInt(tempmodel.modelData.RoomLength);
+                    var tmp = '';
+                    tmp += '<ul class="room-width-index">';
+                    for (let l = 1; l <= rl; l++) {
+
+                        tmp += '<li>';
+                        tmp += '<ul class="room-length-index">';
+                        tmp += '<li class="first"  >' + l + '</li>';
+                        for (let w = 1; w <= rw; w++) {
+                            tmp += '<li class="seat_' + l + '_' + w + '"  >';
+                            tmp += '</li>';
+                        }
+                        tmp += '</ul>';
+                        tmp += '</li>';
+
+                    }
+                    tmp += '<li class="last-row">';
+                    tmp += '<ul class="room-length-index">';
+                    tmp += '<li class="first"  ></li>';
+                    for (let w = 1; w <= rw; w++) {
+                        tmp += '<li >' + w;
+                        tmp += '</li>';
+                    }
+                    tmp += '</ul>';
+                    tmp += '</li>';
+                    tmp += '</ul>';
+                    $('.room-block').html(tmp);
+                    var wpx = (tempmodel.modelData.RoomWidth * 25) + 'px';
+                    $('.room-block').css('width', wpx);
+                    tempmodel.LoadSelectZcb();
+                }
+            },
+            LoadSelectZcb: function () {
+                if (tempmodel.modelData.ZCB.trim() != "") {
+                    var holdseats = JSON.parse(tempmodel.modelData.ZCB);
+                    holdseats.forEach(function (v, i) {
+                        var _cs = $('.seat_' + v.ycode + '_' + v.xcode);
+                        if (v.userid == tempmodel.currentuser.ID) {
+                            $('.seat_' + v.xcode + '_' + v.ycode).attr("class", "selected");
+                        }
+                    });
+                }
+                if (tempmodel.currentuser.Type == 2) {
+                    $('.attention').html('主席台区域');
+                    $('.attention').css('color', '#007457');
+                }
+            },
+
+            //接送服务按钮
+            ChangeType: function (val, label, cla) {
+                if (val == 10) {
+                    $('#' + label).html('航班号');
+                    $('.' + cla).show();
+                }
+                else if (val == 20) {
+                    $('#' + label).html('火车车次');
+                    $('.' + cla).show();
+                }
+                else if (val == 30) {
+                    $('#' + label).html('汽车站');
+                    $('.' + cla).show();
+                }
+                else {
+                    $('#' + cla).val('');
+                    $('.' + cla).hide();
+                }
+            },
+            //保存接送服务
+            SaveType: function () {
+                ComFunJS.showload();
+                if (tempmodel.currentuser.PickupType > 0) {
+                    tempmodel.currentuser.PickupDate = $('#PickupDate').val();
+                    tempmodel.currentuser.PickupNumber = $('#PickupNumber').val();
+                }
+                else {
+                    tempmodel.currentuser.PickupNumber = '';
+                    tempmodel.currentuser.PickupDate = '';
+                }
+                if (tempmodel.currentuser.SendoffType > 0) {
+                    tempmodel.currentuser.SendoffDate = $('#SendoffDate').val();
+                    tempmodel.currentuser.SendoffNumber = $('#SendoffNumber').val();
+                }
+                else {
+                    tempmodel.currentuser.SendoffNumber = '';
+                    tempmodel.currentuser.SendoffDate = '';
+                }
+                $.post('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_UPDATEPICKUPSENDOFF&r=' + Math.random(), { P1: JSON.stringify(tempmodel.currentuser.$model) }, function (r) {
+                    if (r.ErrorMsg == null || r.ErrorMsg == "" || r.ErrorMsg == "undefined") {
+                        ComFunJS.winsuccess('保存成功！');
+                    }
+                    else {
+                        ComFunJS.winwarning('保存失败！');
+                    }
+                })
+                ComFunJS.closeAll();
+            },
+            convertDate: function (date) {
+                if (date != null && date != '') {
+                    date = date.replace(new RegExp(/-/gm), "/");
+                    date = date + ":00";
+                    var d = new Date(date);
+                    var month = d.getMonth() + 1;
+                    var day = d.getDate();
+                    var hour = d.getHours();
+                    var minute = d.getMinutes();
+                    if (month < 10) {
+                        month = '0' + month;
+                    }
+                    if (day < 10) {
+                        day = '0' + day;
+                    }
+                    if (hour < 10) {
+                        hour = '0' + hour;
+                    }
+                    if (minute < 10) {
+                        minute = '0' + minute;
+                    }
+                    var r = d.getFullYear() + '-' + month + '-' + day + ' ' + hour + ":" + minute;
+                    //var r = day + '/' + month + '/' + d.getFullYear() + ' ' + hour + ":" + minute;
+                    return r;
+                }
+                return date;
+            },
+            SetCalendar: function () {
+                var currYear = (new Date()).getFullYear();
+                var opt = {
+                    date: { preset: 'date' },
+                    datetime: { preset: 'datetime' },
+                    time: { preset: 'time' },
+                    defaultopi: {
+                        theme: 'default', //皮肤样式
+                        display: 'bottom', //显示方式
+                        mode: 'scroller', //日期选择模式
+                        lang: 'zh',
+                        startYear: currYear, //开始年份
+                        endYear: currYear + 2, //结束年份
+                        onShow: function (html, valueText, inst) {
+                        }
+                    },
+
+                };
+                var optDateTime = $.extend(opt['datetime'], opt['defaultopi']);
+                if (tempmodel.currentuser.PickupDate != '') {
+                    var date = tempmodel.currentuser.PickupDate;
+                    date = date.replace(new RegExp(/-/gm), "/");
+                    date = date + ":00";
+                    var d = new Date(date);
+                    $("#PickupDate").scroller($.extend(opt['datetime'], opt['defaultopi'])).scroller('setDate', d, true);
+                }
+                else {
+                    var PickupDATE = $("#PickupDate").mobiscroll(optDateTime).datetime(optDateTime);
+                }
+                if (tempmodel.currentuser.SendoffDate != '') {
+                    var date = tempmodel.currentuser.SendoffDate;
+                    date = date.replace(new RegExp(/-/gm), "/");
+                    date = date + ":00";
+                    var d = new Date(date);
+                    $("#SendoffDate").scroller($.extend(opt['datetime'], opt['defaultopi'])).scroller('setDate', d, true);
+                }
+                else {
+                    var SendoffDATE = $("#SendoffDate").mobiscroll(optDateTime).datetime(optDateTime);
+                }
+                //var optDateTime = $.extend(opt['datetime'], opt['defaultopi']);
+                //var PickupDATE = $("#PickupDate").mobiscroll(optDateTime).datetime(optDateTime);
+                //var SendoffDATE = $("#SendoffDate").mobiscroll(optDateTime).datetime(optDateTime);
+            },
+            FormatHTML: function (str) {
+                str = str.replace(/\n/g, '_@').replace(/\r/g, '_#');
+                str = str.replace(/_#_@/g, '<br/>');//IE7-8
+                str = str.replace(/_@/g, '<br/>');//IE9、FF、chrome
+                str = str.replace(/\s/g, '&nbsp;');//空格处理
+                return str;
+            }
+        });
+
+        avalon.ready(function () {
+            $('.hy_menu').hide();
+            $('.up-and-down').hide();
+            tempmodel.inittemp();
+        })
+
+        $(window).on("load resize", function () {
+            var h = document.documentElement.clientHeight || window.innerHeight;
+            $(".wrapper").css("height", h);
+        });
+    </script>
+</body>
+</html>

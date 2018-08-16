@@ -38,5 +38,13 @@ namespace QJY.Data
         public Nullable<int> SendoffType { get; set; }
         public string SendoffNumber { get; set; }
         public string SendoffDate { get; set; }
+        public string PickupUser { get; set; }
+        public string PickupUserMob { get; set; }
+        public string PickupCarNumber { get; set; }
+        public string PickupLocation { get; set; }
+        public string SendoffUser { get; set; }
+        public string SendoffUserMob { get; set; }
+        public string SendoffCarNumber { get; set; }
+        public string SendoffLocation { get; set; }
     }
 }

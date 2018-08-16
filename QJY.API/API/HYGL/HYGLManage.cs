@@ -990,9 +990,9 @@ namespace QJY.API
         {
             int Id = int.Parse(P1);
 
-            string strWhere = " HYGLID=" + Id + " and Mobphone='" + P2 + "'";
-            string colNme = @"* ";
-            string tableName = string.Format(@" SZHL_HYGL_OUTUSER ");
+            string strWhere = " u.HYGLID=" + Id + " and u.Mobphone='" + P2 + "'";
+            string colNme = @"u.*,s.Name as ServiceUserName, s.Mobphone as ServiceUserMobphone ";
+            string tableName = string.Format(@" SZHL_HYGL_OUTUSER u left join SZHL_HYGL_Service s on u.ServiceUser=s.ID ");
 
             string strSql = string.Format("Select {0}  From {1} where {2} ", colNme, tableName, strWhere);
             DataTable dt = new SZHL_HYGL_OUTUSERB().GetDTByCommand(strSql);

@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>会议详情</title>
+    <!--<link href="/View_Mobile/js/layer/need/layer.css" rel="stylesheet" />
+    <link href="/View_Mobile/CSS/add.css?ver=2" rel="stylesheet" />
+    <link href="/View_Mobile/CSS/szhlextend.css?ver=20160904" rel="stylesheet" />-->
+    <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
+</head>
+<body ms-controller="Hydetail">
+    <div class="index-html index-html-r">
+    </div>
+    <div class="hy_wrap hy_wrap_r" id="hy_wrap">
+        <!--<div class="invitation">
+            INVITATION
+        </div>-->
+        <div class="logo">
+        </div>
+        <div class="title">
+            {{modelData.Title|html}}
+        </div>
+        <div class="infomation">
+            时间：{{modelData.TitleTime}}
+        </div>
+        <div class="infomation">
+            地址：{{modelData.Name}}
+        </div>
+        <div class="default_block">
+            <div class="infomation">
+                尊敬的<span style="color:red">{{currentuser.Name}}</span>，欢迎您参加本次会议
+            </div>
+            <div class="infomation">
+                您的联络员是<span style="color:green">{{currentuser.ServiceUserName}}</span>，
+                联络电话是<a href="tel:" style="color:#000; text-decoration:none;">{{currentuser.ServiceUserMobphone}}</a>
+            </div>
+            <div class="gobutton gobutton_r">
+                <div class="fl-left">
+                    <span ms-on-click="re_input()" style="float:right; margin-bottom:30px;">重新输入</span>
+                </div>
+                <div class="fl-right">
+                    <span ms-on-click="view_detail()" style="float:left;margin-bottom:30px;">进入会议</span>
+                </div>
+            </div>
+        </div>
+        <div class="input_block">
+            <div class="phonenumber phonenumber_r">
+                <input type="text" id="phone_input" placeholder="请输入手机号" ms-duplex="phonenumber">
+            </div>
+            <div class="gobutton2 gobutton2_r">
+                <span id="phone_input_submit" ms-on-click="go_detail()">进入会议</span>
+            </div>
+        </div>
+        <div class="subtitle">
+            {{modelData.SubTitle}}
+        </div>
+    </div>
+    <script src="/View_Mobile/js/layer/layer.m.js"></script>
+    <script src="/View_Mobile/js/zepto.min.js"></script>
+    <script src="/View_Mobile/JS/avalon.mobile.js"></script>
+    <script src="/View_Mobile/JS/raty/jquery.raty.js?v=1.3"></script>
+    <script src="/View_Mobile/js/ComFunJS.js"></script>
+    <script>
+        var tempmodel = avalon.define({
+            $id: "Hydetail",
+            ColumnData: [],
+            name: "会议管理",
+            iswf: true,//是否属于流程表单
+            tpData: [],
+            userpl: 0,
+            usertype: "",
+            currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "DisplayOrder": 0, "Zhiwu": "", "ServiceUserName": "", "ServiceUserMobphone": "" },
+            isjl: "",
+            Name: "",
+            wximg: "",
+            phonenumber: '',
+            phonenumbererrorMsg: '',
+            dataid: ComFunJS.getQueryString('id'),
+            RoomID: ComFunJS.getQueryString("rid"),
+            view_detail: function () {
+                var pnum = ComFunJS.getCookie("userphonenumber");
+                if (pnum) {
+                    $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELWITHPHONE', { P1: tempmodel.dataid, P2: pnum }, function (resultData) {
+                        if (resultData.ErrorMsg == "") {
+                            if (resultData.Result[0]) {
+                                tempmodel.phonebackData = resultData.Result[0];//查询有结果返回
+                                location.href = "/View_Mobile/UI/HyDetail_step_r.html?id=" + tempmodel.dataid + "&r=" + Math.random();
+                            }
+                            else {
+                                $('.input_block').show();
+                                $('.default_block').hide();
+                            }
+                        }
+                    })
+                }
+                else {
+                    $('.input_block').show();
+                    $('.default_block').hide();
+                    $('#phone_input').focus();
+                }
+
+            },
+            re_input: function () {
+                $('.input_block').show();
+                $('.default_block').hide();
+                $('#phone_input').focus();
+                $('#phone_input').val('');
+            },
+            go_detail: function () {
+                if ($.trim(tempmodel.phonenumber) == "") {
+                    msg = "请输入手机号";
+                    ComFunJS.winwarning(msg);
+                    return;
+                }
+
+                $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELWITHPHONE', { P1: tempmodel.dataid, P2: tempmodel.phonenumber }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        if (resultData.Result[0]) {
+                            tempmodel.phonebackData = resultData.Result[0];
+                            //查询有结果返回
+                            ComFunJS.setCookieMinute("userphonenumber", tempmodel.phonenumber, 60);
+                            var pn = tempmodel.phonenumber;
+                            if (pn && pn != null && pn != undefined && pn != '') {
+                                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
+                                    if (r.ErrorMsg == "") {
+                                        tempmodel.currentuser = r.Result[0];
+                                    }
+                                });
+                            }
+                            $('.input_block').hide();
+                            $('.default_block').show();
+
+                        }
+                        else {
+                            $('.input_block').show();
+                            $('#phone_input').focus();
+                            $('.default_block').hide();
+                            ComFunJS.winwarning("未查询到您的参会记录");
+                            return;
+                        }
+                    }
+                })
+            },
+            inittemp: function (strId) {
+                strId = tempmodel.dataid;
+                if (strId) {
+                    $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELNOLOGIN', { P1: strId }, function (resultData) {
+                        if (resultData.ErrorMsg == "") {
+                            tempmodel.modelData = resultData.Result[0];
+                            tempmodel.tpData = resultData.Result1;
+
+                            var pn = ComFunJS.getCookie("userphonenumber");
+                            if (pn && pn != null && pn != undefined && pn != '') {
+                                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
+                                    if (r.ErrorMsg == "") {
+                                        tempmodel.currentuser = r.Result[0];
+                                        $('.input_block').hide();
+                                        $('.default_block').show();
+                                    }
+                                });
+                            }
+                            else {
+                                $('.input_block').show();
+                                $('.default_block').hide();
+                            }
+
+                            //if (resultData.Result.JLUser) {
+                            //    var JLUserList = resultData.Result.JLUser.split(',');
+
+                            //    var un = ComFunJS.getCookie("username");
+                            //    if (JLUserList.indexOf(un) != -1 || resultData.Result.FQUser.split(',').indexOf(un) != -1) {
+                            //        tempmodel.isjl = "1";
+                            //    }
+                            //}
+                            //setTimeout(" ComFunJS.initForm()", 500)
+                        }
+                    })
+                }
+                else {
+                    var dates = ComFunJS.getnowdate("yyyy-mm-dd-hh-mm").split('-');
+                    $("#StartTime").datetimePicker({
+                        value: [dates[0], dates[1], dates[2], dates[3], dates[4]]
+                    });
+                    $("#EndTime").datetimePicker({
+                        value: [dates[0], dates[1], dates[2], dates[3], dates[4]]
+                    });
+
+                    tempmodel.modelData.StartTime = dates[0] + "-" + dates[1] + "-" + dates[2] + " " + dates[3] + ":" + dates[4];
+                    tempmodel.modelData.EndTime = dates[0] + "-" + dates[1] + "-" + dates[2] + " " + dates[3] + ":" + dates[4];
+
+                    ComFunJS.uploadimgnew();
+                    ComFunJS.initForm();
+                }
+
+                $('#phone_input').on('focus', function () {
+                    var _this = $('#phone_input_submit');
+                    setTimeout(function () {
+                        _this.scrollIntoView(true);
+                        _this.scrollIntoViewIfNeeded();
+                    }, 200);
+                })
+            },//初始化
+            modelData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" },
+            phonebackData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" }
+
+        });
+
+        avalon.ready(function () {
+            tempmodel.inittemp();
+            document.documentElement.style.fontSize = document.documentElement.clientWidth / 22 + 'px';
+        })
+
+        $(window).on("load resize", function () {
+            var h = document.documentElement.clientHeight || window.innerHeight;
+            $(".hy_wrap").css("height", h);
+        });
+
+
+    </script>
+</body>
+</html>
