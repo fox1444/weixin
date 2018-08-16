@@ -609,18 +609,22 @@
                 if (val == 10) {
                     $('#' + label).html('航班号');
                     $('.' + cla).show();
+                    $('#'+ label).parent().parent('.item-con-list').removeClass('item-single-list');
                 }
                 else if (val == 20) {
                     $('#' + label).html('火车车次');
                     $('.' + cla).show();
+                    $('#' + label).parent().parent('.item-con-list').removeClass('item-single-list');
                 }
                 else if (val == 30) {
                     $('#' + label).html('汽车站');
                     $('.' + cla).show();
+                    $('#' + label).parent().parent('.item-con-list').removeClass('item-single-list');
                 }
                 else {
                     $('#' + cla).val('');
                     $('.' + cla).hide();
+                    $('#' + label).parent().parent('.item-con-list').addClass('item-single-list');
                 }
             },
             //保存接送服务
