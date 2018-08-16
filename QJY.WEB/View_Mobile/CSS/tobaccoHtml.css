@@ -388,9 +388,9 @@ body, html {
                 border-bottom: none;
             }
 
-    .bg-grey .content-bg .item-wall-list {
-        margin-top: 10px;
-    }
+        .bg-grey .content-bg .item-single-list li {
+            border-bottom: none;
+        }
 
 .bg-grey .item-title {
     padding: 10px 15px 5px 15px;
