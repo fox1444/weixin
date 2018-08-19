@@ -13,12 +13,12 @@
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
     <link href="/View_Mobile/JS/Date/FT_Date.min.css" rel="stylesheet" />
 </head>
-<body ms-controller="Hydetail">
+<body ms-controller="Hydetail" class="hy_step_r">
     <div class="index-html" style="display:none;">
     </div>
     <div class="wrapper">
         <div class="hy_menu bg-white" id="item-1" style="padding:0;">
-            <div class="banner banner-r">
+            <div class="banner">
                 {{modelData.Title|html}}
             </div>
             <div class="content-bg">
@@ -289,22 +289,22 @@
                     <li>
                         交通工具
                     </li>
-                    <li>
+                    <li class="edit-icon">
                         <select ms-duplex="currentuser.PickupType" ms-change="ChangeType(this.value,'PickupTitle','Pickup')">
                             <option value="">无</option>
                             <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==currentuser.PickupType?'selected':''">{{item.TypeName}}</option>
                         </select>
                     </li>
-                    <li class="Pickup">
+                    <li class="Pickup ">
                         <span id="PickupTitle">航班号</span>
                     </li>
-                    <li class="Pickup">
+                    <li class="Pickup edit-icon">
                         <input id="PickupNumber" ms-duplex="currentuser.PickupNumber" placeholder="请填写" />
                     </li>
                     <li class="Pickup PickupDate">
                         到达日期
                     </li>
-                    <li class="Pickup PickupDate">
+                    <li class="Pickup PickupDate edit-icon">
                         <input ms-duplex="currentuser.PickupDate" id="PickupDate" placeholder="请选择" />
                     </li>
                     <li ms-if="currentuser.PickupUser!=''">
@@ -339,22 +339,22 @@
                     <li>
                         交通工具
                     </li>
-                    <li>
+                    <li class="edit-icon">
                         <select ms-duplex="currentuser.SendoffType" ms-change="ChangeType(this.value,'SendoffTitle','Sendoff')">
                             <option value="">无</option>
                             <option ms-repeat-item="ComFunJS.TravelType" ms-attr-value="item.ID" ms-attr-selected="item.ID==currentuser.SendoffType?'selected':''">{{item.TypeName}}</option>
                         </select>
                     </li>
-                    <li class="Sendoff">
+                    <li class="Sendoff ">
                         <span id="SendoffTitle">航班号</span>
                     </li>
-                    <li class="Sendoff">
+                    <li class="Sendoff edit-icon">
                         <input id="SendoffNumber" ms-duplex="currentuser.SendoffNumber" placeholder="请填写" />
                     </li>
                     <li class="Sendoff SendoffDate">
                         出发日期
                     </li>
-                    <li class="Sendoff SendoffDate">
+                    <li class="Sendoff SendoffDate edit-icon">
                         <input ms-duplex="currentuser.SendoffDate" id="SendoffDate" placeholder="请选择" />
                     </li>
                     <li ms-if="currentuser.SendoffUser!=''">
@@ -519,8 +519,8 @@
                             tempmodel.currentuser = r.Result[0];
                             tempmodel.currentuser.PickupDate = tempmodel.convertDate(tempmodel.currentuser.PickupDate);
                             tempmodel.currentuser.SendoffDate = tempmodel.convertDate(tempmodel.currentuser.SendoffDate);
-                            $('.pUserMob').attr('href', 'tel:' + tempmodel.currentuser.PickupUserMob );
-                            $('.sUserMob').attr('href', 'tel:' + tempmodel.currentuser.SendoffUserMob );
+                            $('.pUserMob').attr('href', 'tel:' + tempmodel.currentuser.PickupUserMob);
+                            $('.sUserMob').attr('href', 'tel:' + tempmodel.currentuser.SendoffUserMob);
                             tempmodel.SetCalendar();
                             tempmodel.ChangeType(tempmodel.currentuser.PickupType, 'PickupTitle', 'Pickup');
                             tempmodel.ChangeType(tempmodel.currentuser.SendoffType, 'SendoffTitle', 'Sendoff');
@@ -663,7 +663,7 @@
                     time: { preset: 'time' },
                     defaultopi: {
                         theme: 'default', //皮肤样式
-                        display: 'bottom', //显示方式
+                        display: 'modal', //显示方式
                         mode: 'scroller', //日期选择模式
                         lang: 'zh',
                         startYear: currYear, //开始年份
@@ -711,7 +711,7 @@
             $('.hy_menu').hide();
             $('.up-and-down').hide();
             tempmodel.inittemp();
-            
+
         })
 
         $(window).on("load resize", function () {

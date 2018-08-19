@@ -12,10 +12,10 @@
     <link href="/View_Mobile/CSS/szhlextend.css?ver=20160904" rel="stylesheet" />-->
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
 </head>
-<body ms-controller="Hydetail">
-    <div class="index-html index-html-r">
+<body ms-controller="Hydetail" class="hy_wrap_r">
+    <div class="index-html">
     </div>
-    <div class="hy_wrap hy_wrap_r" id="hy_wrap">
+    <div class="hy_wrap" id="hy_wrap">
         <!--<div class="invitation">
             INVITATION
         </div>-->
@@ -36,7 +36,7 @@
             </div>
             <div class="infomation">
                 您的联络员是<span style="color:green">{{currentuser.ServiceUserName}}</span>，
-                联络电话是<a id="suMob" style="color:#000; text-decoration:none;">{{currentuser.ServiceUserMobphone}}</a>
+                联络电话是<a id="suMob" style="text-decoration:none;">{{currentuser.ServiceUserMobphone}}</a>
             </div>
             <div class="gobutton gobutton_r">
                 <div class="fl-left">
@@ -48,10 +48,10 @@
             </div>
         </div>
         <div class="input_block">
-            <div class="phonenumber phonenumber_r">
+            <div class="phonenumber">
                 <input type="text" id="phone_input" placeholder="请输入手机号" ms-duplex="phonenumber">
             </div>
-            <div class="gobutton2 gobutton2_r">
+            <div class="gobutton2">
                 <span id="phone_input_submit" ms-on-click="go_detail()">进入会议</span>
             </div>
         </div>

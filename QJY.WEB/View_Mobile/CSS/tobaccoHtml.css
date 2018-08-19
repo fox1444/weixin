@@ -4,15 +4,26 @@
     src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 
+@font-face {
+    font-family: "icomoon";
+    src: url('../fonts/icomoon.eot'); /* IE9*/
+    src: url('../fonts/icomoon.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/icomoon.woff') format('woff'), /* chrome, firefox */
+    url('../fonts/icomoon.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    url('../fonts/icomoon.svg') format('svg'); /* iOS 4.1- */
+}
+
 body, html {
     margin: 0;
     padding: 0;
     font-size: 1em;
 }
+
 a {
     text-decoration: none;
     color: #000;
 }
+
 .index-html {
     background: url(/View_Mobile/Images/index-bg-2.png) top no-repeat #019FE8;
     background-size: 100%;
@@ -20,10 +31,6 @@ a {
     height: 100%;
     position: fixed;
     z-index: -99;
-}
-
-.index-html-r {
-    background: #f4ae00;
 }
 
 .hy_wrap {
@@ -36,9 +43,22 @@ a {
     height: auto;*/
 }
 
-.hy_wrap_r {
-    background: url(/View_Mobile/Images/index-bg-5.jpg) top right no-repeat #F4AE00;
+    .hy_wrap a {
+        color: #fff;
+    }
+
+.hy_wrap_r .index-html {
+    background: #f4ae00;
+    background-image: none;
+}
+
+.hy_wrap_r .hy_wrap {
+    background: url(/View_Mobile/Images/index-bg-5.jpg) top left no-repeat #F4AE00;
     background-size: auto 100%;
+    color: #000;
+}
+
+.hy_wrap_r a {
     color: #000;
 }
 
@@ -56,15 +76,24 @@ a {
     margin: 0px auto;
 }
 
-    .logo::after {
+    .logo::before {
         content: "";
         width: 100%;
         min-height: 80px;
-        max-height: 100px;
         display: block;
-        background: url(/View_Mobile/Images/tobacco-logo4.png) 15px center no-repeat;
+        background: url(/View_Mobile/Images/tobacco-logo1.png) 10px center no-repeat;
         background-size: 35%;
         margin: 0 0 0 0;
+    }
+
+    .logo::after {
+        content: "";
+        width: 95%;
+        min-height: 80px;
+        display: block;
+        background: url(/View_Mobile/Images/tobacco-fi-1.png) right center no-repeat;
+        background-size: 30%;
+        margin: -80px 30px 0 0;
     }
 
 .title {
@@ -129,11 +158,6 @@ a {
         font-size: 100%;
         background: #fff;
     }
-.gobutton_r span {
-    color: #F4AE00;
-    border: solid 1px #F4AE00;  
-}
-
 /*白色按钮*/
 .gobutton2 span {
     color: #019FE8;
@@ -151,10 +175,7 @@ a {
     font-size: 100%;
     background: #fff;
 }
-.gobutton2_r span {
-    color: #F4AE00;
-    border: solid 1px #F4AE00;
-}
+
 /*蓝色按钮*/
 .gobutton-blue span {
     color: #fff;
@@ -213,9 +234,14 @@ a {
             outline: none;
         }
 
-    .input_block .phonenumber_r {
-        border: solid 1px #F4AE00;
-    }
+.hy_wrap_r .gobutton span, .hy_wrap_r .gobutton2 span {
+    background: #007457;
+    color: #fff;
+}
+
+.hy_wrap_r .phonenumber {
+    border: solid 1px #F4AE00;
+}
 /*.input_block .phonenumber input::-webkit-input-placeholder {
                 color: #019FE8;
             }
@@ -231,6 +257,7 @@ a {
             .input_block .phonenumber input:-ms-input-placeholder { 
                 color: #019FE8;
             }*/
+
 .wrapper {
     color: #fff;
     height: 100%;
@@ -255,113 +282,113 @@ a {
         color: #fff;
     }
 
-    .wrapper .banner-r {
-        background: url(/View_Mobile/Images/index-bg-5.jpg) left top no-repeat;
+.hy_step_r .wrapper .banner {
+    background: url(/View_Mobile/Images/index-bg-5.jpg) center top no-repeat;
+}
+
+.wrapper .content-bg {
+    margin: 0px auto;
+    width: 90%;
+    line-height: 150%;
+}
+
+    .wrapper .content-bg img {
+        vertical-align: middle;
+        margin-bottom: 5px;
     }
 
-    .wrapper .content-bg {
-        margin: 0px auto;
-        width: 90%;
-        line-height: 150%;
-    }
+.wrapper .font-white {
+    color: #fff;
+}
 
-        .wrapper .content-bg img {
-            vertical-align: middle;
-            margin-bottom: 5px;
-        }
+.wrapper .bg-white {
+    background: #fff;
+    padding: 15px;
+    color: #000;
+}
 
-    .wrapper .font-white {
-        color: #fff;
-    }
+.wrapper .bg-grey {
+    background: #f1f1f1;
+    padding: 0;
+}
 
-    .wrapper .bg-white {
-        background: #fff;
-        padding: 15px;
-        color: #000;
-    }
+.wrapper .bg-holder {
+    padding: 15px 10px;
+}
 
-    .wrapper .bg-grey {
-        background: #f1f1f1;
-        padding: 0;
-    }
+.wrapper .title span {
+    padding: 0 100px;
+    position: relative;
+}
 
-    .wrapper .bg-holder {
-        padding: 15px 10px;
-    }
-
-    .wrapper .title span {
-        padding: 0 100px;
+    .wrapper .title span strong {
+        z-index: 99;
         position: relative;
     }
 
-        .wrapper .title span strong {
-            z-index: 99;
-            position: relative;
-        }
-
-        .wrapper .title span:before {
-            border-bottom: solid 1px #fff;
-            height: 0px;
-            position: absolute;
-            left: 0;
-            top: 14px;
-            content: "";
-            margin: 0 auto;
-            width: 32%;
-            z-index: 0;
-        }
-
-        .wrapper .title span:after {
-            border-bottom: solid 1px #fff;
-            height: 0px;
-            position: absolute;
-            right: 0;
-            top: 14px;
-            content: "";
-            margin: 0 auto;
-            width: 32%;
-            z-index: 0;
-        }
-
-    .wrapper .hy_menu_list {
-        text-align: center;
-        clear: both;
-        color: #fff;
+    .wrapper .title span:before {
+        border-bottom: solid 1px #fff;
+        height: 0px;
+        position: absolute;
+        left: 0;
+        top: 14px;
+        content: "";
+        margin: 0 auto;
+        width: 32%;
+        z-index: 0;
     }
 
-        .wrapper .hy_menu_list:after {
-            clear: both;
-            content: " ";
-        }
+    .wrapper .title span:after {
+        border-bottom: solid 1px #fff;
+        height: 0px;
+        position: absolute;
+        right: 0;
+        top: 14px;
+        content: "";
+        margin: 0 auto;
+        width: 32%;
+        z-index: 0;
+    }
 
-        .wrapper .hy_menu_list a {
-            float: left;
-            width: 33%;
-            text-decoration: none;
-            display: block;
-            margin: 20px 0;
-            text-align: center;
-        }
+.wrapper .hy_menu_list {
+    text-align: center;
+    clear: both;
+    color: #fff;
+}
 
-        .wrapper .hy_menu_list i {
-            border: solid 1px #111;
-            border-radius: 14px;
-            line-height: 14px;
-            padding: 0 5px;
-            font-size: 80%;
-            font-style: normal;
-            margin-right: 16px;
-        }
+    .wrapper .hy_menu_list:after {
+        clear: both;
+        content: " ";
+    }
 
-        .wrapper .hy_menu_list img {
-            border-radius: 50px;
-            width: 40%;
-        }
+    .wrapper .hy_menu_list a {
+        float: left;
+        width: 33%;
+        text-decoration: none;
+        display: block;
+        margin: 20px 0;
+        text-align: center;
+    }
 
-        .wrapper .hy_menu_list span {
-            display: block;
-            color: #000;
-        }
+    .wrapper .hy_menu_list i {
+        border: solid 1px #111;
+        border-radius: 14px;
+        line-height: 14px;
+        padding: 0 5px;
+        font-size: 80%;
+        font-style: normal;
+        margin-right: 16px;
+    }
+
+    .wrapper .hy_menu_list img {
+        border-radius: 50px;
+        width: 40%;
+    }
+
+    .wrapper .hy_menu_list span {
+        display: block;
+        color: #000;
+    }
 
 .bg-white .title {
     margin-top: 0px;
@@ -652,14 +679,27 @@ a {
     width: 60%;
 }
 
-.item-con-list input, .item-con-list select{
+.item-con-list input, .item-con-list select {
     border-radius: 3px;
     border: none;
     padding: 0 4px;
     margin: 7px 0 0 0;
     font-size: 16px;
     height: 32px;
-    width: 95%;
+    width: 90%;
+    background: none;
+    outline: none;
+}
+
+.edit-icon::after {
+    content: "\e905";
+    font-family: icomoon;
+    font-size: 0.8rem;
+    color: #777;
+    float: right;
+    display: block;
+    margin-right: 10px;
+    margin-top: -46px;
 }
 
 .room-length-index {
