@@ -506,6 +506,9 @@ a {
 .hydaibiao .title i {
     background: url(/View_Mobile/Images/icon/QYIM.png) center center no-repeat;
 }
+.hynavigate .title i {
+    background: url(/View_Mobile/Images/icon/baidu.png) center center no-repeat;
+}
 
 .bg-grey .title i {
     width: 32px;
@@ -516,7 +519,9 @@ a {
     margin-right: 10px;
     background-size: 100%;
 }
-
+.hynavigate .title i {
+    border-radius: 2px;
+}
 .zcb-content {
     color: #000;
     background: #fff;

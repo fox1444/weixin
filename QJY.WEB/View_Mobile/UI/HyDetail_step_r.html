@@ -89,6 +89,12 @@
                             接送服务
                         </span>
                     </a>
+                    <a href="#" ms-on-click="getdata(12)" class="tab-link button external">
+                        <img src="/View_Mobile/Images/icon/baidu.png" style="border-radius: 10px;">
+                        <span>
+                            地图导航
+                        </span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -388,6 +394,19 @@
             </div>
         </div>
 
+        <!--地图导航-->
+        <div class="hy_menu bg-white bg-grey hynavigate" id="item-12" ms-if="modelData.Files!=''">
+            <div class="title">
+                <i></i>地图导航
+            </div>
+            <div class="content-bg" style="">
+                <div class="">
+
+                    <iframe id="mapping" src="http://api.map.baidu.com/geocoder?address=北京市海淀区上地信息路9号奎科科技大厦&output=html&src=webapp.baidu.openAPIdemo" style="width:100%; height:100%; border:none;"></iframe>
+                </div>
+            </div>
+        </div>
+
         <ul class="up-and-down">
             <li>
                 <div class="arrow-up" ms-on-click="getpredata(tempmodel.stepindex)">
@@ -414,6 +433,7 @@
     <script src="/View_Mobile/js/Jquery2.1.js"></script>
     <script src="/View_Mobile/js/Date/FT_Date.min.js"></script>
 
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=2b866a6daac9014292432d81fe9b47e3"></script>
     <script>
         var tempmodel = avalon.define({
             $id: "Hydetail",
@@ -717,7 +737,10 @@
         $(window).on("load resize", function () {
             var h = document.documentElement.clientHeight || window.innerHeight;
             $(".wrapper").css("height", h);
+            $("#mapping").css("height", (h-100));
         });
+
+       
     </script>
 </body>
 </html>
