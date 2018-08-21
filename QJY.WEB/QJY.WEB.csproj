@@ -241,7 +241,9 @@
     <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="View_Mobile\fonts\icomoon.svg" />
     <Content Include="View_Mobile\Images\arrow.png" />
+    <Content Include="View_Mobile\Images\body-bg.jpg" />
     <Content Include="View_Mobile\Images\index-bg-5.jpg" />
+    <Content Include="View_Mobile\Images\logo-bg.jpg" />
     <Content Include="View_Mobile\Images\tobacco-logo.png" />
     <Content Include="View_Mobile\Images\tobacco-logo2.jpg" />
     <Content Include="View_Mobile\Images\wrap-bg.jpg" />

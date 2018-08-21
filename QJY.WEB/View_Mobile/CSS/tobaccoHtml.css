@@ -53,7 +53,7 @@ a {
 }
 
 .hy_wrap_r .hy_wrap {
-    background: url(/View_Mobile/Images/index-bg-5.jpg) top left no-repeat #F4AE00;
+    background: url(/View_Mobile/Images/body-bg.jpg) top right no-repeat #F4AE00;
     background-size: auto 100%;
     color: #000;
 }
@@ -74,32 +74,37 @@ a {
 
 .logo {
     margin: 0px auto;
+    height: 90px;
+}
+.hy_wrap_r .logo {
+    background: url(/View_Mobile/Images/logo-bg.jpg) right center no-repeat;
+    background-size: auto 100%;
+    height: 110px;
+}
+.logo::before {
+    content: "";
+    width: 100%;
+    min-height: 70px;
+    display: block;
+    background: url(/View_Mobile/Images/tobacco-logo1.png) 10px center no-repeat;
+    background-size: 35%;
+    margin: 0 0 0 0;
 }
 
-    .logo::before {
-        content: "";
-        width: 100%;
-        min-height: 80px;
-        display: block;
-        background: url(/View_Mobile/Images/tobacco-logo1.png) 10px center no-repeat;
-        background-size: 35%;
-        margin: 0 0 0 0;
-    }
-
-    .logo::after {
-        content: "";
-        width: 95%;
-        min-height: 80px;
-        display: block;
-        background: url(/View_Mobile/Images/tobacco-fi-1.png) right center no-repeat;
-        background-size: 30%;
-        margin: -80px 30px 0 0;
-    }
+.hy_wrap_r .logo::after {
+    content: "";
+    width: 95%;
+    min-height: 70px;
+    display: block;
+    background: url(/View_Mobile/Images/tobacco-fi-1.png) right center no-repeat;
+    background-size: 30%;
+    margin: -65px 30px 0 0;
+}
 
 .title {
     font-weight: bold;
     font-size: 140%;
-    margin: 20px auto;
+    margin: 0px auto;
     margin-bottom: 35px;
     line-height: 160%;
 }
@@ -235,7 +240,7 @@ a {
         }
 
 .hy_wrap_r .gobutton span, .hy_wrap_r .gobutton2 span {
-    background: #007457;
+    background: #F4AE00;
     color: #fff;
 }
 
@@ -283,7 +288,7 @@ a {
     }
 
 .hy_step_r .wrapper .banner {
-    background: url(/View_Mobile/Images/index-bg-5.jpg) center top no-repeat;
+    background: url(/View_Mobile/Images/logo-bg.jpg) right top no-repeat;
 }
 
 .wrapper .content-bg {
