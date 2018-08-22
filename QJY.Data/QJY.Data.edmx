@@ -1003,6 +1003,9 @@
           <Property Name="YCQK" Type="varchar(max)" />
           <Property Name="YCTIME" Type="varchar" MaxLength="100" />
           <Property Name="YCLOCATION" Type="varchar" MaxLength="100" />
+          <Property Name="HotelName" Type="varchar" MaxLength="100" />
+          <Property Name="HotelRegion" Type="varchar" MaxLength="20" />
+          <Property Name="HotelLocation" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_OUTUSER">
           <Key>
@@ -1040,6 +1043,9 @@
           <Property Name="SendoffUserMob" Type="varchar" MaxLength="20" />
           <Property Name="SendoffCarNumber" Type="varchar" MaxLength="20" />
           <Property Name="SendoffLocation" Type="varchar" MaxLength="200" />
+          <Property Name="HotelName" Type="varchar" MaxLength="100" />
+          <Property Name="HotelRegion" Type="varchar" MaxLength="20" />
+          <Property Name="HotelLocation" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_QD">
           <Key>
@@ -3833,6 +3839,9 @@
           <Property Name="YCQK" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="YCTIME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="YCLOCATION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HotelName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HotelRegion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="HotelLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_OUTUSER">
           <Key>
@@ -3870,6 +3879,9 @@
           <Property Name="SendoffUserMob" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="SendoffCarNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="SendoffLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="HotelName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HotelRegion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="HotelLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5727,6 +5739,9 @@
           <EntitySetMapping Name="SZHL_HYGL">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL">
               <MappingFragment StoreEntitySet="SZHL_HYGL">
+                <ScalarProperty Name="HotelLocation" ColumnName="HotelLocation" />
+                <ScalarProperty Name="HotelRegion" ColumnName="HotelRegion" />
+                <ScalarProperty Name="HotelName" ColumnName="HotelName" />
                 <ScalarProperty Name="YCLOCATION" ColumnName="YCLOCATION" />
                 <ScalarProperty Name="YCTIME" ColumnName="YCTIME" />
                 <ScalarProperty Name="YCQK" ColumnName="YCQK" />
@@ -5770,6 +5785,9 @@
           <EntitySetMapping Name="SZHL_HYGL_OUTUSER">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL_OUTUSER">
               <MappingFragment StoreEntitySet="SZHL_HYGL_OUTUSER">
+                <ScalarProperty Name="HotelLocation" ColumnName="HotelLocation" />
+                <ScalarProperty Name="HotelRegion" ColumnName="HotelRegion" />
+                <ScalarProperty Name="HotelName" ColumnName="HotelName" />
                 <ScalarProperty Name="SendoffLocation" ColumnName="SendoffLocation" />
                 <ScalarProperty Name="SendoffCarNumber" ColumnName="SendoffCarNumber" />
                 <ScalarProperty Name="SendoffUserMob" ColumnName="SendoffUserMob" />
