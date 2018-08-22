@@ -222,7 +222,7 @@
             <div class="fg-item"><span>出行安排</span><i></i></div>
             <div class="add-item add-widthall">
                 <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hychuxing" umheight="280" ms-duplex="modelData.CXQK"></textarea>
+                    <textarea class="szhl_UEEDIT" id="hychuxing" umheight="120" ms-duplex="modelData.CXQK"></textarea>
                 </div>
             </div>
             <!--<div class="fg-item"><span>分组情况</span><i></i></div>
@@ -231,6 +231,18 @@
                     <textarea class="szhl_UEEDIT" id="hygroup" umheight="280" ms-duplex="modelData.FZQK"></textarea>
                 </div>
             </div>-->
+            <div class="add-item add-widthall">
+                <label class="add-item-label">上车时间</label>
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyBoardingTime" ms-duplex="modelData.BoardingTime" umheight="120"></textarea>
+                </div>
+            </div>
+            <div class="add-item add-widthall">
+                <label class="add-item-label">乘坐车辆</label>
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyCarNumber" ms-duplex="modelData.CarNumber" umheight="120"></textarea>
+                </div>
+            </div>
         </div>
         <div ms-visible="seltype==6">
             <div class="fg-item"><span>住宿服务</span><i></i></div>
@@ -337,7 +349,7 @@
                 ComFunJS.initForm();
             }
         },//初始化
-        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "" },
+        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "BoardingTime": "", "CarNumber": "" },
         SaveData: function (callback) {
             $.post("/API/VIEWAPI.ashx?ACTION=HYGL_ADDHYGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
                 return callback.call(this, result);

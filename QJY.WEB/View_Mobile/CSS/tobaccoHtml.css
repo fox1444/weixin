@@ -314,7 +314,7 @@ a {
 
 .wrapper .bg-grey {
     background: #f1f1f1;
-    padding: 0;
+    padding: 0 0 10px 0;
 }
 
 .wrapper .bg-holder {
@@ -784,6 +784,7 @@ a {
     }
 
 .room-block {
+    margin:0 auto;
 }
 
 .seat_info {

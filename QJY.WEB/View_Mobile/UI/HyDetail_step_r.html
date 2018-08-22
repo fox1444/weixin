@@ -59,7 +59,7 @@
                             参会代表
                         </span>
                     </a>
-                    <a href="#" ms-on-click="getdata(7)" class="button external" ms-class-1="tab-link:modelData.CXQK!=''||currentuser.BoardingTime!=''||currentuser.CarNumber!=''" ms-if="modelData.CXQK!=''||currentuser.BoardingTime!=''||currentuser.CarNumber!=''">
+                    <a href="#" ms-on-click="getdata(7)" class="button external" ms-class-1="tab-link:modelData.CXQK!=''||modelData.BoardingTime!=''||modelData.CarNumber!=''||currentuser.BoardingTime!=''||currentuser.CarNumber!=''" ms-if="modelData.CXQK!=''||modelData.BoardingTime!=''||modelData.CarNumber!=''||currentuser.BoardingTime!=''||currentuser.CarNumber!=''">
                         <img src="/View_Mobile/Images/icon/YCGL.png">
                         <span>
                             出行安排
@@ -83,13 +83,13 @@
                             资料下载
                         </span>
                     </a>
-                    <a href="#" ms-on-click="getdata(11)" class="tab-link button external">
+                    <a href="#" ms-on-click="getdata(11)" class="tab-link button external" >
                         <img src="/View_Mobile/Images/icon/JSFW.png">
                         <span>
                             接送服务
                         </span>
                     </a>
-                    <a href="#" ms-on-click="getdata(12)" class="tab-link button external">
+                    <a href="#" ms-on-click="getdata(12)" class="tab-link button external" ms-class-1="tab-link:modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.RoomNumber!=''" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.RoomNumber!=''">
                         <img src="/View_Mobile/Images/icon/baidu.png" style="border-radius: 10px;">
                         <span>
                             地图导航
@@ -112,7 +112,7 @@
         </div>
 
         <!--服务指南-->
-        <div class="hy_menu  bg-white bg-grey hyfuwu" id="item-3" ms-if="modelData.HYFW!=''" style="padding-bottom:20px;">
+        <div class="hy_menu  bg-white bg-grey hyfuwu" id="item-3" ms-if="modelData.HYFW!=''">
             <div class="item-bg">
                 <div class="title">
                     <i></i>服务指南
@@ -124,7 +124,7 @@
         </div>
 
         <!--日程安排-->
-        <div class="hy_menu bg-white bg-grey hyrich" id="item-4" ms-if="modelData.Details!=''" style="padding-bottom:20px;">
+        <div class="hy_menu bg-white bg-grey hyrich" id="item-4" ms-if="modelData.Details!=''">
             <div class="item-bg">
                 <div class="title">
                     <i></i>日程安排
@@ -174,7 +174,7 @@
         </div>
 
         <!--出行安排-->
-        <div class="hy_menu bg-white bg-grey hychuxing" id="item-7" ms-if="modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''">
+        <div class="hy_menu bg-white bg-grey hychuxing" id="item-7" ms-if="modelData.CXQK!=''||modelData.BoardingTime!=''||modelData.CarNumber!=''||currentuser.BoardingTime!=''||currentuser.CarNumber!=''">
             <div class="item-bg">
                 <div class="title">
                     <i></i>出行安排
@@ -188,20 +188,30 @@
                             {{modelData.CXQK|html}}
                         </div>
                     </div>
-                    <div class="inlist" ms-if="tempmodel.currentuser.BoardingTime!=''">
+                    <div class="inlist" ms-if="modelData.BoardingTime!=''||currentuser.BoardingTime!=''">
                         <span class="parent_title">
                             上车时间
                         </span>
                         <div class="item-con ">
-                            {{tempmodel.FormatHTML(tempmodel.currentuser.BoardingTime)|html}}
+                            <div ms-if="currentuser.BoardingTime!=''">
+                                {{tempmodel.FormatHTML(tempmodel.currentuser.BoardingTime)|html}}
+                            </div>
+                            <div ms-if="currentuser.BoardingTime==''">
+                                {{modelData.BoardingTime|html}}
+                            </div>
                         </div>
                     </div>
-                    <div class="inlist" ms-if="tempmodel.currentuser.CarNumber!=''">
+                    <div class="inlist" ms-if="modelData.CarNumber!=''||currentuser.CarNumber!=''">
                         <span class="parent_title">
-                            车牌号
+                            乘坐车辆
                         </span>
                         <div class="item-con ">
-                            {{tempmodel.FormatHTML(tempmodel.currentuser.CarNumber)|html}}
+                            <div ms-if="currentuser.CarNumber!=''">
+                                {{tempmodel.FormatHTML(tempmodel.currentuser.CarNumber)|html}}
+                            </div>
+                            <div ms-if="currentuser.CarNumber==''">
+                                {{modelData.CarNumber|html}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -209,7 +219,7 @@
         </div>
 
         <!--住宿安排-->
-        <div class="hy_menu bg-white bg-grey hyzhusu" id="item-8" ms-if="modelData.ZSAP!=''||tempmodel.modelData.HotelName!=''||tempmodel.currentuser.RoomNumber!=''">
+        <div class="hy_menu bg-white bg-grey hyzhusu" id="item-8" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.RoomNumber!=''">
             <div class="item-bg">
                 <div class="title">
                     <i></i>住宿安排
@@ -403,7 +413,7 @@
         </div>
 
         <!--地图导航-->
-        <div class="hy_menu bg-white bg-grey hynavigate" id="item-12" ms-if="modelData.Files!=''">
+        <div class="hy_menu bg-white bg-grey hynavigate" id="item-12" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.RoomNumber!=''">
             <div class="title">
                 <i></i>地图导航
             </div>
@@ -449,7 +459,7 @@
             iswf: true,//是否属于流程表单
             tpData: [],
             CYUserStr: "",
-            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "" },
+            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "BoardingTime": "", "CarNumber": "" },
             currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "" },
             dataid: ComFunJS.getQueryString('id'),
             stepindex: "",
@@ -755,7 +765,7 @@
                     //    alert('failed' + this.getStatus());
                     //}
                     var src = 'http://api.map.baidu.com/direction?origin=latlng:' + r.point.lat + ',' + r.point.lng + '|name:&destination=' + destination + '&mode=driving&region=' + region + '&output=html&src=webapp.baidu.openAPIdemo';
-                  
+
                     $('#mapping').attr('src', src);
                 });
             }

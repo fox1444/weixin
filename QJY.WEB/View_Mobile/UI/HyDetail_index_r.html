@@ -34,7 +34,7 @@
             <div class="infomation">
                 尊敬的<span style="color:red">{{currentuser.Name}}</span>，欢迎您参加本次会议
             </div>
-            <div class="infomation">
+            <div class="infomation" ms-if="currentuser.ServiceUserName!=''">
                 您的联络员是<span style="color:green">{{currentuser.ServiceUserName}}</span>，
                 联络电话是<a id="suMob" style="text-decoration:none;">{{currentuser.ServiceUserMobphone}}</a>
             </div>
@@ -160,7 +160,7 @@
                                         tempmodel.currentuser = r.Result[0];
                                         $('.input_block').hide();
                                         $('.default_block').show();
-                                        setTimeout($('#suMob').attr('href', 'tel:' + tempmodel.currentuser.ServiceUserMobphone),500);
+                                        setTimeout($('#suMob').attr('href', 'tel:' + tempmodel.currentuser.ServiceUserMobphone),1000);
                                     }
                                 });
 

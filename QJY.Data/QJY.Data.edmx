@@ -1006,6 +1006,8 @@
           <Property Name="HotelName" Type="varchar" MaxLength="100" />
           <Property Name="HotelRegion" Type="varchar" MaxLength="20" />
           <Property Name="HotelLocation" Type="varchar" MaxLength="200" />
+          <Property Name="BoardingTime" Type="varchar(max)" />
+          <Property Name="CarNumber" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_OUTUSER">
           <Key>
@@ -1021,8 +1023,8 @@
           <Property Name="Mobphone" Type="varchar" MaxLength="20" />
           <Property Name="DisplayOrder" Type="int" />
           <Property Name="RoomNumber" Type="varchar" MaxLength="200" />
-          <Property Name="BoardingTime" Type="varchar" MaxLength="200" />
-          <Property Name="CarNumber" Type="varchar" MaxLength="200" />
+          <Property Name="BoardingTime" Type="varchar(max)" />
+          <Property Name="CarNumber" Type="varchar(max)" />
           <Property Name="YCTIME" Type="varchar" MaxLength="200" />
           <Property Name="YCLOCATION" Type="varchar" MaxLength="200" />
           <Property Name="ServiceUser" Type="int" />
@@ -2036,8 +2038,8 @@
           <EntitySet Name="SZHL_ZCGL_LifeCycle" EntityType="QJY_SaaSModel.SZHL_ZCGL_LifeCycle" />
           <EntitySet Name="SZHL_ZCGL" EntityType="QJY_SaaSModel.SZHL_ZCGL" />
           <EntitySet Name="SZHL_HYGL_SERVICE" EntityType="QJY_SaaSModel.SZHL_HYGL_SERVICE" />
-          <EntitySet Name="SZHL_HYGL" EntityType="QJY_SaaSModel.SZHL_HYGL" />
           <EntitySet Name="SZHL_HYGL_OUTUSER" EntityType="QJY_SaaSModel.SZHL_HYGL_OUTUSER" />
+          <EntitySet Name="SZHL_HYGL" EntityType="QJY_SaaSModel.SZHL_HYGL" />
         </EntityContainer>
         <EntityType Name="FT_File">
           <Key>
@@ -3798,6 +3800,46 @@
           <Property Name="CRUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CRDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="SZHL_HYGL_OUTUSER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HYGLID" Type="Int32" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="OutDeptName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Zhiwu" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Mobphone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayOrder" Type="Int32" />
+          <Property Name="RoomNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="BoardingTime" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CarNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="YCTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="YCLOCATION" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceUser" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Precision="3" />
+          <Property Name="PickupType" Type="Int32" />
+          <Property Name="PickupNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="PickupDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SendoffType" Type="Int32" />
+          <Property Name="SendoffNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="SendoffDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PickupUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PickupUserMob" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PickupCarNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PickupLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SendoffUser" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SendoffUserMob" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SendoffCarNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SendoffLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="HotelName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HotelRegion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="HotelLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="SZHL_HYGL">
           <Key>
             <PropertyRef Name="ID" />
@@ -3842,46 +3884,8 @@
           <Property Name="HotelName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="HotelRegion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="HotelLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="SZHL_HYGL_OUTUSER">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ComId" Type="Int32" />
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="HYGLID" Type="Int32" />
-          <Property Name="Type" Type="Int32" />
-          <Property Name="OutDeptName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Zhiwu" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Mobphone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="DisplayOrder" Type="Int32" />
-          <Property Name="RoomNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="BoardingTime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="CarNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="YCTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="YCLOCATION" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ServiceUser" Type="Int32" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CRUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CRDate" Type="DateTime" Precision="3" />
-          <Property Name="PickupType" Type="Int32" />
-          <Property Name="PickupNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="PickupDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SendoffType" Type="Int32" />
-          <Property Name="SendoffNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="SendoffDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PickupUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PickupUserMob" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="PickupCarNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="PickupLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="SendoffUser" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="SendoffUserMob" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="SendoffCarNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="SendoffLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="HotelName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="HotelRegion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="HotelLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="BoardingTime" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CarNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5736,9 +5740,52 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SZHL_HYGL_OUTUSER">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL_OUTUSER">
+              <MappingFragment StoreEntitySet="SZHL_HYGL_OUTUSER">
+                <ScalarProperty Name="HotelLocation" ColumnName="HotelLocation" />
+                <ScalarProperty Name="HotelRegion" ColumnName="HotelRegion" />
+                <ScalarProperty Name="HotelName" ColumnName="HotelName" />
+                <ScalarProperty Name="SendoffLocation" ColumnName="SendoffLocation" />
+                <ScalarProperty Name="SendoffCarNumber" ColumnName="SendoffCarNumber" />
+                <ScalarProperty Name="SendoffUserMob" ColumnName="SendoffUserMob" />
+                <ScalarProperty Name="SendoffUser" ColumnName="SendoffUser" />
+                <ScalarProperty Name="PickupLocation" ColumnName="PickupLocation" />
+                <ScalarProperty Name="PickupCarNumber" ColumnName="PickupCarNumber" />
+                <ScalarProperty Name="PickupUserMob" ColumnName="PickupUserMob" />
+                <ScalarProperty Name="PickupUser" ColumnName="PickupUser" />
+                <ScalarProperty Name="SendoffDate" ColumnName="SendoffDate" />
+                <ScalarProperty Name="SendoffNumber" ColumnName="SendoffNumber" />
+                <ScalarProperty Name="SendoffType" ColumnName="SendoffType" />
+                <ScalarProperty Name="PickupDate" ColumnName="PickupDate" />
+                <ScalarProperty Name="PickupNumber" ColumnName="PickupNumber" />
+                <ScalarProperty Name="PickupType" ColumnName="PickupType" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ServiceUser" ColumnName="ServiceUser" />
+                <ScalarProperty Name="YCLOCATION" ColumnName="YCLOCATION" />
+                <ScalarProperty Name="YCTIME" ColumnName="YCTIME" />
+                <ScalarProperty Name="CarNumber" ColumnName="CarNumber" />
+                <ScalarProperty Name="BoardingTime" ColumnName="BoardingTime" />
+                <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Mobphone" ColumnName="Mobphone" />
+                <ScalarProperty Name="Zhiwu" ColumnName="Zhiwu" />
+                <ScalarProperty Name="OutDeptName" ColumnName="OutDeptName" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="HYGLID" ColumnName="HYGLID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="SZHL_HYGL">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL">
               <MappingFragment StoreEntitySet="SZHL_HYGL">
+                <ScalarProperty Name="CarNumber" ColumnName="CarNumber" />
+                <ScalarProperty Name="BoardingTime" ColumnName="BoardingTime" />
                 <ScalarProperty Name="HotelLocation" ColumnName="HotelLocation" />
                 <ScalarProperty Name="HotelRegion" ColumnName="HotelRegion" />
                 <ScalarProperty Name="HotelName" ColumnName="HotelName" />
@@ -5777,47 +5824,6 @@
                 <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="RoomID" ColumnName="RoomID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ComId" ColumnName="ComId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SZHL_HYGL_OUTUSER">
-            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL_OUTUSER">
-              <MappingFragment StoreEntitySet="SZHL_HYGL_OUTUSER">
-                <ScalarProperty Name="HotelLocation" ColumnName="HotelLocation" />
-                <ScalarProperty Name="HotelRegion" ColumnName="HotelRegion" />
-                <ScalarProperty Name="HotelName" ColumnName="HotelName" />
-                <ScalarProperty Name="SendoffLocation" ColumnName="SendoffLocation" />
-                <ScalarProperty Name="SendoffCarNumber" ColumnName="SendoffCarNumber" />
-                <ScalarProperty Name="SendoffUserMob" ColumnName="SendoffUserMob" />
-                <ScalarProperty Name="SendoffUser" ColumnName="SendoffUser" />
-                <ScalarProperty Name="PickupLocation" ColumnName="PickupLocation" />
-                <ScalarProperty Name="PickupCarNumber" ColumnName="PickupCarNumber" />
-                <ScalarProperty Name="PickupUserMob" ColumnName="PickupUserMob" />
-                <ScalarProperty Name="PickupUser" ColumnName="PickupUser" />
-                <ScalarProperty Name="SendoffDate" ColumnName="SendoffDate" />
-                <ScalarProperty Name="SendoffNumber" ColumnName="SendoffNumber" />
-                <ScalarProperty Name="SendoffType" ColumnName="SendoffType" />
-                <ScalarProperty Name="PickupDate" ColumnName="PickupDate" />
-                <ScalarProperty Name="PickupNumber" ColumnName="PickupNumber" />
-                <ScalarProperty Name="PickupType" ColumnName="PickupType" />
-                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
-                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="ServiceUser" ColumnName="ServiceUser" />
-                <ScalarProperty Name="YCLOCATION" ColumnName="YCLOCATION" />
-                <ScalarProperty Name="YCTIME" ColumnName="YCTIME" />
-                <ScalarProperty Name="CarNumber" ColumnName="CarNumber" />
-                <ScalarProperty Name="BoardingTime" ColumnName="BoardingTime" />
-                <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
-                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
-                <ScalarProperty Name="Mobphone" ColumnName="Mobphone" />
-                <ScalarProperty Name="Zhiwu" ColumnName="Zhiwu" />
-                <ScalarProperty Name="OutDeptName" ColumnName="OutDeptName" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="HYGLID" ColumnName="HYGLID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ComId" ColumnName="ComId" />
               </MappingFragment>
