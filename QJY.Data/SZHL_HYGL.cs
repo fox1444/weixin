@@ -51,5 +51,8 @@ namespace QJY.Data
         public string YCQK { get; set; }
         public string YCTIME { get; set; }
         public string YCLOCATION { get; set; }
+        public string HotelName { get; set; }
+        public string HotelRegion { get; set; }
+        public string HotelLocation { get; set; }
     }
 }

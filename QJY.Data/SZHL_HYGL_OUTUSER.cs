@@ -46,5 +46,8 @@ namespace QJY.Data
         public string SendoffUserMob { get; set; }
         public string SendoffCarNumber { get; set; }
         public string SendoffLocation { get; set; }
+        public string HotelName { get; set; }
+        public string HotelRegion { get; set; }
+        public string HotelLocation { get; set; }
     }
 }
