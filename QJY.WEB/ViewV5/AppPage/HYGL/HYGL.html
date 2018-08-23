@@ -3,7 +3,7 @@
         <div class="detail-nav">
             <div class="tab-kh nav-bt">
                 <span ms-class-1="cur:seltype==1" ms-click="selecttype(1)"><i class="iconfont icon-bookmark"></i>基本信息</span>
-                <span ms-class-1="cur:seltype==2" ms-if="HYGLID>0" ms-click="selecttype(2)"><i class="iconfont icon-bookmark"></i>主持人</span>
+                <span ms-class-1="cur:seltype==2" ms-if="HYGLID>0" ms-click="selecttype(2)"><i class="iconfont icon-bookmark"></i>单位&主持人</span>
                 <span ms-class-1="cur:seltype==3" ms-if="HYGLID>0" ms-click="selecttype(3)"><i class="iconfont icon-bookmark"></i>参会人</span>
                 <span ms-class-1="cur:seltype==4" ms-click="selecttype(4)"><i class="iconfont icon-bookmark"></i>会议安排</span>
                 <span ms-class-1="cur:seltype==5" ms-click="selecttype(5)"><i class="iconfont icon-bookmark"></i>出行</span>
@@ -12,6 +12,7 @@
                 <span ms-class-1="cur:seltype==8" ms-if="HYGLID>0" ms-click="selecttype(8)"><i class="iconfont icon-bookmark"></i>一键服务</span>
             </div>
         </div>
+        <!--基本信息-->
         <div ms-visible="seltype==1">
             <div>
                 <!--<div class="fg-item"><span>基本信息</span></div>-->
@@ -55,7 +56,7 @@
                         <label class="add-item-label"><i>*</i>会议室</label>
                         <div class="add-ic">
                             <select name="conType" id="conType" ms-duplex="modelData.RoomID" class="form-control szhl_require">
-                                <option ms-repeat-item="CLData" ms-attr-value="item.ID">{{item.Name}}</option>
+                                <option ms-repeat-item="HYSData" ms-attr-value="item.ID">{{item.Name}}</option>
                             </select>
                         </div>
                     </li>
@@ -113,91 +114,46 @@
                 </ul>
             </div>
         </div>
+        <!--主持人-->
         <div ms-visible="seltype==2">
-
             <div class="add-item add-widthall">
                 <div class="pr20">
-                    <button class="btn btn-info" ms-click="EditZCUser(0,'添加')">添加</button>
+                    <button class="btn btn-info" ms-click="EditDept(0,'添加')">添加参会单位</button>
                 </div>
             </div>
-
             <table class="table-con">
                 <tr>
                     <th>单位名称</th>
-                    <th>姓名</th>
-                    <th>联系电话</th>
-                    <th>职务</th>
-                    <th>房间号</th>
-                    <th>上车时间</th>
-                    <th>车牌号</th>
-                    <th>用餐时间</th>
-                    <th>用餐地点</th>
                     <th>序号</th>
-                    <th>服务人员</th>
                     <th>操作</th>
                 </tr>
-                <tr ms-repeat-el="ZCUserData">
-                    <td>{{el.OutDeptName}}</td>
+                <tr ms-repeat-el="DeptData">
                     <td>{{el.Name}}</td>
-                    <td>{{el.Mobphone}}</td>
-                    <td>{{el.Zhiwu}}</td>
-                    <td>{{el.RoomNumber}}</td>
-                    <td>{{el.BoardingTime}}</td>
-                    <td>{{el.CarNumber}}</td>
-                    <td>{{el.YCTIME}}</td>
-                    <td>{{el.YCLOCATION}}</td>
                     <td>{{el.DisplayOrder}}</td>
-                    <td>{{el.ServiceName}}</td>
                     <td>
-                        <a class="lk" ms-click="EditZCUser(el.ID,'编辑')">编辑</a>&nbsp;|
-                        <a class="lk" ms-click="DelZCUser(el,$event)">删除</a>
+                        <a class="lk" ms-click="EditDept(el.ID,'编辑')">编辑</a>&nbsp;|
+                        <a class="lk" ms-click="DelDept(el,$event)">删除</a>
                     </td>
                 </tr>
             </table>
+            <div class="add-item add-widthall" style="margin-top:10px;">
+                <div class="pr20">
+                    <button class="btn btn-info" onclick="EditUser(0,2)">添加主持人</button>
+                </div>
+            </div>
+            {{tempmodel.ZCUserStr|html}}
 
         </div>
+        <!--参会人-->
         <div ms-visible="seltype==3">
             <div class="add-item add-widthall">
                 <div class="pr20">
-                    <button class="btn btn-info" ms-click="EditOutUser(0,'添加')">添加</button>
+                    <button class="btn btn-info" onclick="EditUser(0,1)">添加</button>
                 </div>
             </div>
-
-            <table class="table-con">
-                <tr>
-                    <th>单位名称</th>
-                    <th>姓名</th>
-                    <th>联系电话</th>
-                    <th>职务</th>
-                    <th>房间号</th>
-                    <th>上车时间</th>
-                    <th>车牌号</th>
-                    <th>用餐时间</th>
-                    <th>用餐地点</th>
-                    <th>序号</th>
-                    <th>服务人员</th>
-                    <th>操作</th>
-                </tr>
-                <tr ms-repeat-el="OutUserData">
-                    <td>{{el.OutDeptName}}</td>
-                    <td>{{el.Name}}</td>
-                    <td>{{el.Mobphone}}</td>
-                    <td>{{el.Zhiwu}}</td>
-                    <td>{{el.RoomNumber}}</td>
-                    <td>{{el.BoardingTime}}</td>
-                    <td>{{el.CarNumber}}</td>
-                    <td>{{el.YCTIME}}</td>
-                    <td>{{el.YCLOCATION}}</td>
-                    <td>{{el.DisplayOrder}}</td>
-                    <td>{{el.ServiceName}}</td>
-                    <td>
-                        <a class="lk" ms-click="EditOutUser(el.ID,'编辑',1)">编辑</a>&nbsp;|
-                        <a class="lk" ms-click="DelOutUser(el,$event)">删除</a>
-                    </td>
-                </tr>
-            </table>
-
+            {{tempmodel.CYUserStr|html}}
         </div>
+        <!--会议内容-->
         <div ms-visible="seltype==4">
             <div class="fg-item"><span>会议须知</span><i></i></div>
             <div class="add-item add-widthall">
@@ -218,6 +174,7 @@
                 </div>
             </div>
         </div>
+        <!--出行安排-->
         <div ms-visible="seltype==5">
             <div class="fg-item"><span>出行安排</span><i></i></div>
             <div class="add-item add-widthall">
@@ -244,6 +201,7 @@
                 </div>
             </div>
         </div>
+        <!--住宿安排-->
         <div ms-visible="seltype==6">
             <div class="fg-item"><span>住宿服务</span><i></i></div>
             <div class="add-item add-widthall">
@@ -271,6 +229,7 @@
                 </div>
             </div>
         </div>
+        <!--用餐安排-->
         <div ms-visible="seltype==7">
             <div class="fg-item"><span>用餐安排</span><i></i></div>
             <div class="add-item add-widthall">
@@ -279,6 +238,7 @@
                 </div>
             </div>
         </div>
+        <!--服务人员-->
         <div ms-visible="seltype==8">
             <div class="fg-item"><span>服务人员</span><i></i></div>
             <div class="add-item add-widthall">
@@ -312,17 +272,20 @@
         ColumnData: [],
         name: "会议管理",
         seltype: 1,
-        CLData: [],
+        HYSData: [],
         ServiceData: [],
         OutUserData: [],
         ZCUserData: [],
+        DeptData: [],
+        ZCUserStr: "",
+        CYUserStr: "",
         TypeId: ComFunJS.getQueryString("typeId"),
         HYGLID: ComFunJS.getQueryString("ID"),//会议ID
         iswf: true,//是否属于流程表单
         inittemp: function (strId) {
             $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETKYHYSLIST', {}, function (resultData) {
                 if (resultData.ErrorMsg == "") {
-                    tempmodel.CLData = resultData.Result;
+                    tempmodel.HYSData = resultData.Result;
                     //if (resultData.Result.length > 0) {
                     //    if (tempmodel.TypeId) {
                     //        tempmodel.modelData.RoomID = tempmodel.TypeId;
@@ -339,6 +302,7 @@
                     if (resultData.ErrorMsg == "") {
                         tempmodel.modelData = resultData.Result[0];
                         tempmodel.GetServiceList(strId);
+                        tempmodel.GetDeptList(strId);
                         tempmodel.GetZCUserList(strId);
                         tempmodel.GetOutUserList(strId);
                         setTimeout(" ComFunJS.initForm()", 500);
@@ -400,106 +364,179 @@
                 })
             }
         },
-        EditOutUser: function (OutUserID, title) {
-            //type=1 参会人，=2主持人
-            ComFunJS.winbtnwin("/ViewV5/AppPage/HYGL/EDIT_OutUser.html?OutUserID=" + OutUserID + "&type=1&r=" + Math.random(), title + "参会人员", 750, 500, {}, function (layero, inx) {
-                var frameid = $("iframe", $(layero)).attr('id');
-                var outusernr = ComFunJS.isIE() ? window.frames[frameid].getOutUser() : window.frames[frameid].contentWindow.getOutUser();
-                var otmodel = JSON.parse(outusernr);
-                if (!(/^[0-9]*$/.test(otmodel.DisplayOrder))) {
-                    top.ComFunJS.winwarning("序号必须是数字");
-                    return;
-                }
-                if (outusernr) {
-                    $.post('/API/VIEWAPI.ashx?Action=HYGL_UPDATEOUTUSER&r=' + Math.random(), { P1: tempmodel.HYGLID, P2: outusernr, type: 1 }, function (resultData) {
-                        if (resultData.ErrorMsg == "") {
-                            layer.close(inx);
-                            tempmodel.GetOutUserList(tempmodel.HYGLID);
-                            top.ComFunJS.winsuccess("操作成功！！");
-                        }
-                        else {
-                            top.ComFunJS.winwarning(resultData.ErrorMsg);
-                        }
-                    })
-                }
-            })
-        },
-        DelOutUser: function (el, event) {
-            if (event) {
-                event.stopPropagation();
-            }
-            ComFunJS.winconfirm("确认要删除吗？", function () {
-                $.getJSON("/API/VIEWAPI.ashx?Action=HYGL_DELOUTUSER", { P1: el.ID }, function (resultData) {
-                    if (resultData.ErrorMsg == "") {
-                        tempmodel.OutUserData.remove(el);
-                        ComFunJS.winsuccess("操作成功");
-                    }
-                })
-            }, function () { })
-        },
         GetOutUserList: function (strId) {
             if (strId) {
                 $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETOUTUSERLISTBYHYGLID', { P1: strId, P2: 1 }, function (resultData) {
                     if (resultData.ErrorMsg == "") {
-                        if (resultData.Result.length > 0) {
-                            tempmodel.OutUserData = resultData.Result;
+                        if (resultData.Result.length >= 0) {
+                            //tempmodel.OutUserData = resultData.Result;
+                            tempmodel.CYUserStr = tempmodel.Convbranch(resultData.Result,1);
                         }
                     }
                 })
             }
-        },
-
-        EditZCUser: function (OutUserID, title) {
-            //type=1 参会人，=2主持人
-            ComFunJS.winbtnwin("/ViewV5/AppPage/HYGL/EDIT_OutUser.html?OutUserID=" + OutUserID + "&type=2&r=" + Math.random(), title + "主持人", 750, 500, {}, function (layero, inx) {
-                var frameid = $("iframe", $(layero)).attr('id');
-                var outusernr = ComFunJS.isIE() ? window.frames[frameid].getOutUser() : window.frames[frameid].contentWindow.getOutUser();
-                var otmodel = JSON.parse(outusernr);
-                if (!(/^[0-9]*$/.test(otmodel.DisplayOrder))) {
-                    top.ComFunJS.winwarning("序号必须是数字");
-                    return;
-                }
-                if (outusernr) {
-                    $.post('/API/VIEWAPI.ashx?Action=HYGL_UPDATEOUTUSER&r=' + Math.random(), { P1: tempmodel.HYGLID, P2: outusernr, type: 2 }, function (resultData) {
-                        if (resultData.ErrorMsg == "") {
-                            layer.close(inx);
-                            tempmodel.GetZCUserList(tempmodel.HYGLID);
-                            top.ComFunJS.winsuccess("操作成功！！");
-                        }
-                        else {
-                            top.ComFunJS.winwarning(resultData.ErrorMsg);
-                        }
-                    })
-                }
-            })
-        },
-        DelZCUser: function (el, event) {
-            if (event) {
-                event.stopPropagation();
-            }
-            ComFunJS.winconfirm("确认要删除吗？", function () {
-                $.getJSON("/API/VIEWAPI.ashx?Action=HYGL_DELOUTUSER", { P1: el.ID }, function (resultData) {
-                    if (resultData.ErrorMsg == "") {
-                        tempmodel.ZCUserData.remove(el);
-                        ComFunJS.winsuccess("操作成功");
-                    }
-                })
-            }, function () { })
         },
         GetZCUserList: function (strId) {
             if (strId) {
                 $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETOUTUSERLISTBYHYGLID', { P1: strId, P2: 2 }, function (resultData) {
                     if (resultData.ErrorMsg == "") {
-                        if (resultData.Result.length > 0) {
-                            tempmodel.ZCUserData = resultData.Result;
+                        if (resultData.Result.length >= 0) {
+                            //tempmodel.ZCUserData = resultData.Result;
+                            tempmodel.ZCUserStr = tempmodel.Convbranch(resultData.Result,2);
                         }
                     }
                 })
             }
         },
+        EditDept: function (DeptID, title) {
+            //type=1 参会人，=2主持人
+            ComFunJS.winbtnwin("/ViewV5/AppPage/HYGL/EDIT_Dept.html?DeptID=" + DeptID + "&r=" + Math.random(), title + "参会单位", 750, 500, {}, function (layero, inx) {
+                var frameid = $("iframe", $(layero)).attr('id');
+                var deptnr = ComFunJS.isIE() ? window.frames[frameid].getDept() : window.frames[frameid].contentWindow.getDept();
+                var otmodel = JSON.parse(deptnr);
+                if (!(/^[0-9]*$/.test(otmodel.DisplayOrder))) {
+                    top.ComFunJS.winwarning("序号必须是数字");
+                    return;
+                }
+                if (deptnr) {
+                    $.post('/API/VIEWAPI.ashx?Action=HYGL_UPDATEOUTUSERDEPT&r=' + Math.random(), { P1: tempmodel.HYGLID, P2: deptnr }, function (resultData) {
+                        if (resultData.ErrorMsg == "") {
+                            layer.close(inx);
+                            tempmodel.GetDeptList(tempmodel.HYGLID);
+                            top.ComFunJS.winsuccess("操作成功！！");
+                        }
+                        else {
+                            top.ComFunJS.winwarning(resultData.ErrorMsg);
+                        }
+                    })
+                }
+            })
+        },
+        GetDeptList: function (strId) {
+            if (strId) {
+                $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETOUTUSERDEPTLISTBYHYGLID', { P1: strId }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        if (resultData.Result.length > 0) {
+                            tempmodel.DeptData = resultData.Result;
+                        }
+                    }
+                })
+            }
+        },
+        DelDept: function (el, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            ComFunJS.winconfirm("确认要删除吗？", function () {
+                $.getJSON("/API/VIEWAPI.ashx?Action=HYGL_DELOUTUSERDEPT", { P1: el.ID }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        tempmodel.DeptData.remove(el);
+                        ComFunJS.winsuccess("操作成功");
+                    }
+                })
+            }, function () { })
+        },
+        Convbranch: function (users, type) { //type=1参会人，2主持人
+            var branchcodes = '';
+            var branchtmp = '<table class="table-con"><tr><th>单位名称</th><th>姓名</th><th>联系电话</th><th>职务</th><th>序号</th><th>服务人员</th><th>操作</th></tr>';
+            if (users) {
+                $(users).each(function (index, ele) {
+                    if (branchcodes.indexOf(ele.OutDept + ',') == -1) {
+                        var i = tempmodel.ConvNumber(ele.OutDept, users);
+                        branchtmp += '<tr><td rowspan="' + i + '">' + ele.OutDeptName + '</td>';
+                        branchtmp += tempmodel.Convuser(ele.OutDept, users, type);
+                        branchtmp += '</tr>';
+                        branchcodes += ele.OutDept + ',';
+                    }
+                });
+            }
+            branchtmp += '</table>';
+            return branchtmp;
+        },
+        Convuser: function (branchcode, users, type) {
+            var username = '';
+            var i = 0;
+            if (users) {
+                $(users).each(function (index, ele) {
+                    if (ele.OutDept == branchcode) {
+                        if (i > 0) {
+                            username += '<tr>';
+                        }
+                        username += '<td>' + ele.Name + '</td>';
+                        username += '<td>' + ele.Mobphone + '</td>';
+                        username += '<td>' + ele.Zhiwu + '</td>';
+                        username += '<td>' + ele.DisplayOrder + '</td>';
+                        username += '<td>' + ele.ServiceName + '</td>';
+                        username += '<td><a class="lk" onclick="EditUser(' + ele.ID + ',' + type + ')">编辑</a>&nbsp;|&nbsp;<a class="lk" onclick="DelUser(' + ele.ID + ',' + type + ')"> 删除</a></td>';
+                        if (i > 0) {
+                            username += '</tr>';
+                        }
+                        i++;
+                    }
+                });
+            }
+            return username;
+        },
+        ConvNumber: function (branchcode, users) {
+            var i = 0;
+            if (users) {
+                $(users).each(function (index, ele) {
+                    if (ele.OutDept == branchcode) {
+                        i++;
+                    }
+                });
+            }
+            return i;
+        },
     });
 
     function GetHYGLID() {
         return tempmodel.HYGLID;
+    }
+    function EditUser(OutUserID, type) {
+        //type=1 参会人，=2主持人
+        var title = '参会人';
+        if (type == 2) {
+            title = '主持人';
+        }
+        ComFunJS.winbtnwin("/ViewV5/AppPage/HYGL/EDIT_OutUser.html?OutUserID=" + OutUserID + "&type=2&r=" + Math.random(), "编辑" + title, 750, 500, {}, function (layero, inx) {
+            var frameid = $("iframe", $(layero)).attr('id');
+            var outusernr = ComFunJS.isIE() ? window.frames[frameid].getOutUser() : window.frames[frameid].contentWindow.getOutUser();
+            var otmodel = JSON.parse(outusernr);
+            if (!(/^[0-9]*$/.test(otmodel.DisplayOrder))) {
+                top.ComFunJS.winwarning("序号必须是数字");
+                return;
+            }
+            if (outusernr) {
+                $.post('/API/VIEWAPI.ashx?Action=HYGL_UPDATEOUTUSER&r=' + Math.random(), { P1: tempmodel.HYGLID, P2: outusernr, type: type }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        layer.close(inx);
+                        if (type == 1)
+                            tempmodel.GetOutUserList(tempmodel.HYGLID);
+                        else if (type == 2)
+                            tempmodel.GetZCUserList(tempmodel.HYGLID);
+                        top.ComFunJS.winsuccess("操作成功！！");
+                    }
+                    else {
+                        top.ComFunJS.winwarning(resultData.ErrorMsg);
+                    }
+                })
+            }
+        })
+    }
+    function DelUser(OutUserID, type) {
+        ComFunJS.winconfirm("确认要删除吗？", function () {
+            $.getJSON("/API/VIEWAPI.ashx?Action=HYGL_DELOUTUSER", { P1: OutUserID }, function (resultData) {
+                if (resultData.ErrorMsg == "") {
+                   
+                    if (type == 1)
+                        tempmodel.GetOutUserList(tempmodel.HYGLID);
+                    else if (type == 2)
+                        tempmodel.GetZCUserList(tempmodel.HYGLID);
+                    //tempmodel.ZCUserData.remove(el);
+                    ComFunJS.winsuccess("操作成功");
+                }
+            })
+        }, function () { })
     }
 </script>

@@ -921,7 +921,7 @@ namespace QJY.API
             {
                 strWhere += " and u.type=" + type;
             }
-            msg.Result = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.*, s.Name as ServiceName from dbo.SZHL_HYGL_OUTUSER u left join  SZHL_HYGL_SERVICE s on u.ServiceUser=s.ID where " + strWhere + " order by u.type desc, u.OutDeptName, u.DisplayOrder, u.Name, u.CRDate desc");
+            msg.Result = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.*, s.Name as ServiceName, d.Name as OutDeptName from dbo.SZHL_HYGL_OUTUSER u left join  SZHL_HYGL_SERVICE s on u.ServiceUser=s.ID left join SZHL_HYGL_OUTUSER_DEPT d on u.OutDept=d.ID where " + strWhere + " order by d.DisplayOrder, u.DisplayOrder, u.Name");
         }
 
         /// <summary>
@@ -947,10 +947,14 @@ namespace QJY.API
                 msg.ErrorMsg = "电话不能为空！";
                 return;
             }
-            if (string.IsNullOrWhiteSpace(HYOutuser.OutDeptName))
+            if (HYOutuser.OutDept <= 0)
             {
                 msg.ErrorMsg = "单位不能为空！";
                 return;
+            }
+            if (HYOutuser.DisplayOrder == null)
+            {
+                HYOutuser.DisplayOrder = 0;
             }
             if (HYOutuser.ID == 0)
             {
@@ -991,14 +995,13 @@ namespace QJY.API
             int Id = int.Parse(P1);
 
             string strWhere = " u.HYGLID=" + Id + " and u.Mobphone='" + P2 + "'";
-            string colNme = @"u.*,s.Name as ServiceUserName, s.Mobphone as ServiceUserMobphone ";
-            string tableName = string.Format(@" SZHL_HYGL_OUTUSER u left join SZHL_HYGL_Service s on u.ServiceUser=s.ID ");
+            string colNme = @"u.*, s.Name as ServiceUserName, s.Mobphone as ServiceUserMobphone, d.Name as OutDeptName ";
+            string tableName = string.Format(@" SZHL_HYGL_OUTUSER u left join SZHL_HYGL_Service s on u.ServiceUser=s.ID left join SZHL_HYGL_OUTUSER_DEPT d on u.OutDept=d.ID");
 
             string strSql = string.Format("Select {0}  From {1} where {2} ", colNme, tableName, strWhere);
             DataTable dt = new SZHL_HYGL_OUTUSERB().GetDTByCommand(strSql);
             msg.Result = dt;
         }
-
         /// <summary>
         /// 删除外部参会人
         /// </summary>
@@ -1009,6 +1012,75 @@ namespace QJY.API
             new SZHL_HYGL_OUTUSERB().Delete(model);
         }
 
+        /// <summary>
+        /// 会议的参会单位列表
+        /// </summary>
+        public void GETOUTUSERDEPTLISTBYHYGLID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            msg.Result = new SZHL_HYGL_OUTUSER_DEPTB().GetDTByCommand("select * from dbo.SZHL_HYGL_OUTUSER_DEPT where HYGLID=" + Id + " order by DisplayOrder ");
+        }
+
+        /// <summary>
+        /// 参会单位实体
+        /// </summary>
+        public void GETOUTUSERDEPTMODEL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            string strWhere = " ID=" + Id;
+            string colNme = @"* ";
+            string tableName = string.Format(@" SZHL_HYGL_OUTUSER_DEPT ");
+
+            string strSql = string.Format("Select {0}  From {1} where {2} ", colNme, tableName, strWhere);
+            DataTable dt = new SZHL_HYGL_OUTUSER_DEPTB().GetDTByCommand(strSql);
+            msg.Result = dt;
+        }
+
+        /// <summary>
+        /// 新加、修改参会单位
+        /// </summary>
+        public void UPDATEOUTUSERDEPT(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int HYGLId = int.Parse(P1);
+            SZHL_HYGL_OUTUSER_DEPT HYDept = JsonConvert.DeserializeObject<SZHL_HYGL_OUTUSER_DEPT>(P2);
+            if (HYGLId <= 0)
+            {
+                msg.ErrorMsg = "会议不存在！";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(HYDept.Name))
+            {
+                msg.ErrorMsg = "名称不能为空！";
+                return;
+            }
+            if (HYDept.DisplayOrder == null)
+            {
+                HYDept.DisplayOrder = 0;
+            }
+            if (HYDept.ID == 0)
+            {
+                HYDept.HYGLID = HYGLId;
+                HYDept.CRDate = DateTime.Now;
+                HYDept.CRUser = UserInfo.User.UserName;
+                HYDept.ComId = UserInfo.User.ComId.Value;
+                new SZHL_HYGL_OUTUSER_DEPTB().Insert(HYDept);
+            }
+            else
+            {
+                new SZHL_HYGL_OUTUSER_DEPTB().Update(HYDept);
+            }
+            msg.Result = HYDept;
+        }
+
+        /// <summary>
+        /// 删除单位
+        /// </summary>
+        public void DELOUTUSERDEPT(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            SZHL_HYGL_OUTUSER_DEPT model = new SZHL_HYGL_OUTUSER_DEPTB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
+            new SZHL_HYGL_OUTUSER_DEPTB().Delete(model);
+        }
         /// <summary>
         /// 保存接送机信息
         /// </summary>

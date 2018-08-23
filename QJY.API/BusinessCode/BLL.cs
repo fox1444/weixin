@@ -356,6 +356,7 @@ namespace QJY.API
     public class SZHL_TSSQB : BaseEFDao<SZHL_TSSQ>{ }
     public class SZHL_HYGLB : BaseEFDao<SZHL_HYGL>{ }
     public class SZHL_HYGL_OUTUSERB : BaseEFDao<SZHL_HYGL_OUTUSER> { }
+    public class SZHL_HYGL_OUTUSER_DEPTB : BaseEFDao<SZHL_HYGL_OUTUSER_DEPT> { }
     public class SZHL_HYGL_SERVICEB : BaseEFDao<SZHL_HYGL_SERVICE> { }
     public class APPConfigB : BaseEFDao<APPConfig>{ }
     public class WX_UserB : BaseEFDao<WX_User>{ }

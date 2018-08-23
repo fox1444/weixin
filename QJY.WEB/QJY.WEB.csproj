@@ -194,6 +194,7 @@
     <Content Include="ToolS\YZMCode.aspx" />
     <Content Include="ViewV5\AppPage\FSGL\LSXXLIST.html" />
     <Content Include="ViewV5\AppPage\HYGL\EDIT_OUTUSER.html" />
+    <Content Include="ViewV5\AppPage\HYGL\EDIT_DEPT.html" />
     <Content Include="ViewV5\AppPage\HYGL\EDIT_SERVICE.html" />
     <Content Include="ViewV5\AppPage\HYGL\HYGL.html" />
     <Content Include="ViewV5\AppPage\HYGL\HYGLINDEX.html" />

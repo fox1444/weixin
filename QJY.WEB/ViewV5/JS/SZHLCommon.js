@@ -1438,7 +1438,7 @@
         { "ID": "10", "TypeName": "飞机" },
         { "ID": "20", "TypeName": "火车" },
         { "ID": "30", "TypeName": "汽车" },
-    ], 
+    ]   
 });
 
 $(function () {

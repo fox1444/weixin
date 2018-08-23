@@ -42,7 +42,10 @@
                 <li class="add-item add-width fl-left">
                     <label class="add-item-label"><i>*</i>单位名称</label>
                     <div class="add-ic">
-                        <input type="text" class="form-control szhl_require" ms-duplex="modelData.OutDeptName" />
+                        <!--<input type="text" class="form-control szhl_require" ms-duplex="modelData.OutDeptName" />-->
+                        <select name="conDept" id="conDept" ms-duplex="modelData.OutDept" class="form-control szhl_require">
+                            <option ms-repeat-item="DeptData" ms-attr-value="item.ID" ms-attr-selected="item.ID==modelData.OutDept?'selected':''">{{item.Name}}</option>
+                        </select>
                     </div>
                 </li>
                 <li class="add-item add-width fl-right">
@@ -60,7 +63,7 @@
                 <li class="add-item add-width fl-right">
                     <label class="add-item-label">服务人员</label>
                     <div class="add-ic">
-                        <select name="conType" id="conType" ms-duplex="modelData.ServiceUser" class="form-control szhl_require">
+                        <select name="conType" id="conType" ms-duplex="modelData.ServiceUser" class="form-control">
                             <option ms-repeat-item="ServiceData" ms-attr-value="item.ID" ms-attr-selected="item.ID==modelData.ServiceUser?'selected':''">{{item.Name}}</option>
                         </select>
                     </div>
@@ -223,7 +226,8 @@
             OutUserID: ComFunJS.getQueryString("OutUserID", 0), //人员Id
             HYGLID: window.parent.GetHYGLID(),
             ServiceData: [],
-            modelData: { "ComId": "0", "ID": "0", "Name": "", "Mobphone": "", "HYGLID": window.parent.GetHYGLID(), "Type": 0, "Zhiwu": "", "DisplayOrder": 0, "OutDeptName": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "Comment": "", "CRUser": ComFunJS.getnowuser(), "CRDate": ComFunJS.getnowdate('yyyy-mm-dd hh:mm') },
+            DeptData:[],
+            modelData: { "ComId": "0", "ID": "0", "Name": "", "Mobphone": "", "HYGLID": window.parent.GetHYGLID(), "Type": 0, "Zhiwu": "", "DisplayOrder": 0, "OutDept": 0, "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "Comment": "", "CRUser": ComFunJS.getnowuser(), "CRDate": ComFunJS.getnowdate('yyyy-mm-dd hh:mm') },
             GetModelData: function () {
                 if (model.OutUserID) {
                     //编辑加载数据
@@ -240,7 +244,13 @@
                                     }
                                 }
                             });
-
+                            $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETOUTUSERDEPTLISTBYHYGLID', { P1: model.HYGLID }, function (r) {
+                                if (r.ErrorMsg == "") {
+                                    if (r.Result.length > 0) {
+                                        model.DeptData = r.Result;
+                                    }
+                                }
+                            });
                             setTimeout(" ComFunJS.initForm()", 500);
                         }
                     })

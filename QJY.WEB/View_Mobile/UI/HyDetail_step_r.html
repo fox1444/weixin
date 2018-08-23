@@ -534,7 +534,7 @@
                 }
             },//初始化
             LoadAllUser: function () {
-                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERLISTBYHYGLID&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: 1 }, function (r) {
+                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERLISTBYHYGLID&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: 0 }, function (r) {
                     if (r.ErrorMsg == "") {
                         tempmodel.CYUserStr = ComFunJS.convusers_branch(r.Result);
                     }
