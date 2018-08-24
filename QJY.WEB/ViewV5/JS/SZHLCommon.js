@@ -462,10 +462,6 @@
             len = 40;
             str = ComFunJS.convstr(text, 18);
             $("#large-link").remove();
-            //$('#' + id).after('&nbsp;&nbsp;<a id="large-link">点击查看小图</a>');
-            //$('#large-link').click(function () {
-            //    ComFunJS.DrawEWMcancas(id, imgurl, text);
-            //});
         }
         else if (size == 'large') {
             width = 600;
@@ -473,10 +469,6 @@
             len = 50;
             str = ComFunJS.convstr(text, 22);
             $("#large-link").remove();
-            //$('#' + id).after('&nbsp;&nbsp;<a id="large-link">点击查看小图</a>');
-            //$('#large-link').click(function () {
-            //    ComFunJS.DrawEWMcancas(id, imgurl, text);
-            //});
         }
         else {
             $("#large-link").remove();
@@ -488,7 +480,6 @@
                 ComFunJS.setCookie('ewm_imgurl', imgurl);
                 ComFunJS.setCookie('ewm_text', text);
                 window.open("/ViewV5/ewm.html");
-                //ComFunJS.DrawEWMcancas(id, imgurl, text, 'large');
             });
         }
 
@@ -519,8 +510,63 @@
             ctx.fillText(str, width / 2, (height + len / 2));
             //ctx.drawImage(this, 0, 0,1024,768);//改变图片的大小到1024*768
         }
-    },//绘制有文字的二维码
+    },//外链有文字的二维码，现已不用
+    DrawQrcode: function (id, url, content, size, title) {
+        var width = 200;
+        var height = 200;
+        var imgwidth = 100;
+        var imgheight = 30;
+        var len = 30;
+        var str = ComFunJS.convstr(content, 12);
 
+        if (size == 'medium') {
+            width = 400;
+            height = 400;
+            imgwidth = 200;
+            imgheight = 60;
+            len = 40;
+            str = ComFunJS.convstr(content, 18);
+            $("#large-link").remove();
+        }
+        else if (size == 'large') {
+            width = 600;
+            height = 600;
+            imgwidth = 300;
+            imgheight = 90;
+            len = 50;
+            str = ComFunJS.convstr(content, 22);
+            $("#large-link").remove();
+        }
+        else {
+            $("#large-link").remove();
+            if (!title || title == '') {
+                title = "点击查看高清大图";
+            }
+            $('#' + id).after("<a id='large-link'>" + title + "</a>");
+            $('#large-link').click(function () {
+                ComFunJS.setCookie('ewm_url', url);
+                ComFunJS.setCookie('ewm_text', content);
+                window.open("/ViewV5/ewm.html");
+            });
+        }
+        $('#' + id + ' canvas').css("height", (height + len - 5) + 'px');
+        $('#' + id).css("width", width + 16 + 'px');
+        $('#' + id).css("border", "solid 1px #ccc");
+        $('#' + id).css("padding", "7px 7px 2px 7px");
+        $("#" + id).qrcode({
+            render: "canvas",
+            text: url,                //扫描二维码后显示的内容,可以直接填一个网址，扫描二维码后自动跳向该链接
+            width: width,               //二维码的宽度
+            height: height,              //二维码的高度
+            background: "#ffffff",    //二维码的后景色
+            foreground: "#007457",    //二维码的前景色
+            src: ComFunJS.yuming + "/View_Mobile/images/tobacco-logo-icon.png",   //logo地址
+            imgWidth: imgwidth,     //logo宽度
+            imgHeight: imgheight,     //logo高度
+            content: str,      //文字说明
+            len: len            //文字高度
+        });
+    },//绘制有文字的二维码新
     convertuser: function (user) {
         var returnmsg = "";
         var arruser = user.split(",");
@@ -1438,7 +1484,7 @@
         { "ID": "10", "TypeName": "飞机" },
         { "ID": "20", "TypeName": "火车" },
         { "ID": "30", "TypeName": "汽车" },
-    ]   
+    ]
 });
 
 $(function () {

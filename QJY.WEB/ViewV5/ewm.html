@@ -10,11 +10,7 @@
 </head>
 <body style="background-color: #F8F8F8; height: 100%;" ms-controller="EWM">
     <div style="text-align:center; margin:0 auto;">
-        <canvas id="cvs" class="fj clearfix mt10">
-            当前浏览器不支持canvas
-            <!-- 如果浏览器支持canvas，则canvas标签里的内容不会显示出来 -->
-        </canvas>
-
+        <div id="qrcode" style="margin:10px auto;"></div>
         <div class="btn-print">
             <p>
                 <br/>
@@ -26,14 +22,17 @@
     </div>
     <script src="/ViewV5/JS/jquery-1.11.2.min.js"></script>
     <script src="/ViewV5/JS/avalon1.47.js"></script>
+    <script src="/ViewV5/JS/Utf.js"></script>
+    <script src="/ViewV5/JS/jquery.qrcode.min.js"></script>
     <script src="/ViewV5/JS/SZHLCommon.js?jsver=20160915"></script>
     <script type="text/javascript">
         var model = avalon.define({
             $id: "EWM",
             GetEWM: function (size) {
-                var imgurl = ComFunJS.getCookie('ewm_imgurl');
+                var url = ComFunJS.getCookie('ewm_url');
                 var text = ComFunJS.getCookie('ewm_text');
-                ComFunJS.DrawEWMcancas('cvs', imgurl, text, size);
+                $('#qrcode').html('');
+                ComFunJS.DrawQrcode("qrcode", url, text, size);
             },
             Print: function () {
                 $(".btn-print").hide();

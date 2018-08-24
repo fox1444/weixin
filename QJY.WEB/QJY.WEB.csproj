@@ -231,6 +231,7 @@
     <Content Include="ViewV5\JS\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="ViewV5\JS\Utf.js" />
     <Content Include="ViewV5\JS\WFJS.min.js">
       <DependentUpon>WFJS.js</DependentUpon>
     </Content>
