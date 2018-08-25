@@ -167,7 +167,7 @@
         .room-block-hold {
             overflow: scroll;
             width: 100%;
-            height: 600px;
+            height: 490px;
         }
 
         .chairmen-wrapper {
@@ -228,11 +228,11 @@
                 <span>参会人员</span>
                 <!--<input type="button" value="保存自定义分组" class="btn btn-sm btn-success pull-right" ms-if="SelUsers.size()>0" data-toggle="modal" data-target="#UserGroupModal" />-->
             </div>
-            <div class="panel-body" style="padding: 0; height: 560px; overflow: auto; overflow-y:scroll;">
-                <div ms-repeat-seluser="SelUsers" style="min-width: 80px">
+            <div class="panel-body" style="padding: 0; height: 450px; overflow: auto; overflow-y:scroll;">
+                <div ms-repeat-seluser="SelUsers" style=" min-width: 80px">
                     <div class="pCard">
                         <!--<span class="badge" ms-click="DelSelUser(seluser)">X</span>-->
-                        <div class="pName" style="padding-top: 5px" ms-title="{{seluser.OutDeptName+seluser.Name}}">
+                        <div class="pName" style="padding-top: 5px" ms-title="{{seluser.OutDeptName+'-'+seluser.Zhiwu+'-'+seluser.Name}}">
                             {{seluser.Name}}
                         </div>
                         <input class="pDept" type="hidden" ms-duplex="seluser.OutDeptName" />

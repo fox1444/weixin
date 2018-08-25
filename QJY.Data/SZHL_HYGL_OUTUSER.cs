@@ -19,7 +19,7 @@ namespace QJY.Data
         public string Name { get; set; }
         public Nullable<int> HYGLID { get; set; }
         public Nullable<int> Type { get; set; }
-        public string OutDeptName { get; set; }
+        public Nullable<int> OutDept { get; set; }
         public string Zhiwu { get; set; }
         public string Mobphone { get; set; }
         public Nullable<int> DisplayOrder { get; set; }

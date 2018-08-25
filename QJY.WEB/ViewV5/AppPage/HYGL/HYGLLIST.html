@@ -15,12 +15,16 @@
                 <li ms-click="SelectType('4')"><span>我已审核的</span></li>-->
             </ul>
         </div>
-        <div class="oh">
+        <div class="oh" style="margin-bottom:15px;">
             <h5 class="pull-left tr">会议室：</h5>
-            <ul class="tab-type ft14">
+            <select name="conGWs" id="conGWs" ms-change="SelectHYS(this.value)" class="narrow-select">
+                <option value="">所有</option>
+                <option ms-repeat-item="TypeData" ms-attr-value="item.ID">{{item.Name}}</option>
+            </select>
+            <!--<ul class="tab-type ft14">
                 <li ms-click="SelectHYS('')"><span class="active">全部</span></li>
                 <li ms-repeat-el="TypeData" ms-click="SelectHYS(el.ID)"><span>{{el.Name}}</span></li>
-            </ul>
+            </ul>-->
         </div>
 
         <!-- 搜索 -->

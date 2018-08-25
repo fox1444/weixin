@@ -32,18 +32,13 @@
                     <span class="item-tit">{{el.ColText}}</span>
                     <div class="item-con ">{{FnFormat(modelData[el.ColName],el)|html}}</div>
                 </div>
-                <!--<div class="detail-item">
-                    <span class="item-tit">二维码</span>
-                    <div class="fj clearfix mt10">
-                        <img ms-attr-src="{{model.EWMcode}}" class="EWM-medium" align="left" style=" float:left; vertical-align:top; clear:both;" />
-                    </div>
-                </div>-->
+              
                 <div class="detail-item">
                     <span class="item-tit">二维码</span>
-                    <canvas id="cvs" class="fj clearfix mt10">
+                    <div id="qrcode"></div>
+                    <!--<canvas id="cvs" class="fj clearfix mt10">
                         当前浏览器不支持canvas
-                        <!-- 如果浏览器支持canvas，则canvas标签里的内容不会显示出来 -->
-                    </canvas>
+                    </canvas>-->
                 </div>
                 <div class="detail-item" ms-if="tpData.size()!=0">
                     <span class="item-tit">附件</span>
@@ -121,6 +116,8 @@
     </div>
 
     <script src="/ViewV5/JS/jquery-1.11.2.min.js"></script>
+    <script src="/ViewV5/JS/Utf.js"></script>
+    <script src="/ViewV5/JS/jquery.qrcode.min.js"></script>
     <script src="/ViewV5/JS/layer/layer.js"></script>
     <script src="/ViewV5/CSS/bootstrap3.3.5/js/bootstrap.js"></script>
     <script src="/ViewV5/JS/avalon1.47.js"></script>
@@ -162,8 +159,12 @@
                                 model.tpData = resultData.Result1;
                                 model.plData = resultData.Result2;
                                 model.plStatus = resultData.Result3;
-                                model.EWMcode = "http://qr.liantu.com/api.php?text=" + ComFunJS.yuming + "/View_Mobile/UI/HyDetail_index_r.html?id=" + model.modelData.ID + "&bg=ffffff&fg=007457&w=600&logo=" + ComFunJS.yuming + "/View_Mobile/images/tobacco-logo-icon.png";
-                                ComFunJS.DrawEWMcancas('cvs', model.EWMcode, model.modelData.Title);
+
+                                var url = ComFunJS.yuming + "/View_Mobile/UI/HyDetail_index_r.html?id=" + model.modelData.ID;
+                                ComFunJS.DrawQrcode("qrcode", url, model.modelData.Title,"icon");
+                             
+                                //model.EWMcode = "http://qr.liantu.com/api.php?text=" + ComFunJS.yuming + "/View_Mobile/UI/HyDetail_index_r.html?id=" + model.modelData.ID + "&bg=ffffff&fg=007457&w=600&logo=" + ComFunJS.yuming + "/View_Mobile/images/tobacco-logo-icon.png";
+                                //ComFunJS.DrawEWMcancas('cvs', model.EWMcode, model.modelData.Title);
                             }
                             //setTimeout(" ComFunJS.initForm()", 500)
                         }

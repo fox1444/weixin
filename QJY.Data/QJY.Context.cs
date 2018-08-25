@@ -114,7 +114,8 @@ namespace QJY.Data
         public virtual DbSet<SZHL_ZCGL_LifeCycle> SZHL_ZCGL_LifeCycle { get; set; }
         public virtual DbSet<SZHL_ZCGL> SZHL_ZCGL { get; set; }
         public virtual DbSet<SZHL_HYGL_SERVICE> SZHL_HYGL_SERVICE { get; set; }
-        public virtual DbSet<SZHL_HYGL_OUTUSER> SZHL_HYGL_OUTUSER { get; set; }
         public virtual DbSet<SZHL_HYGL> SZHL_HYGL { get; set; }
+        public virtual DbSet<SZHL_HYGL_OUTUSER> SZHL_HYGL_OUTUSER { get; set; }
+        public virtual DbSet<SZHL_HYGL_OUTUSER_DEPT> SZHL_HYGL_OUTUSER_DEPT { get; set; }
     }
 }

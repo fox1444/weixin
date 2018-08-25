@@ -157,13 +157,19 @@
                             if (pn && pn != null && pn != undefined && pn != '') {
                                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
                                     if (r.ErrorMsg == "") {
-                                        tempmodel.currentuser = r.Result[0];
-                                        $('.input_block').hide();
-                                        $('.default_block').show();
-                                        setTimeout($('#suMob').attr('href', 'tel:' + tempmodel.currentuser.ServiceUserMobphone),1000);
+                                        if (r.Result.length > 0) {
+                                            tempmodel.currentuser = r.Result[0];
+                                            $('.input_block').hide();
+                                            $('.default_block').show();
+                                            setTimeout($('#suMob').attr('href', 'tel:' + tempmodel.currentuser.ServiceUserMobphone), 1000);
+                                        }
+                                        else
+                                        {
+                                            $('.input_block').show();
+                                            $('.default_block').hide();
+                                        }
                                     }
                                 });
-
                             }
                             else {
                                 $('.input_block').show();
@@ -178,7 +184,7 @@
                             //        tempmodel.isjl = "1";
                             //    }
                             //}
-                            //setTimeout(" ComFunJS.initForm()", 500)
+                            //setTimeout(" ComFunJS.initForm()", 500) 
                         }
                     })
                 }

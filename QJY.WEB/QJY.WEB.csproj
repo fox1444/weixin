@@ -194,6 +194,7 @@
     <Content Include="ToolS\YZMCode.aspx" />
     <Content Include="ViewV5\AppPage\FSGL\LSXXLIST.html" />
     <Content Include="ViewV5\AppPage\HYGL\EDIT_OUTUSER.html" />
+    <Content Include="ViewV5\AppPage\HYGL\EDIT_DEPT.html" />
     <Content Include="ViewV5\AppPage\HYGL\EDIT_SERVICE.html" />
     <Content Include="ViewV5\AppPage\HYGL\HYGL.html" />
     <Content Include="ViewV5\AppPage\HYGL\HYGLINDEX.html" />
@@ -230,6 +231,7 @@
     <Content Include="ViewV5\JS\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="ViewV5\JS\Utf.js" />
     <Content Include="ViewV5\JS\WFJS.min.js">
       <DependentUpon>WFJS.js</DependentUpon>
     </Content>
