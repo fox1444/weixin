@@ -206,14 +206,14 @@
             <div class="fg-item"><span>住宿服务</span><i></i></div>
             <div class="add-item add-widthall">
                 <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hysit" umheight="280" ms-duplex="modelData.ZSAP"></textarea>
+                    <textarea class="szhl_UEEDIT" id="hysit" umheight="180" ms-duplex="modelData.ZSAP"></textarea>
                 </div>
             </div>
             <div class="fg-item"><span>酒店</span><i></i></div>
             <div class="add-item add-widthall">
                 <label class="add-item-label">所在地</label>
                 <div class="add-ic">
-                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.HotelRegion" />
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.HotelRegion" placeholder="如北京、上海、成都、西昌等等" />
                 </div>
             </div>
             <div class="add-item add-widthall">
@@ -231,10 +231,22 @@
         </div>
         <!--用餐安排-->
         <div ms-visible="seltype==7">
-            <div class="fg-item"><span>用餐安排</span><i></i></div>
+            <!--<div class="fg-item"><span>用餐安排</span><i></i></div>
             <div class="add-item add-widthall">
                 <div class="add-ic">
                     <textarea class="szhl_UEEDIT" id="hyyongcan" umheight="280" ms-duplex="modelData.YCQK"></textarea>
+                </div>
+            </div>-->
+            <div class="fg-item"><span>用餐时间</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyyctime" umheight="120" ms-duplex="modelData.YCTIME"></textarea>
+                </div>
+            </div>
+            <div class="add-item add-widthall">
+                <label class="add-item-label">用餐地点</label>
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyyclocation" umheight="120" ms-duplex="modelData.YCLOCATION"></textarea>
                 </div>
             </div>
         </div>
@@ -313,7 +325,7 @@
                 ComFunJS.initForm();
             }
         },//初始化
-        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "BoardingTime": "", "CarNumber": "" },
+        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "BoardingTime": "", "CarNumber": "", "YCQK": "", "YCTIME": "","YCLOCATION":"" },
         SaveData: function (callback) {
             $.post("/API/VIEWAPI.ashx?ACTION=HYGL_ADDHYGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
                 return callback.call(this, result);
@@ -370,7 +382,7 @@
                     if (resultData.ErrorMsg == "") {
                         if (resultData.Result.length >= 0) {
                             //tempmodel.OutUserData = resultData.Result;
-                            tempmodel.CYUserStr = tempmodel.Convbranch(resultData.Result,1);
+                            tempmodel.CYUserStr = tempmodel.Convbranch(resultData.Result, 1);
                         }
                     }
                 })
@@ -382,7 +394,7 @@
                     if (resultData.ErrorMsg == "") {
                         if (resultData.Result.length >= 0) {
                             //tempmodel.ZCUserData = resultData.Result;
-                            tempmodel.ZCUserStr = tempmodel.Convbranch(resultData.Result,2);
+                            tempmodel.ZCUserStr = tempmodel.Convbranch(resultData.Result, 2);
                         }
                     }
                 })
@@ -528,7 +540,7 @@
         ComFunJS.winconfirm("确认要删除吗？", function () {
             $.getJSON("/API/VIEWAPI.ashx?Action=HYGL_DELOUTUSER", { P1: OutUserID }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
-                   
+
                     if (type == 1)
                         tempmodel.GetOutUserList(tempmodel.HYGLID);
                     else if (type == 2)

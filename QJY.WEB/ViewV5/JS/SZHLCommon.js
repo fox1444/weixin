@@ -517,7 +517,7 @@
         var imgwidth = 100;
         var imgheight = 30;
         var len = 30;
-        var str = ComFunJS.convstr(content, 12);
+        var str = ComFunJS.convstr(content, 11);
 
         if (size == 'medium') {
             width = 400;
@@ -525,7 +525,7 @@
             imgwidth = 200;
             imgheight = 60;
             len = 40;
-            str = ComFunJS.convstr(content, 18);
+            str = ComFunJS.convstr(content, 17);
             $("#large-link").remove();
         }
         else if (size == 'large') {
@@ -533,8 +533,8 @@
             height = 600;
             imgwidth = 300;
             imgheight = 90;
-            len = 50;
-            str = ComFunJS.convstr(content, 22);
+            len = 60;
+            str = ComFunJS.convstr(content, 17);
             $("#large-link").remove();
         }
         else {
@@ -550,9 +550,7 @@
             });
         }
         $('#' + id + ' canvas').css("height", (height + len - 5) + 'px');
-        $('#' + id).css("width", width + 16 + 'px');
-        $('#' + id).css("border", "solid 1px #ccc");
-        $('#' + id).css("padding", "7px 7px 2px 7px");
+        $('#' + id).css("width", width + 16 + "px").css("border", "solid 1px #ccc").css("padding", "7px 7px 2px 7px").css("background","#fff");
         $("#" + id).qrcode({
             render: "canvas",
             text: url,                //扫描二维码后显示的内容,可以直接填一个网址，扫描二维码后自动跳向该链接
