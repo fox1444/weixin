@@ -12,13 +12,13 @@
     <link href="/View_Mobile/CSS/szhlextend.css?ver=20160904" rel="stylesheet" />-->
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
 </head>
-<body ms-controller="Hydetail">
+<body ms-controller="Hydetail" class="">
     <div class="index-html">
     </div>
     <div class="hy_wrap" id="hy_wrap">
-        <div class="invitation">
+        <!--<div class="invitation">
             INVITATION
-        </div>
+        </div>-->
         <div class="logo">
         </div>
         <div class="title">
@@ -32,18 +32,18 @@
         </div>
         <div class="default_block">
             <div class="infomation">
-                尊敬的<span style="color:#ff4700">{{currentuser.Name}}</span>，欢迎您参加本次会议
+                尊敬的<span style="color:red">{{currentuser.Name}}</span>，欢迎您参加本次会议
             </div>
-            <div class="infomation">
+            <div class="infomation" ms-if="currentuser.ServiceUserName!=''">
                 您的联络员是<span style="color:green">{{currentuser.ServiceUserName}}</span>，
-                联络电话是<a id="suMob" style="text-decoration:none;">{{currentuser.ServiceUserMobphone}}</a>
+                联络电话是{{ComFunJS.SetContactPhone(currentuser.ServiceUserMobphone)|html}}
             </div>
-            <div class="gobutton">
+            <div class="gobutton gobutton_r">
                 <div class="fl-left">
-                    <span ms-on-click="re_input()" style="float:right;">重新输入</span>
+                    <span ms-on-click="re_input()" style="float:right; margin-bottom:30px;">重新输入</span>
                 </div>
                 <div class="fl-right">
-                    <span ms-on-click="view_detail()" style="float:left;">进入会议</span>
+                    <span ms-on-click="view_detail()" style="float:left;margin-bottom:30px;">进入会议</span>
                 </div>
             </div>
         </div>
@@ -73,7 +73,9 @@
             tpData: [],
             userpl: 0,
             usertype: "",
-            currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "DisplayOrder": 0, "Zhiwu": "" },
+            modelData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" },
+            phonebackData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" },
+            currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "DisplayOrder": 0, "Zhiwu": "", "ServiceUserName": "", "ServiceUserMobphone": "" },
             isjl: "",
             Name: "",
             wximg: "",
@@ -88,7 +90,7 @@
                         if (resultData.ErrorMsg == "") {
                             if (resultData.Result[0]) {
                                 tempmodel.phonebackData = resultData.Result[0];//查询有结果返回
-                                location.href = "/View_Mobile/UI/HyDetail_step_n.html?id=" + tempmodel.dataid + "&r=" + Math.random();
+                                location.href = "/View_Mobile/UI/HyDetail_step_r.html?id=" + tempmodel.dataid + "&r=" + Math.random();
                             }
                             else {
                                 $('.input_block').show();
@@ -128,12 +130,12 @@
                                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
                                     if (r.ErrorMsg == "") {
                                         tempmodel.currentuser = r.Result[0];
-                                        $('.input_block').hide();
-                                        $('.default_block').show();
-                                        setTimeout($('#suMob').attr('href', 'tel:' + tempmodel.currentuser.ServiceUserMobphone), 500);
                                     }
                                 });
                             }
+                            $('.input_block').hide();
+                            $('.default_block').show();
+
                         }
                         else {
                             $('.input_block').show();
@@ -157,10 +159,15 @@
                             if (pn && pn != null && pn != undefined && pn != '') {
                                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
                                     if (r.ErrorMsg == "") {
-                                        tempmodel.currentuser = r.Result[0];
-                                        $('#suMob').attr('href', 'tel:' + tempmodel.currentuser.ServiceUserMobphone);
-                                        $('.input_block').hide();
-                                        $('.default_block').show();
+                                        if (r.Result.length > 0) {
+                                            tempmodel.currentuser = r.Result[0];
+                                            $('.input_block').hide();
+                                            $('.default_block').show();
+                                        }
+                                        else {
+                                            $('.input_block').show();
+                                            $('.default_block').hide();
+                                        }
                                     }
                                 });
                             }
@@ -205,9 +212,6 @@
                     }, 200);
                 })
             },//初始化
-            modelData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" },
-            phonebackData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" }
-
         });
 
         avalon.ready(function () {
@@ -217,10 +221,8 @@
 
         $(window).on("load resize", function () {
             var h = document.documentElement.clientHeight || window.innerHeight;
-            $(".index-html").css("height", h);
+            $(".hy_wrap").css("height", h);
         });
-
-
     </script>
 </body>
 </html>

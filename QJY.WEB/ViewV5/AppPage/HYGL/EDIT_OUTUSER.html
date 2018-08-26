@@ -135,7 +135,7 @@
                 <li class="add-item add-width fl-left">
                     <label class="add-item-label">到达日期</label>
                     <div class="add-ic">
-                        <input type="text" class="form-control szhl_form_date_time" ms-duplex="modelData.PickupDate"  />
+                        <input type="text" id="PickupDate_input" class="form-control szhl_form_date_time" ms-duplex="modelData.PickupDate"  />
                     </div>
                 </li>
                 <li class="add-item add-width fl-right">
@@ -182,7 +182,7 @@
                 <li class="add-item add-width fl-left">
                     <label class="add-item-label">到达日期</label>
                     <div class="add-ic">
-                        <input type="text" class="form-control szhl_form_date_time" ms-duplex="modelData.SendoffDate"  />
+                        <input type="text" id="SendoffDate_input" class="form-control szhl_form_date_time" ms-duplex="modelData.SendoffDate"  />
                     </div>
                 </li>
                 <li class="add-item add-width fl-right">
@@ -251,11 +251,18 @@
                                     }
                                 }
                             });
-                            setTimeout(" ComFunJS.initForm()", 500);
+                            setTimeout("model.SetinitForm()", 500);
                         }
                     })
                 }
             },
+            SetinitForm: function () {
+                var pdate = model.modelData.PickupDate;
+                var sdate = model.modelData.SendoffDate;
+                ComFunJS.initForm();
+                $('#PickupDate_input').val(pdate);
+                $('#SendoffDate_input').val(sdate);
+            }
         });
 
         avalon.ready(function () {

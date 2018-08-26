@@ -13,7 +13,7 @@
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
     <link href="/View_Mobile/JS/Date/FT_Date.min.css" rel="stylesheet" />
 </head>
-<body ms-controller="Hydetail">
+<body ms-controller="Hydetail" class="">
     <div class="index-html" style="display:none;">
     </div>
     <div class="wrapper">
@@ -59,19 +59,19 @@
                             参会代表
                         </span>
                     </a>
-                    <a href="#" ms-on-click="getdata(7)" class="button external" ms-class-1="tab-link:modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''" ms-if="modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''">
+                    <a href="#" ms-on-click="getdata(7)" class="button external" ms-class-1="tab-link:modelData.CXQK!=''||modelData.BoardingTime!=''||modelData.CarNumber!=''||currentuser.BoardingTime!=''||currentuser.CarNumber!=''" ms-if="modelData.CXQK!=''||modelData.BoardingTime!=''||modelData.CarNumber!=''||currentuser.BoardingTime!=''||currentuser.CarNumber!=''">
                         <img src="/View_Mobile/Images/icon/YCGL.png">
                         <span>
                             出行安排
                         </span>
                     </a>
-                    <a href="#" ms-on-click="getdata(8)" class="button external" ms-class-1="tab-link:modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''" ms-if="modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''">
+                    <a href="#" ms-on-click="getdata(8)" class="button external" ms-class-1="tab-link:modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.RoomNumber!=''" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.RoomNumber!=''">
                         <img src="/View_Mobile/Images/icon/Info.jpg">
                         <span>
                             住宿安排
                         </span>
                     </a>
-                    <a href="#" ms-on-click="getdata(9)" class="button external" ms-class-1="tab-link:modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''" ms-if="modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''">
+                    <a href="#" ms-on-click="getdata(9)" class="button external" ms-class-1="tab-link:modelData.YCTIME!=''||modelData.YCLOCATION!=''||currentuser.YCTIME!=''||currentuser.YCLOCATION!=''" ms-if="modelData.YCTIME!=''||modelData.YCLOCATION!=''||currentuser.YCTIME!=''||currentuser.YCLOCATION!=''">
                         <img src="/View_Mobile/Images/icon/DCGL.png">
                         <span>
                             用餐安排
@@ -89,8 +89,8 @@
                             接送服务
                         </span>
                     </a>
-                    <a href="#" ms-on-click="getdata(12)" class="tab-link button external">
-                        <img src="/View_Mobile/Images/icon/DH.jpg">
+                    <a href="#" ms-on-click="getdata(12)" class="tab-link button external" ms-class-1="tab-link:modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''">
+                        <img src="/View_Mobile/Images/icon/baidu.png" style="border-radius: 10px;">
                         <span>
                             地图导航
                         </span>
@@ -112,7 +112,7 @@
         </div>
 
         <!--服务指南-->
-        <div class="hy_menu  bg-white bg-grey hyfuwu" id="item-3" ms-if="modelData.HYFW!=''" style="padding-bottom:20px;">
+        <div class="hy_menu  bg-white bg-grey hyfuwu" id="item-3" ms-if="modelData.HYFW!=''">
             <div class="item-bg">
                 <div class="title">
                     <i></i>服务指南
@@ -124,7 +124,7 @@
         </div>
 
         <!--日程安排-->
-        <div class="hy_menu bg-white bg-grey hyrich" id="item-4" ms-if="modelData.Details!=''" style="padding-bottom:20px;">
+        <div class="hy_menu bg-white bg-grey hyrich" id="item-4" ms-if="modelData.Details!=''">
             <div class="item-bg">
                 <div class="title">
                     <i></i>日程安排
@@ -155,7 +155,6 @@
                     </div>
                     <div class="room-block-hold">
                         <div class="room-block">
-
                         </div>
                     </div>
                     <div style="text-align:center;margin-bottom:10px;">请左右滑动查找您的座位</div>
@@ -174,7 +173,7 @@
         </div>
 
         <!--出行安排-->
-        <div class="hy_menu bg-white bg-grey hychuxing" id="item-7" ms-if="modelData.CXQK!=''||tempmodel.currentuser.BoardingTime!=''||tempmodel.currentuser.CarNumber!=''">
+        <div class="hy_menu bg-white bg-grey hychuxing" id="item-7" ms-if="modelData.CXQK!=''||modelData.BoardingTime!=''||modelData.CarNumber!=''||currentuser.BoardingTime!=''||currentuser.CarNumber!=''">
             <div class="item-bg">
                 <div class="title">
                     <i></i>出行安排
@@ -188,20 +187,30 @@
                             {{modelData.CXQK|html}}
                         </div>
                     </div>
-                    <div class="inlist" ms-if="tempmodel.currentuser.BoardingTime!=''">
+                    <div class="inlist" ms-if="modelData.BoardingTime!=''||currentuser.BoardingTime!=''">
                         <span class="parent_title">
                             上车时间
                         </span>
                         <div class="item-con ">
-                            {{tempmodel.FormatHTML(tempmodel.currentuser.BoardingTime)|html}}
+                            <div ms-if="currentuser.BoardingTime!=''">
+                                {{tempmodel.FormatHTML(currentuser.BoardingTime)|html}}
+                            </div>
+                            <div ms-if="currentuser.BoardingTime==''">
+                                {{modelData.BoardingTime|html}}
+                            </div>
                         </div>
                     </div>
-                    <div class="inlist" ms-if="tempmodel.currentuser.CarNumber!=''">
+                    <div class="inlist" ms-if="modelData.CarNumber!=''||currentuser.CarNumber!=''">
                         <span class="parent_title">
-                            车牌号
+                            乘坐车辆
                         </span>
                         <div class="item-con ">
-                            {{tempmodel.FormatHTML(tempmodel.currentuser.CarNumber)|html}}
+                            <div ms-if="currentuser.CarNumber!=''">
+                                {{tempmodel.FormatHTML(currentuser.CarNumber)|html}}
+                            </div>
+                            <div ms-if="currentuser.CarNumber==''">
+                                {{modelData.CarNumber|html}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -209,7 +218,7 @@
         </div>
 
         <!--住宿安排-->
-        <div class="hy_menu bg-white bg-grey hyzhusu" id="item-8" ms-if="modelData.ZSAP!=''||tempmodel.currentuser.RoomNumber!=''">
+        <div class="hy_menu bg-white bg-grey hyzhusu" id="item-8" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.RoomNumber!=''">
             <div class="item-bg">
                 <div class="title">
                     <i></i>住宿安排
@@ -223,13 +232,21 @@
                             {{tempmodel.FormatHTML(modelData.ZSAP)|html}}
                         </div>
                     </div>
-
-                    <div class="inlist" ms-if="tempmodel.currentuser.RoomNumber!=''">
+                    <div class="inlist" ms-if="tempmodel.modelData.HotelName!=''">
+                        <span class="parent_title">
+                            酒店
+                        </span>
+                        <div class="item-con ">
+                            <p>名称：{{modelData.HotelRegion|html}}{{modelData.HotelName|html}}</p>
+                            <p ms-if="modelData.HotelLocation!=''">地址：{{modelData.HotelLocation|html}}</p>
+                        </div>
+                    </div>
+                    <div class="inlist" ms-if="currentuser.RoomNumber!=''">
                         <span class="parent_title">
                             房间号
                         </span>
                         <div class="item-con ">
-                            {{tempmodel.FormatHTML(tempmodel.currentuser.RoomNumber)|html}}
+                            {{tempmodel.FormatHTML(currentuser.RoomNumber)|html}}
                         </div>
                     </div>
                 </div>
@@ -237,35 +254,36 @@
         </div>
 
         <!--用餐安排-->
-        <div class="hy_menu bg-white bg-grey hyyongcan" id="item-9" ms-if="modelData.YCQK!=''||tempmodel.currentuser.YCTIME!=''||tempmodel.currentuser.YCLOCATION!=''">
+        <div class="hy_menu bg-white bg-grey hyyongcan" id="item-9" ms-if="modelData.YCTIME!=''||modelData.YCLOCATION!=''||currentuser.YCTIME!=''||currentuser.YCLOCATION!=''">
             <div class="item-bg">
                 <div class="title">
                     <i></i>用餐安排
                 </div>
                 <div class="item-description">
-                    <div class="inlist" ms-if="modelData.YCQK!=''">
-                        <span class="parent_title">
-                            用餐安排
-                        </span>
-                        <div class="item-con ">
-                            {{modelData.YCQK|html}}
-                        </div>
-                    </div>
-
-                    <div class="inlist" ms-if="tempmodel.currentuser.YCTIME!=''">
+                    <div class="inlist" ms-if="modelData.YCTIME!=''||currentuser.YCTIME!=''">
                         <span class="parent_title">
                             用餐时间
                         </span>
                         <div class="item-con ">
-                            &nbsp;&nbsp;{{tempmodel.FormatHTML(tempmodel.currentuser.YCTIME)}}
+                            <div ms-if="currentuser.YCTIME!=''">
+                                {{tempmodel.FormatHTML(currentuser.YCTIME)}}
+                            </div>
+                            <div ms-if="currentuser.YCTIME==''">
+                                {{modelData.YCTIME|html}}
+                            </div>
                         </div>
                     </div>
-                    <div class="inlist" ms-if="tempmodel.currentuser.YCLOCATION!=''">
+                    <div class="inlist" ms-if="modelData.YCLOCATION!=''||currentuser.YCLOCATION!=''">
                         <span class="parent_title">
                             用餐地点
                         </span>
                         <div class="item-con ">
-                            &nbsp;&nbsp;{{tempmodel.FormatHTML(tempmodel.currentuser.YCLOCATION)}}
+                            <div ms-if="currentuser.YCLOCATION!=''">
+                                {{tempmodel.FormatHTML(currentuser.YCLOCATION)}}
+                            </div>
+                            <div ms-if="currentuser.YCLOCATION==''">
+                                {{modelData.YCLOCATION|html}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -291,7 +309,7 @@
                 <div class="item-title">
                     接机
                 </div>
-                <ul class="item-con-list">
+                <ul class="item-con-list" id="PickupList">
                     <li>
                         交通工具
                     </li>
@@ -305,13 +323,13 @@
                         <span id="PickupTitle">航班号</span>
                     </li>
                     <li class="Pickup edit-icon">
-                        <input id="PickupNumber" ms-duplex="currentuser.PickupNumber" />
+                        <input id="PickupNumber" ms-duplex="currentuser.PickupNumber" placeholder="请填写" />
                     </li>
                     <li class="Pickup PickupDate">
                         到达日期
                     </li>
                     <li class="Pickup PickupDate edit-icon">
-                        <input ms-duplex="currentuser.PickupDate" id="PickupDate" />
+                        <input ms-duplex="currentuser.PickupDate" id="PickupDate" placeholder="请选择" />
                     </li>
                     <li ms-if="currentuser.PickupUser!=''">
                         <span>接机人</span>
@@ -323,7 +341,7 @@
                         <span>接机人电话</span>
                     </li>
                     <li ms-if="currentuser.PickupUserMob!=''">
-                        <span><a class="pUserMob">{{currentuser.PickupUserMob}}</a></span>
+                        <span>{{ComFunJS.SetContactPhone(currentuser.PickupUserMob)|html}}</span>
                     </li>
                     <li ms-if="currentuser.PickupCarNumber!=''">
                         <span>车牌号</span>
@@ -341,7 +359,7 @@
                 <div class="item-title">
                     送机
                 </div>
-                <ul class="item-con-list">
+                <ul class="item-con-list" id="SendoffList">
                     <li>
                         交通工具
                     </li>
@@ -355,13 +373,13 @@
                         <span id="SendoffTitle">航班号</span>
                     </li>
                     <li class="Sendoff edit-icon">
-                        <input id="SendoffNumber" ms-duplex="currentuser.SendoffNumber" />
+                        <input id="SendoffNumber" ms-duplex="currentuser.SendoffNumber" placeholder="请填写" />
                     </li>
                     <li class="Sendoff SendoffDate">
                         出发日期
                     </li>
                     <li class="Sendoff SendoffDate edit-icon">
-                        <input ms-duplex="currentuser.SendoffDate" id="SendoffDate" />
+                        <input ms-duplex="currentuser.SendoffDate" id="SendoffDate" placeholder="请选择" />
                     </li>
                     <li ms-if="currentuser.SendoffUser!=''">
                         <span>送机人</span>
@@ -373,7 +391,7 @@
                         <span>送机人电话</span>
                     </li>
                     <li ms-if="currentuser.SendoffUserMob!=''">
-                        <span><a class="sUserMob">{{currentuser.SendoffUserMob}}</a></span>
+                        <span>{{ComFunJS.SetContactPhone(currentuser.SendoffUserMob)|html}}</span>
                     </li>
                     <li ms-if="currentuser.SendoffCarNumber!=''">
                         <span>车牌号</span>
@@ -391,6 +409,20 @@
                 <div class="gobutton-blue" style="padding-top:30px;  padding-bottom:50px;">
                     <span id="phone_input_submit" ms-on-click="SaveType()">保存</span>
                 </div>
+            </div>
+        </div>
+
+        <!--地图导航-->
+        <div class="hy_menu bg-white bg-grey hynavigate" id="item-12" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''">
+            <div class="title">
+                <i></i>地图导航
+                <a style="display:block; float:right; margin-right:10px;font-size:80%;" ms-click="tempmodel.ReLoadMap()">刷新地图</a>
+            </div>
+            <div class="content-bg" style="">
+                <div class="">
+                    <iframe id="mapping" src="" style="width:100%; height:100%; border:none;"></iframe>
+                </div>
+
             </div>
         </div>
 
@@ -420,6 +452,7 @@
     <script src="/View_Mobile/js/Jquery2.1.js"></script>
     <script src="/View_Mobile/js/Date/FT_Date.min.js"></script>
 
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=rIHnNifrMRwoxGjoChaiClXQqt96IRiw"></script>
     <script>
         var tempmodel = avalon.define({
             $id: "Hydetail",
@@ -428,12 +461,13 @@
             iswf: true,//是否属于流程表单
             tpData: [],
             CYUserStr: "",
-            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "" },
+            Mapsrc: "",
+            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "BoardingTime": "", "CarNumber": "" },
             currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "" },
             dataid: ComFunJS.getQueryString('id'),
             stepindex: "",
             gostart: function (index) {
-                location.href = "/View_Mobile/UI/HyDetail_index.html?id=" + tempmodel.dataid + "&r=" + Math.random() ;
+                location.href = "/View_Mobile/UI/HyDetail_index_r.html?id=" + tempmodel.dataid + "&r=" + Math.random();
             },
             getdata: function (index) {
                 if (index) {
@@ -503,7 +537,7 @@
                 }
             },//初始化
             LoadAllUser: function () {
-                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERLISTBYHYGLID&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: 1 }, function (r) {
+                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERLISTBYHYGLID&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: 0 }, function (r) {
                     if (r.ErrorMsg == "") {
                         tempmodel.CYUserStr = ComFunJS.convusers_branch(r.Result);
                     }
@@ -525,12 +559,17 @@
                             tempmodel.currentuser = r.Result[0];
                             tempmodel.currentuser.PickupDate = tempmodel.convertDate(tempmodel.currentuser.PickupDate);
                             tempmodel.currentuser.SendoffDate = tempmodel.convertDate(tempmodel.currentuser.SendoffDate);
-                            $('.pUserMob').attr('href', 'tel:' + tempmodel.currentuser.PickupUserMob);
-                            $('.sUserMob').attr('href', 'tel:' + tempmodel.currentuser.SendoffUserMob);
                             tempmodel.SetCalendar();
-                            tempmodel.ChangeType(tempmodel.currentuser.PickupType, 'PickupTitle', 'Pickup');
-                            tempmodel.ChangeType(tempmodel.currentuser.SendoffType, 'SendoffTitle', 'Sendoff');
+
                             tempmodel.SetRoom();
+
+                            tempmodel.LoadType(tempmodel.currentuser.PickupType, 'PickupTitle', 'Pickup');
+                            tempmodel.LoadType(tempmodel.currentuser.SendoffType, 'SendoffTitle', 'Sendoff');
+                            setTimeout("tempmodel.ChangeTypeStyle()", 1000);
+
+                            if (tempmodel.modelData.ZSAP != '' || tempmodel.modelData.HotelName != '' || tempmodel.currentuser.HotelName != '') {
+                                tempmodel.LoadMap();
+                            }
                         }
                     });
                 }
@@ -585,25 +624,45 @@
                     $('.attention').css('color', '#007457');
                 }
             },
-
-            //接送服务按钮
-            ChangeType: function (val, label, cla) {
+            LoadType: function (val, label, cla) {
                 if (val == 10) {
                     $('#' + label).html('航班号');
-                    $('.' + cla).show();
+                    $('.' + cla).removeClass('hide');
                 }
                 else if (val == 20) {
                     $('#' + label).html('火车车次');
-                    $('.' + cla).show();
+                    $('.' + cla).removeClass('hide');
                 }
                 else if (val == 30) {
                     $('#' + label).html('汽车站');
-                    $('.' + cla).show();
+                    $('.' + cla).removeClass('hide');
                 }
                 else {
                     $('#' + cla).val('');
-                    $('.' + cla).hide();                
+                    $('.' + cla).addClass('hide');
+                    //if (label =='PickupTitle' && tempmodel.currentuser.PickupUser == '' && tempmodel.currentuser.PickupUserMob == '' && tempmodel.currentuser.PickupCarNumber == '' && tempmodel.currentuser.PickupLocation == '') {
+                    //    $('#PickupList li').css('border-bottom', 'none');
+                    //}
+                    //if (label == 'SendoffTitle' &&tempmodel.currentuser.SendoffUser == '' && tempmodel.currentuser.SendoffUserMob == '' && tempmodel.currentuser.SendoffCarNumber == '' && tempmodel.currentuser.SendoffLocation == '') {
+                    //    $('#SendoffList li').css('border-bottom', 'none');
+                    //}
                 }
+            },
+            //接送服务按钮
+            ChangeType: function (val, label, cla) {
+                tempmodel.LoadType(val, label, cla);
+                tempmodel.ChangeTypeStyle();
+            },
+            ChangeTypeStyle: function () {
+                var plen = $('#PickupList li:not(".hide")').length;
+                $('#PickupList li').css('border-bottom', 'solid 1px #e1e1e1');
+                $('#PickupList li:not(".hide"):eq(' + (plen - 2) + ')').css('border-bottom', 'none');
+                $('#PickupList li:not(".hide"):eq(' + (plen - 1) + ')').css('border-bottom', 'none');
+
+                var slen = $('#SendoffList li:not(".hide")').length;
+                $('#SendoffList li').css('border-bottom', 'solid 1px #e1e1e1');
+                $('#SendoffList li:not(".hide"):eq(' + (slen - 2) + ')').css('border-bottom', 'none');
+                $('#SendoffList li:not(".hide"):eq(' + (slen - 1) + ')').css('border-bottom', 'none');
             },
             //保存接送服务
             SaveType: function () {
@@ -661,6 +720,7 @@
                 }
                 return date;
             },
+            //日历控件
             SetCalendar: function () {
                 var currYear = (new Date()).getFullYear();
                 var opt = {
@@ -710,6 +770,34 @@
                 str = str.replace(/_@/g, '<br/>');//IE9、FF、chrome
                 str = str.replace(/\s/g, '&nbsp;');//空格处理
                 return str;
+            },
+            ReLoadMap: function () {
+                $('#mapping').attr('src', tempmodel.Mapsrc);
+            },
+            LoadMap: function () {
+                var region = tempmodel.modelData.HotelRegion;//酒店地区必须填
+                var destination = tempmodel.currentuser.HotelName;
+                if (destination == '') {
+                    destination = tempmodel.modelData.HotelName;
+                }
+                var map = new BMap.Map("mapping");
+                var point = new BMap.Point(30.668497, 104.11315);
+                map.centerAndZoom(point, 12);
+
+                var geolocation = new BMap.Geolocation();
+                geolocation.getCurrentPosition(function (r) {
+                    if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                        var mk = new BMap.Marker(r.point);
+                        map.addOverlay(mk);
+                        map.panTo(r.point);
+                        tempmodel.Mapsrc = 'http://api.map.baidu.com/direction?origin=latlng:' + r.point.lat + ',' + r.point.lng + '|name:&destination=' + destination + '&mode=driving&region=' + region + '&output=html&ak=rIHnNifrMRwoxGjoChaiClXQqt96IRiw';
+                        $('#mapping').attr('src', tempmodel.Mapsrc);
+                    }
+                });
+
+                //腾讯地图  很不好用
+                //tempmodel.Mapsrc  = "https://apis.map.qq.com/tools/routeplan/eword=" + region + destination + "&transport=2?referer=myapp&key=O47BZ-GWE3D-LPB4R-P4E46-HMACS-WKFRQ";
+                //$('#mapping').attr('src', tempmodel.Mapsrc);
             }
         });
 
@@ -721,7 +809,8 @@
 
         $(window).on("load resize", function () {
             var h = document.documentElement.clientHeight || window.innerHeight;
-            $(".wrapper").css("height", h);
+            $(".wrapper").css("height", h + 'px');
+            $("#mapping").css("height", (h - 88) + 'px');
         });
     </script>
 </body>

@@ -1822,6 +1822,10 @@ var ComFunJS = {
         { "ID": "20", "TypeName": "火车" },
         { "ID": "30", "TypeName": "汽车" },
     ], 
+    SetContactPhone: function (phone) {
+        var str = '<a href="tel:' + phone + '">' + phone + '</a>';
+        return str;
+    },
 }
 
 ComFunJS.initsetajax();

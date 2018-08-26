@@ -341,7 +341,7 @@
                         <span>接机人电话</span>
                     </li>
                     <li ms-if="currentuser.PickupUserMob!=''">
-                        <span><a class="pUserMob">{{currentuser.PickupUserMob}}</a></span>
+                        <span>{{ComFunJS.SetContactPhone(currentuser.PickupUserMob)|html}}</span>
                     </li>
                     <li ms-if="currentuser.PickupCarNumber!=''">
                         <span>车牌号</span>
@@ -391,7 +391,7 @@
                         <span>送机人电话</span>
                     </li>
                     <li ms-if="currentuser.SendoffUserMob!=''">
-                        <span><a class="sUserMob">{{currentuser.SendoffUserMob}}</a></span>
+                        <span>{{ComFunJS.SetContactPhone(currentuser.SendoffUserMob)|html}}</span>
                     </li>
                     <li ms-if="currentuser.SendoffCarNumber!=''">
                         <span>车牌号</span>
@@ -559,20 +559,21 @@
                             tempmodel.currentuser = r.Result[0];
                             tempmodel.currentuser.PickupDate = tempmodel.convertDate(tempmodel.currentuser.PickupDate);
                             tempmodel.currentuser.SendoffDate = tempmodel.convertDate(tempmodel.currentuser.SendoffDate);
-                            $('.pUserMob').attr('href', 'tel:' + tempmodel.currentuser.PickupUserMob);
-                            $('.sUserMob').attr('href', 'tel:' + tempmodel.currentuser.SendoffUserMob);
                             tempmodel.SetCalendar();
+
                             tempmodel.SetRoom();
+                            
+                            tempmodel.LoadType(tempmodel.currentuser.PickupType, 'PickupTitle', 'Pickup');
+                            tempmodel.LoadType(tempmodel.currentuser.SendoffType, 'SendoffTitle', 'Sendoff');
+                            setTimeout("tempmodel.ChangeTypeStyle()", 1000);
 
                             if (tempmodel.modelData.ZSAP != '' || tempmodel.modelData.HotelName != '' || tempmodel.currentuser.HotelName != '') {
                                 tempmodel.LoadMap();
                             }
-                            tempmodel.LoadType(tempmodel.currentuser.PickupType, 'PickupTitle', 'Pickup');
-                            tempmodel.LoadType(tempmodel.currentuser.SendoffType, 'SendoffTitle', 'Sendoff');
                         }
                     });
                 }
-            },
+            },            
             SetRoom: function () {
                 if (tempmodel.modelData.RoomWidth && tempmodel.modelData.RoomLength) {
                     var rw = parseInt(tempmodel.modelData.RoomWidth);
@@ -639,17 +640,20 @@
                 else {
                     $('#' + cla).val('');
                     $('.' + cla).addClass('hide');
-                    if (label =='PickupTitle' && tempmodel.currentuser.PickupUser == '' && tempmodel.currentuser.PickupUserMob == '' && tempmodel.currentuser.PickupCarNumber == '' && tempmodel.currentuser.PickupLocation == '') {
-                        $('#PickupList li').css('border-bottom', 'none');
-                    }
-                    if (label == 'SendoffTitle' &&tempmodel.currentuser.SendoffUser == '' && tempmodel.currentuser.SendoffUserMob == '' && tempmodel.currentuser.SendoffCarNumber == '' && tempmodel.currentuser.SendoffLocation == '') {
-                        $('#SendoffList li').css('border-bottom', 'none');
-                    }
+                    //if (label =='PickupTitle' && tempmodel.currentuser.PickupUser == '' && tempmodel.currentuser.PickupUserMob == '' && tempmodel.currentuser.PickupCarNumber == '' && tempmodel.currentuser.PickupLocation == '') {
+                    //    $('#PickupList li').css('border-bottom', 'none');
+                    //}
+                    //if (label == 'SendoffTitle' &&tempmodel.currentuser.SendoffUser == '' && tempmodel.currentuser.SendoffUserMob == '' && tempmodel.currentuser.SendoffCarNumber == '' && tempmodel.currentuser.SendoffLocation == '') {
+                    //    $('#SendoffList li').css('border-bottom', 'none');
+                    //}
                 }
             },
             //接送服务按钮
             ChangeType: function (val, label, cla) {
                 tempmodel.LoadType(val, label, cla);
+                tempmodel.ChangeTypeStyle();
+            },
+            ChangeTypeStyle: function () {
                 var plen = $('#PickupList li:not(".hide")').length;
                 $('#PickupList li').css('border-bottom', 'solid 1px #e1e1e1');
                 $('#PickupList li:not(".hide"):eq(' + (plen - 2) + ')').css('border-bottom', 'none');
@@ -716,6 +720,7 @@
                 }
                 return date;
             },
+            //日历控件
             SetCalendar: function () {
                 var currYear = (new Date()).getFullYear();
                 var opt = {

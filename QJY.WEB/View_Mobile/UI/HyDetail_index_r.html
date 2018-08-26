@@ -36,7 +36,7 @@
             </div>
             <div class="infomation" ms-if="currentuser.ServiceUserName!=''">
                 您的联络员是<span style="color:green">{{currentuser.ServiceUserName}}</span>，
-                联络电话是<a id="suMob" style="text-decoration:none;">{{currentuser.ServiceUserMobphone}}</a>
+                联络电话是{{ComFunJS.SetContactPhone(currentuser.ServiceUserMobphone)|html}}
             </div>
             <div class="gobutton gobutton_r">
                 <div class="fl-left">
@@ -73,6 +73,8 @@
             tpData: [],
             userpl: 0,
             usertype: "",
+            modelData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" },
+            phonebackData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" },
             currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "DisplayOrder": 0, "Zhiwu": "", "ServiceUserName": "", "ServiceUserMobphone": "" },
             isjl: "",
             Name: "",
@@ -161,10 +163,8 @@
                                             tempmodel.currentuser = r.Result[0];
                                             $('.input_block').hide();
                                             $('.default_block').show();
-                                            setTimeout($('#suMob').attr('href', 'tel:' + tempmodel.currentuser.ServiceUserMobphone), 2000);
                                         }
-                                        else
-                                        {
+                                        else {
                                             $('.input_block').show();
                                             $('.default_block').hide();
                                         }
@@ -184,7 +184,7 @@
                             //        tempmodel.isjl = "1";
                             //    }
                             //}
-                            //setTimeout(" ComFunJS.initForm()", 500) 
+                            //setTimeout(" ComFunJS.initForm()", 500)
                         }
                     })
                 }
@@ -212,9 +212,6 @@
                     }, 200);
                 })
             },//初始化
-            modelData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" },
-            phonebackData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" }
-
         });
 
         avalon.ready(function () {
@@ -226,8 +223,6 @@
             var h = document.documentElement.clientHeight || window.innerHeight;
             $(".hy_wrap").css("height", h);
         });
-
-
     </script>
 </body>
 </html>
