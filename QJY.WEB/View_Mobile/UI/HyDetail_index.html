@@ -11,6 +11,11 @@
     <link href="/View_Mobile/CSS/add.css?ver=2" rel="stylesheet" />
     <link href="/View_Mobile/CSS/szhlextend.css?ver=20160904" rel="stylesheet" />-->
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
+    <style>
+        .mobphone a {
+            color: green;
+        }
+    </style>
 </head>
 <body ms-controller="Hydetail" class="">
     <div class="index-html">
@@ -34,8 +39,8 @@
             <div class="infomation">
                 尊敬的<span style="color:red">{{currentuser.Name}}</span>，欢迎您参加本次会议
             </div>
-            <div class="infomation" ms-if="currentuser.ServiceUserName!=''">
-                您的联络员是<span style="color:green">{{currentuser.ServiceUserName}}</span>，
+            <div class="infomation " ms-if="currentuser.ServiceUserName!=''">
+                您的联络员是<span class="mobphone">{{ComFunJS.SetContactPhone(currentuser.ServiceUserMobphone,currentuser.ServiceUserName)|html}}</span>，
                 联络电话是{{ComFunJS.SetContactPhone(currentuser.ServiceUserMobphone)|html}}
             </div>
             <div class="gobutton gobutton_r">
