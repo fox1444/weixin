@@ -1821,9 +1821,13 @@ var ComFunJS = {
         { "ID": "10", "TypeName": "飞机" },
         { "ID": "20", "TypeName": "火车" },
         { "ID": "30", "TypeName": "汽车" },
-    ], 
-    SetContactPhone: function (phone) {
-        var str = '<a href="tel:' + phone + '">' + phone + '</a>';
+    ],
+    SetContactPhone: function (phone, text) {
+        var s = text;
+        if (!text || text == '' || text == undefined) {
+            s = phone;
+        }
+        var str = '<a href="tel:' + phone + '">' + s + '</a>';
         return str;
     },
 }

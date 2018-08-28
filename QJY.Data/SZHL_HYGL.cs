@@ -56,5 +56,7 @@ namespace QJY.Data
         public string HotelLocation { get; set; }
         public string BoardingTime { get; set; }
         public string CarNumber { get; set; }
+        public string LbsRegion { get; set; }
+        public string LbsLocation { get; set; }
     }
 }

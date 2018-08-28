@@ -65,7 +65,7 @@
                             出行安排
                         </span>
                     </a>
-                    <a href="#" ms-on-click="getdata(8)" class="button external" ms-class-1="tab-link:modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.RoomNumber!=''" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.RoomNumber!=''">
+                    <a href="#" ms-on-click="getdata(8)" class="button external" ms-class-1="tab-link:modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''||currentuser.RoomNumber!=''" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''||currentuser.RoomNumber!=''">
                         <img src="/View_Mobile/Images/icon/Info.jpg">
                         <span>
                             住宿安排
@@ -89,7 +89,7 @@
                             接送服务
                         </span>
                     </a>
-                    <a href="#" ms-on-click="getdata(12)" class="tab-link button external" ms-class-1="tab-link:modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''">
+                    <a href="#" ms-on-click="getdata(12)" class="tab-link button external" ms-class-1="tab-link:(modelData.LbsRegion != '' && modelData.LbsLocation != '') || (modelData.HotelRegion!='' && (modelData.HotelName != '' || currentuser.HotelName != ''))" ms-if="(modelData.LbsRegion != '' && modelData.LbsLocation != '') || (modelData.HotelRegion!='' && (modelData.HotelName != '' || currentuser.HotelName != ''))">
                         <img src="/View_Mobile/Images/icon/baidu.png" style="border-radius: 10px;">
                         <span>
                             地图导航
@@ -218,7 +218,7 @@
         </div>
 
         <!--住宿安排-->
-        <div class="hy_menu bg-white bg-grey hyzhusu" id="item-8" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.RoomNumber!=''">
+        <div class="hy_menu bg-white bg-grey hyzhusu" id="item-8" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''||currentuser.RoomNumber!=''">
             <div class="item-bg">
                 <div class="title">
                     <i></i>住宿安排
@@ -232,11 +232,15 @@
                             {{tempmodel.FormatHTML(modelData.ZSAP)|html}}
                         </div>
                     </div>
-                    <div class="inlist" ms-if="tempmodel.modelData.HotelName!=''">
+                    <div class="inlist" ms-if="modelData.HotelName!=''||currentuser.HotelName!=''">
                         <span class="parent_title">
                             酒店
                         </span>
-                        <div class="item-con ">
+                        <div class="item-con" ms-if="currentuser.HotelName!=''">
+                            <p>名称：{{modelData.HotelRegion|html}}{{currentuser.HotelName|html}}</p>
+                            <p ms-if="currentuser.HotelLocation!=''">地址：{{currentuser.HotelLocation|html}}</p>
+                        </div>
+                        <div class="item-con" ms-if="currentuser.HotelName==''">
                             <p>名称：{{modelData.HotelRegion|html}}{{modelData.HotelName|html}}</p>
                             <p ms-if="modelData.HotelLocation!=''">地址：{{modelData.HotelLocation|html}}</p>
                         </div>
@@ -413,7 +417,7 @@
         </div>
 
         <!--地图导航-->
-        <div class="hy_menu bg-white bg-grey hynavigate" id="item-12" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''">
+        <div class="hy_menu bg-white bg-grey hynavigate" id="item-12" ms-if="(modelData.LbsRegion != '' && modelData.LbsLocation != '') || (modelData.HotelRegion!='' && (modelData.HotelName != '' || currentuser.HotelName != ''))">
             <div class="title">
                 <i></i>地图导航
                 <a style="display:block; float:right; margin-right:10px;font-size:80%;" ms-click="tempmodel.ReLoadMap()">刷新地图</a>
@@ -462,8 +466,8 @@
             tpData: [],
             CYUserStr: "",
             Mapsrc: "",
-            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "BoardingTime": "", "CarNumber": "" },
-            currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "" },
+            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "BoardingTime": "", "CarNumber": "", "HotelName": "", "HotelLocation": "", "LbsRegion": "", "LbsLocation": "" },
+            currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "", "HotelName": "", "HotelLocation": "" },
             dataid: ComFunJS.getQueryString('id'),
             stepindex: "",
             gostart: function (index) {
@@ -562,18 +566,18 @@
                             tempmodel.SetCalendar();
 
                             tempmodel.SetRoom();
-                            
+
                             tempmodel.LoadType(tempmodel.currentuser.PickupType, 'PickupTitle', 'Pickup');
                             tempmodel.LoadType(tempmodel.currentuser.SendoffType, 'SendoffTitle', 'Sendoff');
                             setTimeout("tempmodel.ChangeTypeStyle()", 1000);
-
-                            if (tempmodel.modelData.ZSAP != '' || tempmodel.modelData.HotelName != '' || tempmodel.currentuser.HotelName != '') {
+                          
+                            if ((tempmodel.modelData.LbsRegion != '' && tempmodel.modelData.LbsLocation != '') || (tempmodel.modelData.HotelRegion!='' && (tempmodel.modelData.HotelName != '' || tempmodel.currentuser.HotelName != ''))) {
                                 tempmodel.LoadMap();
                             }
                         }
                     });
                 }
-            },            
+            },
             SetRoom: function () {
                 if (tempmodel.modelData.RoomWidth && tempmodel.modelData.RoomLength) {
                     var rw = parseInt(tempmodel.modelData.RoomWidth);
@@ -775,10 +779,14 @@
                 $('#mapping').attr('src', tempmodel.Mapsrc);
             },
             LoadMap: function () {
-                var region = tempmodel.modelData.HotelRegion;//酒店地区必须填
-                var destination = tempmodel.currentuser.HotelName;
-                if (destination == '') {
-                    destination = tempmodel.modelData.HotelName;
+                var region = tempmodel.modelData.LbsRegion;
+                var destination = tempmodel.modelData.LbsLocation;
+                if (region == '' && destination == '') {
+                    region = tempmodel.modelData.HotelRegion;
+                    destination = tempmodel.currentuser.HotelName;
+                    if (destination == '') {
+                        destination = tempmodel.modelData.HotelName;
+                    }
                 }
                 var map = new BMap.Map("mapping");
                 var point = new BMap.Point(30.668497, 104.11315);
@@ -804,7 +812,7 @@
         avalon.ready(function () {
             $('.hy_menu').hide();
             $('.up-and-down').hide();
-            tempmodel.inittemp();            
+            tempmodel.inittemp();
         })
 
         $(window).on("load resize", function () {
