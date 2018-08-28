@@ -3,13 +3,13 @@
         <div class="detail-nav">
             <div class="tab-kh nav-bt">
                 <span ms-class-1="cur:seltype==1" ms-click="selecttype(1)"><i class="iconfont icon-bookmark"></i>基本信息</span>
-                <span ms-class-1="cur:seltype==2" ms-if="HYGLID>0" ms-click="selecttype(2)"><i class="iconfont icon-bookmark"></i>单位&主持人</span>
-                <span ms-class-1="cur:seltype==3" ms-if="HYGLID>0" ms-click="selecttype(3)"><i class="iconfont icon-bookmark"></i>参会人</span>
-                <span ms-class-1="cur:seltype==4" ms-click="selecttype(4)"><i class="iconfont icon-bookmark"></i>会议安排</span>
-                <span ms-class-1="cur:seltype==5" ms-click="selecttype(5)"><i class="iconfont icon-bookmark"></i>出行</span>
-                <span ms-class-1="cur:seltype==6" ms-click="selecttype(6)"><i class="iconfont icon-bookmark"></i>住宿</span>
-                <span ms-class-1="cur:seltype==7" ms-click="selecttype(7)"><i class="iconfont icon-bookmark"></i>用餐</span>
-                <span ms-class-1="cur:seltype==8" ms-if="HYGLID>0" ms-click="selecttype(8)"><i class="iconfont icon-bookmark"></i>一键服务</span>
+                <span ms-class-1="cur:seltype==2" ms-click="selecttype(2)"><i class="iconfont icon-bookmark"></i>会议安排</span>
+                <span ms-class-1="cur:seltype==3" ms-click="selecttype(3)"><i class="iconfont icon-bookmark"></i>出行</span>
+                <span ms-class-1="cur:seltype==4" ms-click="selecttype(4)"><i class="iconfont icon-bookmark"></i>住宿</span>
+                <span ms-class-1="cur:seltype==5" ms-click="selecttype(5)"><i class="iconfont icon-bookmark"></i>用餐</span>
+                <span ms-class-1="cur:seltype==6" ms-if="HYGLID>0" ms-click="selecttype(6)"><i class="iconfont icon-bookmark"></i>一键服务</span>
+                <span ms-class-1="cur:seltype==7" ms-if="HYGLID>0" ms-click="selecttype(7)"><i class="iconfont icon-bookmark"></i>单位&主持人</span>
+                <span ms-class-1="cur:seltype==8" ms-if="HYGLID>0" ms-click="selecttype(8)"><i class="iconfont icon-bookmark"></i>参会人</span>
             </div>
         </div>
         <!--基本信息-->
@@ -114,8 +114,143 @@
                 </ul>
             </div>
         </div>
-        <!--主持人-->
+        <!--会议内容-->
         <div ms-visible="seltype==2">
+            <div class="fg-item"><span>会议须知</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyxuzhi" umheight="280" ms-duplex="modelData.HYXZ"></textarea>
+                </div>
+            </div>
+            <div class="fg-item"><span>服务指南</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyservice" umheight="280" ms-duplex="modelData.HYFW"></textarea>
+                </div>
+            </div>
+            <div class="fg-item"><span>日程安排</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hycontent" umheight="280" ms-duplex="modelData.Details"></textarea>
+                </div>
+            </div>
+        </div>
+        <!--出行安排-->
+        <div ms-visible="seltype==3">
+            <div class="fg-item"><span>出行安排</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hychuxing" umheight="120" ms-duplex="modelData.CXQK"></textarea>
+                </div>
+            </div>
+            <!--<div class="fg-item"><span>分组情况</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hygroup" umheight="280" ms-duplex="modelData.FZQK"></textarea>
+                </div>
+            </div>-->
+            <div class="add-item add-widthall">
+                <label class="add-item-label">上车时间</label>
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyBoardingTime" ms-duplex="modelData.BoardingTime" umheight="120"></textarea>
+                </div>
+            </div>
+            <div class="add-item add-widthall">
+                <label class="add-item-label">乘坐车辆</label>
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyCarNumber" ms-duplex="modelData.CarNumber" umheight="120"></textarea>
+                </div>
+            </div>
+        </div>
+        <!--住宿安排-->
+        <div ms-visible="seltype==4">
+            <div class="fg-item"><span>住宿服务</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hysit" umheight="180" ms-duplex="modelData.ZSAP"></textarea>
+                </div>
+            </div>
+            <div class="fg-item"><span>酒店</span><i></i></div>
+            <div class="add-item add-width fl-left">
+                <label class="add-item-label">所在地</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.HotelRegion" placeholder="如北京、上海、成都、西昌等等" />
+                </div>
+            </div>
+            <div class="add-item add-width fl-right">
+                <label class="add-item-label">名称</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.HotelName" />
+                </div>
+            </div>
+            <div class="add-item add-width fl-left">
+                <label class="add-item-label">地址</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.HotelLocation" />
+                </div>
+            </div>
+        </div>
+        <!--用餐安排-->
+        <div ms-visible="seltype==5">
+            <!--<div class="fg-item"><span>用餐安排</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyyongcan" umheight="280" ms-duplex="modelData.YCQK"></textarea>
+                </div>
+            </div>-->
+            <div class="fg-item"><span>用餐时间</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyyctime" umheight="120" ms-duplex="modelData.YCTIME"></textarea>
+                </div>
+            </div>
+            <div class="add-item add-widthall">
+                <label class="add-item-label">用餐地点</label>
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyyclocation" umheight="120" ms-duplex="modelData.YCLOCATION"></textarea>
+                </div>
+            </div>
+        </div>
+        <!--服务人员-->
+        <div ms-visible="seltype==6">
+            <div class="fg-item"><span>服务人员</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="pr20">
+                    <button class="btn btn-info" ms-click="EditService(0,'添加')">添加</button>
+                </div>
+            </div>
+            <table class="table-con">
+                <tr>
+                    <th>姓名</th>
+                    <th>联系电话</th>
+                    <th>操作</th>
+                </tr>
+                <tr ms-repeat-el="ServiceData">
+                    <td>{{el.Name}}</td>
+                    <td>{{el.Mobphone}}</td>
+                    <td>
+                        <a class="lk" ms-click="EditService(el.ID,'编辑')">编辑</a>&nbsp;|
+                        <a class="lk" ms-click="DelService(el,$event)">删除</a>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="fg-item"><span>导航地址(不填写则导航至住宿地址)</span><i></i></div>
+            <div class="add-item add-width fl-left">
+                <label class="add-item-label">所在地</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.LbsRegion" placeholder="如北京、上海、成都、西昌等等" />
+                </div>
+            </div>
+            <div class="add-item add-width fl-right">
+                <label class="add-item-label">地点</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.LbsLocation" />
+                </div>
+            </div>
+        </div>
+        <!--主持人-->
+        <div ms-visible="seltype==7">
             <div class="add-item add-widthall">
                 <div class="pr20">
                     <button class="btn btn-info" ms-click="EditDept(0,'添加')">添加参会单位</button>
@@ -145,136 +280,13 @@
 
         </div>
         <!--参会人-->
-        <div ms-visible="seltype==3">
+        <div ms-visible="seltype==8">
             <div class="add-item add-widthall">
                 <div class="pr20">
                     <button class="btn btn-info" onclick="EditUser(0,1)">添加</button>
                 </div>
             </div>
             {{tempmodel.CYUserStr|html}}
-        </div>
-        <!--会议内容-->
-        <div ms-visible="seltype==4">
-            <div class="fg-item"><span>会议须知</span><i></i></div>
-            <div class="add-item add-widthall">
-                <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hyxuzhi" umheight="280" ms-duplex="modelData.HYXZ"></textarea>
-                </div>
-            </div>
-            <div class="fg-item"><span>服务指南</span><i></i></div>
-            <div class="add-item add-widthall">
-                <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hyservice" umheight="280" ms-duplex="modelData.HYFW"></textarea>
-                </div>
-            </div>
-            <div class="fg-item"><span>日程安排</span><i></i></div>
-            <div class="add-item add-widthall">
-                <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hycontent" umheight="280" ms-duplex="modelData.Details"></textarea>
-                </div>
-            </div>
-        </div>
-        <!--出行安排-->
-        <div ms-visible="seltype==5">
-            <div class="fg-item"><span>出行安排</span><i></i></div>
-            <div class="add-item add-widthall">
-                <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hychuxing" umheight="120" ms-duplex="modelData.CXQK"></textarea>
-                </div>
-            </div>
-            <!--<div class="fg-item"><span>分组情况</span><i></i></div>
-            <div class="add-item add-widthall">
-                <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hygroup" umheight="280" ms-duplex="modelData.FZQK"></textarea>
-                </div>
-            </div>-->
-            <div class="add-item add-widthall">
-                <label class="add-item-label">上车时间</label>
-                <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hyBoardingTime" ms-duplex="modelData.BoardingTime" umheight="120"></textarea>
-                </div>
-            </div>
-            <div class="add-item add-widthall">
-                <label class="add-item-label">乘坐车辆</label>
-                <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hyCarNumber" ms-duplex="modelData.CarNumber" umheight="120"></textarea>
-                </div>
-            </div>
-        </div>
-        <!--住宿安排-->
-        <div ms-visible="seltype==6">
-            <div class="fg-item"><span>住宿服务</span><i></i></div>
-            <div class="add-item add-widthall">
-                <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hysit" umheight="180" ms-duplex="modelData.ZSAP"></textarea>
-                </div>
-            </div>
-            <div class="fg-item"><span>酒店</span><i></i></div>
-            <div class="add-item add-widthall">
-                <label class="add-item-label">所在地</label>
-                <div class="add-ic">
-                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.HotelRegion" placeholder="如北京、上海、成都、西昌等等" />
-                </div>
-            </div>
-            <div class="add-item add-widthall">
-                <label class="add-item-label">名称</label>
-                <div class="add-ic">
-                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.HotelName" />
-                </div>
-            </div>
-            <div class="add-item add-widthall">
-                <label class="add-item-label">地址</label>
-                <div class="add-ic">
-                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.HotelLocation" />
-                </div>
-            </div>
-        </div>
-        <!--用餐安排-->
-        <div ms-visible="seltype==7">
-            <!--<div class="fg-item"><span>用餐安排</span><i></i></div>
-            <div class="add-item add-widthall">
-                <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hyyongcan" umheight="280" ms-duplex="modelData.YCQK"></textarea>
-                </div>
-            </div>-->
-            <div class="fg-item"><span>用餐时间</span><i></i></div>
-            <div class="add-item add-widthall">
-                <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hyyctime" umheight="120" ms-duplex="modelData.YCTIME"></textarea>
-                </div>
-            </div>
-            <div class="add-item add-widthall">
-                <label class="add-item-label">用餐地点</label>
-                <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hyyclocation" umheight="120" ms-duplex="modelData.YCLOCATION"></textarea>
-                </div>
-            </div>
-        </div>
-        <!--服务人员-->
-        <div ms-visible="seltype==8">
-            <div class="fg-item"><span>服务人员</span><i></i></div>
-            <div class="add-item add-widthall">
-                <div class="pr20">
-                    <button class="btn btn-info" ms-click="EditService(0,'添加')">添加</button>
-                </div>
-            </div>
-
-            <table class="table-con">
-                <tr>
-                    <th>姓名</th>
-                    <th>联系电话</th>
-                    <th>操作</th>
-                </tr>
-                <tr ms-repeat-el="ServiceData">
-                    <td>{{el.Name}}</td>
-                    <td>{{el.Mobphone}}</td>
-                    <td>
-                        <a class="lk" ms-click="EditService(el.ID,'编辑')">编辑</a>&nbsp;|
-                        <a class="lk" ms-click="DelService(el,$event)">删除</a>
-                    </td>
-                </tr>
-            </table>
-
         </div>
     </div>
 </div>
