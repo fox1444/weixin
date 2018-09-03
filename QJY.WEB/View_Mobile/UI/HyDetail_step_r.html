@@ -799,7 +799,8 @@
                         map.addOverlay(mk);
                         map.panTo(r.point);
                         tempmodel.Mapsrc = 'http://api.map.baidu.com/direction?origin=latlng:' + r.point.lat + ',' + r.point.lng + '|name:&destination=' + destination + '&mode=driving&region=' + region + '&output=html&ak=rIHnNifrMRwoxGjoChaiClXQqt96IRiw';
-                        $('#mapping').attr('src', tempmodel.Mapsrc);
+                        tempmodel.ReLoadMap();
+                        //$('#mapping').attr('src', tempmodel.Mapsrc);
                     }
                 });
 
