@@ -1063,6 +1063,18 @@
           <Property Name="CRUser" Type="varchar" MaxLength="100" />
           <Property Name="CRDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="SZHL_HYGL_OUTUSER_Log">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="int" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Mobphone" Type="varchar" MaxLength="20" />
+          <Property Name="HYGLID" Type="int" />
+          <Property Name="CRDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="SZHL_HYGL_QD">
           <Key>
             <PropertyRef Name="ID" />
@@ -1918,6 +1930,7 @@
           <EntitySet Name="SZHL_HYGL" EntityType="Self.SZHL_HYGL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_HYGL_OUTUSER" EntityType="Self.SZHL_HYGL_OUTUSER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_HYGL_OUTUSER_DEPT" EntityType="Self.SZHL_HYGL_OUTUSER_DEPT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SZHL_HYGL_OUTUSER_Log" EntityType="Self.SZHL_HYGL_OUTUSER_Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_HYGL_QD" EntityType="Self.SZHL_HYGL_QD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_HYGL_QR" EntityType="Self.SZHL_HYGL_QR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_HYGL_ROOM" EntityType="Self.SZHL_HYGL_ROOM" Schema="dbo" store:Type="Tables" />
@@ -2056,6 +2069,7 @@
           <EntitySet Name="SZHL_HYGL_OUTUSER" EntityType="QJY_SaaSModel.SZHL_HYGL_OUTUSER" />
           <EntitySet Name="SZHL_HYGL_OUTUSER_DEPT" EntityType="QJY_SaaSModel.SZHL_HYGL_OUTUSER_DEPT" />
           <EntitySet Name="SZHL_HYGL" EntityType="QJY_SaaSModel.SZHL_HYGL" />
+          <EntitySet Name="SZHL_HYGL_OUTUSER_Log" EntityType="QJY_SaaSModel.SZHL_HYGL_OUTUSER_Log" />
         </EntityContainer>
         <EntityType Name="FT_File">
           <Key>
@@ -3916,6 +3930,18 @@
           <Property Name="CarNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="LbsRegion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="LbsLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SZHL_HYGL_OUTUSER_Log">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Mobphone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="HYGLID" Type="Int32" />
+          <Property Name="CRDate" Type="DateTime" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5869,6 +5895,19 @@
                 <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SZHL_HYGL_OUTUSER_Log">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL_OUTUSER_Log">
+              <MappingFragment StoreEntitySet="SZHL_HYGL_OUTUSER_Log">
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="HYGLID" ColumnName="HYGLID" />
+                <ScalarProperty Name="Mobphone" ColumnName="Mobphone" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ComId" ColumnName="ComId" />
               </MappingFragment>

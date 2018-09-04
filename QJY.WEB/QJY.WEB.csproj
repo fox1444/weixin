@@ -193,6 +193,8 @@
     <Content Include="ToolS\umeditor122\umeditor.min.js" />
     <Content Include="ToolS\YZMCode.aspx" />
     <Content Include="ViewV5\AppPage\FSGL\LSXXLIST.html" />
+    <Content Include="ViewV5\AppPage\HYGL\VIEW_LOG_DETAIL.html" />
+    <Content Include="ViewV5\AppPage\HYGL\VIEW_LOG.html" />
     <Content Include="ViewV5\AppPage\HYGL\EDIT_OUTUSER.html" />
     <Content Include="ViewV5\AppPage\HYGL\EDIT_DEPT.html" />
     <Content Include="ViewV5\AppPage\HYGL\EDIT_SERVICE.html" />

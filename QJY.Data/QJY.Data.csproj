@@ -225,6 +225,9 @@
     <Compile Include="SZHL_HYGL_OUTUSER_DEPT.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>
+    <Compile Include="SZHL_HYGL_OUTUSER_Log.cs">
+      <DependentUpon>QJY.tt</DependentUpon>
+    </Compile>
     <Compile Include="SZHL_HYGL_QD.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>

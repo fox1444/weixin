@@ -921,7 +921,7 @@ namespace QJY.API
             {
                 strWhere += " and u.type=" + type;
             }
-            msg.Result = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.*, s.Name as ServiceName, d.Name as OutDeptName from dbo.SZHL_HYGL_OUTUSER u left join  SZHL_HYGL_SERVICE s on u.ServiceUser=s.ID left join SZHL_HYGL_OUTUSER_DEPT d on u.OutDept=d.ID where " + strWhere + " order by d.DisplayOrder, u.DisplayOrder, u.Name");
+            msg.Result = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.*, s.Name as ServiceName, d.Name as OutDeptName, (select count(1) from SZHL_HYGL_OUTUSER_Log where HYGLID=" + Id + " and UserID=u.ID) as N from dbo.SZHL_HYGL_OUTUSER u left join  SZHL_HYGL_SERVICE s on u.ServiceUser=s.ID left join SZHL_HYGL_OUTUSER_DEPT d on u.OutDept=d.ID where " + strWhere + " order by d.DisplayOrder, u.DisplayOrder, u.Name");
         }
 
         /// <summary>
@@ -1081,6 +1081,7 @@ namespace QJY.API
             SZHL_HYGL_OUTUSER_DEPT model = new SZHL_HYGL_OUTUSER_DEPTB().GetEntity(d => d.ID == Id && d.ComId == UserInfo.User.ComId);
             new SZHL_HYGL_OUTUSER_DEPTB().Delete(model);
         }
+
         /// <summary>
         /// 保存接送机信息
         /// </summary>
@@ -1122,6 +1123,32 @@ namespace QJY.API
             //}
         }
 
+        /// <summary>
+        /// 参会人员登录日志
+        /// </summary>
+        public void ADDOUTUSERLOG(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            SZHL_HYGL_OUTUSER_Log log = JsonConvert.DeserializeObject<SZHL_HYGL_OUTUSER_Log>(P1);
+            if (String.IsNullOrWhiteSpace(log.Mobphone))
+            {
+                msg.ErrorMsg = "用户手机号为空！";
+                return;
+            }
+            if (log.HYGLID <= 0)
+            {
+                msg.ErrorMsg = "会议不存在！";
+                return;
+            }
+            log.CRDate = DateTime.Now;
+            new SZHL_HYGL_OUTUSER_LogB().Insert(log);
+        }
+
+        public void GETOUTUSERLOGLISTBYHYGLID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            int UserID = int.Parse(P2);
+            msg.Result = new SZHL_HYGL_OUTUSER_LogB().GetDTByCommand("select * from dbo.SZHL_HYGL_OUTUSER_Log where HYGLID=" + Id + " and UserID=" + UserID + " order by Mobphone, CRDate desc");
+        }
         #endregion
 
         #region 会议服务人管理

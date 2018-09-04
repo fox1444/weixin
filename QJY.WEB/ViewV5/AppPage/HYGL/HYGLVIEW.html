@@ -23,6 +23,7 @@
                 <div class="tab-kh nav-bt">
                     <span class="cur"><i class="iconfont icon-bookmark"></i>会议信息</span>
                     <div class="pr20" style="float: right;">
+                        <button class="btn btn-info" ms-click="ViewLog()">使用日志</button>
                         <button class="btn btn-info" ms-if="isEdit=='Y' && nowuser==modelData.CRUser" ms-click="Edit()">编辑</button>
                     </div>
                 </div>
@@ -173,6 +174,11 @@
             },
             Edit: function (ID) {
                 window.location.href = "/ViewV5/AppPage/APP_ADD_WF.html?FormCode=HYGL&id=" + model.modelData.ID + "&PIID=" + model.modelData.PIID + "&PDID=" + model.PDID;
+            },
+            ViewLog: function (ID) {
+                ComFunJS.winbtnwin("/ViewV5/AppPage/HYGL/VIEW_LOG.html?r=" + Math.random(), "使用日志", 700, 500, {}, function (layero, inx) {
+                    layer.close(inx);
+                })
             },
             viewfile: function (file) {
                 if (ComFunJS.isPic(file.FileExtendName)) {
@@ -435,7 +441,7 @@
 
                 }
                 return str;
-            }
+            },
         });
 
         avalon.ready(function () {
@@ -447,21 +453,25 @@
                 { "ColName": "StartTime", "ColText": "开始时间", "IsSel": true, "class": "width50" },
                 { "ColName": "EndTime", "ColText": "结束时间", "IsSel": true, "class": "width50" },
                 { "ColName": "Name", "ColText": "会议室", IsSel: true, "class": "" },
-                { "ColName": "CYUser", "ColText": "参与人", "IsSel": true, "class": "", "format": "username" },
-                { "ColName": "JLUser", "ColText": "纪要人", "IsSel": false, "class": "", "format": "username" },
-                { "ColName": "ZCUser", "ColText": "主持人", "IsSel": false, "class": "", "format": "username" },
-                { "ColName": "SXUser", "ColText": "摄像人", "IsSel": false, "class": "", "format": "username" },
-                { "ColName": "HYFW", "ColText": "会议服务", "IsSel": false, "class": "width50 limited-heigth" },
-                { "ColName": "Details", "ColText": "日程安排", "IsSel": true, "class": "width50 limited-heigth" },
-                { "ColName": "HYXZ", "ColText": "会议须知", "IsSel": true, "class": "width50 limited-heigth" },
-                { "ColName": "ZSAP", "ColText": "住宿安排", "IsSel": true, "class": "width50 limited-heigth" },
-                { "ColName": "FZQK", "ColText": "分组情况", "IsSel": true, "class": "width50 limited-heigth" },
-                { "ColName": "HYJL", "ColText": "会议纪要", "IsSel": false, "format": "bqh" }
+                //{ "ColName": "CYUser", "ColText": "参与人", "IsSel": true, "class": "", "format": "username" },
+                //{ "ColName": "JLUser", "ColText": "纪要人", "IsSel": false, "class": "", "format": "username" },
+                //{ "ColName": "ZCUser", "ColText": "主持人", "IsSel": false, "class": "", "format": "username" },
+                //{ "ColName": "SXUser", "ColText": "摄像人", "IsSel": false, "class": "", "format": "username" },
+                //{ "ColName": "HYFW", "ColText": "会议服务", "IsSel": false, "class": "width50 limited-heigth" },
+                //{ "ColName": "Details", "ColText": "日程安排", "IsSel": true, "class": "width50 limited-heigth" },
+                //{ "ColName": "HYXZ", "ColText": "会议须知", "IsSel": true, "class": "width50 limited-heigth" },
+                //{ "ColName": "ZSAP", "ColText": "住宿安排", "IsSel": true, "class": "width50 limited-heigth" },
+                //{ "ColName": "FZQK", "ColText": "分组情况", "IsSel": true, "class": "width50 limited-heigth" },
+                //{ "ColName": "HYJL", "ColText": "会议纪要", "IsSel": false, "format": "bqh" }
                 ]);
 
             model.GetModelData();
             model.getwfdata();
         })
+
+        function GetHYGLID() {
+            return model.strId;
+        }
     </script>
 </body>
 </html>

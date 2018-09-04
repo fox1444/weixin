@@ -13,7 +13,7 @@
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
     <style>
         .mobphone a {
-        color:green;
+            color: green;
         }
     </style>
 </head>
@@ -81,6 +81,7 @@
             modelData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" },
             phonebackData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" },
             currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "DisplayOrder": 0, "Zhiwu": "", "ServiceUserName": "", "ServiceUserMobphone": "" },
+            logdata: { "ComId": 0, "UserID": 0, "Name": "", "Mobphone": "", "HYGLID": 0 },
             isjl: "",
             Name: "",
             wximg: "",
@@ -135,12 +136,12 @@
                                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
                                     if (r.ErrorMsg == "") {
                                         tempmodel.currentuser = r.Result[0];
+                                        tempmodel.signlog();
                                     }
                                 });
                             }
                             $('.input_block').hide();
                             $('.default_block').show();
-
                         }
                         else {
                             $('.input_block').show();
@@ -180,16 +181,6 @@
                                 $('.input_block').show();
                                 $('.default_block').hide();
                             }
-
-                            //if (resultData.Result.JLUser) {
-                            //    var JLUserList = resultData.Result.JLUser.split(',');
-
-                            //    var un = ComFunJS.getCookie("username");
-                            //    if (JLUserList.indexOf(un) != -1 || resultData.Result.FQUser.split(',').indexOf(un) != -1) {
-                            //        tempmodel.isjl = "1";
-                            //    }
-                            //}
-                            //setTimeout(" ComFunJS.initForm()", 500)
                         }
                     })
                 }
@@ -217,6 +208,18 @@
                     }, 200);
                 })
             },//初始化
+            signlog: function () {
+                tempmodel.logdata.ComId = tempmodel.currentuser.ComId;
+                tempmodel.logdata.UserID = tempmodel.currentuser.ID;
+                tempmodel.logdata.Name = tempmodel.currentuser.Name;
+                tempmodel.logdata.Mobphone = tempmodel.currentuser.Mobphone;
+                tempmodel.logdata.HYGLID = tempmodel.modelData.ID;
+                //alert(JSON.stringify(tempmodel.logdata.$model));
+                $.post('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_ADDOUTUSERLOG', { P1: JSON.stringify(tempmodel.logdata.$model) }, function (r) {
+                    if (r.ErrorMsg == "") {
+                    }
+                });
+            },
         });
 
         avalon.ready(function () {
