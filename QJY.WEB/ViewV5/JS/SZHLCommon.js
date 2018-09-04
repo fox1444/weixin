@@ -550,7 +550,7 @@
             });
         }
         $('#' + id + ' canvas').css("height", (height + len - 5) + 'px');
-        $('#' + id).css("width", width + 16 + "px").css("border", "solid 1px #ccc").css("padding", "7px 7px 2px 7px").css("background","#fff");
+       
         $("#" + id).qrcode({
             render: "canvas",
             text: url,                //扫描二维码后显示的内容,可以直接填一个网址，扫描二维码后自动跳向该链接
@@ -564,6 +564,8 @@
             content: str,      //文字说明
             len: len            //文字高度
         });
+        $('#' + id).css("width", width + 16 + "px").css("border", "solid 1px #ccc").css("background", "#fff");
+        $("#" + id + " canvas").css("padding", "7px 7px 2px 7px");
     },//绘制有文字的二维码新
     convertuser: function (user) {
         var returnmsg = "";
