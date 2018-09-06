@@ -11,7 +11,8 @@
     <link href="/View_Mobile/CSS/add.css?ver=2" rel="stylesheet" />
     <link href="/View_Mobile/CSS/szhlextend.css?ver=20160904" rel="stylesheet" />
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
-    <link href="/View_Mobile/JS/Date/FT_Date.min.css" rel="stylesheet" />
+    <link href="/View_Mobile/JS/Date/FT_Date.min.css" rel="stylesheet" />    
+    <link href="/View_Mobile/CSS/video-js.css" rel="stylesheet"/>
 </head>
 <body ms-controller="Hydetail" class="hy_step_r">
     <div class="index-html" style="display:none;">
@@ -89,10 +90,16 @@
                             接送服务
                         </span>
                     </a>
-                    <a href="#" ms-on-click="getdata(12)" class="tab-link button external" ms-class-1="tab-link:(modelData.LbsRegion != '' && modelData.LbsLocation != '') || (modelData.HotelRegion!='' && (modelData.HotelName != '' || currentuser.HotelName != ''))" ms-if="(modelData.LbsRegion != '' && modelData.LbsLocation != '') || (modelData.HotelRegion!='' && (modelData.HotelName != '' || currentuser.HotelName != ''))">
+                    <a href="#" ms-on-click="getdata(12)" class="button external" ms-class-1="tab-link:(modelData.LbsRegion != '' && modelData.LbsLocation != '') || (modelData.HotelRegion!='' && (modelData.HotelName != '' || currentuser.HotelName != ''))" ms-if="(modelData.LbsRegion != '' && modelData.LbsLocation != '') || (modelData.HotelRegion!='' && (modelData.HotelName != '' || currentuser.HotelName != ''))">
                         <img src="/View_Mobile/Images/icon/baidu.png" style="border-radius: 10px;">
                         <span>
                             地图导航
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(13)" class="tab-link button external">
+                        <img src="/View_Mobile/Images/icon/video.png" style="border-radius: 2px;">
+                        <span>
+                            宣传片
                         </span>
                     </a>
                 </div>
@@ -430,6 +437,23 @@
             </div>
         </div>
 
+        <div class="hy_menu bg-white bg-grey hyvideo" id="item-13">
+            <div class="title">
+                <i></i>宣传片
+            </div>
+            <div class="content-bg">
+                <video id="videocontent" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" style="width:100%; height:260px;"
+                       poster="http://video-js.zencoder.com/oceans-clip.png"
+                       data-setup="{}">
+                    <source src="http://www.lstobacco.com/View_Mobile/images/RARBG.mp4" type='video/mp4' />
+                    <!--<source src="http://视频地址格式2.webm" type='video/webm' />
+                    <source src="http://视频地址格式3.ogv" type='video/ogg' />-->
+                    <track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+                    <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+                </video>
+            </div>
+        </div>
+
         <ul class="up-and-down">
             <li>
                 <div class="arrow-up" ms-on-click="getpredata(tempmodel.stepindex)">
@@ -455,9 +479,16 @@
     <script src="/View_Mobile/js/ComFunJS.js"></script>
     <script src="/View_Mobile/js/Jquery2.1.js"></script>
     <script src="/View_Mobile/js/Date/FT_Date.min.js"></script>
+    <script src="/View_Mobile/js/video.js"></script>
 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=rIHnNifrMRwoxGjoChaiClXQqt96IRiw"></script>
     <script>
+        var myPlayer = videojs('videocontent');
+        videojs("videocontent").ready(function () {
+            var myPlayer = this;
+            //myPlayer.play();
+        });
+
         var tempmodel = avalon.define({
             $id: "Hydetail",
             ColumnData: [],
@@ -505,6 +536,13 @@
                         if ($('.hy_menu').length == i) {
                             $('.arrow-down').hide();
                         }
+                    }
+
+                    if (index != 13) {
+                        myPlayer.pause();
+                    }
+                    else {
+                        myPlayer.play();
                     }
                 }
             },
@@ -570,8 +608,8 @@
                             tempmodel.LoadType(tempmodel.currentuser.PickupType, 'PickupTitle', 'Pickup');
                             tempmodel.LoadType(tempmodel.currentuser.SendoffType, 'SendoffTitle', 'Sendoff');
                             setTimeout("tempmodel.ChangeTypeStyle()", 1000);
-                          
-                            if ((tempmodel.modelData.LbsRegion != '' && tempmodel.modelData.LbsLocation != '') || (tempmodel.modelData.HotelRegion!='' && (tempmodel.modelData.HotelName != '' || tempmodel.currentuser.HotelName != ''))) {
+
+                            if ((tempmodel.modelData.LbsRegion != '' && tempmodel.modelData.LbsLocation != '') || (tempmodel.modelData.HotelRegion != '' && (tempmodel.modelData.HotelName != '' || tempmodel.currentuser.HotelName != ''))) {
                                 tempmodel.LoadMap();
                             }
                         }
@@ -821,6 +859,8 @@
             $(".wrapper").css("height", h + 'px');
             $("#mapping").css("height", (h - 88) + 'px');
         });
+
+        
     </script>
 </body>
 </html>
