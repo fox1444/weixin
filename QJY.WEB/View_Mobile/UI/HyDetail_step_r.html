@@ -11,8 +11,8 @@
     <link href="/View_Mobile/CSS/add.css?ver=2" rel="stylesheet" />
     <link href="/View_Mobile/CSS/szhlextend.css?ver=20160904" rel="stylesheet" />
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
-    <link href="/View_Mobile/JS/Date/FT_Date.min.css" rel="stylesheet" />    
-    <link href="/View_Mobile/CSS/video-js.css" rel="stylesheet"/>
+    <link href="/View_Mobile/JS/Date/FT_Date.min.css" rel="stylesheet" />
+    <link href="/View_Mobile/CSS/video-js.css" rel="stylesheet" />
 </head>
 <body ms-controller="Hydetail" class="hy_step_r">
     <div class="index-html" style="display:none;">
@@ -817,14 +817,14 @@
                 $('#mapping').attr('src', tempmodel.Mapsrc);
             },
             LoadMap: function () {
-                var region = tempmodel.modelData.LbsRegion;
-                var destination = tempmodel.modelData.LbsLocation;
-                if (region == '' && destination == '') {
-                    region = tempmodel.modelData.HotelRegion;
-                    destination = tempmodel.currentuser.HotelName;
-                    if (destination == '') {
-                        destination = tempmodel.modelData.HotelName;
-                    }
+                var region = tempmodel.modelData.HotelRegion;
+                var destination = tempmodel.currentuser.HotelName;
+                if (destination == '') {
+                    destination = tempmodel.modelData.HotelName;
+                }
+                if (region == '' || destination == '') {
+                    region = tempmodel.modelData.LbsRegion;
+                    destination = tempmodel.modelData.LbsLocation;
                 }
                 var map = new BMap.Map("mapping");
                 var point = new BMap.Point(30.668497, 104.11315);
@@ -859,8 +859,6 @@
             $(".wrapper").css("height", h + 'px');
             $("#mapping").css("height", (h - 88) + 'px');
         });
-
-        
     </script>
 </body>
 </html>

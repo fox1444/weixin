@@ -18,8 +18,6 @@ namespace QJY.API
 {
     public class CommonHelp
     {
-
-
         /// <summary>
         /// 从html中提取纯文本
         /// </summary>
@@ -527,6 +525,7 @@ namespace QJY.API
             }
 
         }
+
         public static string HttpGet(string Url, string postDataStr)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url + (postDataStr == "" ? "" : "?") + postDataStr);
