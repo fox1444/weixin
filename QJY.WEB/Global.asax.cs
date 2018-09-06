@@ -53,7 +53,7 @@ namespace QJY.WEB
             //string Returndata = new StreamReader(ResponseDataXS.GetResponseStream(), Encoding.UTF8).ReadToEnd();
 
             //更新AccessToken
-            //new JH_Auth_LogB().InsertLog("Application_End", "Application关闭", "Global.asax", "System", "www.lgosoft.com", 0, "");
+            new JH_Auth_LogB().InsertLog("Application_End", "Application关闭", "Global.asax", "System", "www.lgosoft.com", 0, "");
             WXFWHelp.UpdateTokenByTimer();
         }
     }

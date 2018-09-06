@@ -134,7 +134,6 @@ namespace QJY.API
             }
         }
 
-
         public void DXGL_CHECK(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             SZHL_TXSX TX = JsonConvert.DeserializeObject<SZHL_TXSX>(P1);
@@ -143,11 +142,9 @@ namespace QJY.API
                // UserInfo = new JH_Auth_UserB().GetUserInfo(TX.ComId.Value,TX.CRUser);
                 //发送微信消息
                 CommonHelp.SendSMS(TX.TXUser, TX.TXContent, TX.ComId.Value);
-
             }
-
-
         }
+
         public void GETDXQTY(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             decimal DXCost = decimal.Parse(CommonHelp.GetConfig("DXCost"));
