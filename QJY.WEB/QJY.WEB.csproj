@@ -240,7 +240,6 @@
     <Content Include="View_Mobile\CSS\login.css" />
     <Content Include="View_Mobile\CSS\sm.css" />
     <Content Include="View_Mobile\CSS\sm.min.css" />
-    <Content Include="View_Mobile\CSS\tobaccoHtml - 复制.css" />
     <Content Include="View_Mobile\CSS\tobaccoHtml.css" />
     <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="View_Mobile\fonts\icomoon.svg" />
@@ -1912,7 +1911,6 @@
     <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="View_Mobile\JS\jq22pd-49414aee-b8ac-11e4-8813-00163e001348.zip" />
     <Content Include="View_Mobile\fonts\icomoon.eot" />
     <Content Include="View_Mobile\fonts\icomoon.ttf" />
     <Content Include="View_Mobile\fonts\icomoon.woff" />

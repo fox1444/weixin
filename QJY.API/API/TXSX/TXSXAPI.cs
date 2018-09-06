@@ -15,7 +15,6 @@ namespace TXSX
     {
         public static void AddALERT(SZHL_TXSX tx)
         {
-
             tx.Type = "3";
             tx.TXType = "1";
 
@@ -40,13 +39,11 @@ namespace TXSX
 
         }
         private static object islock = new object();
+
         public static void AUTOALERT()
         {
-           
-
             lock (islock)
             {
-
                 var txLst = new SZHL_TXSXB().GetEntities(p => p.Status == "0");
 
                 foreach (var model in txLst)
@@ -89,7 +86,6 @@ namespace TXSX
                                     {
                                         upcount = true;
                                     }
-
                                 }
                                 break;
                             case "3":  //每天
@@ -125,11 +121,7 @@ namespace TXSX
                                                 upcount = true;
                                             }
                                         }
-
-
-
                                     }
-
                                 }
                                 break;
                         }
@@ -188,7 +180,6 @@ namespace TXSX
                                         CommonHelp.SendSMS(u.ToString(), model.CRUserRealName + "给您添加了提醒\n" + model.TXContent, model.ComId.Value);
                                     }
                                 }
-
                             }
                             if (swx) //发微信
                             {

@@ -35,7 +35,6 @@ namespace QJY.API
             return strOutput;
         }
 
-
         /// <summary>
         /// 移除html标签
         /// </summary>
@@ -54,7 +53,6 @@ namespace QJY.API
             }
             return html;
         }
-
 
         /// <summary>
         /// 生成PCCode
@@ -543,6 +541,14 @@ namespace QJY.API
 
             return retString;
         }
+
+        /// <summary>
+        /// 迅捷科技发送短信方法，现已不用
+        /// </summary>
+        /// <param name="telephone"></param>
+        /// <param name="content"></param>
+        /// <param name="ComId"></param>
+        /// <returns></returns>
         public static string SendSMS(string telephone, string content, int ComId = 0)
         {
             string err = "";
@@ -979,6 +985,7 @@ namespace QJY.API
 
 
         }
+
         /// <summary>
         /// 获取导入excel的字段
         /// </summary>
@@ -1044,6 +1051,7 @@ namespace QJY.API
             return cls;
 
         }
+
         /// <summary>
         /// 获取模板中的默认数据
         /// </summary>

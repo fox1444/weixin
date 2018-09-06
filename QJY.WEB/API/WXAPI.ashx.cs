@@ -16,7 +16,6 @@ namespace QJY.WEB
     /// </summary>
     public class WXAPI : IHttpHandler, IRequiresSessionState
     {
-
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
@@ -31,7 +30,6 @@ namespace QJY.WEB
 
             if (!string.IsNullOrEmpty(strAction))
             {
-
                 #region 企业号应用callback
                 if (strAction == "XXJS")
                 {
@@ -241,7 +239,6 @@ namespace QJY.WEB
                                 Auth(jam.Token, jam.EncodingAESKey, jaq.corpId);
                             }
                             #endregion
-
                         }
                     }
                     catch (Exception ex)
@@ -356,13 +353,11 @@ namespace QJY.WEB
 
                     if (!string.IsNullOrEmpty(strCode))
                     {
-
                         var qy = new JH_Auth_QYB().GetEntity(p => p.corpId == strCorpID);
                         if (qy != null)
                         {
                             try
                             {
-
                                 //通过微信接口获取用户名
                                 WXHelp wx = new WXHelp(qy);
                                 string username = wx.GetUserDataByCode(strCode, strModelCode);
@@ -389,7 +384,6 @@ namespace QJY.WEB
                                         Model.Result1 = jau.UserName;
                                         Model.Result2 = ts.TotalMinutes;
                                     }
-
                                 }
                                 else
                                 {
@@ -405,7 +399,6 @@ namespace QJY.WEB
                         {
                             Model.ErrorMsg = "当前企业号未在电脑端注册";
                         }
-
                     }
                     else
                     {
@@ -414,6 +407,7 @@ namespace QJY.WEB
                     #endregion
                 }
                 #endregion
+
                 #region 是否存在
                 if (strAction.ToUpper() == "isexist".ToUpper())
                 {
@@ -445,8 +439,6 @@ namespace QJY.WEB
                                         Model.ErrorMsg = "企业需要重新选择";
                                     }
                                     //重写CODE
-
-
                                 }
                             }
                         }
@@ -457,6 +449,7 @@ namespace QJY.WEB
                     }
                 }
                 #endregion
+
                 #region 发送提醒
                 if (strAction.ToUpper() == "AUTOALERT")
                 {
@@ -469,7 +462,6 @@ namespace QJY.WEB
                 #region 获取SuiteTicket
                 if (HttpContext.Current.Request.HttpMethod.ToUpper() == "POST")
                 {
-
                     string signature = HttpContext.Current.Request.QueryString["msg_signature"];//企业号的 msg_signature
                     string timestamp = HttpContext.Current.Request.QueryString["timestamp"];
                     string nonce = HttpContext.Current.Request.QueryString["nonce"];
@@ -486,7 +478,6 @@ namespace QJY.WEB
 
                     string strde = string.Empty;
                     string strinfotype = string.Empty;
-
 
                     foreach (XmlNode xn in XmlDocument.ChildNodes[0].ChildNodes)
                     {
@@ -534,15 +525,12 @@ namespace QJY.WEB
                     if (strinfotype == "suite_ticket")
                     {
                         pj.Ticket = strtct;
-
                         new JH_Auth_WXPJB().Update(pj);
                     }
-
 
                     HttpContext.Current.Response.Write("success");
                     HttpContext.Current.Response.End();
                 }
-
                 #endregion
             }
 
@@ -553,11 +541,10 @@ namespace QJY.WEB
         }
 
         /// <summary>
-        /// 成为开发者的第一步，验证并相应服务器的数据
+        /// 成为开发者的第一步，验证并响应服务器的数据
         /// </summary>
         private void Auth(string token, string encodingAESKey, string corpId)
         {
-
             string echoString = HttpContext.Current.Request.QueryString["echoStr"];
             string signature = HttpContext.Current.Request.QueryString["msg_signature"];//企业号的 msg_signature
             string timestamp = HttpContext.Current.Request.QueryString["timestamp"];
@@ -604,8 +591,8 @@ namespace QJY.WEB
             //ret==0表示验证成功，retEchostr参数表示明文，用户需要将retEchostr作为get请求的返回参数，返回给企业号。
             // HttpUtils.SetResponse(retEchostr);
         }
-
         #endregion
+
         public bool IsReusable
         {
             get
@@ -613,9 +600,5 @@ namespace QJY.WEB
                 return false;
             }
         }
-
-
-
     }
-
 }
