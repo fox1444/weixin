@@ -109,6 +109,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="API\WXAPI.ashx" />
+    <Content Include="hy.html" />
     <Content Include="ToolS\DownFile.aspx" />
     <Content Include="ToolS\HtmlToWord.aspx" />
     <Content Include="ToolS\JS\echarts.common.min.js" />
