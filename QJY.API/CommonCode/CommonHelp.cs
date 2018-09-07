@@ -13,6 +13,8 @@ using NPOI.HSSF.UserModel;
 using System.Configuration;
 using Newtonsoft.Json;
 using NPOI.XSSF.UserModel;
+using System.Net.Http;
+using System.Security.Cryptography;
 
 namespace QJY.API
 {
@@ -300,7 +302,7 @@ namespace QJY.API
             context.Response.AddHeader("Content-Disposition", "attachment;fileName=" + fileName);
             context.Response.BinaryWrite(ms.ToArray());
         }
-        //
+
         public static bool HasData(Stream excelFileStream)
         {
             using (excelFileStream)
@@ -315,13 +317,6 @@ namespace QJY.API
             return false;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="uploadUrl"></param>
-        /// <param name="fileToUpload"></param>
-        /// <param name="poststr"></param>
-        /// <returns></returns>
         public static string PostFile(string uploadUrl, string fileToUpload, string poststr = "")
         {
             string result = "";
@@ -502,6 +497,13 @@ namespace QJY.API
             }
         }
 
+        /// <summary>
+        /// 发送短信
+        /// </summary>
+        /// <param name="Mobile"></param>
+        /// <param name="Content"></param>
+        /// <param name="SendTime"></param>
+        /// <returns></returns>
         public static string SendDX(string Mobile, string Content, string SendTime)
         {
             try
@@ -521,9 +523,89 @@ namespace QJY.API
             catch (Exception Ex)
             {
                 return Ex.Message;
-
             }
+        }
 
+        public static string SendMAS()
+        {
+            string authurl = "http://112.35.1.155:1992/sms/norsubmit"; //正式环境
+            string ecName = "四川省烟草公司凉山州烟草公司"; //集团客户名称
+            string apId = "lsyc01"; //用户名
+            string secretKey = "CS08122998032"; //密码
+            string mobiles = "13980444473,15196180999";
+            string content = "测试短信接口，如有打扰，请谅解！";
+            string sign = "WUghy8diA"; //签名编码
+            string addSerial = ""; //扩展码，根据向移动公司申请的通道填写，如果申请的精确匹配通道，则填写空字符串("")，否则添加移动公司允许的扩展码
+
+            string ConvertString = ecName + apId + secretKey + mobiles + content + sign + addSerial;
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            string mac = BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(ConvertString)));
+            mac = mac.Replace("-", "").ToLower();
+            //26c695f6c8fc4a7e2a743879990eda3f
+            var authRequest = new
+            {
+                ecName = ecName,
+                apId = apId,
+                secretKey = secretKey,
+                mobiles = mobiles,
+                content = content,
+                sign = sign,
+                addSerial = addSerial,
+                mac = mac
+            };
+            string sData = Base64Encode(Encoding.UTF8, JsonConvert.SerializeObject(authRequest));
+            WebClient WC = new WebClient();
+            WC.Headers.Add("Content-Type", "application/json");
+            byte[] postData = Encoding.UTF8.GetBytes(sData);
+            byte[] responseData = WC.UploadData(authurl, "POST", postData);
+            string returnData = Encoding.UTF8.GetString(responseData);
+            return returnData;
+
+            //string result = "";
+            //HttpWebRequest req = (HttpWebRequest)WebRequest.Create(authurl);
+            //req.Method = "POST";
+            //req.Timeout = 800;//设置请求超时时间，单位为毫秒
+            //req.ContentType = "application/json";
+            //byte[] data = Encoding.UTF8.GetBytes(sData);           
+
+            //req.ContentLength = data.Length;
+
+            //using (Stream reqStream = req.GetRequestStream())
+            //{
+            //    reqStream.Write(data, 0, data.Length);
+            //    reqStream.Close();
+            //}
+
+            //try
+            //{
+            //    HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+            //    Stream stream = resp.GetResponseStream();
+            //    //获取响应内容
+            //    using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+            //    {
+            //        result = reader.ReadToEnd();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return ex.ToString();
+            //}
+            //return result;
+        }
+
+        public static string Base64Encode(Encoding encodeType, string source)
+        {
+            string encode = string.Empty;
+            byte[] bytes = encodeType.GetBytes(source);
+            try
+            {
+                encode = Convert.ToBase64String(bytes);
+            }
+            catch
+            {
+                encode = source;
+            }
+            return encode;
         }
 
         public static string HttpGet(string Url, string postDataStr)
@@ -806,7 +888,7 @@ namespace QJY.API
                 double expires = DateTime.Now.Subtract(DateTime.Parse(model.CRDate.ToString())).TotalSeconds;
                 if (expires > 6000)
                 {
-                    return  WXFWHelp.GetToken();
+                    return WXFWHelp.GetToken();
                 }
                 else
                 {
@@ -1313,10 +1395,4 @@ namespace QJY.API
             return strCheckString;
         }
     }
-
-
-
-
-
-
 }
