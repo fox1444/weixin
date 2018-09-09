@@ -33,12 +33,12 @@ namespace QJY.API
                 }
                 else
                 {
-                    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为空", "Global.asax", "System", "www.lgosoft.com", 0, strIp);
+                    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为空", "Global.asax", "System", "www.lstobacco.com", 0, strIp);
                 }
             }
             catch (Exception ex)
             {
-                new JH_Auth_LogB().InsertLog("Application_Start", "更新Access错误" + ex.ToString(), "Global.asax", "System", "www.lgosoft.com", 0, strIp);
+                new JH_Auth_LogB().InsertLog("Application_Start", "更新Access错误" + ex.ToString(), "Global.asax", "System", "www.lstobacco.com", 0, strIp);
             }
         }
         /// <summary>

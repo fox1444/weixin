@@ -109,6 +109,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="API\WXAPI.ashx" />
+    <Content Include="hy.html" />
     <Content Include="ToolS\DownFile.aspx" />
     <Content Include="ToolS\HtmlToWord.aspx" />
     <Content Include="ToolS\JS\echarts.common.min.js" />
@@ -237,6 +238,7 @@
     <Content Include="ViewV5\JS\WFJS.min.js">
       <DependentUpon>WFJS.js</DependentUpon>
     </Content>
+    <Content Include="ViewV5\test.aspx" />
     <Content Include="View_Mobile\CSS\login.css" />
     <Content Include="View_Mobile\CSS\sm.css" />
     <Content Include="View_Mobile\CSS\sm.min.css" />
@@ -1834,6 +1836,13 @@
     </Compile>
     <Compile Include="ToolS\YZMCode.aspx.designer.cs">
       <DependentUpon>YZMCode.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewV5\test.aspx.cs">
+      <DependentUpon>test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewV5\test.aspx.designer.cs">
+      <DependentUpon>test.aspx</DependentUpon>
     </Compile>
     <Compile Include="WX\Authrise.aspx.cs">
       <DependentUpon>Authrise.aspx</DependentUpon>

@@ -19,7 +19,7 @@ namespace QJY.WEB
 
         public void TimerNow(object source, System.Timers.ElapsedEventArgs e)
         {
-            //new JH_Auth_LogB().InsertLog("Application_Start", "Application启动", "Global.asax", "System", "www.lgosoft.com", 0, "");
+            //new JH_Auth_LogB().InsertLog("Application_Start", "Application启动", "Global.asax", "System", "www.lstobacco.com", 0, "");
             WXFWHelp.UpdateTokenByTimer();
         }
         protected void Session_Start(object sender, EventArgs e)
@@ -53,7 +53,7 @@ namespace QJY.WEB
             //string Returndata = new StreamReader(ResponseDataXS.GetResponseStream(), Encoding.UTF8).ReadToEnd();
 
             //更新AccessToken
-            new JH_Auth_LogB().InsertLog("Application_End", "Application关闭", "Global.asax", "System", "www.lgosoft.com", 0, "");
+            new JH_Auth_LogB().InsertLog("Application_End", "Application关闭", "Global.asax", "System", "www.lstobacco.com", 0, "");
             WXFWHelp.UpdateTokenByTimer();
         }
     }
