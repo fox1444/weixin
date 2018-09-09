@@ -186,6 +186,7 @@ namespace QJY.API
 
             }
         }
+
         /// <summary>
         /// 导出Excel
         /// </summary>
@@ -235,6 +236,7 @@ namespace QJY.API
             //}
             return ms;
         }
+
         /// <summary>
         /// excel转换为table
         /// </summary>
@@ -295,6 +297,7 @@ namespace QJY.API
 
             return dt;
         }
+
         static void RenderToBrowser(MemoryStream ms, HttpContext context, string fileName)
         {
             if (context.Request.Browser.Browser == "IE")
@@ -526,14 +529,14 @@ namespace QJY.API
             }
         }
 
-        public static string SendMAS()
+        public static string SendMAS(string Mobiles, string Content)
         {
             string authurl = "http://112.35.1.155:1992/sms/norsubmit"; //正式环境
             string ecName = "四川省烟草公司凉山州烟草公司"; //集团客户名称
             string apId = "lsyc01"; //用户名
             string secretKey = "CS08122998032"; //密码
-            string mobiles = "13980444473,15196180999,13881568899,15183645235,13881518989,13778614373,15884011111,13881470470,13881453311,18328832580,13981587872,18282844528";
-            string content = "凉山烟叶产业扶贫座谈会暨产销衔接会通知测试短信，会议链接http://www.lstobacco.com/hy.html?id=271，如有打扰，请谅解！";
+            string mobiles = Mobiles;
+            string content = Content;
             string sign = "WUghy8diA"; //签名编码
             string addSerial = ""; //扩展码，根据向移动公司申请的通道填写，如果申请的精确匹配通道，则填写空字符串("")，否则添加移动公司允许的扩展码
 

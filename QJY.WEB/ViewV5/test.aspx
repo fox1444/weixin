@@ -1,17 +1,144 @@
-ï»¿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="test.aspx.cs" Inherits="QJY.WEB.ViewV5.test" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="test.aspx.cs" Inherits="QJY.WEB.ViewV5.test" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
     <title></title>
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div>
-            <asp:Button ID="btn" runat="server" Text="æäº¤" OnClick="btn_Click" />
-        </div>
-    </form>
+    <script src="/ViewV5/JS/jquery-1.11.2.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script>
+        wx.config({
+            debug: true, // ¿ªÆôµ÷ÊÔÄ£Ê½,µ÷ÓÃµÄËùÓĞapiµÄ·µ»ØÖµ»áÔÚ¿Í»§¶Ëalert³öÀ´£¬ÈôÒª²é¿´´«ÈëµÄ²ÎÊı£¬¿ÉÒÔÔÚpc¶Ë´ò¿ª£¬²ÎÊıĞÅÏ¢»áÍ¨¹ılog´ò³ö£¬½öÔÚpc¶ËÊ±²Å»á´òÓ¡¡£
+            appId: 'wx1b5c7dbfe9a3555d', // ±ØÌî£¬¹«ÖÚºÅµÄÎ¨Ò»±êÊ¶
+            timestamp: Date.parse(new Date()), // ±ØÌî£¬Éú³ÉÇ©ÃûµÄÊ±¼ä´Á
+            nonceStr: '', // ±ØÌî£¬Éú³ÉÇ©ÃûµÄËæ»ú´®
+            signature: '',// ±ØÌî£¬Ç©Ãû
+            jsApiList: [] // ±ØÌî£¬ĞèÒªÊ¹ÓÃµÄJS½Ó¿ÚÁĞ±í
+        });
+
+    </script>
+    <%--<style type="text/css">
+        html, body {
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+    
+    <script>
+        //Õâ¶Î´ú Ö÷ÒªÊÇ»ñÈ¡ÉãÏñÍ·µÄÊÓÆµÁ÷²¢ÏÔÊ¾ÔÚVideo Ç©ÖĞ  
+        var canvas = null, context = null, video = null;
+        window.addEventListener("DOMContentLoaded", function () {
+            try {
+                canvas = document.getElementById("canvas");
+                context = canvas.getContext("2d");
+                video = document.getElementById("video");
+
+                var videoObj = { "video": true, audio: false },
+                    flag = true,
+                    MediaErr = function (error) {
+                        flag = false;
+                        if (error.PERMISSION_DENIED) {
+                            alert('ÓÃ»§¾Ü¾øÁËä¯ÀÀÆ÷ÇëÇóÃ½ÌåµÄÈ¨ÏŞ', 'ÌáÊ¾');
+                        } else if (error.NOT_SUPPORTED_ERROR) {
+                            alert('¶Ô²»Æğ£¬ÄúµÄä¯ÀÀÆ÷²»Ö§³ÖÅÄÕÕ¹¦ÄÜ£¬ÇëÊ¹ÓÃÆäËûä¯ÀÀÆ÷', 'ÌáÊ¾');
+                        } else if (error.MANDATORY_UNSATISFIED_ERROR) {
+                            alert('Ö¸¶¨µÄÃ½ÌåÀàĞÍÎ´½ÓÊÕµ½Ã½ÌåÁ÷', 'ÌáÊ¾');
+                        } else {
+                            alert('ÏµÍ³Î´ÄÜ»ñÈ¡µ½ÉãÏñÍ·£¬ÇëÈ·±£ÉãÏñÍ·ÒÑÕıÈ·°²×°¡£»ò³¢ÊÔË¢ĞÂÒ³Ãæ£¬ÖØÊÔ', 'ÌáÊ¾');
+                        }
+                    };
+                //»ñÈ¡Ã½ÌåµÄ¼æÈİ´úÂë£¬Ä¿Ç°Ö»Ö§³Ö£¨Firefox,Chrome,Opera£©
+                if (navigator.getUserMedia) {
+                    //qqä¯ÀÀÆ÷²»Ö§³Ö
+                    if (navigator.userAgent.indexOf('MQQBrowser') > -1) {
+                        alert('¶Ô²»Æğ£¬ÄúµÄä¯ÀÀÆ÷²»Ö§³ÖÅÄÕÕ¹¦ÄÜ£¬ÇëÊ¹ÓÃÆäËûä¯ÀÀÆ÷1', 'ÌáÊ¾');
+                        return false;
+                    }
+                    navigator.getUserMedia(videoObj, function (stream) {
+                        video.src = stream;
+                        video.play();
+                    }, MediaErr);
+                }
+                else if (navigator.webkitGetUserMedia) {
+                    navigator.webkitGetUserMedia(videoObj, function (stream) {
+                        video.src = window.webkitURL.createObjectURL(stream);
+                        video.play();
+                    }, MediaErr);
+                }
+                else if (navigator.mozGetUserMedia) {
+                    navigator.mozGetUserMedia(videoObj, function (stream) {
+                        video.src = window.URL.createObjectURL(stream);
+                        video.play();
+                    }, MediaErr);
+                }
+                else if (navigator.msGetUserMedia) {
+                    navigator.msGetUserMedia(videoObj, function (stream) {
+                        $(document).scrollTop($(window).height());
+                        video.src = window.URL.createObjectURL(stream);
+                        video.play();
+                    }, MediaErr);
+                } else {
+                    alert('¶Ô²»Æğ£¬ÄúµÄä¯ÀÀÆ÷²»Ö§³ÖÅÄÕÕ¹¦ÄÜ£¬ÇëÊ¹ÓÃÆäËûä¯ÀÀÆ÷2');
+                    return false;
+                }
+                if (flag) {
+                    alert('ÎªÁË»ñµÃ¸ü×¼È·µÄ²âÊÔ½á¹û£¬Çë¾¡Á¿½«¶şÎ¬ÂëÖÃÓÚ¿òÖĞ£¬È»ºó½øĞĞÅÄÉã¡¢É¨Ãè¡£ ÇëÈ·±£ä¯ÀÀÆ÷ÓĞÈ¨ÏŞÊ¹ÓÃÉãÏñ¹¦ÄÜ');
+                }
+                //Õâ¸öÊÇÅÄÕÕ°´Å¥µÄÊÂ¼ş£¬          
+                $("#snap").click(function () { startPat(); }).show();
+            } catch (e) {
+                printHtml("ä¯ÀÀÆ÷²»Ö§³ÖHTML5 CANVAS");
+            }
+        }, false);
+
+        //´òÓ¡ÄÚÈİµ½Ò³Ãæ      
+        function printHtml(content) {
+            $(window.document.body).append(content + "<br/>");
+        }
+        //¿ªÊ¼ÅÄÕÕ
+        function startPat() {
+            setTimeout(function () {//·ÀÖ¹µ÷ÓÃ¹ı¿ì
+                if (context) {
+                    context.drawImage(video, 0, 0, 320, 320);
+                    CatchCode();
+                }
+            }, 200);
+        }
+        //×¥ÆÁ»ñÈ¡Í¼ÏñÁ÷£¬²¢ÉÏ´«µ½·şÎñÆ÷      
+        function CatchCode() {
+            if (canvas != null) {
+                //ÒÔÏÂ¿ªÊ¼±à Êı¾İ   
+                var imgData = canvas.toDataURL();
+                //½«Í¼Ïñ×ª»»Îªbase64Êı¾İ
+                var base64Data = imgData;//.substr(22); //ÔÚÇ°¶Ë½ØÈ¡22Î»Ö®ºóµÄ×Ö·û´®×÷ÎªÍ¼ÏñÊı¾İ
+                //¿ªÊ¼Òì²½ÉÏ
+                $.post("testpost.aspx", { "img": base64Data }, function (result) {
+                    printHtml("½âÎö½á¹û£º" + result.data);
+                    if (result.status == "success" && result.data != "") {
+                        printHtml("½âÎö½á¹û³É¹¦£¡");
+                    } else {
+                        startPat();//Èç¹ûÃ»ÓĞ½âÎö³öÀ´ÔòÖØĞÂ×¥ÅÄ½âÎö       
+                    }
+                }, "json");
+            }
+        }
+    </script>
+
+    <div id="support"></div>
+    <div id="contentHolder">
+        <video id="video" width="320" height="320" autoplay="autoplay">
+        </video>
+        <canvas style="display: none; background-color: #F00;" id="canvas" width="320" height="320"></canvas>
+        <br />
+        <button id="snap" style="display: none; height: 50px; width: 120px;">¿ªÊ¼É¨Ãè</button>
+    </div>--%>
+    <div>
+        <asp:Button ID="btn" runat="server" Text="Ìá½»" OnClick="btn_Click" Visible="false" />
+    </div>
 </body>
 </html>

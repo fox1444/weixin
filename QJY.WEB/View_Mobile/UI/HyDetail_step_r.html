@@ -128,6 +128,8 @@
                     {{modelData.HYFW|html}}
                 </div>
             </div>
+
+            <video id="scansao" autoplay></video>
         </div>
 
         <!--日程安排-->
@@ -837,7 +839,7 @@
                         map.addOverlay(mk);
                         map.panTo(r.point);
                         tempmodel.Mapsrc = 'http://api.map.baidu.com/direction?origin=latlng:' + r.point.lat + ',' + r.point.lng + '|name:&destination=' + destination + '&mode=driving&region=' + region + '&output=html&ak=rIHnNifrMRwoxGjoChaiClXQqt96IRiw';
-                        tempmodel.ReLoadMap();
+                        setTimeout(" tempmodel.ReLoadMap()", 1000);
                         //$('#mapping').attr('src', tempmodel.Mapsrc);
                     }
                 });
@@ -859,6 +861,8 @@
             $(".wrapper").css("height", h + 'px');
             $("#mapping").css("height", (h - 88) + 'px');
         });
+
+        
     </script>
 </body>
 </html>

@@ -105,6 +105,12 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="zxing, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.4\lib\net45\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.4\lib\net45\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -238,6 +244,7 @@
     <Content Include="ViewV5\JS\WFJS.min.js">
       <DependentUpon>WFJS.js</DependentUpon>
     </Content>
+    <Content Include="ViewV5\testpost.aspx" />
     <Content Include="ViewV5\test.aspx" />
     <Content Include="View_Mobile\CSS\login.css" />
     <Content Include="View_Mobile\CSS\sm.css" />
@@ -1836,6 +1843,13 @@
     </Compile>
     <Compile Include="ToolS\YZMCode.aspx.designer.cs">
       <DependentUpon>YZMCode.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewV5\testpost.aspx.cs">
+      <DependentUpon>testpost.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewV5\testpost.aspx.designer.cs">
+      <DependentUpon>testpost.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewV5\test.aspx.cs">
       <DependentUpon>test.aspx</DependentUpon>
