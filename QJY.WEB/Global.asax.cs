@@ -10,7 +10,8 @@ namespace QJY.WEB
         protected void Application_Start(object sender, EventArgs e)
         {
             System.Timers.Timer t = new System.Timers.Timer();
-            t.Interval = (CommonHelp.AppConfigInt("AccessTokenExpireTime") * 60 * 1000);
+            //t.Interval = (CommonHelp.AppConfigInt("AccessTokenExpireTime") * 60 * 1000);
+            t.Interval = 20 * 60 * 1000;
             t.Elapsed += new System.Timers.ElapsedEventHandler(TimerNow);
             t.AutoReset = true;
             t.Enabled = true;
@@ -22,6 +23,7 @@ namespace QJY.WEB
             //new JH_Auth_LogB().InsertLog("Application_Start", "Application启动", "Global.asax", "System", "www.lstobacco.com", 0, "");
             WXFWHelp.UpdateTokenByTimer();
         }
+
         protected void Session_Start(object sender, EventArgs e)
         {
 

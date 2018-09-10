@@ -115,6 +115,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="API\WXAPI.ashx" />
+    <Content Include="confirm.html" />
     <Content Include="hy.html" />
     <Content Include="ToolS\DownFile.aspx" />
     <Content Include="ToolS\HtmlToWord.aspx" />
@@ -265,10 +266,8 @@
     <Content Include="View_Mobile\JS\sm-extend.min.js" />
     <Content Include="View_Mobile\JS\sm.min.js" />
     <Content Include="View_Mobile\UI\HyDetail_index_r.html" />
-    <Content Include="View_Mobile\UI\HyDetail_index.html" />
     <Content Include="View_Mobile\UI\HyDetail_step_r.html" />
     <Content Include="View_Mobile\UI\HyDetail_step_n.html" />
-    <Content Include="View_Mobile\UI\HyDetail_step.html" />
     <Content Include="View_Mobile\JS\avalon1.47.js" />
     <Content Include="View_Mobile\UI\TEMP\MODEL\MWXGROUP.html" />
     <Content Include="View_Mobile\UI\UI_CAR_INFO.html" />

@@ -9,7 +9,7 @@
 </head>
 <body>
     <script src="/ViewV5/JS/jquery-1.11.2.min.js"></script>
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+<%--    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
     <script>
         wx.config({
             debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -20,8 +20,9 @@
             jsApiList: [] // 必填，需要使用的JS接口列表
         });
 
-    </script>
-    <%--<style type="text/css">
+    </script>--%>
+    <%--<input type="file" name="file"  capture="camera" />--%>
+    <style type="text/css">
         html, body {
             height: 100%;
             width: 100%;
@@ -82,7 +83,8 @@
                         video.src = window.URL.createObjectURL(stream);
                         video.play();
                     }, MediaErr);
-                } else {
+                } 
+                else {
                     alert('对不起，您的浏览器不支持拍照功能，请使用其他浏览器2');
                     return false;
                 }
@@ -136,7 +138,7 @@
         <canvas style="display: none; background-color: #F00;" id="canvas" width="320" height="320"></canvas>
         <br />
         <button id="snap" style="display: none; height: 50px; width: 120px;">开始扫描</button>
-    </div>--%>
+    </div>
     <div>
         <asp:Button ID="btn" runat="server" Text="提交" OnClick="btn_Click" Visible="false" />
     </div>
