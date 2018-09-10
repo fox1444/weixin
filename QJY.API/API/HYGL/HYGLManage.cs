@@ -666,16 +666,19 @@ namespace QJY.API
             }
         }
 
-        public void GETHYGLMODELWITHPHONE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        /// <summary>
+        /// 根据会议ID和参会人的姓名/手机获取会议信息
+        /// </summary>
+        public void GETHYGLMODELBYPHONEORNAME(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int Id = int.Parse(P1);
-            string PhoneNumber = P2;
+            string PhoneOrName = P2;
             //string strWhere = " hy.IsDel=0 and hy.ID=" + Id + " and (CHARINDEX((select UserName FROM JH_Auth_User where mobphone=N'" + PhoneNumber + "')+',',CYUser+',')>0 " +
             //    " or CHARINDEX((select UserName FROM JH_Auth_User where mobphone=N'" + PhoneNumber + "')+',',ZCUser+',')>0 " +
             //    " or CHARINDEX((select UserName FROM JH_Auth_User where mobphone=N'" + PhoneNumber + "')+',',JLUser+',')>0 " +
             //    " or CHARINDEX((select UserName FROM JH_Auth_User where mobphone=N'" + PhoneNumber + "')+',',SXUser+',')>0 )";
 
-            string strWhere = " hy.IsDel=0 and hy.ID=" + Id + " and hy.Id in (select HYGLID from SZHL_HYGL_OUTUSER where Mobphone=N'" + PhoneNumber + "')";
+            string strWhere = " hy.IsDel=0 and hy.ID=" + Id + " and hy.Id in (select HYGLID from SZHL_HYGL_OUTUSER where (Mobphone=N'" + PhoneOrName + "' or Name=N'" + PhoneOrName + "') and HYGLID=" + Id + ")";
             string colNme = @"hy.*,hys.Name ,dbo.fn_PDStatus(hy.intProcessStanceid) AS StateName,case when hy.StartTime>getdate() then '即将开始' when hy.StartTime<=getdate() and hy.EndTime>=getdate() then '正在进行' when hy.EndTime<getdate() then '已结束' end as HLStatus ";
             string tableName = string.Format(@" SZHL_HYGL hy left join SZHL_HYGL_ROOM hys on hy.RoomID=hys.ID");
 
@@ -730,8 +733,29 @@ namespace QJY.API
 
                 //更新消息为已读状态
                 //new JH_Auth_User_CenterB().ReadMsg(UserInfo, Int32.Parse(strid), "HYGL");
+
+                string userWhere = " u.HYGLID=" + Id + " and (u.Mobphone=N'" + PhoneOrName + "' or u.Name=N'" + PhoneOrName + "')";
+                msg.Result5 = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.*, s.Name as ServiceUserName, s.Mobphone as ServiceUserMobphone, d.Name as OutDeptName from dbo.SZHL_HYGL_OUTUSER u left join  SZHL_HYGL_SERVICE s on u.ServiceUser=s.ID left join SZHL_HYGL_OUTUSER_DEPT d on u.OutDept=d.ID where " + userWhere + " order by d.DisplayOrder, u.DisplayOrder, u.Name");
             }
         }
+
+        /// <summary>
+        /// 根据会议ID和参会人ID获取会议信息
+        /// </summary>
+        public void GETHYGLMODELBYOUTERUSERID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            int OuterId = int.Parse(P2);
+
+            string strWhere = " hy.IsDel=0 and hy.ID=" + Id + " and hy.Id in (select HYGLID from SZHL_HYGL_OUTUSER where  ID= " + OuterId + " and HYGLID=" + Id + ")";
+            string colNme = @"hy.*,hys.Name ,dbo.fn_PDStatus(hy.intProcessStanceid) AS StateName,case when hy.StartTime>getdate() then '即将开始' when hy.StartTime<=getdate() and hy.EndTime>=getdate() then '正在进行' when hy.EndTime<getdate() then '已结束' end as HLStatus ";
+            string tableName = string.Format(@" SZHL_HYGL hy left join SZHL_HYGL_ROOM hys on hy.RoomID=hys.ID");
+
+            string strSql = string.Format("Select {0}  From {1} where {2} order by hy.CRDate desc", colNme, tableName, strWhere);
+            DataTable dt = new SZHL_HYGLB().GetDTByCommand(strSql);
+            msg.Result = dt;
+        }
+
         #endregion
 
         #region 更新会议情况
@@ -925,6 +949,17 @@ namespace QJY.API
         }
 
         /// <summary>
+        /// 登录时根据姓名或手机号获取参会人信息列表，可能为多个
+        /// </summary>
+        public void GETOUTUSERLISTBYPHONEORNAME(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int HYGLID = int.Parse(P1);
+            string phoneorname = P2;
+            string strWhere = " u.HYGLID=" + HYGLID + " and (u.Mobphone=N'" + phoneorname + "' or u.Name=N'" + phoneorname + "')";
+            msg.Result = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.*, s.Name as ServiceName, d.Name as OutDeptName from dbo.SZHL_HYGL_OUTUSER u left join  SZHL_HYGL_SERVICE s on u.ServiceUser=s.ID left join SZHL_HYGL_OUTUSER_DEPT d on u.OutDept=d.ID where " + strWhere + " order by d.DisplayOrder, u.DisplayOrder, u.Name");
+        }
+
+        /// <summary>
         /// 新加、编辑外部参会人，微信前端使用，不登录
         /// </summary>
         public void UPDATEOUTUSER(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
@@ -995,6 +1030,22 @@ namespace QJY.API
             int Id = int.Parse(P1);
 
             string strWhere = " u.HYGLID=" + Id + " and u.Mobphone='" + P2 + "'";
+            string colNme = @"u.*, s.Name as ServiceUserName, s.Mobphone as ServiceUserMobphone, d.Name as OutDeptName ";
+            string tableName = string.Format(@" SZHL_HYGL_OUTUSER u left join SZHL_HYGL_Service s on u.ServiceUser=s.ID left join SZHL_HYGL_OUTUSER_DEPT d on u.OutDept=d.ID");
+
+            string strSql = string.Format("Select {0}  From {1} where {2} ", colNme, tableName, strWhere);
+            DataTable dt = new SZHL_HYGL_OUTUSERB().GetDTByCommand(strSql);
+            msg.Result = dt;
+        }
+
+        /// <summary>
+        /// 根据ID获取外部参会人信息，微信前端使用
+        /// </summary>
+        public void GETOUTUSERMODELBYID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int HYGLId = int.Parse(P1);
+            int OuterId = int.Parse(P2);
+            string strWhere = " u.HYGLID=" + HYGLId + " and u.ID=" + OuterId;
             string colNme = @"u.*, s.Name as ServiceUserName, s.Mobphone as ServiceUserMobphone, d.Name as OutDeptName ";
             string tableName = string.Format(@" SZHL_HYGL_OUTUSER u left join SZHL_HYGL_Service s on u.ServiceUser=s.ID left join SZHL_HYGL_OUTUSER_DEPT d on u.OutDept=d.ID");
 
