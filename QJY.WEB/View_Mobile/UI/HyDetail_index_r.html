@@ -35,11 +35,11 @@
         <div class="infomation">
             地址：{{modelData.Name}}
         </div>
-        <div class="default_block">
+        <div class="default_block" style="display:none;">
             <div class="infomation">
                 尊敬的<span style="color:red">{{currentuser.Name}}</span>，欢迎您参加本次会议
             </div>
-            <div class="infomation " ms-if="currentuser.ServiceUserName!=''">
+            <div class="infomation" ms-if="currentuser.ServiceUserName!=''">
                 您的联络员是<span class="mobphone">{{ComFunJS.SetContactPhone(currentuser.ServiceUserMobphone,currentuser.ServiceUserName)|html}}</span>，
                 联络电话是{{ComFunJS.SetContactPhone(currentuser.ServiceUserMobphone)|html}}
             </div>
@@ -52,9 +52,17 @@
                 </div>
             </div>
         </div>
-        <div class="input_block">
+        <div class="list_block" style="display:none;">
+            <div class="infomation" style="color:red;">
+                请选择您登录的账号：
+            </div>
+            <div ms-repeat-el="currentuserlist" class="infomation">
+                <a href="#" ms-on-click="selectuser(el)" style="color:green;">{{el.OutDeptName}}{{el.Zhiwu}}{{el.Name}}</a>
+            </div>
+        </div>
+        <div class="input_block" style="display:none;">
             <div class="phonenumber">
-                <input type="number" id="phone_input" placeholder="请输入姓名或手机号" ms-duplex="phonenumberorname">
+                <input type="text" id="phone_input" placeholder="请输入姓名或手机号" ms-duplex="phonenumberorname">
             </div>
             <div class="gobutton2">
                 <span id="phone_input_submit" ms-on-click="go_detail()">进入会议</span>
@@ -79,7 +87,7 @@
             userpl: 0,
             usertype: "",
             modelData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" },
-            currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "DisplayOrder": 0, "Zhiwu": "", "ServiceUserName": "", "ServiceUserMobphone": "" },
+            currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "Zhiwu": "", "DisplayOrder": 0, "Zhiwu": "", "ServiceUserName": "", "ServiceUserMobphone": "" },
             currentuserlist: [],
             logdata: { "ComId": 0, "UserID": 0, "Name": "", "Mobphone": "", "HYGLID": 0 },
             Name: "",
@@ -87,7 +95,7 @@
             dataid: ComFunJS.getQueryString('id'),
             RoomID: ComFunJS.getQueryString("rid"),
             view_detail: function () {
-                var pnum = ComFunJS.getCookie("outuserid");                
+                var pnum = ComFunJS.getCookie("outuserid");
                 if (pnum) {
                     $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELBYOUTERUSERID', { P1: tempmodel.dataid, P2: pnum }, function (resultData) {
                         if (resultData.ErrorMsg == "") {
@@ -122,30 +130,21 @@
                                     tempmodel.currentuser = resultData.Result5[0];
                                     ComFunJS.setCookieMinute("outuserid", tempmodel.currentuser.ID, 60);
                                     $('.input_block').hide();
+                                    $('.list_block').hide();
                                     $('.default_block').show();
+                                    tempmodel.signlog();
                                 }
                                 else {//多条数据的情况
-
+                                    tempmodel.currentuserlist = resultData.Result5;
+                                    $('.input_block').hide();
+                                    $('.list_block').show();
+                                    $('.default_block').hide();
                                 }
-                                //if (resultData.Result[5].length == 1) {
-                                //tempmodel.currentuser = r.Result5[0];
-                                //ComFunJS.setCookieMinute("outuserid", resultData.Result[5].ID, 60);
-                                //var pn = tempmodel.phonenumberorname;
-                                //if (pn && pn != null && pn != undefined && pn != '') {
-                                //    $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
-                                //        if (r.ErrorMsg == "") {
-                                //            tempmodel.currentuser = r.Result[0];
-                                //            tempmodel.signlog();
-                                //        }
-                                //    });
-                                //}
-                                //$('.input_block').hide();
-                                //$('.default_block').show();
-                                //}
                             }
                         }
                         else {
                             $('.input_block').show();
+                            $('.list_block').hide();
                             $('#phone_input').focus();
                             $('.default_block').hide();
                             ComFunJS.winwarning("未查询到您的参会记录");
@@ -154,8 +153,19 @@
                     }
                 })
             },//输入手机或姓名后加载
+            selectuser: function (u) {
+                if (u) {
+                    tempmodel.currentuser = u;
+                    ComFunJS.setCookieMinute("outuserid", tempmodel.currentuser.ID, 60);
+                    $('.input_block').hide();
+                    $('.list_block').hide();
+                    $('.default_block').show();
+                    tempmodel.signlog();
+                }
+            },
             re_input: function () {
                 $('.input_block').show();
+                $('.list_block').hide();
                 $('.default_block').hide();
                 $('#phone_input').focus();
                 $('#phone_input').val('');
@@ -175,10 +185,12 @@
                                         if (r.Result.length > 0) {
                                             tempmodel.currentuser = r.Result[0];
                                             $('.input_block').hide();
+                                            $('.list_block').hide();
                                             $('.default_block').show();
                                         }
                                         else {
                                             $('.input_block').show();
+                                            $('.list_block').hide();
                                             $('.default_block').hide();
                                         }
                                     }
@@ -186,6 +198,7 @@
                             }
                             else {
                                 $('.input_block').show();
+                                $('.list_block').hide();
                                 $('.default_block').hide();
                             }
                         }

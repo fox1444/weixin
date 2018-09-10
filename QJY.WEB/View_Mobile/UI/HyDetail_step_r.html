@@ -598,7 +598,7 @@
             LoadRoom: function () {
                 var pn = ComFunJS.getCookie("outuserid");
                 if (pn && pn != null && pn != undefined && pn != '') {
-                    $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETHYGLMODELBYOUTERUSERID&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: pn }, function (r) {
+                    $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYID&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: pn }, function (r) {
                         if (r.ErrorMsg == "") {
                             tempmodel.currentuser = r.Result[0];
                             tempmodel.currentuser.PickupDate = tempmodel.convertDate(tempmodel.currentuser.PickupDate);
