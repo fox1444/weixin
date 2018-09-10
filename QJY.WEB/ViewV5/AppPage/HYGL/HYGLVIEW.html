@@ -161,13 +161,14 @@
                                 model.plData = resultData.Result2;
                                 model.plStatus = resultData.Result3;
 
-                                var url = ComFunJS.yuming + "/View_Mobile/UI/HyDetail_index_r.html?id=" + model.modelData.ID;
+                                //var url = ComFunJS.yuming + "/confirm.html?name=1811513406027600004412; X2F/云烟87/德昌县德州烟点 定级:郭光奎 仓管:宋正文 烟农:尤银富";
+                                var url = ComFunJS.yuming + "/hy.html?id=" + model.modelData.ID;
                                 ComFunJS.DrawQrcode("qrcode", url, model.modelData.Title,"icon");
                              
                                 //model.EWMcode = "http://qr.liantu.com/api.php?text=" + ComFunJS.yuming + "/View_Mobile/UI/HyDetail_index_r.html?id=" + model.modelData.ID + "&bg=ffffff&fg=007457&w=600&logo=" + ComFunJS.yuming + "/View_Mobile/images/tobacco-logo-icon.png";
                                 //ComFunJS.DrawEWMcancas('cvs', model.EWMcode, model.modelData.Title);
                             }
-                            //setTimeout(" ComFunJS.initForm()", 500)
+                            //setTimeout("ComFunJS.initForm()", 500)
                         }
                     })
                 }

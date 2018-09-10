@@ -500,7 +500,7 @@
             CYUserStr: "",
             Mapsrc: "",
             modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "BoardingTime": "", "CarNumber": "", "HotelName": "", "HotelLocation": "", "LbsRegion": "", "LbsLocation": "" },
-            currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "", "HotelName": "", "HotelLocation": "" },
+            currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUserName": 0, "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "", "HotelName": "", "HotelLocation": "" },
             dataid: ComFunJS.getQueryString('id'),
             stepindex: "",
             gostart: function (index) {
@@ -561,7 +561,7 @@
                 tempmodel.getdata(id);
             },
             inittemp: function (strId) {
-                var pn = ComFunJS.getCookie("userphonenumber");
+                var pn = ComFunJS.getCookie("outuserid");
                 if (!pn || pn == null || pn == undefined || pn == '') {
                     tempmodel.gostart();
                 }
@@ -596,9 +596,9 @@
                 tempmodel.getdata(1);
             },
             LoadRoom: function () {
-                var pn = ComFunJS.getCookie("userphonenumber");
+                var pn = ComFunJS.getCookie("outuserid");
                 if (pn && pn != null && pn != undefined && pn != '') {
-                    $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: pn }, function (r) {
+                    $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETHYGLMODELBYOUTERUSERID&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: pn }, function (r) {
                         if (r.ErrorMsg == "") {
                             tempmodel.currentuser = r.Result[0];
                             tempmodel.currentuser.PickupDate = tempmodel.convertDate(tempmodel.currentuser.PickupDate);

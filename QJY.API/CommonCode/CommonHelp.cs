@@ -529,6 +529,12 @@ namespace QJY.API
             }
         }
 
+        /// <summary>
+        /// 移动云MAS 发送短信接口
+        /// </summary>
+        /// <param name="Mobiles">手机号以,隔开</param>
+        /// <param name="Content">发送内容，建议400字以内</param>
+        /// <returns></returns>
         public static string SendMAS(string Mobiles, string Content)
         {
             string authurl = "http://112.35.1.155:1992/sms/norsubmit"; //正式环境

@@ -54,7 +54,7 @@
         </div>
         <div class="input_block">
             <div class="phonenumber">
-                <input type="number" id="phone_input" placeholder="请输入手机号" ms-duplex="phonenumber">
+                <input type="number" id="phone_input" placeholder="请输入姓名或手机号" ms-duplex="phonenumberorname">
             </div>
             <div class="gobutton2">
                 <span id="phone_input_submit" ms-on-click="go_detail()">进入会议</span>
@@ -79,23 +79,19 @@
             userpl: 0,
             usertype: "",
             modelData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" },
-            phonebackData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "" },
             currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "DisplayOrder": 0, "Zhiwu": "", "ServiceUserName": "", "ServiceUserMobphone": "" },
+            currentuserlist: [],
             logdata: { "ComId": 0, "UserID": 0, "Name": "", "Mobphone": "", "HYGLID": 0 },
-            isjl: "",
             Name: "",
-            wximg: "",
-            phonenumber: '',
-            phonenumbererrorMsg: '',
+            phonenumberorname: '',
             dataid: ComFunJS.getQueryString('id'),
             RoomID: ComFunJS.getQueryString("rid"),
             view_detail: function () {
-                var pnum = ComFunJS.getCookie("userphonenumber");
+                var pnum = ComFunJS.getCookie("outuserid");
                 if (pnum) {
-                    $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELWITHPHONE', { P1: tempmodel.dataid, P2: pnum }, function (resultData) {
+                    $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELBYOUTERUSERID', { P1: tempmodel.dataid, P2: pnum }, function (resultData) {
                         if (resultData.ErrorMsg == "") {
                             if (resultData.Result[0]) {
-                                tempmodel.phonebackData = resultData.Result[0];//查询有结果返回
                                 location.href = "/View_Mobile/UI/HyDetail_step_r.html?id=" + tempmodel.dataid + "&r=" + Math.random();
                             }
                             else {
@@ -110,38 +106,43 @@
                     $('.default_block').hide();
                     $('#phone_input').focus();
                 }
-
-            },
-            re_input: function () {
-                $('.input_block').show();
-                $('.default_block').hide();
-                $('#phone_input').focus();
-                $('#phone_input').val('');
-            },
+            },//跳转到详情页面
             go_detail: function () {
-                if ($.trim(tempmodel.phonenumber) == "") {
-                    msg = "请输入手机号";
+                if ($.trim(tempmodel.phonenumberorname) == "") {
+                    msg = "请输入姓名或手机号";
                     ComFunJS.winwarning(msg);
                     return;
                 }
 
-                $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELWITHPHONE', { P1: tempmodel.dataid, P2: tempmodel.phonenumber }, function (resultData) {
+                $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELBYPHONEORNAME', { P1: tempmodel.dataid, P2: tempmodel.phonenumberorname }, function (resultData) {
                     if (resultData.ErrorMsg == "") {
                         if (resultData.Result[0]) {
-                            tempmodel.phonebackData = resultData.Result[0];
-                            //查询有结果返回
-                            ComFunJS.setCookieMinute("userphonenumber", tempmodel.phonenumber, 60);
-                            var pn = tempmodel.phonenumber;
-                            if (pn && pn != null && pn != undefined && pn != '') {
-                                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
-                                    if (r.ErrorMsg == "") {
-                                        tempmodel.currentuser = r.Result[0];
-                                        tempmodel.signlog();
-                                    }
-                                });
+                            if (resultData.Result5.length > 0) {
+                                if (resultData.Result5.length == 1) {  //只有一条数据的情况
+                                    tempmodel.currentuser = resultData.Result5[0];
+                                    ComFunJS.setCookieMinute("outuserid", tempmodel.currentuser.ID, 60);
+                                    $('.input_block').hide();
+                                    $('.default_block').show();
+                                }
+                                else {//多条数据的情况
+
+                                }
+                                //if (resultData.Result[5].length == 1) {
+                                //tempmodel.currentuser = r.Result5[0];
+                                //ComFunJS.setCookieMinute("outuserid", resultData.Result[5].ID, 60);
+                                //var pn = tempmodel.phonenumberorname;
+                                //if (pn && pn != null && pn != undefined && pn != '') {
+                                //    $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
+                                //        if (r.ErrorMsg == "") {
+                                //            tempmodel.currentuser = r.Result[0];
+                                //            tempmodel.signlog();
+                                //        }
+                                //    });
+                                //}
+                                //$('.input_block').hide();
+                                //$('.default_block').show();
+                                //}
                             }
-                            $('.input_block').hide();
-                            $('.default_block').show();
                         }
                         else {
                             $('.input_block').show();
@@ -152,6 +153,12 @@
                         }
                     }
                 })
+            },//输入手机或姓名后加载
+            re_input: function () {
+                $('.input_block').show();
+                $('.default_block').hide();
+                $('#phone_input').focus();
+                $('#phone_input').val('');
             },
             inittemp: function (strId) {
                 strId = tempmodel.dataid;
@@ -161,9 +168,9 @@
                             tempmodel.modelData = resultData.Result[0];
                             tempmodel.tpData = resultData.Result1;
 
-                            var pn = ComFunJS.getCookie("userphonenumber");
+                            var pn = ComFunJS.getCookie("outuserid");
                             if (pn && pn != null && pn != undefined && pn != '') {
-                                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
+                                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYID&r=" + Math.random(), { P1: tempmodel.dataid, P2: pn }, function (r) {
                                     if (r.ErrorMsg == "") {
                                         if (r.Result.length > 0) {
                                             tempmodel.currentuser = r.Result[0];
@@ -183,21 +190,6 @@
                             }
                         }
                     })
-                }
-                else {
-                    var dates = ComFunJS.getnowdate("yyyy-mm-dd-hh-mm").split('-');
-                    $("#StartTime").datetimePicker({
-                        value: [dates[0], dates[1], dates[2], dates[3], dates[4]]
-                    });
-                    $("#EndTime").datetimePicker({
-                        value: [dates[0], dates[1], dates[2], dates[3], dates[4]]
-                    });
-
-                    tempmodel.modelData.StartTime = dates[0] + "-" + dates[1] + "-" + dates[2] + " " + dates[3] + ":" + dates[4];
-                    tempmodel.modelData.EndTime = dates[0] + "-" + dates[1] + "-" + dates[2] + " " + dates[3] + ":" + dates[4];
-
-                    ComFunJS.uploadimgnew();
-                    ComFunJS.initForm();
                 }
 
                 $('#phone_input').on('focus', function () {
