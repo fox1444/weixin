@@ -12,6 +12,7 @@
     <link href="/View_Mobile/CSS/szhlextend.css?ver=20160904" rel="stylesheet" />
     <link href="/View_Mobile/CSS/tobaccoHtml.css" rel="stylesheet" />
     <link href="/View_Mobile/JS/Date/FT_Date.min.css" rel="stylesheet" />
+    <link href="/View_Mobile/CSS/video-js.css" rel="stylesheet" />
 </head>
 <body ms-controller="Hydetail" class="">
     <div class="index-html" style="display:none;">
@@ -65,7 +66,7 @@
                             出行安排
                         </span>
                     </a>
-                    <a href="#" ms-on-click="getdata(8)" class="button external" ms-class-1="tab-link:modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.RoomNumber!=''" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.RoomNumber!=''">
+                    <a href="#" ms-on-click="getdata(8)" class="button external" ms-class-1="tab-link:modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''||currentuser.RoomNumber!=''" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''||currentuser.RoomNumber!=''">
                         <img src="/View_Mobile/Images/icon/Info.jpg">
                         <span>
                             住宿安排
@@ -89,10 +90,16 @@
                             接送服务
                         </span>
                     </a>
-                    <a href="#" ms-on-click="getdata(12)" class="tab-link button external" ms-class-1="tab-link:modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''">
+                    <a href="#" ms-on-click="getdata(12)" class="button external" ms-class-1="tab-link:(modelData.LbsRegion != '' && modelData.LbsLocation != '') || (modelData.HotelRegion!='' && (modelData.HotelName != '' || currentuser.HotelName != ''))" ms-if="(modelData.LbsRegion != '' && modelData.LbsLocation != '') || (modelData.HotelRegion!='' && (modelData.HotelName != '' || currentuser.HotelName != ''))">
                         <img src="/View_Mobile/Images/icon/baidu.png" style="border-radius: 10px;">
                         <span>
                             地图导航
+                        </span>
+                    </a>
+                    <a href="#" ms-on-click="getdata(13)" class="tab-link button external">
+                        <img src="/View_Mobile/Images/icon/video.png" style="border-radius: 2px;">
+                        <span>
+                            宣传片
                         </span>
                     </a>
                 </div>
@@ -121,6 +128,8 @@
                     {{modelData.HYFW|html}}
                 </div>
             </div>
+
+            <video id="scansao" autoplay></video>
         </div>
 
         <!--日程安排-->
@@ -218,7 +227,7 @@
         </div>
 
         <!--住宿安排-->
-        <div class="hy_menu bg-white bg-grey hyzhusu" id="item-8" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.RoomNumber!=''">
+        <div class="hy_menu bg-white bg-grey hyzhusu" id="item-8" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''||currentuser.RoomNumber!=''">
             <div class="item-bg">
                 <div class="title">
                     <i></i>住宿安排
@@ -232,11 +241,15 @@
                             {{tempmodel.FormatHTML(modelData.ZSAP)|html}}
                         </div>
                     </div>
-                    <div class="inlist" ms-if="tempmodel.modelData.HotelName!=''">
+                    <div class="inlist" ms-if="modelData.HotelName!=''||currentuser.HotelName!=''">
                         <span class="parent_title">
                             酒店
                         </span>
-                        <div class="item-con ">
+                        <div class="item-con" ms-if="currentuser.HotelName!=''">
+                            <p>名称：{{modelData.HotelRegion|html}}{{currentuser.HotelName|html}}</p>
+                            <p ms-if="currentuser.HotelLocation!=''">地址：{{currentuser.HotelLocation|html}}</p>
+                        </div>
+                        <div class="item-con" ms-if="currentuser.HotelName==''">
                             <p>名称：{{modelData.HotelRegion|html}}{{modelData.HotelName|html}}</p>
                             <p ms-if="modelData.HotelLocation!=''">地址：{{modelData.HotelLocation|html}}</p>
                         </div>
@@ -413,7 +426,7 @@
         </div>
 
         <!--地图导航-->
-        <div class="hy_menu bg-white bg-grey hynavigate" id="item-12" ms-if="modelData.ZSAP!=''||modelData.HotelName!=''||currentuser.HotelName!=''">
+        <div class="hy_menu bg-white bg-grey hynavigate" id="item-12" ms-if="(modelData.LbsRegion != '' && modelData.LbsLocation != '') || (modelData.HotelRegion!='' && (modelData.HotelName != '' || currentuser.HotelName != ''))">
             <div class="title">
                 <i></i>地图导航
                 <a style="display:block; float:right; margin-right:10px;font-size:80%;" ms-click="tempmodel.ReLoadMap()">刷新地图</a>
@@ -423,6 +436,23 @@
                     <iframe id="mapping" src="" style="width:100%; height:100%; border:none;"></iframe>
                 </div>
 
+            </div>
+        </div>
+
+        <div class="hy_menu bg-white bg-grey hyvideo" id="item-13">
+            <div class="title">
+                <i></i>宣传片
+            </div>
+            <div class="content-bg">
+                <video id="videocontent" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" style="width:100%; height:260px;"
+                       poster="http://video-js.zencoder.com/oceans-clip.png"
+                       data-setup="{}">
+                    <source src="http://www.lstobacco.com/View_Mobile/images/RARBG.mp4" type='video/mp4' />
+                    <!--<source src="http://视频地址格式2.webm" type='video/webm' />
+                    <source src="http://视频地址格式3.ogv" type='video/ogg' />-->
+                    <track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+                    <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+                </video>
             </div>
         </div>
 
@@ -451,9 +481,16 @@
     <script src="/View_Mobile/js/ComFunJS.js"></script>
     <script src="/View_Mobile/js/Jquery2.1.js"></script>
     <script src="/View_Mobile/js/Date/FT_Date.min.js"></script>
+    <script src="/View_Mobile/js/video.js"></script>
 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=rIHnNifrMRwoxGjoChaiClXQqt96IRiw"></script>
     <script>
+        var myPlayer = videojs('videocontent');
+        videojs("videocontent").ready(function () {
+            var myPlayer = this;
+            //myPlayer.play();
+        });
+
         var tempmodel = avalon.define({
             $id: "Hydetail",
             ColumnData: [],
@@ -462,8 +499,8 @@
             tpData: [],
             CYUserStr: "",
             Mapsrc: "",
-            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "BoardingTime": "", "CarNumber": "" },
-            currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUser": 0, "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "" },
+            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "BoardingTime": "", "CarNumber": "", "HotelName": "", "HotelLocation": "", "LbsRegion": "", "LbsLocation": "" },
+            currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUserName": 0, "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "", "HotelName": "", "HotelLocation": "" },
             dataid: ComFunJS.getQueryString('id'),
             stepindex: "",
             gostart: function (index) {
@@ -502,6 +539,13 @@
                             $('.arrow-down').hide();
                         }
                     }
+
+                    if (index != 13) {
+                        myPlayer.pause();
+                    }
+                    else {
+                        myPlayer.play();
+                    }
                 }
             },
             getpredata: function (index) {
@@ -517,7 +561,7 @@
                 tempmodel.getdata(id);
             },
             inittemp: function (strId) {
-                var pn = ComFunJS.getCookie("userphonenumber");
+                var pn = ComFunJS.getCookie("outuserid");
                 if (!pn || pn == null || pn == undefined || pn == '') {
                     tempmodel.gostart();
                 }
@@ -552,9 +596,9 @@
                 tempmodel.getdata(1);
             },
             LoadRoom: function () {
-                var pn = ComFunJS.getCookie("userphonenumber");
+                var pn = ComFunJS.getCookie("outuserid");
                 if (pn && pn != null && pn != undefined && pn != '') {
-                    $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYPHONENUMBER&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: pn }, function (r) {
+                    $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERMODELBYID&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: pn }, function (r) {
                         if (r.ErrorMsg == "") {
                             tempmodel.currentuser = r.Result[0];
                             tempmodel.currentuser.PickupDate = tempmodel.convertDate(tempmodel.currentuser.PickupDate);
@@ -567,7 +611,7 @@
                             tempmodel.LoadType(tempmodel.currentuser.SendoffType, 'SendoffTitle', 'Sendoff');
                             setTimeout("tempmodel.ChangeTypeStyle()", 1000);
 
-                            if (tempmodel.modelData.ZSAP != '' || tempmodel.modelData.HotelName != '' || tempmodel.currentuser.HotelName != '') {
+                            if ((tempmodel.modelData.LbsRegion != '' && tempmodel.modelData.LbsLocation != '') || (tempmodel.modelData.HotelRegion != '' && (tempmodel.modelData.HotelName != '' || tempmodel.currentuser.HotelName != ''))) {
                                 tempmodel.LoadMap();
                             }
                         }
@@ -775,10 +819,14 @@
                 $('#mapping').attr('src', tempmodel.Mapsrc);
             },
             LoadMap: function () {
-                var region = tempmodel.modelData.HotelRegion;//酒店地区必须填
+                var region = tempmodel.modelData.HotelRegion;
                 var destination = tempmodel.currentuser.HotelName;
                 if (destination == '') {
                     destination = tempmodel.modelData.HotelName;
+                }
+                if (region == '' || destination == '') {
+                    region = tempmodel.modelData.LbsRegion;
+                    destination = tempmodel.modelData.LbsLocation;
                 }
                 var map = new BMap.Map("mapping");
                 var point = new BMap.Point(30.668497, 104.11315);
@@ -791,7 +839,8 @@
                         map.addOverlay(mk);
                         map.panTo(r.point);
                         tempmodel.Mapsrc = 'http://api.map.baidu.com/direction?origin=latlng:' + r.point.lat + ',' + r.point.lng + '|name:&destination=' + destination + '&mode=driving&region=' + region + '&output=html&ak=rIHnNifrMRwoxGjoChaiClXQqt96IRiw';
-                        $('#mapping').attr('src', tempmodel.Mapsrc);
+                        setTimeout(" tempmodel.ReLoadMap()", 1000);
+                        //$('#mapping').attr('src', tempmodel.Mapsrc);
                     }
                 });
 
@@ -812,6 +861,8 @@
             $(".wrapper").css("height", h + 'px');
             $("#mapping").css("height", (h - 88) + 'px');
         });
+
+
     </script>
 </body>
 </html>
