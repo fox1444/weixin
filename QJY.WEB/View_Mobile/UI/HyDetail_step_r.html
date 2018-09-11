@@ -91,15 +91,15 @@
                         </span>
                     </a>
                     <a href="#" ms-on-click="getdata(12)" class="button external" ms-class-1="tab-link:(modelData.LbsRegion != '' && modelData.LbsLocation != '') || (modelData.HotelRegion!='' && (modelData.HotelName != '' || currentuser.HotelName != ''))" ms-if="(modelData.LbsRegion != '' && modelData.LbsLocation != '') || (modelData.HotelRegion!='' && (modelData.HotelName != '' || currentuser.HotelName != ''))">
-                        <img src="/View_Mobile/Images/icon/baidu.png" style="border-radius: 10px;">
+                        <img src="/View_Mobile/Images/icon/map.png" style="border-radius: 10px;">
                         <span>
                             地图导航
                         </span>
                     </a>
                     <a href="#" ms-on-click="getdata(13)" class="tab-link button external">
-                        <img src="/View_Mobile/Images/icon/video.png" style="border-radius: 2px;">
+                        <img src="/View_Mobile/Images/icon/video1.png" style="border-radius: 2px;">
                         <span>
-                            宣传片
+                            影像纪实
                         </span>
                     </a>
                 </div>
@@ -441,24 +441,29 @@
 
         <div class="hy_menu bg-white bg-grey hyvideo" id="item-13">
             <div class="title">
-                <i></i>宣传片
+                <i></i>影像纪实
             </div>
             <div class="content-bg video-body">
-                <div class="video-title">
-                    脱贫奔康大凉山
+                <div class="">
+                    <div class="video-title">
+                        脱贫奔康大凉山
+                    </div>
+                    <div class="video-content v-medium">
+                        <video id="video1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" style="width:100%; height:100%;"
+                               poster="/view_mobile/images/video1.jpg" data-setup="{}">
+                            <source src="http://mp.lstobacco.com/17f2a61c18904c7684331721998bc334/2460e346491541b396990bd26bcf1d49-d37cb381fbf773ba55215781bb5e285b-fd.mp4" type='video/mp4' />
+                            <!--<source src="http://视频地址格式2.webm" type='video/webm' />
+                            <source src="http://视频地址格式3.ogv" type='video/ogg' />-->
+                            <track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+                            <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+                        </video>
+                    </div>
                 </div>
-                <div class="video-content v-medium">
-                    <video id="video1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" style="width:100%; height:100px;"
-                           poster="/view_mobile/images/video1.jpg" data-setup="{}">
-                        <source src="http://mp.lstobacco.com/17f2a61c18904c7684331721998bc334/2460e346491541b396990bd26bcf1d49-d37cb381fbf773ba55215781bb5e285b-fd.mp4" type='video/mp4' />
-                        <!--<source src="http://视频地址格式2.webm" type='video/webm' />
-                        <source src="http://视频地址格式3.ogv" type='video/ogg' />-->
-                        <track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
-                        <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
-                    </video>
-                </div>
-                <div class="video-list">
-                    <div class="video-content v-small">
+                <div class="">
+                    <div class="video-title video-title-small">
+                        遥望幸福 — 走进特补乃乌村
+                    </div>
+                    <div class="video-content v-medium">
                         <video id="video2" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" style="width:100%; height:100%;"
                                poster="/view_mobile/images/video2.jpg" data-setup="{}">
                             <source src="http://mp.lstobacco.com/0758169485b1427abb8344acc5af7e98/09870ca0286948d5b04936065c738b08-8b0c19f6232be74a000c9cb9c108d64b-fd.mp4" type='video/mp4' />
@@ -466,12 +471,13 @@
                             <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
                         </video>
                     </div>
-                    <div class="video-title">
-                        遥望幸福——走进特补乃乌村
-                    </div>
+
                 </div>
-                <div class="video-list">
-                    <div class="video-content v-small">
+                <div class="">
+                    <div class="video-title video-title-small">
+                        追梦幸福 — 再进普格县特补乃乌村
+                    </div>
+                    <div class="video-content v-medium">
                         <video id="video3" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" style="width:100%; height:100%;"
                                poster="/view_mobile/images/video3.jpg" data-setup="{}">
                             <source src="http://mp.lstobacco.com/b9936875b2b7411fa328caaa3efcf3b1/092fed4bc79c4036afeff79a105f14b8-481db03d499e5d7a26577bd6e98f2d5d-fd.mp4" type='video/mp4' />
@@ -479,9 +485,7 @@
                             <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
                         </video>
                     </div>
-                    <div class="video-title">
-                        追梦幸福——再进普格县特补乃乌村
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -515,12 +519,39 @@
 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=rIHnNifrMRwoxGjoChaiClXQqt96IRiw"></script>
     <script>
+
+        var src1 = "http://mp.lstobacco.com/17f2a61c18904c7684331721998bc334/2460e346491541b396990bd26bcf1d49-d37cb381fbf773ba55215781bb5e285b-fd.mp4";
+        var src2 = "http://mp.lstobacco.com/0758169485b1427abb8344acc5af7e98/09870ca0286948d5b04936065c738b08-8b0c19f6232be74a000c9cb9c108d64b-fd.mp4";
+        var src3 = "http://mp.lstobacco.com/b9936875b2b7411fa328caaa3efcf3b1/092fed4bc79c4036afeff79a105f14b8-481db03d499e5d7a26577bd6e98f2d5d-fd.mp4";
         var myPlayer1 = videojs('video1');
         var myPlayer2 = videojs('video2');
         var myPlayer3 = videojs('video3');
         videojs("video1").ready(function () {
             var myPlayer1 = this;
-            //myPlayer.play();
+            this.on('play', function () {
+                myPlayer2.pause();
+                myPlayer3.pause();
+                myPlayer2.src(src2);
+                myPlayer3.src(src3);
+            });          
+        });
+        videojs("video2").ready(function () {
+            var myPlayer2 = this;
+            this.on('play', function () {
+                myPlayer1.pause();
+                myPlayer3.pause();
+                myPlayer1.src(src1);
+                myPlayer3.src(src3);
+            });
+        });
+        videojs("video3").ready(function () {
+            var myPlayer3 = this;
+            this.on('play', function () {
+                myPlayer1.pause();
+                myPlayer2.pause();
+                myPlayer1.src(src1);
+                myPlayer2.src(src2);
+            });
         });
 
         var tempmodel = avalon.define({
@@ -572,12 +603,14 @@
                         }
                     }
 
-                    //if (index != 13) {
-                    //    myPlayer.pause();
-                    //}
-                    //else {
-                    //    myPlayer.play();
-                    //}
+                    if (index != 13) {
+                        myPlayer1.pause();
+                        myPlayer2.pause();
+                        myPlayer3.pause();
+                    }
+                    else {
+                        LoadVideo();
+                    }
                 }
             },
             getpredata: function (index) {
@@ -626,7 +659,7 @@
                     $(this).children("i").html(k);
                     k++;
                 });
-                tempmodel.getdata(13);
+                tempmodel.getdata(1);
             },
             LoadRoom: function () {
                 var pn = ComFunJS.getCookie("outuserid");
@@ -887,7 +920,7 @@
             $('.hy_menu').hide();
             $('.up-and-down').hide();
             tempmodel.inittemp();
-            
+
         })
 
         $(window).on("load resize", function () {
@@ -897,11 +930,10 @@
             setTimeout('LoadVideo()', 500);
         });
 
-        function LoadVideo()
-        {
+        function LoadVideo() {
             $("#video1").css("height", ($("#video1").width() * 9 / 16) + "px");
             $("#video2").css("height", ($("#video2").width() * 9 / 16) + "px");
-            $("#video3").css("height", ($("#video3").width() * 9 / 16) + "px"); 
+            $("#video3").css("height", ($("#video3").width() * 9 / 16) + "px");
         }
     </script>
 </body>

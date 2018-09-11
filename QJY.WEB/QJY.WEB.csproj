@@ -256,8 +256,11 @@
     <Content Include="View_Mobile\fonts\icomoon.svg" />
     <Content Include="View_Mobile\Images\arrow.png" />
     <Content Include="View_Mobile\Images\body-bg.jpg" />
+    <Content Include="View_Mobile\Images\icon\video.png" />
+    <Content Include="View_Mobile\Images\icon\video1.png" />
     <Content Include="View_Mobile\Images\index-bg-5.jpg" />
     <Content Include="View_Mobile\Images\logo-bg.jpg" />
+    <Content Include="View_Mobile\Images\icon\map.png" />
     <Content Include="View_Mobile\Images\tobacco-fi-2.png" />
     <Content Include="View_Mobile\Images\tobacco-logo.png" />
     <Content Include="View_Mobile\Images\tobacco-logo2.jpg" />
