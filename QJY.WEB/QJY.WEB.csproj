@@ -251,6 +251,7 @@
     <Content Include="View_Mobile\CSS\sm.css" />
     <Content Include="View_Mobile\CSS\sm.min.css" />
     <Content Include="View_Mobile\CSS\tobaccoHtml.css" />
+    <Content Include="View_Mobile\CSS\video-js.css" />
     <Content Include="View_Mobile\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="View_Mobile\fonts\icomoon.svg" />
     <Content Include="View_Mobile\Images\arrow.png" />
@@ -260,11 +261,15 @@
     <Content Include="View_Mobile\Images\tobacco-fi-2.png" />
     <Content Include="View_Mobile\Images\tobacco-logo.png" />
     <Content Include="View_Mobile\Images\tobacco-logo2.jpg" />
+    <Content Include="View_Mobile\Images\video1.jpg" />
+    <Content Include="View_Mobile\Images\video2.jpg" />
+    <Content Include="View_Mobile\Images\video3.jpg" />
     <Content Include="View_Mobile\Images\wrap-bg.jpg" />
     <Content Include="View_Mobile\JS\Date\FT_Date.min - 复制.js" />
     <Content Include="View_Mobile\JS\jweixin-1.1.0.js" />
     <Content Include="View_Mobile\JS\sm-extend.min.js" />
     <Content Include="View_Mobile\JS\sm.min.js" />
+    <Content Include="View_Mobile\JS\video.js" />
     <Content Include="View_Mobile\UI\HyDetail_index_b.html" />
     <Content Include="View_Mobile\UI\HyDetail_index_r.html" />
     <Content Include="View_Mobile\UI\HyDetail_step_r.html" />
