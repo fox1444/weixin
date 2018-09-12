@@ -21,7 +21,18 @@ namespace QJY.API
         public dynamic Result4 { get; set; }
         public dynamic Result5 { get; set; }
         public dynamic Result6 { get; set; }
+    }
 
-
+    public class Msg_SMSendResult
+    {
+        public string msgGroup { get; set; }
+        public string rspcod { get; set; }
+        public bool success { get; set; }
+        public string IllegalMac { get; set; }
+        public string InvalidMessage { get; set; }
+        public string InvalidUsrOrPwd { get; set; }
+        public string NoSignId { get; set; }
+        public string IllegalSignId { get; set; }
+        public string TooManyMobiles { get; set; }
     }
 }

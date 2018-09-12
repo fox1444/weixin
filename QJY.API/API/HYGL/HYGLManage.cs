@@ -930,22 +930,19 @@ namespace QJY.API
         /// </summary>
         public void GETOUTUSERLISTBYHYGLID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            int Id = int.Parse(P1);
-            int type = 0;
-            try
-            {
-                type = int.Parse(P2);
-            }
-            catch
-            {
-
-            }
+            int Id = CommonHelp.ParseInt(P1);
+            int type = CommonHelp.ParseInt(P2);
+            string DeptID = context.Request["DeptID"] ?? "";
             string strWhere = " u.HYGLID=" + Id;
             if (type > 0)
             {
                 strWhere += " and u.type=" + type;
             }
-            msg.Result = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.*, s.Name as ServiceName, d.Name as OutDeptName, (select count(1) from SZHL_HYGL_OUTUSER_Log where HYGLID=" + Id + " and UserID=u.ID) as N from dbo.SZHL_HYGL_OUTUSER u left join  SZHL_HYGL_SERVICE s on u.ServiceUser=s.ID left join SZHL_HYGL_OUTUSER_DEPT d on u.OutDept=d.ID where " + strWhere + " order by d.DisplayOrder, u.DisplayOrder, u.Name");
+            if (DeptID != "")
+            {
+                strWhere += " and u.OutDept=" + DeptID;
+            }
+            msg.Result = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.*, case u.OutDept when -999 then '测试' else d.Name end as ODName , s.Name as ServiceName, d.Name as OutDeptName, (select count(1) from SZHL_HYGL_OUTUSER_Log where HYGLID=" + Id + " and UserID=u.ID) as N from dbo.SZHL_HYGL_OUTUSER u left join  SZHL_HYGL_SERVICE s on u.ServiceUser=s.ID left join SZHL_HYGL_OUTUSER_DEPT d on u.OutDept=d.ID where " + strWhere + " order by d.DisplayOrder, u.DisplayOrder, u.Name");
         }
 
         /// <summary>
@@ -982,7 +979,7 @@ namespace QJY.API
                 msg.ErrorMsg = "电话不能为空！";
                 return;
             }
-            if (HYOutuser.OutDept <= 0)
+            if (HYOutuser.OutDept <= 0 && HYOutuser.OutDept != -999)
             {
                 msg.ErrorMsg = "单位不能为空！";
                 return;
@@ -1275,7 +1272,53 @@ namespace QJY.API
         #endregion
 
         #region 会议信息管理
+        /// <summary>
+        /// 根据会议中的单位来发送短信，短信前加上“尊敬的xx”
+        /// </summary>
+        public void SENDHYSMS(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = CommonHelp.ParseInt(P1);
+            int type = CommonHelp.ParseInt(P2);
+            string DeptID = context.Request["DeptID"] ?? ""; ;
+            string content = context.Request["content"] ?? "";
+            if (content.Trim().Length <= 0)
+            {
+                msg.ErrorMsg = "短信内容为空！";
+                return;
+            }
+            if (Id <= 0)
+            {
+                msg.ErrorMsg = "会议不存在！";
+                return;
+            }
 
+            string strWhere = " u.HYGLID=" + Id;
+            if (type > 0)
+            {
+                strWhere += " and u.type=" + type;
+            }
+            if (DeptID != "")
+            {
+                strWhere += " and u.OutDept=" + DeptID;
+            }
+            DataTable dt = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.Name, u.Mobphone from dbo.SZHL_HYGL_OUTUSER u left join SZHL_HYGL_OUTUSER_DEPT d on u.OutDept=d.ID where " + strWhere + " order by d.DisplayOrder, u.DisplayOrder, u.Name");
+            List<Msg_SMSendResult> list = new List<Msg_SMSendResult>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                string phone = dr["Mobphone"].ToString();
+                if (phone.Trim().Length > 0)
+                {
+                    string message = "尊敬的" + dr["Name"].ToString() + "，" + content;
+                    if (CommonHelp.MarchPhoneNumber(phone))
+                    {
+                        string MASresult = CommonHelp.SendMAS(phone, message);
+                        Msg_SMSendResult sendResult = JsonConvert.DeserializeObject<Msg_SMSendResult>(MASresult);
+                        list.Add(sendResult);
+                    }
+                }
+            }
+            msg.Result = list;
+        }
         #region 会议管理发送消息
         /// <summary>
         /// 会议管理发送消息
@@ -1497,7 +1540,6 @@ namespace QJY.API
             }
         }
         #endregion
-
         #endregion
     }
 }

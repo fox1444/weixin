@@ -338,10 +338,7 @@ var ComFunJS = {
                             plpoints = parseInt($('#pc').raty('score')) * 20;
                         }
                     }
-
-
                     if (comment) {
-
                         var rObject = { comment: comment, point: plpoints };
                         layer.close(pagei);
                         return callback.call(this, rObject);
@@ -1355,11 +1352,13 @@ var ComFunJS = {
         var branchcodes = '';
         if (users) {
             $(users).each(function (index, ele) {
-                if (branchcodes.indexOf(ele.OutDeptName + ',') == -1) {
-                    branchtmp += '<ul class="list_parent_node " onclick="ComFunJS.showchild(this)"><span class="parent_title title_cyuser">' + ele.OutDeptName + '</span>';
-                    branchtmp += '<li class="list_child_block">' + ComFunJS.convusers_branchuser(ele.OutDeptName, users) + '</li>';
-                    branchtmp += '</ul>';
-                    branchcodes += ele.OutDeptName + ',';
+                if (ele.OutDept > 0) {
+                    if (branchcodes.indexOf(ele.OutDeptName + ',') == -1) {
+                        branchtmp += '<ul class="list_parent_node " onclick="ComFunJS.showchild(this)"><span class="parent_title title_cyuser">' + ele.OutDeptName + '</span>';
+                        branchtmp += '<li class="list_child_block">' + ComFunJS.convusers_branchuser(ele.OutDeptName, users) + '</li>';
+                        branchtmp += '</ul>';
+                        branchcodes += ele.OutDeptName + ',';
+                    }
                 }
             });
         }
@@ -1369,10 +1368,12 @@ var ComFunJS = {
         var username = '';
         if (users) {
             $(users).each(function (index, ele) {
-                if (ele.OutDeptName == branchcode) {
-                    username += '<div class="list_child_node"><span class="child_title">' + ele.Name + '</span>';
-                    username += '<span class="child_ext" >';
-                    username += ele.Zhiwu + '</span></div> ';
+                if (ele.OutDept > 0) {
+                    if (ele.OutDeptName == branchcode) {
+                        username += '<div class="list_child_node"><span class="child_title">' + ele.Name + '</span>';
+                        username += '<span class="child_ext" >';
+                        username += ele.Zhiwu + '</span></div> ';
+                    }
                 }
             });
         }
