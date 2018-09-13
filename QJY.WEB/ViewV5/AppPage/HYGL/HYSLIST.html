@@ -22,8 +22,7 @@
         <table class="table table-striped table-responsive table-hover">
             <thead>
                 <tr>
-                    <th class="tc">
-                    
+                    <th class="tc">                    
                         序号
                     </th>
                     <th ms-repeat-im="ShowColumns" ms-visible="im.IsSel">{{im.ColText}}</th>
@@ -35,7 +34,6 @@
             <tbody>
                 <tr ms-repeat-el="tmpListData" ms-click="ViewForm('HYGL_HYS',el.ID,'',$event)">
                     <td class="tc">
-
                         {{$index+1+page.pagecount*(page.pageindex-1)}}
                     </td>
                     <td ms-repeat-im="ShowColumns" ms-visible="im.IsSel">{{FnFormat(el[im.ColName],im)|html}}</td>

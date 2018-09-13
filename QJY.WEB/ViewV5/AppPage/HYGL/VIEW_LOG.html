@@ -64,7 +64,7 @@
                     $(users).each(function (index, ele) {
                         if (branchcodes.indexOf(ele.OutDept + ',') == -1) {
                             var i = model.ConvNumber(ele.OutDept, users);
-                            branchtmp += '<tr><td rowspan="' + i + '">' + ele.OutDeptName + '</td>';
+                            branchtmp += '<tr><td rowspan="' + i + '">' + ele.ODName + '</td>';
                             branchtmp += model.Convuser(ele.OutDept, users, type);
                             branchtmp += '</tr>';
                             branchcodes += ele.OutDept + ',';
