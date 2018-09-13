@@ -645,6 +645,12 @@ namespace QJY.API
             return encode;
         }
 
+        /// <summary>
+        /// 请求Url，发送数据
+        /// </summary>
+        /// <param name="Url"></param>
+        /// <param name="postDataStr"></param>
+        /// <returns></returns>
         public static string HttpGet(string Url, string postDataStr)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url + (postDataStr == "" ? "" : "?") + postDataStr);

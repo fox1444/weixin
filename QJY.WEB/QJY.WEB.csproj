@@ -116,6 +116,7 @@
     <Content Include="Global.asax" />
     <Content Include="API\WXAPI.ashx" />
     <Content Include="confirm.html" />
+    <Content Include="tcn.html" />
     <Content Include="hy.html" />
     <Content Include="ToolS\DownFile.aspx" />
     <Content Include="ToolS\HtmlToWord.aspx" />

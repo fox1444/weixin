@@ -1,4 +1,5 @@
-﻿using QJY.API;
+﻿using Newtonsoft.Json;
+using QJY.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,5 +23,19 @@ namespace QJY.WEB.ViewV5
             string result = CommonHelp.SendMAS(Mobiles, Content);
             Response.Write(result);
         }
+
+        protected void shotbtn_Click(object sender, EventArgs e)
+        {
+            var result= CommonHelp.HttpGet("http://api.t.sina.com.cn/short_url/shorten.json?source=1681459862&url_long=http://www.lstobacco.com/view_mobile/ui/HyDetail_index_r.html?id=271", "");
+            List<ShotUrl> jsonresult = JsonConvert.DeserializeObject<List<ShotUrl>>(result);
+            Response.Write(jsonresult[0].url_short.ToString());
+        }
+    }
+
+    public class ShotUrl
+    {
+        public string url_short { get; set; }
+        public string url_long { get; set; }
+        public int type { get; set; }
     }
 }
