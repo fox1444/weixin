@@ -320,6 +320,34 @@ namespace QJY.API
             return false;
         }
 
+
+        public static int ParseInt(string p)
+        {
+            int result = 0;
+            try
+            {
+                result = int.Parse(p);
+            }
+            catch
+            {
+
+            }
+            return result;
+        }
+
+        public static bool MarchPhoneNumber(string phone)
+        {
+            Regex rx = new Regex(@"^0{0,1}(13[4-9]|15[7-9]|15[0-2]|18[7-8])[0-9]{8}$");
+            if (!rx.IsMatch(phone)) //不匹配
+            {
+                return false;
+            }
+            else //匹配
+            {
+                return true;
+            }
+        }
+
         public static string PostFile(string uploadUrl, string fileToUpload, string poststr = "")
         {
             string result = "";

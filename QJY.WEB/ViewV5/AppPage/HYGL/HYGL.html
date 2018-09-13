@@ -336,7 +336,7 @@
                 ComFunJS.initForm();
             }
         },//初始化
-        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "BoardingTime": "", "CarNumber": "", "YCQK": "", "YCTIME": "","YCLOCATION":"" },
+        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "BoardingTime": "", "CarNumber": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "" },
         SaveData: function (callback) {
             $.post("/API/VIEWAPI.ashx?ACTION=HYGL_ADDHYGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
                 return callback.call(this, result);
@@ -466,7 +466,7 @@
                 $(users).each(function (index, ele) {
                     if (branchcodes.indexOf(ele.OutDept + ',') == -1) {
                         var i = tempmodel.ConvNumber(ele.OutDept, users);
-                        branchtmp += '<tr><td rowspan="' + i + '">' + ele.OutDeptName + '</td>';
+                        branchtmp += '<tr><td rowspan="' + i + '">' + ele.ODName + '<br/><a href="#" onclick="EditSMS(' + ele.OutDept + ', ' + type + ')">发送短信</a></td>';
                         branchtmp += tempmodel.Convuser(ele.OutDept, users, type);
                         branchtmp += '</tr>';
                         branchcodes += ele.OutDept + ',';
@@ -561,5 +561,22 @@
                 }
             })
         }, function () { })
+    }
+    function EditSMS(DeptID, type) {
+        ComFunJS.winbtnwin("/ViewV5/AppPage/HYGL/EDIT_SMS.html?DeptID=" + DeptID + "&type=" + type + "&r=" + Math.random(), "发送短信", 750, 400, {}, function (layero, inx) {
+            var frameid = $("iframe", $(layero)).attr('id');
+            var content = ComFunJS.isIE() ? window.frames[frameid].getContent() : window.frames[frameid].contentWindow.getContent();
+            if (content) {
+                $.post('/API/VIEWAPI.ashx?Action=HYGL_SENDHYSMS&r=' + Math.random(), { P1: tempmodel.HYGLID, P2: type, DeptID: DeptID, content: content }, function (resultData) {
+                    if (resultData.ErrorMsg == "") {
+                        layer.close(inx);
+                        top.ComFunJS.winsuccess("发送成功！！");
+                    }
+                    else {
+                        top.ComFunJS.winwarning(resultData.ErrorMsg);
+                    }
+                })
+            }
+        })
     }
 </script>
