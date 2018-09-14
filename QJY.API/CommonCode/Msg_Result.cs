@@ -23,6 +23,9 @@ namespace QJY.API
         public dynamic Result6 { get; set; }
     }
 
+    /// <summary>
+    /// 云MAS短信返回类
+    /// </summary>
     public class Msg_SMSendResult
     {
         public string msgGroup { get; set; }
@@ -35,4 +38,15 @@ namespace QJY.API
         public string IllegalSignId { get; set; }
         public string TooManyMobiles { get; set; }
     }
+
+    /// <summary>
+    /// 微博短链接返回类
+    /// </summary>
+    public class Msg_ShortUrl
+    {
+        public string url_short { get; set; }
+        public string url_long { get; set; }
+        public int type { get; set; }
+    }
+
 }

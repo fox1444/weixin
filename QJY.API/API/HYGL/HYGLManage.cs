@@ -1319,6 +1319,16 @@ namespace QJY.API
             }
             msg.Result = list;
         }
+
+        /// <summary>
+        /// 获取会议的短链接
+        /// </summary>
+        public void GETHYSHORTURL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string host = CommonHelp.AppConfig("Host");
+            msg.Result = CommonHelp.GetShortUrl(host + "/view_mobile/ui/hydetail_index_r.html?id=" + P1);
+        }
+
         #region 会议管理发送消息
         /// <summary>
         /// 会议管理发送消息

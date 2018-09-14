@@ -557,6 +557,22 @@ namespace QJY.API
             }
         }
 
+        public static string GetShortUrl(string long_url)
+        {
+            string short_url = "";
+            try
+            {
+                var result = HttpGet("http://api.t.sina.com.cn/short_url/shorten.json?source=1681459862&url_long=" + long_url, "");
+                List<Msg_ShortUrl> jsonresult = JsonConvert.DeserializeObject<List<Msg_ShortUrl>>(result);
+                short_url = jsonresult[0].url_short;
+            }
+            catch
+            {
+
+            }
+            return short_url;
+        }
+
         /// <summary>
         /// 移动云MAS 发送短信接口
         /// </summary>

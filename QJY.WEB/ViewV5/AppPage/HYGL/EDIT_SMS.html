@@ -25,7 +25,7 @@
     <div style="margin: 8px 80px;">
         <div>
             <div class="add-item  ">
-                <label class="add-item-label"><i>*</i>短信内容</label>
+                <label class="add-item-label"><i>*</i>短信内容（会议短链接为：{{model.short_url}}）</label>
                 <div class="add-ic">
                     <textarea class="form-control" id="content" ms-duplex="model.Content" style="height:120px;resize:none"></textarea>
                 </div>
@@ -59,7 +59,8 @@
             type: ComFunJS.getQueryString("type", 0),
             HYGLID: window.parent.GetHYGLID(),
             Content: "",
-            USERData:[],
+            USERData: [],
+            short_url: "",
             GetModelData: function () {
                 if (model.DeptID) {
                     //编辑加载数据
@@ -67,6 +68,14 @@
                         if (resultData.ErrorMsg == "") {
                             if (resultData.Result.length > 0) {
                                 model.USERData = resultData.Result;
+                            }
+                        }
+                    })
+
+                    $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETHYSHORTURL', { P1: model.HYGLID }, function (resultData) {
+                        if (resultData.ErrorMsg == "") {
+                            if (resultData.Result && resultData.Result != '') {
+                                model.short_url = resultData.Result;
                             }
                         }
                     })
