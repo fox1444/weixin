@@ -36,7 +36,7 @@
                     </td>
                 </tr>
                 <tr ms-repeat-item="DSHData.LCSPData">
-                    
+
                     <td class="tc">{{$index+1}}</td>
                     <td> {{item.ProcessName}}</td>
                     <td> {{ComFunJS.convertuser(item.CRUser) }}</td>
@@ -48,7 +48,7 @@
                     </td>
                 </tr>
                 <tr ms-repeat-item="DSHData.LCSPModelData">
-                    
+
                     <td class="tc">{{$index+1}}</td>
                     <td>{{item.ProcessName}}(流程审批)</td>
                     <td> {{ComFunJS.convertuser(item.CRUser) }}</td>
@@ -66,7 +66,7 @@
             </tbody>
             <tbody ms-if="listType=='YBSX'">
                 <tr ms-repeat-item="DSHData.LCSPYCLData">
-                    
+
                     <td class="tc">{{$index+1}}</td>
                     <td>{{item.ProcessName}}({{item.TaskState==1?"已审批":(item.TaskState==-1?"已退回":"")}})</td>
                     <td> {{ComFunJS.convertuser(item.CRUser) }}</td>
@@ -84,7 +84,7 @@
             </tbody>
             <tbody ms-visible="listType=='Create'">
                 <tr ms-repeat-item="DSHData.createLCSP">
-                    
+
                     <td class="tc">{{$index+1}}</td>
                     <td>{{item.ProcessName}}<span ms-if="item.StateName!='-1'">({{item.StateName}})</span> </td>
                     <td> {{ComFunJS.convertuser(item.CRUser) }}</td>
@@ -152,7 +152,8 @@
             $.getJSON('/API/VIEWAPI.ashx?Action=LCSP_GETLCSPLIST_INDEX', {}, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     if (typeof (model) != "undefined") {
-                        tempindex.DSHData.LCSPData = resultData.Result;//会议管理，出差请假，用车管理待审批
+                        if (typeof (tempindex.DSHData.LCSPData) != "undefined")
+                            tempindex.DSHData.LCSPData = resultData.Result;//会议管理，出差请假，用车管理待审批
                     }
                     tempindex.DSHData.LCSPModelData = resultData.Result1; //自定义流程审批待审批管理
                     tempindex.DSHData.LCSPYCLData = resultData.Result2; //流程审批已审批列表
@@ -160,10 +161,10 @@
             })
             if (typeof (model) != "undefined") {
                 //信息发布待审核
-                $.getJSON('/API/VIEWAPI.ashx?Action=XXFB_GETXXFBLIST_DSH', {},function (resultData) {
+                $.getJSON('/API/VIEWAPI.ashx?Action=XXFB_GETXXFBLIST_DSH', {}, function (resultData) {
                     if (resultData.ErrorMsg == "") {
-                        tempindex.DSHData.XXFBData = resultData.Result; //信息发布待审核列表
-
+                        if (typeof (tempindex.DSHData.XXFBData) != "undefined")
+                            tempindex.DSHData.XXFBData = resultData.Result; //信息发布待审核列表
                     }
                 })
             }
@@ -194,7 +195,7 @@
                     });
                 }
             })
-          
+
 
         },
         CheckXXFBData: {},

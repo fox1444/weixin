@@ -558,6 +558,7 @@ namespace QJY.API
             DataTable dtUsers = new JH_Auth_UserB().GetDTByCommand(" SELECT u.UserName,u.UserRealName,u.mobphone, u.UserGW, u.zhiwu,b.DeptName, b.DeptRoot, u.BranchCode FROM JH_Auth_User u left join JH_Auth_Branch b on u.BranchCode = b.DeptCode where userName in (select items from dbo.split('" + P1 + "', ',')) order by b.DeptShort DESC, u.UserOrder, u.UserRealName");
             msg.Result = dtUsers;
         }
+
         /// <summary>
         /// 根据部门编号获取部门人员列表分页
         /// </summary>
@@ -565,29 +566,44 @@ namespace QJY.API
         {
             int deptCode = 0;
             int.TryParse(P1, out deptCode);
+            string usergw = context.Request["usergw"] ?? "";
             JH_Auth_Branch branch = new JH_Auth_BranchB().GetBMByDeptCode(UserInfo.QYinfo.ComId, deptCode);
             if (branch == null) { msg.ErrorMsg = "数据异常"; }
-            string strQXWhere = string.Format("And  ( u.branchCode={0} or b.Remark1 like '{1}%')", deptCode, (branch.Remark1 == "" ? "" : branch.Remark1 + "-") + branch.DeptCode);
-            //string strQXWhere = string.Format("And   u.branchCode={0} ", deptCode, (branch.Remark1 == "" ? "" : branch.Remark1 + "-") + branch.DeptCode);
-            string branchqx = new JH_Auth_BranchB().GetBranchQX(UserInfo);
-            if (branch.DeptRoot == -1 && !string.IsNullOrEmpty(branchqx))
-            {
-                strQXWhere = " And (";
-                int i = 0;
-                foreach (int dept in branchqx.SplitTOInt(','))
-                {
-                    JH_Auth_Branch branchQX = new JH_Auth_BranchB().GetBMByDeptCode(UserInfo.QYinfo.ComId, dept);
-                    strQXWhere += string.Format((i == 0 ? "" : "And") + "  ( u.branchCode!={0} And b.Remark1 NOT like '{1}%')", dept, (branchQX.Remark1 == "" ? "" : branchQX.Remark1 + "-") + branchQX.DeptCode);
-                    i++;
-                }
-                strQXWhere += ")";
-            }
+
             string tableName = " JH_Auth_User u  inner join JH_Auth_Branch b on u.branchCode=b.DeptCode";
             string tableColumn = " u.*,b.DeptName,b.DeptCode";
-            string strWhere = string.Format("u.ComId={0}   {1}", UserInfo.User.ComId, strQXWhere);
-            if (P2 != "")
+
+            string strWhere = string.Format(" u.ComId={0}", UserInfo.User.ComId); ;
+            if (!string.IsNullOrEmpty(usergw))
             {
-                strWhere += string.Format(" And (u.UserName like '%{0}%'  or u.UserRealName like '%{0}%'  or b.DeptName like '%{0}%' or u.mobphone like '%{0}%' ) ", P2);
+                strWhere += string.Format(" And u.branchCode={0}", deptCode);
+            }
+            else
+            {
+                //跟节点可查看子节点的人员， 现已屏蔽，如有需要可以还原
+                string strQXWhere = string.Format(" And  ( u.branchCode={0} or b.Remark1 like '{1}%')", deptCode, (branch.Remark1 == "" ? "" : branch.Remark1 + "-") + branch.DeptCode);
+                string branchqx = new JH_Auth_BranchB().GetBranchQX(UserInfo);
+                if (branch.DeptRoot == -1 && !string.IsNullOrEmpty(branchqx))
+                {
+                    strQXWhere = " And (";
+                    int i = 0;
+                    foreach (int dept in branchqx.SplitTOInt(','))
+                    {
+                        JH_Auth_Branch branchQX = new JH_Auth_BranchB().GetBMByDeptCode(UserInfo.QYinfo.ComId, dept);
+                        strQXWhere += string.Format((i == 0 ? "" : "And") + "  ( u.branchCode!={0} And b.Remark1 NOT like '{1}%')", dept, (branchQX.Remark1 == "" ? "" : branchQX.Remark1 + "-") + branchQX.DeptCode);
+                        i++;
+                    }
+                    strQXWhere += ")";
+                }
+                strWhere += strQXWhere;
+            }
+            if (!string.IsNullOrEmpty(P2))
+            {
+                strWhere += string.Format(" And (u.UserName like '%{0}%'  or u.UserRealName like '%{0}%'  or b.DeptName like '%{0}%' or u.mobphone like '%{0}%' ) ", P2.Trim());
+            }
+            if (!string.IsNullOrEmpty(usergw))
+            {
+                strWhere += string.Format(" And u.UserGW='{0}' ", usergw);
             }
             int page = 0;
             int pagecount = 8;
