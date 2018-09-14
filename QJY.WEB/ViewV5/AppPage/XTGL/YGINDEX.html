@@ -10,6 +10,9 @@
     .jinyong {
         color: orangered;
     }
+    .input-group .form-control {
+        width:50%;
+    }
 </style>
 <div ms-controller="YGINDEX">
     <div class="jg-left pull-left ft14">
@@ -130,7 +133,11 @@
                 <button type="button" class="btn btn-info" ms-click="UPDATEPLUser()">分配部门</button>
                 <button type="button" class="btn btn-info" ms-click="OpenPLModify()">重置密码</button>
                 <button type="button" class="btn btn-info" style="float: right" data-toggle="modal" data-target="#myselfModal">自定义显示</button>
-                <div class="input-group ml15" style="width: 295px; float: right; margin-right: 20px;">
+                <div class="input-group ml15" style="width: 405px; float: right; margin-right: 20px;">
+                    <select name="conGWs" id="conGWs" ms-change="SelectUSERGW(this.value)" class="form-control">
+                        <option value="">所有部门</option>
+                        <option ms-repeat-item="GWData" ms-attr-value="item.UserGW">{{item.UserGW}}</option>
+                    </select>
                     <input type="search" class="form-control" placeholder="搜索姓名，账号，部门，手机号" ms-duplex="searchContent">
                     <span class="input-group-addon" ms-click="GetLIST()">搜索</span>
                 </div>
@@ -186,11 +193,11 @@
                 <div ms-if="UserData.size()!=0"><span class="ico-radius-r color-greed"></span>正常</div>
                 <div id="pageDiv" ms-visible="model.page.total>model.pageNum[0].num" class="pull-right"></div>
                 <div class="pull-right" ms-visible="UserData.size()!=0">
-                    <span>共{{model.page.total}}条记录</span>
-                    <span ms-visible="model.page.total>model.pageNum[0].num">选择每页条数
+                    <span>共{{model.page.total}}条</span>
+                    <span ms-visible="model.page.total>model.pageNum[0].num">每页
                         <select style="height: 25px; width: 50px;" ms-change="selNum(this.value)" ms-duplex="model.page.pagecount">
                             <option ms-repeat-pg="pageNum" ms-attr-value="pg.num" ms-attr-selected="pg.num==model.page.pagecount?'selected':''">{{pg.num}}</option>
-                        </select>
+                        </select>条
                     </span>
                 </div>
             </div>
@@ -323,6 +330,8 @@
         $id: "YGINDEX",
         BranchListData: [],
         UserData: [],
+        GWData: [],
+        curUSERGW: "",
         searchContent: "",
         SelDeptItem: {},
         selNum: function (item) {    //选择显示的条数
@@ -381,6 +390,7 @@
                 tempindex.BranchListData = resultData.Result;
                 tempindex.SelDeptItem = resultData.Result[0];
                 tempindex.GetLIST();
+                tempindex.LoadUSERGW();
             })
         },
         BranchToggle: function (dom, event) {
@@ -401,6 +411,20 @@
             }
             tempindex.SelDeptItem = {};
             tempindex.SelDeptItem = item.$model;
+            tempindex.curUSERGW = "";
+            $('#conGWs').val('');
+            tempindex.LoadUSERGW();
+            tempindex.GetLIST();
+        },
+        LoadUSERGW: function () {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETALLGWBYBRANCHCODE&r=' + Math.random(), { P1: tempindex.SelDeptItem.DeptCode }, function (resultData) {
+                if (resultData.ErrorMsg == "") {
+                    tempindex.GWData = resultData.Result;
+                }
+            })
+        },
+        SelectUSERGW: function (val) {
+            tempindex.curUSERGW = val;
             tempindex.GetLIST();
         },
         dcyg: function () {
@@ -414,7 +438,7 @@
         totalUserCount: 0,
         GetLIST: function () {
             $(".icheckbox_square-blue", $("#branchTab")).removeClass('checked')//去除选中
-            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETUSERBYCODENEW_PAGE', { "P1": tempindex.SelDeptItem.DeptCode, P2: tempindex.searchContent, pagecount: model.page.pagecount, p: 1 }, function (resultData) {
+            $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETUSERBYCODENEW_PAGE', { "P1": tempindex.SelDeptItem.DeptCode, P2: tempindex.searchContent, usergw: tempindex.curUSERGW, pagecount: model.page.pagecount, p: 1 }, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempindex.UserData = resultData.Result;
                     model.page.total = resultData.Result2;
@@ -429,7 +453,7 @@
                         skin: 'molv',
                         jump: function (e) { //触发分页后的回调
                             if (e.curr != page) {
-                                $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETUSERBYCODENEW_PAGE', { "P1": tempindex.SelDeptItem.DeptCode, P2: tempindex.searchContent, pagecount: model.page.pagecount, p: e.curr }, function (resultData) {
+                                $.getJSON('/API/VIEWAPI.ashx?Action=XTGL_GETUSERBYCODENEW_PAGE', { "P1": tempindex.SelDeptItem.DeptCode, P2: tempindex.searchContent, usergw: tempindex.curUSERGW, pagecount: model.page.pagecount, p: e.curr }, function (resultData) {
                                     tempindex.UserData = resultData.Result;
                                     tempindex.totalUserCount = resultData.Result2;
                                 })
