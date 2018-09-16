@@ -226,6 +226,14 @@ namespace QJY.API
         }
         #endregion
 
+        #region 更新会议室的座位，哪些需要屏蔽
+        public void UPDATEHYSROOM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int id = CommonHelp.ParseInt(P1);
+            new SZHL_HYGL_ROOMB().ExsSql("update SZHL_HYGL_ROOM set Seats=N'" + P2 + "' where ID=" + id);
+        }
+        #endregion
+
         #region 会议室详细信息
         /// <summary>
         /// 会议室详细信息
@@ -257,10 +265,7 @@ namespace QJY.API
                     }
                 }
             }
-
             var list1 = list.Where(p => !li.Contains(p.ID));
-
-
             msg.Result = model;
             msg.Result1 = list1;
         }
@@ -542,7 +547,7 @@ namespace QJY.API
         {
             int Id = int.Parse(P1);
             string strWhere = " hy.IsDel=0 and hy.ComId=" + UserInfo.User.ComId + " and hy.ID=" + Id;
-            string colName = @"hy.*, hys.Name, hys.Width as RoomWidth, hys.Length as RoomLength, dbo.fn_PDStatus(hy.intProcessStanceid) AS StateName,case when hy.StartTime>getdate() then '即将开始' when hy.StartTime<=getdate() and hy.EndTime>=getdate() then '正在进行' when hy.EndTime<getdate() then '已结束' end as HLStatus ";
+            string colName = @"hy.*, hys.Name, hys.Width as RoomWidth, hys.Length as RoomLength, hys.Seats, dbo.fn_PDStatus(hy.intProcessStanceid) AS StateName,case when hy.StartTime>getdate() then '即将开始' when hy.StartTime<=getdate() and hy.EndTime>=getdate() then '正在进行' when hy.EndTime<getdate() then '已结束' end as HLStatus ";
             string tableName = string.Format(@" SZHL_HYGL hy left join SZHL_HYGL_ROOM hys on hy.RoomID=hys.ID");
 
             string strSql = string.Format("Select {0}  From {1} where {2} order by hy.CRDate desc", colName, tableName, strWhere);
@@ -606,7 +611,7 @@ namespace QJY.API
         {
             int Id = int.Parse(P1);
             string strWhere = "  hy.IsDel=0 and hy.ID=" + Id;
-            string colNme = @"hy.*,hys.Name ,hys.Width as RoomWidth, hys.Length as RoomLength, dbo.fn_PDStatus(hy.intProcessStanceid) AS StateName,case when hy.StartTime>getdate() then '即将开始' when hy.StartTime<=getdate() and hy.EndTime>=getdate() then '正在进行' when hy.EndTime<getdate() then '已结束' end as HLStatus ";
+            string colNme = @"hy.*,hys.Name ,hys.Width as RoomWidth, hys.Length as RoomLength,hys.Seats, dbo.fn_PDStatus(hy.intProcessStanceid) AS StateName,case when hy.StartTime>getdate() then '即将开始' when hy.StartTime<=getdate() and hy.EndTime>=getdate() then '正在进行' when hy.EndTime<getdate() then '已结束' end as HLStatus ";
             string tableName = string.Format(@" SZHL_HYGL hy left join SZHL_HYGL_ROOM hys on hy.RoomID=hys.ID");
 
             string strSql = string.Format("Select {0}  From {1} where {2} order by hy.CRDate desc", colNme, tableName, strWhere);

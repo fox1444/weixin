@@ -58,5 +58,14 @@ namespace QJY.Data
         public string CarNumber { get; set; }
         public string LbsRegion { get; set; }
         public string LbsLocation { get; set; }
+        public string Summary { get; set; }
+        public string Security { get; set; }
+        public string Organization { get; set; }
+        public string SummaryTitle { get; set; }
+        public string Comment { get; set; }
+        public string CommentTitle { get; set; }
+        public string SummarySubTitle { get; set; }
+        public string CommentSubTitle { get; set; }
+        public string LocationImg { get; set; }
     }
 }

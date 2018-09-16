@@ -215,6 +215,8 @@
     <Content Include="ViewV5\AppPage\HYGL\HYS.html" />
     <Content Include="ViewV5\AppPage\HYGL\HYSLIST.html" />
     <Content Include="ViewV5\AppPage\HYGL\HYSVIEW.html" />
+    <Content Include="ViewV5\AppPage\SEAT\EDIT_ROOM.html" />
+    <Content Include="ViewV5\AppPage\SEAT\SEAT_3.html" />
     <Content Include="ViewV5\AppPage\ZCGL\LIFECYCLELIST.html" />
     <Content Include="ViewV5\AppPage\SEAT\SEAT_2.html" />
     <Content Include="ViewV5\AppPage\YCGL\CLGL.html" />

@@ -33,5 +33,6 @@ namespace QJY.Data
         public Nullable<System.DateTime> DelDate { get; set; }
         public Nullable<int> Width { get; set; }
         public Nullable<int> Length { get; set; }
+        public string Seats { get; set; }
     }
 }

@@ -1010,6 +1010,15 @@
           <Property Name="CarNumber" Type="varchar(max)" />
           <Property Name="LbsRegion" Type="varchar" MaxLength="20" />
           <Property Name="LbsLocation" Type="varchar" MaxLength="200" />
+          <Property Name="Summary" Type="varchar(max)" />
+          <Property Name="Security" Type="varchar(max)" />
+          <Property Name="Organization" Type="varchar(max)" />
+          <Property Name="SummaryTitle" Type="varchar" MaxLength="200" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="CommentTitle" Type="varchar" MaxLength="200" />
+          <Property Name="SummarySubTitle" Type="varchar" MaxLength="100" />
+          <Property Name="CommentSubTitle" Type="varchar" MaxLength="100" />
+          <Property Name="LocationImg" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_OUTUSER">
           <Key>
@@ -1040,12 +1049,12 @@
           <Property Name="SendoffNumber" Type="varchar" MaxLength="400" />
           <Property Name="SendoffDate" Type="varchar" MaxLength="50" />
           <Property Name="PickupUser" Type="varchar" MaxLength="50" />
-          <Property Name="PickupUserMob" Type="varchar" MaxLength="20" />
-          <Property Name="PickupCarNumber" Type="varchar" MaxLength="20" />
+          <Property Name="PickupUserMob" Type="varchar" MaxLength="100" />
+          <Property Name="PickupCarNumber" Type="varchar" MaxLength="100" />
           <Property Name="PickupLocation" Type="varchar" MaxLength="200" />
           <Property Name="SendoffUser" Type="varchar" MaxLength="20" />
-          <Property Name="SendoffUserMob" Type="varchar" MaxLength="20" />
-          <Property Name="SendoffCarNumber" Type="varchar" MaxLength="20" />
+          <Property Name="SendoffUserMob" Type="varchar" MaxLength="100" />
+          <Property Name="SendoffCarNumber" Type="varchar" MaxLength="100" />
           <Property Name="SendoffLocation" Type="varchar" MaxLength="200" />
           <Property Name="HotelName" Type="varchar" MaxLength="100" />
           <Property Name="HotelRegion" Type="varchar" MaxLength="20" />
@@ -1129,6 +1138,7 @@
           <Property Name="DelDate" Type="datetime" />
           <Property Name="Width" Type="int" />
           <Property Name="Length" Type="int" />
+          <Property Name="Seats" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_SERVICE">
           <Key>
@@ -3573,6 +3583,7 @@
           <Property Name="DelDate" Type="DateTime" Precision="3" />
           <Property Name="Width" Type="Int32" />
           <Property Name="Length" Type="Int32" />
+          <Property Name="Seats" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SZHL_YCGL">
           <Key>
@@ -3859,12 +3870,12 @@
           <Property Name="SendoffNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
           <Property Name="SendoffDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PickupUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PickupUserMob" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="PickupCarNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PickupUserMob" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PickupCarNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PickupLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="SendoffUser" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="SendoffUserMob" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="SendoffCarNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SendoffUserMob" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SendoffCarNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="SendoffLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="HotelName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="HotelRegion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -3930,6 +3941,15 @@
           <Property Name="CarNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="LbsRegion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="LbsLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Security" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Organization" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SummaryTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CommentTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SummarySubTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CommentSubTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LocationImg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_OUTUSER_Log">
           <Key>
@@ -5504,6 +5524,7 @@
           <EntitySetMapping Name="SZHL_HYGL_ROOM">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL_ROOM">
               <MappingFragment StoreEntitySet="SZHL_HYGL_ROOM">
+                <ScalarProperty Name="Seats" ColumnName="Seats" />
                 <ScalarProperty Name="Length" ColumnName="Length" />
                 <ScalarProperty Name="Width" ColumnName="Width" />
                 <ScalarProperty Name="DelDate" ColumnName="DelDate" />
@@ -5853,6 +5874,15 @@
           <EntitySetMapping Name="SZHL_HYGL">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL">
               <MappingFragment StoreEntitySet="SZHL_HYGL">
+                <ScalarProperty Name="LocationImg" ColumnName="LocationImg" />
+                <ScalarProperty Name="CommentSubTitle" ColumnName="CommentSubTitle" />
+                <ScalarProperty Name="SummarySubTitle" ColumnName="SummarySubTitle" />
+                <ScalarProperty Name="CommentTitle" ColumnName="CommentTitle" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="SummaryTitle" ColumnName="SummaryTitle" />
+                <ScalarProperty Name="Organization" ColumnName="Organization" />
+                <ScalarProperty Name="Security" ColumnName="Security" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
                 <ScalarProperty Name="LbsLocation" ColumnName="LbsLocation" />
                 <ScalarProperty Name="LbsRegion" ColumnName="LbsRegion" />
                 <ScalarProperty Name="CarNumber" ColumnName="CarNumber" />

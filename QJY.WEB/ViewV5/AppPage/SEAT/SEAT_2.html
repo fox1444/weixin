@@ -208,6 +208,13 @@
         .navbar-fixed-bottom {
             padding: 10px;
         }
+        .room-block .empty {
+            border: solid 1px #fff;
+        }
+
+            .room-block .empty span {
+                color: #fff;
+            }
     </style>
 </head>
 <body ms-controller="UserSelect">
@@ -269,6 +276,7 @@
             $id: "UserSelect",
             HyId: ComFunJS.getQueryString("id"),
             SelUsers: [],//已选择用户
+            seats: [],
             render: function () {
             },
             inittemp: function () {
@@ -276,6 +284,8 @@
                 $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETHYGLMODEL', { P1: model.HyId }, function (resultData) {
                     if (resultData.ErrorMsg == "") {
                         model.modelData = resultData.Result[0];
+                        if (model.modelData.Seats)
+                            model.seats = JSON.parse(model.modelData.Seats);
                         model.getUserTree();
                     }
                 })
@@ -296,16 +306,21 @@
                     var tmp = '';
                     tmp += '<ul class="room-width-index">';
                     for (let l = 1; l <= rl; l++) {
-
                         tmp += '<li>';
                         tmp += '<ul class="room-length-index">';
                         for (let w = 1; w <= rw; w++) {
-                            tmp += '<li class="seat_' + l + '_' + w + '"  >';
+
+                            var emptyclass = "";
+                            model.seats.forEach(function (v, i) {
+                                if (v.xcode == l && v.ycode == w) {
+                                    emptyclass = "empty";
+                                }
+                            })
+                            tmp += '<li class="seat_' + l + '_' + w + ' ' + emptyclass + '">';
                             tmp += '<span>' + l + '-' + w + '</span>';
                             tmp += '<span class="seat_info "></span>';
                             tmp += '<span class="seat_info_userid" style="display:none"></span>';
                             tmp += '</li>';
-
                         }
                         tmp += '</ul>';
                         tmp += '</li>';
@@ -425,7 +440,7 @@
                 });
             },
             modelData: { "ID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "" },
-            LoadDeptitle: function() {
+            LoadDeptitle: function () {
                 var title = "";
                 var d = false;
                 $('.dept-title').each(function () {

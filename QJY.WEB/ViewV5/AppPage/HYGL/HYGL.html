@@ -10,6 +10,7 @@
                 <span ms-class-1="cur:seltype==6" ms-if="HYGLID>0" ms-click="selecttype(6)"><i class="iconfont icon-bookmark"></i>一键服务</span>
                 <span ms-class-1="cur:seltype==7" ms-if="HYGLID>0" ms-click="selecttype(7)"><i class="iconfont icon-bookmark"></i>单位&主持人</span>
                 <span ms-class-1="cur:seltype==8" ms-if="HYGLID>0" ms-click="selecttype(8)"><i class="iconfont icon-bookmark"></i>参会人</span>
+                <span ms-class-1="cur:seltype==9" ms-click="selecttype(9)"><i class="iconfont icon-bookmark"></i>其他</span>
             </div>
         </div>
         <!--基本信息-->
@@ -85,7 +86,6 @@
                 </ul>
             </div>
             <div>
-                <div class="fg-item"><span>其他信息</span><i></i></div>
                 <ul class="clearfix" style="padding:0" id="OtherInfo">
                     <!--<li class="add-item add-widthall">
                         <label class="add-item-label">主持人</label>
@@ -211,7 +211,7 @@
                 </div>
             </div>
         </div>
-        <!--服务人员-->
+        <!--一键服务-->
         <div ms-visible="seltype==6">
             <div class="fg-item"><span>服务人员</span><i></i></div>
             <div class="add-item add-widthall">
@@ -246,6 +246,12 @@
                 <label class="add-item-label">地点</label>
                 <div class="add-ic">
                     <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.LbsLocation" />
+                </div>
+            </div>
+            <div class="add-item add-widthall">
+                <label class="add-item-label">地图图片（如输入地图图片信息，则不调用地图导航，直接使用以下图片）</label>
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hylocationimg" umheight="150" ms-duplex="modelData.LocationImg"></textarea>
                 </div>
             </div>
         </div>
@@ -286,6 +292,62 @@
                 </div>
             </div>
             {{tempmodel.CYUserStr|html}}
+            <div class="add-item add-widthall" style="margin-top:10px;">
+                <div class="pr20">
+                    <button class="btn btn-info" onclick="EditUser(0,1)">添加</button>
+                </div>
+            </div>
+        </div>
+        <!--其他-->
+        <div ms-visible="seltype==9">
+            <div class="fg-item"><span>简介</span><i></i></div>
+            <div class="add-item add-width fl-left">
+                <label class="add-item-label">简介标题</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.SummaryTitle" />
+                </div>
+            </div>
+            <div class="add-item add-width fl-right">
+                <label class="add-item-label">简介短标题</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.SummarySubTitle" />
+                </div>
+            </div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hysummary" umheight="150" ms-duplex="modelData.Summary"></textarea>
+                </div>
+            </div>
+            <div class="fg-item"><span>简介2</span><i></i></div>
+            <div class="add-item add-width fl-left">
+                <label class="add-item-label">简介2标题</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.CommentTitle" />
+                </div>
+            </div>
+            <div class="add-item add-width fl-right">
+                <label class="add-item-label">简介2短标题</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.CommentSubTitle" />
+                </div>
+            </div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hycomment" umheight="150" ms-duplex="modelData.Comment"></textarea>
+                </div>
+            </div>
+            <div class="fg-item"><span>安全应急预案</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hysecurity" umheight="150" ms-duplex="modelData.Security"></textarea>
+                </div>
+            </div>
+            <div class="fg-item"><span>会务机构</span><i></i></div>
+            <div class="add-item add-widthall">
+                <div class="add-ic">
+                    <textarea class="szhl_UEEDIT" id="hyorganization" umheight="150" ms-duplex="modelData.Organization"></textarea>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -304,6 +366,7 @@
         CYUserStr: "",
         TypeId: ComFunJS.getQueryString("typeId"),
         HYGLID: ComFunJS.getQueryString("ID"),//会议ID
+        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "Summary": "", "SummaryTitle": "", "SummarySubTitle": "", "Comment": "", "CommentTitle": "", "CommentSubTitle": "", "Security": "", "Organization": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "BoardingTime": "", "CarNumber": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "LocationImg":"" },
         iswf: true,//是否属于流程表单
         inittemp: function (strId) {
             $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETKYHYSLIST', {}, function (resultData) {
@@ -336,7 +399,6 @@
                 ComFunJS.initForm();
             }
         },//初始化
-        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "BoardingTime": "", "CarNumber": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "" },
         SaveData: function (callback) {
             $.post("/API/VIEWAPI.ashx?ACTION=HYGL_ADDHYGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
                 return callback.call(this, result);
@@ -460,11 +522,11 @@
             }, function () { })
         },
         Convbranch: function (users, type) { //type=1参会人，2主持人
-            var branchcodes = '';
+            var branchcodes = ',';
             var branchtmp = '<table class="table-con"><tr><th>单位名称</th><th>姓名</th><th>联系电话</th><th>职务</th><th>序号</th><th>服务人员</th><th>操作</th></tr>';
             if (users) {
                 $(users).each(function (index, ele) {
-                    if (branchcodes.indexOf(ele.OutDept + ',') == -1) {
+                    if (branchcodes.indexOf(',' + ele.OutDept + ',') == -1) {
                         var i = tempmodel.ConvNumber(ele.OutDept, users);
                         branchtmp += '<tr><td rowspan="' + i + '">' + ele.ODName + '<br/><a href="#" onclick="EditSMS(' + ele.OutDept + ', ' + type + ')">发送短信</a></td>';
                         branchtmp += tempmodel.Convuser(ele.OutDept, users, type);

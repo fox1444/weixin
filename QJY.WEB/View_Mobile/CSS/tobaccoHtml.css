@@ -473,8 +473,19 @@ a {
         padding-left: 0px;
     }
 
+.hysummary .title i {
+    background: url(/View_Mobile/Images/icon/GZRB.png) center center no-repeat;
+}
+
+.hycomment .title i {
+    background: url(/View_Mobile/Images/icon/PXGL.png) center center no-repeat;
+}
 .hyxuzhi .title i {
     background: url(/View_Mobile/Images/icon/ZHBG.jpg) center center no-repeat;
+}
+
+.hysecurity .title i {
+    background: url(/View_Mobile/Images/icon/SECURITY.jpg) center center no-repeat;
 }
 
 .picksend .title i {
@@ -503,6 +514,10 @@ a {
 
 .hyyongcan .title i {
     background: url(/View_Mobile/Images/icon/DCGL.png) center center no-repeat;
+}
+
+.hyorganization .title i {
+    background: url(/View_Mobile/Images/icon/XMGL.png) center center no-repeat;
 }
 
 .zldownload .title i {
@@ -534,6 +549,9 @@ a {
 .hynavigate .title i {
     border-radius: 2px;
 }
+.mobphone a {
+    color: green;
+}
 
 .video-body {
     padding: 0 16px 10px 16px;
@@ -544,9 +562,11 @@ a {
     font-size: 110%;
     font-weight: bold;
 }
+
 .video-title-small {
-  font-size:95%;
+    font-size: 95%;
 }
+
 .video-content .vjs-poster, .video-content .video-js {
     border-radius: 0px;
 }
@@ -566,7 +586,7 @@ a {
     .video-list .video-content {
         float: left;
         width: 45%;
-        height:90px;
+        height: 90px;
     }
 
     .video-list .video-title {
@@ -574,6 +594,7 @@ a {
         float: right;
         font-size: 80%;
     }
+
 .v-small .video-js .vjs-big-play-button {
     display: none;
 }
@@ -715,7 +736,16 @@ a {
     color: #000;
     float: right;
     display: block;
+    width: 70%;
+    text-align:right;
 }
+
+    .list_parent_node .list_child_node::after {
+        content: " ";
+        display: block;
+        line-height: 0px;
+        clear: both;
+    }
 
 .item-con {
     padding: 4px 0 4px 8px;
@@ -785,11 +815,13 @@ a {
         background: url(/View_Mobile/Images/zuoyi.png) no-repeat center center;
         background-size: 100%;
     }
-
-    .room-length-index .selected {
-        background: url(/View_Mobile/Images/zuoyi-selected.png) no-repeat center center;
-        background-size: 100%;
-    }
+        .room-length-index li.empty{
+            background:none;
+        }
+        .room-length-index .selected {
+            background: url(/View_Mobile/Images/zuoyi-selected.png) no-repeat center center;
+            background-size: 100%;
+        }
 
 .room-width-index .first {
     background: none;
@@ -799,7 +831,7 @@ a {
     left: 12px;
     text-align: center;
     font-size: 90%;
-    line-height: 20px;
+    line-height: 22px;
     vertical-align: top;
 }
 
