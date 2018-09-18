@@ -538,7 +538,7 @@
                                poster="/view_mobile/images/video2.jpg" data-setup="{}">
                             <source src="http://mp.lstobacco.com/0758169485b1427abb8344acc5af7e98/09870ca0286948d5b04936065c738b08-8b0c19f6232be74a000c9cb9c108d64b-fd.mp4" type='video/mp4' />
                             <!--<source src="http://视频地址格式2.webm" type='video/webm' />
-                        <source src="http://视频地址格式3.ogv" type='video/ogg' />-->
+                            <source src="http://视频地址格式3.ogv" type='video/ogg' />-->
                             <track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
                             <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
                         </video>
@@ -621,10 +621,11 @@
             CYUserStr: "",
             Mapsrc: "",
             seats: [],
-            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "BoardingTime": "", "CarNumber": "", "HotelName": "", "HotelLocation": "", "LbsRegion": "", "LbsLocation": "", "Security": "", "Organization": "", "Summary": "", "SummaryTitle": "", "SummarySubTitle": "", "Comment": "", "CommentTitle": "", "CommentSubTitle": "", "LocationImg":""},
-            currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUserName": "","ServiceUserMobphone":"", "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "", "HotelName": "", "HotelLocation": "" },
+            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "BoardingTime": "", "CarNumber": "", "HotelName": "", "HotelLocation": "", "LbsRegion": "", "LbsLocation": "", "Security": "", "Organization": "", "Summary": "", "SummaryTitle": "", "SummarySubTitle": "", "Comment": "", "CommentTitle": "", "CommentSubTitle": "", "LocationImg": "" },
+            currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUserName": "", "ServiceUserMobphone": "", "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "", "HotelName": "", "HotelLocation": "" },
             dataid: ComFunJS.getQueryString('id'),
             stepindex: "",
+            logdata: { "ComId": 0, "UserID": 0, "Name": "", "Mobphone": "", "HYGLID": 0 },
             gostart: function (index) {
                 location.href = "/View_Mobile/UI/HyDetail_index_r.html?id=" + tempmodel.dataid + "&r=" + Math.random();
             },
@@ -663,7 +664,7 @@
                     }
 
                     //视频页特殊处理
-                    if (index != 17) { 
+                    if (index != 17) {
                         myPlayer2.pause();
                         myPlayer3.pause();
                     }
@@ -695,6 +696,7 @@
                     $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELNOLOGIN', { P1: strId }, function (resultData) {
                         if (resultData.ErrorMsg == "") {
                             tempmodel.modelData = resultData.Result[0];
+                            document.title = tempmodel.modelData.Title.replace('<br/>', '') + "详情";
                             if (tempmodel.modelData.Seats)
                                 tempmodel.seats = JSON.parse(tempmodel.modelData.Seats);
                             tempmodel.tpData = resultData.Result1;
@@ -708,7 +710,7 @@
                 }
             },
             LoadAllUser: function () {
-                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERLISTBYHYGLID&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: 0 }, function (r) {
+                $.getJSON("/API/VIEWAPINOLOGIN.ashx?action=HYGL_GETOUTUSERLISTBYHYGLID&r=" + Math.random(), { P1: tempmodel.modelData.ID, P2: 0, Status: 0 }, function (r) {
                     if (r.ErrorMsg == "") {
                         tempmodel.CYUserStr = ComFunJS.convusers_branch(r.Result);
                     }
@@ -743,6 +745,8 @@
                                     tempmodel.LoadMap();
                                 }
                             }
+
+                            tempmodel.signlog();
                         }
                     });
                 }
@@ -766,7 +770,7 @@
                                     emptyclass = "empty";
                                 }
                             })
-                            tmp += '<li class="seat_' + l + '_' + w + ' ' + emptyclass +'"  >';
+                            tmp += '<li class="seat_' + l + '_' + w + ' ' + emptyclass + '"  >';
                             tmp += '</li>';
                         }
                         tmp += '</ul>';
@@ -983,6 +987,17 @@
                 //腾讯地图  很不好用
                 //tempmodel.Mapsrc  = "https://apis.map.qq.com/tools/routeplan/eword=" + region + destination + "&transport=2?referer=myapp&key=O47BZ-GWE3D-LPB4R-P4E46-HMACS-WKFRQ";
                 //$('#mapping').attr('src', tempmodel.Mapsrc);
+            },
+            signlog: function () {
+                tempmodel.logdata.ComId = tempmodel.currentuser.ComId;
+                tempmodel.logdata.UserID = tempmodel.currentuser.ID;
+                tempmodel.logdata.Name = tempmodel.currentuser.Name;
+                tempmodel.logdata.Mobphone = tempmodel.currentuser.Mobphone;
+                tempmodel.logdata.HYGLID = tempmodel.modelData.ID;
+                $.post('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_ADDOUTUSERLOG', { P1: JSON.stringify(tempmodel.logdata.$model) }, function (r) {
+                    if (r.ErrorMsg == "") {
+                    }
+                });
             }
         });
 

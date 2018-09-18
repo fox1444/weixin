@@ -39,6 +39,15 @@
                         <input type="text" class="form-control" ms-duplex="modelData.DisplayOrder" />
                     </div>
                 </li>
+                <li class="add-item  ">
+                    <label class="add-item-label"><i>*</i>是否可见</label>
+                    <div class="add-ic">
+                        <select class="form-control" ms-duplex="modelData.Status">
+                            <option value="0">可见</option>
+                            <option value="1">不可见</option>
+                        </select>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
@@ -55,7 +64,7 @@
             $id: "HYGLDEPT",
             DeptID: ComFunJS.getQueryString("DeptID", 0), 
             HYGLID: window.parent.GetHYGLID(),
-            modelData: { "ComId": "0", "ID": "0", "Name": "", "DisplayOrder": "", "HYGLID": window.parent.GetHYGLID(), "CRUser": ComFunJS.getnowuser(), "CRDate": ComFunJS.getnowdate('yyyy-mm-dd hh:mm') },
+            modelData: { "ComId": "0", "ID": "0", "Name": "", "DisplayOrder": "", "HYGLID": window.parent.GetHYGLID(), "CRUser": ComFunJS.getnowuser(), "CRDate": ComFunJS.getnowdate('yyyy-mm-dd hh:mm'),"Status":0 },
             GetModelData: function () {
                 if (model.DeptID) {
                     //编辑加载数据
