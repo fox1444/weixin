@@ -44,7 +44,6 @@
                     <div class="add-ic">
                         <!--<input type="text" class="form-control szhl_require" ms-duplex="modelData.OutDeptName" />-->
                         <select name="conDept" id="conDept" ms-duplex="modelData.OutDept" class="form-control szhl_require">
-                            <option value="-999">测试</option>
                             <option ms-repeat-item="DeptData" ms-attr-value="item.ID" ms-attr-selected="item.ID==modelData.OutDept?'selected':''">{{item.Name}}</option>
                         </select>
                     </div>

@@ -21,5 +21,6 @@ namespace QJY.Data
         public Nullable<int> DisplayOrder { get; set; }
         public string CRUser { get; set; }
         public Nullable<System.DateTime> CRDate { get; set; }
+        public Nullable<int> Status { get; set; }
     }
 }

@@ -938,6 +938,7 @@ namespace QJY.API
             int Id = CommonHelp.ParseInt(P1);
             int type = CommonHelp.ParseInt(P2);
             string DeptID = context.Request["DeptID"] ?? "";
+            string Status = context.Request["Status"] ?? "";
             string strWhere = " u.HYGLID=" + Id;
             if (type > 0)
             {
@@ -947,7 +948,11 @@ namespace QJY.API
             {
                 strWhere += " and u.OutDept=" + DeptID;
             }
-            msg.Result = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.*, case u.OutDept when -999 then '测试' else d.Name end as ODName , s.Name as ServiceName, d.Name as OutDeptName, (select count(1) from SZHL_HYGL_OUTUSER_Log where HYGLID=" + Id + " and UserID=u.ID) as N from dbo.SZHL_HYGL_OUTUSER u left join  SZHL_HYGL_SERVICE s on u.ServiceUser=s.ID left join SZHL_HYGL_OUTUSER_DEPT d on u.OutDept=d.ID where " + strWhere + " order by d.DisplayOrder, u.DisplayOrder, u.Name");
+            if (Status != "")
+            {
+                strWhere += " and d.Status=" + Status;
+            }
+            msg.Result = new SZHL_HYGL_OUTUSERB().GetDTByCommand("select u.*,  d.Name as ODName , s.Name as ServiceName, d.Name as OutDeptName, (select count(1) from SZHL_HYGL_OUTUSER_Log where HYGLID=" + Id + " and UserID=u.ID) as N from dbo.SZHL_HYGL_OUTUSER u left join  SZHL_HYGL_SERVICE s on u.ServiceUser=s.ID left join SZHL_HYGL_OUTUSER_DEPT d on u.OutDept=d.ID where " + strWhere + " order by d.DisplayOrder, u.DisplayOrder, u.Name");
         }
 
         /// <summary>
@@ -1071,7 +1076,7 @@ namespace QJY.API
         public void GETOUTUSERDEPTLISTBYHYGLID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int Id = int.Parse(P1);
-            msg.Result = new SZHL_HYGL_OUTUSER_DEPTB().GetDTByCommand("select * from dbo.SZHL_HYGL_OUTUSER_DEPT where HYGLID=" + Id + " order by DisplayOrder ");
+            msg.Result = new SZHL_HYGL_OUTUSER_DEPTB().GetDTByCommand("select *, case Status when 0 then '可见' else '不可见' end as StatusType from dbo.SZHL_HYGL_OUTUSER_DEPT where HYGLID=" + Id + " order by DisplayOrder ");
         }
 
         /// <summary>

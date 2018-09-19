@@ -1071,6 +1071,7 @@
           <Property Name="DisplayOrder" Type="int" />
           <Property Name="CRUser" Type="varchar" MaxLength="100" />
           <Property Name="CRDate" Type="datetime" />
+          <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_OUTUSER_Log">
           <Key>
@@ -3892,6 +3893,7 @@
           <Property Name="DisplayOrder" Type="Int32" />
           <Property Name="CRUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CRDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
         </EntityType>
         <EntityType Name="SZHL_HYGL">
           <Key>
@@ -5861,6 +5863,7 @@
           <EntitySetMapping Name="SZHL_HYGL_OUTUSER_DEPT">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL_OUTUSER_DEPT">
               <MappingFragment StoreEntitySet="SZHL_HYGL_OUTUSER_DEPT">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="CRDate" ColumnName="CRDate" />
                 <ScalarProperty Name="CRUser" ColumnName="CRUser" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />

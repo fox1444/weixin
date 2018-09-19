@@ -266,11 +266,13 @@
                 <tr>
                     <th>单位名称</th>
                     <th>序号</th>
+                    <th>是否可见</th>
                     <th>操作</th>
                 </tr>
                 <tr ms-repeat-el="DeptData">
                     <td>{{el.Name}}</td>
                     <td>{{el.DisplayOrder}}</td>
+                    <td>{{el.StatusType}}</td>
                     <td>
                         <a class="lk" ms-click="EditDept(el.ID,'编辑')">编辑</a>&nbsp;|
                         <a class="lk" ms-click="DelDept(el,$event)">删除</a>
