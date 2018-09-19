@@ -124,7 +124,7 @@
                             if (resultData.Result5.length > 0) {
                                 if (resultData.Result5.length == 1) {  //只有一条数据的情况
                                     tempmodel.currentuser = resultData.Result5[0];
-                                    ComFunJS.setCookieMinute("outuserid", tempmodel.currentuser.ID, 60);
+                                    ComFunJS.setCookieMinute("outuserid", tempmodel.currentuser.ID, 4320);
                                     $('.input_block').hide();
                                     $('.list_block').hide();
                                     $('.default_block').show();
@@ -226,6 +226,9 @@
 
         avalon.ready(function () {
             tempmodel.inittemp();
+            //if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+            //    document.documentElement.style.fontSize = document.documentElement.clientWidth / 22 + 'px';
+            //}
             document.documentElement.style.fontSize = document.documentElement.clientWidth / 22 + 'px';
         })
 
