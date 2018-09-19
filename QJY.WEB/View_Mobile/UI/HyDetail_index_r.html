@@ -226,10 +226,10 @@
 
         avalon.ready(function () {
             tempmodel.inittemp();
-            //if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-            //    document.documentElement.style.fontSize = document.documentElement.clientWidth / 22 + 'px';
-            //}
-            document.documentElement.style.fontSize = document.documentElement.clientWidth / 22 + 'px';
+            if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+                document.documentElement.style.fontSize = document.documentElement.clientWidth / 22 + 'px';
+            }
+            //document.documentElement.style.fontSize = document.documentElement.clientWidth / 22 + 'px';
         })
 
         $(window).on("load resize", function () {
