@@ -122,15 +122,15 @@
             tempindex.GetLIST();
         },
         InitWigetData: function () {
-
             //显示的列名
             model.ShowColumns.clear();
             model.ShowColumns.pushArray([
                 { "ColName": "Title", "ColText": "会议主题", "IsSel": true, "format": "text", "type": "link" },
                 { "ColName": "StartTime", "ColText": "开始时间", "IsSel": true, "format": "timeformat" },
                 { "ColName": "EndTime", "ColText": "结束时间", "IsSel": true, "format": "timeformat" },
+                { "ColName": "IsOff", "ColText": "已关闭", "IsSel": true, "format": "allowed" },
                 { "ColName": "CYUser", "ColText": "参与人", "IsSel": false, "format": "username", "len": 10 },
-                { "ColName": "Name", "ColText": "会议室", "width": "10%", IsSel: true, "format": "text" },
+                { "ColName": "Name", "ColText": "会议室", "width": "10%", "IsSel": true, "format": "text" },
                 { "ColName": "Details", "ColText": "会议内容", "IsSel": false, "format": "text" },
                 { "ColName": "StateName", "ColText": "审核状态", "width": "10%", "IsSel": false, "format": "statename" },
                 { "ColName": "JLUser", "ColText": "纪要人", "width": "5%", "IsSel": false, "format": "username" },

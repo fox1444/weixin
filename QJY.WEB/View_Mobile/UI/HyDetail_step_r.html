@@ -621,7 +621,7 @@
             CYUserStr: "",
             Mapsrc: "",
             seats: [],
-            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "BoardingTime": "", "CarNumber": "", "HotelName": "", "HotelLocation": "", "LbsRegion": "", "LbsLocation": "", "Security": "", "Organization": "", "Summary": "", "SummaryTitle": "", "SummarySubTitle": "", "Comment": "", "CommentTitle": "", "CommentSubTitle": "", "LocationImg": "" },
+            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "BoardingTime": "", "CarNumber": "", "HotelName": "", "HotelLocation": "", "LbsRegion": "", "LbsLocation": "", "Security": "", "Organization": "", "Summary": "", "SummaryTitle": "", "SummarySubTitle": "", "Comment": "", "CommentTitle": "", "CommentSubTitle": "", "LocationImg": "", "IsOff": false },
             currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUserName": "", "ServiceUserMobphone": "", "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "", "HotelName": "", "HotelLocation": "" },
             dataid: ComFunJS.getQueryString('id'),
             stepindex: "",
@@ -695,6 +695,10 @@
                 if (strId) {
                     $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELNOLOGIN', { P1: strId }, function (resultData) {
                         if (resultData.ErrorMsg == "") {
+                            resultData.Result[0].IsOff = resultData.Result[0].IsOff == 0 ? false : true;
+                            if (resultData.Result[0].IsOff) {
+                                location.href = "/View_Mobile/UI/HyDetail_index_r.html?id=" + strId + "&r=" + Math.random();
+                            }
                             tempmodel.modelData = resultData.Result[0];
                             document.title = tempmodel.modelData.Title.replace('<br/>', '') + "详情";
                             if (tempmodel.modelData.Seats)

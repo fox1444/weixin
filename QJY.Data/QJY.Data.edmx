@@ -1019,6 +1019,7 @@
           <Property Name="SummarySubTitle" Type="varchar" MaxLength="100" />
           <Property Name="CommentSubTitle" Type="varchar" MaxLength="100" />
           <Property Name="LocationImg" Type="varchar(max)" />
+          <Property Name="IsOff" Type="int" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_OUTUSER">
           <Key>
@@ -3952,6 +3953,7 @@
           <Property Name="SummarySubTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CommentSubTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LocationImg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsOff" Type="Int32" />
         </EntityType>
         <EntityType Name="SZHL_HYGL_OUTUSER_Log">
           <Key>
@@ -5877,6 +5879,7 @@
           <EntitySetMapping Name="SZHL_HYGL">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_HYGL">
               <MappingFragment StoreEntitySet="SZHL_HYGL">
+                <ScalarProperty Name="IsOff" ColumnName="IsOff" />
                 <ScalarProperty Name="LocationImg" ColumnName="LocationImg" />
                 <ScalarProperty Name="CommentSubTitle" ColumnName="CommentSubTitle" />
                 <ScalarProperty Name="SummarySubTitle" ColumnName="SummarySubTitle" />

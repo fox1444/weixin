@@ -21,6 +21,14 @@
                     <li class="add-item add-width">
                         <label>申请人:</label>
                         <label>{{ComFunJS.convertuser(modelData.FQUser)}}</label>
+
+                        <div class="checkbox checkbox-inline" ms-click="chkshowhide(1)" style="padding-left:50px">
+                            <div class="icheckbox_square-blue" ms-class-1="checked:modelData.IsOff" id="inlineCheck1">
+                                <input type="checkbox" id="inlineCheckbox1" ms-duplex-checked="modelData.IsOff">
+                                <span class="iconfont icon-check ft12"></span>
+                            </div>
+                            <label style="padding:0">关闭会议 </label>
+                        </div>
                     </li>
                     <li class="add-item add-width fl-left">
                         <label class="add-item-label"><i>*</i>会议主题</label>
@@ -368,26 +376,19 @@
         CYUserStr: "",
         TypeId: ComFunJS.getQueryString("typeId"),
         HYGLID: ComFunJS.getQueryString("ID"),//会议ID
-        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "Summary": "", "SummaryTitle": "", "SummarySubTitle": "", "Comment": "", "CommentTitle": "", "CommentSubTitle": "", "Security": "", "Organization": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "BoardingTime": "", "CarNumber": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "LocationImg":"" },
+        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "Summary": "", "SummaryTitle": "", "SummarySubTitle": "", "Comment": "", "CommentTitle": "", "CommentSubTitle": "", "Security": "", "Organization": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "BoardingTime": "", "CarNumber": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "LocationImg": "","IsOff": false},
         iswf: true,//是否属于流程表单
         inittemp: function (strId) {
             $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETKYHYSLIST', {}, function (resultData) {
                 if (resultData.ErrorMsg == "") {
                     tempmodel.HYSData = resultData.Result;
-                    //if (resultData.Result.length > 0) {
-                    //    if (tempmodel.TypeId) {
-                    //        tempmodel.modelData.RoomID = tempmodel.TypeId;
-                    //    }
-                    //    if (!tempmodel.modelData.RoomID) {
-                    //        tempmodel.modelData.RoomID = resultData.Result[0].ID;
-                    //    };
-                    //}
                 }
             })
             if (strId) {
                 //编辑加载数据
                 $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETHYGLMODEL', { P1: strId }, function (resultData) {
                     if (resultData.ErrorMsg == "") {
+                        resultData.Result.IsOff = resultData.Result.IsOff == 0 ? false : true;
                         tempmodel.modelData = resultData.Result[0];
                         tempmodel.GetServiceList(strId);
                         tempmodel.GetDeptList(strId);
@@ -402,6 +403,7 @@
             }
         },//初始化
         SaveData: function (callback) {
+            tempmodel.modelData.IsOff = tempmodel.modelData.IsOff ? 1 : 0;
             $.post("/API/VIEWAPI.ashx?ACTION=HYGL_ADDHYGL&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (result) {
                 return callback.call(this, result);
             });
@@ -575,6 +577,13 @@
             }
             return i;
         },
+        chkshowhide: function (checkid) {
+            switch (checkid) {
+                case 1:
+                    tempmodel.modelData.IsOff = !tempmodel.modelData.IsOff;
+                    break;
+            }
+        }
     });
 
     function GetHYGLID() {
