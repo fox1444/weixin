@@ -699,16 +699,18 @@
                             if (resultData.Result[0].IsOff) {
                                 location.href = "/View_Mobile/UI/HyDetail_index_r.html?id=" + strId + "&r=" + Math.random();
                             }
-                            tempmodel.modelData = resultData.Result[0];
-                            document.title = tempmodel.modelData.Title.replace('<br/>', '') + "详情";
-                            if (tempmodel.modelData.Seats)
-                                tempmodel.seats = JSON.parse(tempmodel.modelData.Seats);
-                            tempmodel.tpData = resultData.Result1;
-                            tempmodel.LoadNumber();
-                            tempmodel.LoadAllUser();//参会人
-                            tempmodel.LoadRoom();//座次表
-                            ComFunJS.viewimg_for_view(tempmodel.tpData, '1');//文件下载
-                            //setTimeout(" ComFunJS.initForm()", 500);
+                            else {
+                                tempmodel.modelData = resultData.Result[0];
+                                document.title = tempmodel.modelData.Title.replace('<br/>', '') + "详情";
+                                if (tempmodel.modelData.Seats)
+                                    tempmodel.seats = JSON.parse(tempmodel.modelData.Seats);
+                                tempmodel.tpData = resultData.Result1;
+                                tempmodel.LoadNumber();
+                                tempmodel.LoadAllUser();//参会人
+                                tempmodel.LoadRoom();//座次表
+                                ComFunJS.viewimg_for_view(tempmodel.tpData, '1');//文件下载
+                                //setTimeout(" ComFunJS.initForm()", 500);
+                            }
                         }
                     })
                 }
