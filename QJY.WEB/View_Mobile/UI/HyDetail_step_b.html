@@ -701,7 +701,7 @@
                             }
                             else {
                                 tempmodel.modelData = resultData.Result[0];
-                                document.title = tempmodel.modelData.Title.replace('<br/>', '') + "详情";
+                                document.title = tempmodel.modelData.Title.replace('<br/>', '') + "详情" ;
                                 if (tempmodel.modelData.Seats)
                                     tempmodel.seats = JSON.parse(tempmodel.modelData.Seats);
                                 tempmodel.tpData = resultData.Result1;
