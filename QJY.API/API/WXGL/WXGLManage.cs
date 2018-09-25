@@ -10,6 +10,7 @@ using QJY.Data;
 using Newtonsoft.Json;
 using Senparc.Weixin.QY.Entities;
 using System.Collections;
+using System.Text;
 
 namespace QJY.API
 {
@@ -21,6 +22,8 @@ namespace QJY.API
             WXGLManage model = new WXGLManage();
             methodInfo.FastInvoke(model, new object[] { context, msg, P1, P2, UserInfo });
         }
+
+        #region 微信管理系统
 
         public void ADDGROUP(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
@@ -400,5 +403,57 @@ namespace QJY.API
                 msg.ErrorMsg = "您没有权限删除";
             }
         }
+        #endregion
+
+        #region 获取微信初始化参数
+        public void GETWXCONFIG(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+
+            TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1);
+            string timestamp = Convert.ToInt64(ts.TotalSeconds).ToString();
+            string appId = CommonHelp.AppConfig("AppId");
+            string jsapi_ticket = CommonHelp.AppConfig("jsapi_ticket");
+            string nonceStr = "7Gds34JH76tdy54IUY65er";
+            string url = "http://www.lstobacco.com/WX/BGXT/GetLocation.html";
+
+            string TOP_FIELD_SIGN = "";
+            param.Add("timestamp", timestamp.ToString());
+            param.Add("jsapi_ticket", jsapi_ticket);
+            param.Add("noncestr", nonceStr);
+            param.Add("url", url);
+
+            SortedDictionary<string, string> dic = new SortedDictionary<string, string>(param);
+            IEnumerator<KeyValuePair<string, string>> em = dic.GetEnumerator();
+            // 第1步：把所有参数名和参数值串在一起
+            StringBuilder query = new StringBuilder();
+            while (em.MoveNext())
+            {
+                string key = em.Current.Key;
+                if (!TOP_FIELD_SIGN.Equals(key, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    string value = em.Current.Value;
+                    if (!string.IsNullOrWhiteSpace(value) && !string.IsNullOrWhiteSpace(key))
+                    {
+                        query.Append("&").Append(key).Append("=").Append(value);
+                    }
+                }
+            }
+            query = new StringBuilder(query.ToString().TrimStart('&'));
+
+            // 第2步：使用sha1加密
+            string signature = WXFWHelp.EnSha1(query.ToString());
+            msg.Result = new
+            {
+                timestamp = timestamp,
+                appId = appId,
+                jsapi_ticket = jsapi_ticket,
+                noncestr = nonceStr,
+                url = url,
+                query = query.ToString(),
+                signature = signature
+            };
+        }
+        #endregion
     }
 }
