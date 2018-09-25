@@ -290,17 +290,20 @@
     <Content Include="View_Mobile\UI\HyDetail.html" />
     <Content Include="View_Mobile\UI\UI_Login.html" />
     <Content Include="View_Mobile\UI\UI_YCGL_LIST.html" />
-    <Content Include="WX\bgxt\BranchZc_List.html" />
-    <Content Include="WX\bgxt\LocZc_List.html" />
-    <Content Include="WX\bgxt\Zc_Detail.html" />
-    <Content Include="WX\bgxt\Zc_List.html" />
-    <Content Include="WX\bgxt\Index.html" />
-    <Content Include="WX\bgxt\Hy_List.html" />
-    <Content Include="WX\message\bgxtbox.html" />
-    <Content Include="WX\message\newMsg.html" />
-    <Content Include="WX\zlxz\Satisfaction.html" />
-    <Content Include="WX\zlxz\HD_Add.html" />
-    <Content Include="WX\zlxz\Group_member.html" />
+    <Content Include="WX\BGXT\BranchZc_List.html" />
+    <Content Include="WX\BGXT\GetLocation.html" />
+    <Content Include="WX\BGXT\LocZc_List.html" />
+    <Content Include="WX\BGXT\Zc_Detail.html" />
+    <Content Include="WX\BGXT\Zc_List.html" />
+    <Content Include="WX\BGXT\Index.html" />
+    <Content Include="WX\BGXT\Hy_List.html" />
+    <Content Include="WX\CSS\sm-extend.min.css" />
+    <Content Include="WX\CSS\sm.min.css" />
+    <Content Include="WX\Message\bgxtbox.html" />
+    <Content Include="WX\Message\newMsg.html" />
+    <Content Include="WX\ZLXZ\Satisfaction.html" />
+    <Content Include="WX\ZLXZ\HD_Add.html" />
+    <Content Include="WX\ZLXZ\Group_member.html" />
     <Content Include="WX\JS\chart.js" />
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\bin\LitJSON.dll" />
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\demo.aspx" />
@@ -500,9 +503,9 @@
     <Content Include="WX\JS\kindeditor-4.1.4\themes\qq\editor.gif" />
     <Content Include="WX\JS\kindeditor-4.1.4\themes\qq\qq.css" />
     <Content Include="WX\JS\kindeditor-4.1.4\themes\simple\simple.css" />
-    <Content Include="WX\zlxz\Calculation.html" />
-    <Content Include="WX\message\zlxzbox.html" />
-    <Content Include="WX\zlxz\RY_Add.html" />
+    <Content Include="WX\ZLXZ\Calculation.html" />
+    <Content Include="WX\Message\zlxzbox.html" />
+    <Content Include="WX\ZLXZ\RY_Add.html" />
     <Content Include="WX\CSS\fonts\icomoon.svg" />
     <Content Include="WX\CSS\wxstyle.css" />
     <Content Include="WX\Authrise.aspx" />
@@ -510,17 +513,17 @@
     <Content Include="WX\images\plus-zhankai.png" />
     <Content Include="WX\images\plus-zhedie.png" />
     <Content Include="WX\BindPhone.html" />
-    <Content Include="WX\zlxz\Home.html" />
+    <Content Include="WX\ZLXZ\Home.html" />
     <Content Include="WX\JS\WxControl.js" />
-    <Content Include="WX\zlxz\MyGroup.html" />
+    <Content Include="WX\ZLXZ\MyGroup.html" />
     <Content Include="WX\Me.html" />
     <Content Include="WX\FSlist.html" />
-    <Content Include="WX\zlxz\NewProduct.html" />
-    <Content Include="WX\zlxz\HD_List.html" />
-    <Content Include="WX\zlxz\HD_Info.html" />
-    <Content Include="WX\zlxz\RY_List.html" />
-    <Content Include="WX\zlxz\RY_Info.html" />
-    <Content Include="WX\zlxz\UploadImg.aspx" />
+    <Content Include="WX\ZLXZ\NewProduct.html" />
+    <Content Include="WX\ZLXZ\HD_List.html" />
+    <Content Include="WX\ZLXZ\HD_Info.html" />
+    <Content Include="WX\ZLXZ\RY_List.html" />
+    <Content Include="WX\ZLXZ\RY_Info.html" />
+    <Content Include="WX\ZLXZ\UploadImg.aspx" />
     <Content Include="WX\WeiXin.aspx" />
     <Content Include="WZWeb\CSS\bootstrap.css" />
     <Content Include="WZWeb\CSS\dialog.css" />
@@ -1806,8 +1809,8 @@
     <Content Include="WX\images\会理自律小组现场会组员名单20180418--%282%29.xlsx" />
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\file_manager_json.ashx" />
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\upload_json.ashx" />
-    <Content Include="WX\message\GetMsg.ashx" />
-    <Content Include="WX\message\MsgWB.ashx" />
+    <Content Include="WX\Message\GetMsg.ashx" />
+    <Content Include="WX\Message\MsgWB.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\HtmlModule.cs" />
@@ -1869,17 +1872,17 @@
     <Compile Include="WX\Authrise.aspx.designer.cs">
       <DependentUpon>Authrise.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WX\message\GetMsg.ashx.cs">
+    <Compile Include="WX\Message\GetMsg.ashx.cs">
       <DependentUpon>GetMsg.ashx</DependentUpon>
     </Compile>
-    <Compile Include="WX\message\MsgWB.ashx.cs">
+    <Compile Include="WX\Message\MsgWB.ashx.cs">
       <DependentUpon>MsgWB.ashx</DependentUpon>
     </Compile>
-    <Compile Include="WX\zlxz\UploadImg.aspx.cs">
+    <Compile Include="WX\ZLXZ\UploadImg.aspx.cs">
       <DependentUpon>UploadImg.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WX\zlxz\UploadImg.aspx.designer.cs">
+    <Compile Include="WX\ZLXZ\UploadImg.aspx.designer.cs">
       <DependentUpon>UploadImg.aspx</DependentUpon>
     </Compile>
     <Compile Include="WX\WeiXin.aspx.cs">
