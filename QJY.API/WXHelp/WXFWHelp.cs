@@ -6,6 +6,9 @@ using Senparc.Weixin.MP.CommonAPIs;
 using Senparc.Weixin.MP.Containers;
 using Senparc.Weixin.MP.Entities;
 using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -19,6 +22,7 @@ namespace QJY.API
         public WXFWHelp()
         {
         }
+    
         /// <summary>
         /// Global中定时更新AccessToken
         /// </summary>
@@ -48,12 +52,15 @@ namespace QJY.API
         {
             AccessTokenResult r = CommonApi.GetToken(CommonHelp.AppConfig("AppId"), CommonHelp.AppConfig("AppSecret"), "client_credential");
             string _username = CommonHelp.GetUserNameByszhlcode();
+            string strIp = CommonHelp.getIP(HttpContext.Current);
 
             string accesstoken = r.access_token;
             if (accesstoken.Trim().Length > 0)
             {
                 CommonHelp.UpdateAppConfig("AccessToken", accesstoken);
-                new JH_Auth_LogB().InsertLog("WXFWHelper", "立即更新AccessToken为" + accesstoken, "WXFWHelper", _username, _username, 0, "");
+                new JH_Auth_LogB().InsertLog("WXFWHelper", "立即更新AccessToken为" + accesstoken, "WXFWHelper", _username, _username, 0, strIp);
+
+                Updatejsapiticket(accesstoken, _username, strIp);
             }
             return accesstoken;
         }
@@ -78,18 +85,27 @@ namespace QJY.API
                 CommonHelp.UpdateAppConfig("AccessToken", accesstoken);
                 new JH_Auth_LogB().InsertLog("WXFWHelper", "更新AccessToken为" + accesstoken, "WXFWHelper", _username, _username, 0, strIp);
 
-                JsApiTicketResult jsapi_ticket = CommonApi.GetTicketByAccessToken(accesstoken);
-                if (jsapi_ticket != null)
-                {
-                    if (jsapi_ticket.ticket.Length > 0)
-                    {
-                        CommonHelp.UpdateAppConfig("jsapi_ticket", jsapi_ticket.ticket);
-                        new JH_Auth_LogB().InsertLog("WXFWHelper", "更新jsapi_ticket为" + jsapi_ticket.ticket, "WXFWHelper", _username, _username, 0, strIp);
-
-                    }
-                }
+                Updatejsapiticket(accesstoken, _username, strIp);
             }
             return accesstoken;
+        }
+        /// <summary>
+        /// 更新jsapi_ticket
+        /// </summary>
+        public static bool Updatejsapiticket(string accesstoken, string username = "System", string strIp = "")
+        {
+            bool result = false;
+            JsApiTicketResult jsapi_ticket = CommonApi.GetTicketByAccessToken(accesstoken);
+            if (jsapi_ticket != null)
+            {
+                if (jsapi_ticket.ticket.Length > 0)
+                {
+                    CommonHelp.UpdateAppConfig("jsapi_ticket", jsapi_ticket.ticket);
+                    new JH_Auth_LogB().InsertLog("WXFWHelper", "更新jsapi_ticket为" + jsapi_ticket.ticket, "WXFWHelper", username, username, 0, strIp);
+                    result = true;
+                }
+            }
+            return result;
         }
         /// <summary>
         /// 从公众号中进入获取用户信息并更新数据库中账号
@@ -221,6 +237,55 @@ namespace QJY.API
             CommonHelp.SetCookie("szhlcode", userInfo.pccode, expires);
             CommonHelp.SetCookie("username", userInfo.UserName, expires);
             CommonHelp.SetCookie("userphonenumber", userInfo.mobphone, expires);
+        }
+
+        /// <summary>
+        /// 基于Sha1的自定义加密字符串方法：输入一个字符串，返回一个由40个字符组成的十六进制的哈希散列（字符串）。
+        /// </summary>
+        /// <param name="str">要加密的字符串</param>
+        /// <returns>加密后的十六进制的哈希散列（字符串）</returns>
+        public static string EnSha1(string str)
+        {
+            //大写加密
+            //var buffer = Encoding.UTF8.GetBytes(str);
+            //var data = SHA1.Create().ComputeHash(buffer);
+
+            //var sb = new StringBuilder();
+            //foreach (var t in data)
+            //{
+            //    sb.Append(t.ToString("X2"));
+            //}
+            //return sb.ToString();
+
+            //小写加密
+            StringBuilder result = new StringBuilder();
+            var data = Encoding.UTF8.GetBytes(str);
+            SHA1 sha = new SHA1CryptoServiceProvider();
+            var resultArr = sha.ComputeHash(data);
+            for (int i = 0; i < resultArr.Length; i++)
+            {
+                var tmp = String.Format("{0:X2}", resultArr[i] & 0xFF);
+                if (tmp.Length == 1)
+                {
+                    result.Append("0");
+                }
+                result.Append(tmp);
+            }
+            var passwd = result.ToString();
+            StringBuilder lowerstr = new StringBuilder();
+            foreach (char c in passwd)
+            {
+                if (c >= 'A' && c <= 'Z')
+                {
+                    lowerstr.Append(char.ToLower(c));
+                }
+                else
+                {
+                    lowerstr.Append(c);
+                }
+            }
+            string sb = lowerstr.ToString();
+            return sb;
         }
     }
 }
