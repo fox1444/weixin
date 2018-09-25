@@ -539,9 +539,9 @@
             $.post("/API/VIEWAPI.ashx", { Action: "XTGL_UPDATEUSERISUSE", P1: item.UserName, P2: (item.IsUse == "Y" ? "N" : "Y") },
               function (result) {
                   if ($.trim(result.ErrorMsg) == "") {
-
                       top.ComFunJS.winsuccess(item.IsUse == "Y" ? "禁用成功" : "启用成功");
-                      tempindex.BranchClick(tempindex.SelDeptItem, null);
+                      //tempindex.BranchClick(tempindex.SelDeptItem, null);
+                      tempindex.GetLIST();
                   }
               });
         },
