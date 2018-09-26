@@ -1686,40 +1686,6 @@ var ComFunJS = {
         }
 
     },
-    initsetajax: function (isload) { /// 配置AJAX
-        $(document).on('ajaxStart', function () {
-            if (!isload) {
-                ComFunJS.showload();
-            }
-        })
-        $(document).on('ajaxSuccess', function (e, jqXHR, s, data) {
-            try {
-                if (s.type == "POST") {
-                    data = $.parseJSON(data);
-                }
-                if (s.type == "GET") {
-                    data = data;
-                }
-                if (data.ErrorMsg == "NOSESSIONCODE" || data.ErrorMsg == "WXTIMEOUT") {
-                    //ComFunJS.winwarning("未登录或登录已过期");
-                    var pagehistory = window.location.href;
-                    ComFunJS.setCookieMinute("pagehistory", pagehistory, 10);
-                    window.location.href = '/wx/Authrise.aspx?commit=reauthrise';
-                }
-                else if (data.ErrorMsg != "") {
-                    ComFunJS.winwarning(data.ErrorMsg);
-                }
-            } catch (e) {
-                ComFunJS.closeAll()
-            }
-        })
-        $(document).on('ajaxStop', function () {
-            ComFunJS.closeAll()
-        })
-        $(document).on('ajaxError', function (event, xhr, options, exc) {
-            ComFunJS.winwarning("请求失败！");
-        })
-    },
     ZCStatusData: [
         { "ID": "0", "TypeName": "完好" },
         { "ID": "10", "TypeName": "维修" },
@@ -1831,6 +1797,42 @@ var ComFunJS = {
         var str = '<a href="tel:' + phone + '">' + s + '</a>';
         return str;
     },
+    initsetajax: function (isload) { /// 配置AJAX
+        $(document).on('ajaxStart', function () {
+            if (!isload) {
+                ComFunJS.showload();
+            }
+        })
+        $(document).on('ajaxSuccess', function (e, jqXHR, s, data) {
+            try {
+                if (s.type == "POST") {
+                    data = $.parseJSON(data);
+                }
+                if (s.type == "GET") {
+                    data = data;
+                }
+                if (data.ErrorMsg == "NOSESSIONCODE" || data.ErrorMsg == "WXTIMEOUT") {
+                    //ComFunJS.winwarning("未登录或登录已过期");
+                    var pagehistory = window.location.href;
+                    ComFunJS.setCookieMinute("pagehistory", pagehistory, 10);
+                    var redirecturl = ComFunJS.getQueryString('redirecturl', '');
+                    window.location.href = '/wx/Authrise.aspx?commit=reauthrise&redirecturl=' + redirecturl;
+                }
+                else if (data.ErrorMsg != "") {
+                    ComFunJS.winwarning(data.ErrorMsg);
+                }
+            } catch (e) {
+                ComFunJS.closeAll()
+            }
+        })
+        $(document).on('ajaxStop', function () {
+            ComFunJS.closeAll()
+        })
+        $(document).on('ajaxError', function (event, xhr, options, exc) {
+            ComFunJS.winwarning("请求失败！");
+        })
+    },
+   
 }
 
 ComFunJS.initsetajax();

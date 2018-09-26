@@ -29,26 +29,26 @@ namespace QJY.WEB.WX
                 else//未绑定手机号和姓名
                 {
                     CommonHelp.SetCookie("openid", u.Openid, expires);
-                    Response.Redirect("/WX/BindPhone.html");
+                    //Response.Redirect("/WX/BindPhone.html?redirecturl=" + redirecturl);
                 }
             }
             if (!string.IsNullOrWhiteSpace(redirecturl))
             {
-                Response.Redirect(redirecturl);
+                //Response.Redirect(redirecturl);
             }
             else
             {
                 string redirect_uri = CommonHelp.GetCookieString("pagehistory");
                 if (redirect_uri.Trim().Length > 0)
                 {
-                    Response.Redirect(HttpUtility.UrlDecode(redirect_uri));
+                    //Response.Redirect(HttpUtility.UrlDecode(redirect_uri));
                 }
                 else//默认返回页面
                 {
-                    if (IsZiLvXiaoZu)
-                        Response.Redirect("/WX/zlxz/home.html");
-                    else
-                        Response.Redirect("/WX/bgxt/index.html");
+                    //if (IsZiLvXiaoZu)
+                        //Response.Redirect("/WX/zlxz/home.html");
+                    //else
+                        //Response.Redirect("/WX/bgxt/index.html");
                 }
             }
         }

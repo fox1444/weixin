@@ -27,7 +27,9 @@ namespace QJY.WEB.WX
                 {
                     string authurl = OAuthApi.GetAuthorizeUrl(CommonHelp.AppConfig("AppId"), reauthriseurl, "reload", OAuthScope.snsapi_userinfo);
                     if (authurl.Length > 0)
-                        Response.Redirect(authurl);
+                    {
+                        Response.Redirect(reauthriseurl);
+                    }
                 }
             }
         }
