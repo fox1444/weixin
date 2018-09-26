@@ -22,7 +22,7 @@ namespace QJY.API
         public WXFWHelp()
         {
         }
-    
+
         /// <summary>
         /// Global中定时更新AccessToken
         /// </summary>
@@ -107,15 +107,32 @@ namespace QJY.API
             }
             return result;
         }
+
         /// <summary>
-        /// 从公众号中进入获取用户信息并更新数据库中账号
+        /// 从公众号中进入获取用户信息
         /// </summary>
-        public static WX_User GetWXUserInfo(string _code)
+        public static UserInfoJson GetWXUserInfo(string _code)
         {
             try
             {
                 OAuthAccessTokenResult _accresstoken = OAuthApi.GetAccessToken(CommonHelp.AppConfig("AppId"), CommonHelp.AppConfig("AppSecret"), _code);
-                //return GetUserInfoByOpenidWithUpdateLocal(_accresstoken.openid);
+                return GetUserInfoByOpenid(_accresstoken.openid);
+            }
+            catch
+            {
+
+            }
+
+            return null;
+        }
+        /// <summary>
+        /// 从公众号中进入获取用户信息并更新数据库中账号
+        /// </summary>
+        public static WX_User GetWXUserInfoWithUpdateLocal(string _code)
+        {
+            try
+            {
+                OAuthAccessTokenResult _accresstoken = OAuthApi.GetAccessToken(CommonHelp.AppConfig("AppId"), CommonHelp.AppConfig("AppSecret"), _code);
                 return GetUserInfoByOpenidWithUpdateLocal(_accresstoken.openid, _accresstoken, _code);
             }
             catch
@@ -233,7 +250,7 @@ namespace QJY.API
         /// </summary>
         public static void UpdateCookieAfterSignIn(JH_Auth_User userInfo)
         {
-            DateTime expires = DateTime.Now.AddMinutes(30);
+            DateTime expires = DateTime.Now.AddMinutes(120);
             CommonHelp.SetCookie("szhlcode", userInfo.pccode, expires);
             CommonHelp.SetCookie("username", userInfo.UserName, expires);
             CommonHelp.SetCookie("userphonenumber", userInfo.mobphone, expires);

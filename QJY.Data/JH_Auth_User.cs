@@ -80,5 +80,6 @@ namespace QJY.Data
         public string ZiLvXiaoZu { get; set; }
         public Nullable<int> IsZuZhang { get; set; }
         public string JianDuXiaoZu { get; set; }
+        public string ToMonoLicense { get; set; }
     }
 }

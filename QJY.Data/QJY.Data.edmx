@@ -507,6 +507,7 @@
           <Property Name="ZiLvXiaoZu" Type="varchar" MaxLength="400" />
           <Property Name="IsZuZhang" Type="int" />
           <Property Name="JianDuXiaoZu" Type="varchar" MaxLength="4000" />
+          <Property Name="ToMonoLicense" Type="varchar" MaxLength="400" />
         </EntityType>
         <EntityType Name="JH_Auth_User_Center">
           <Key>
@@ -2555,6 +2556,7 @@
           <Property Name="ZiLvXiaoZu" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
           <Property Name="IsZuZhang" Type="Int32" />
           <Property Name="JianDuXiaoZu" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="ToMonoLicense" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="JH_Auth_User_Center">
           <Key>
@@ -4400,6 +4402,7 @@
           <EntitySetMapping Name="JH_Auth_User">
             <EntityTypeMapping TypeName="QJY_SaaSModel.JH_Auth_User">
               <MappingFragment StoreEntitySet="JH_Auth_User">
+                <ScalarProperty Name="ToMonoLicense" ColumnName="ToMonoLicense" />
                 <ScalarProperty Name="JianDuXiaoZu" ColumnName="JianDuXiaoZu" />
                 <ScalarProperty Name="IsZuZhang" ColumnName="IsZuZhang" />
                 <ScalarProperty Name="ZiLvXiaoZu" ColumnName="ZiLvXiaoZu" />

@@ -142,11 +142,6 @@ namespace QJY.API
                 msg.ErrorMsg = "手机号不能为空";
                 return;
             }
-            //if (string.IsNullOrWhiteSpace(j.weixinCard))
-            //{
-            //    msg.ErrorMsg = "微信号不能为空";
-            //    return;
-            //}
             string _openid = CommonHelp.GetCookieString("openid");
             WX_User u = new WX_UserB().GetEntity(d => d.Openid == _openid);
             msg.Result = u;
@@ -167,7 +162,7 @@ namespace QJY.API
                     //localuser.mobphone = j.mobphone;
                     //localuser.BranchCode = 0;
                     //localuser.CRDate = DateTime.Now;
-                    //localuser.CRUser = "administrator";
+                    //localuser.CRUser = "System";
                     //localuser.logindate = DateTime.Now;
                     //localuser.IsUse = "Y";
                     //localuser.IsWX = 1;
@@ -411,11 +406,11 @@ namespace QJY.API
             Dictionary<string, string> param = new Dictionary<string, string>();
 
             TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1);
-            string timestamp = Convert.ToInt64(ts.TotalSeconds).ToString();
+            long timestamp = Convert.ToInt64(ts.TotalSeconds);
             string appId = CommonHelp.AppConfig("AppId");
             string jsapi_ticket = CommonHelp.AppConfig("jsapi_ticket");
-            string nonceStr = "7Gds34JH76tdy54IUY65er";
-            string url = "http://www.lstobacco.com/WX/BGXT/GetLocation.html";
+            string nonceStr = CommonHelp.GetRandomString(15);
+            string url = P1;
 
             string TOP_FIELD_SIGN = "";
             param.Add("timestamp", timestamp.ToString());
@@ -445,9 +440,9 @@ namespace QJY.API
             string signature = WXFWHelp.EnSha1(query.ToString());
             msg.Result = new
             {
-                timestamp = timestamp,
                 appId = appId,
                 jsapi_ticket = jsapi_ticket,
+                timestamp = timestamp,
                 noncestr = nonceStr,
                 url = url,
                 query = query.ToString(),
