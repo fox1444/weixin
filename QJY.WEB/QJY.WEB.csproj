@@ -291,6 +291,8 @@
     <Content Include="View_Mobile\UI\UI_Login.html" />
     <Content Include="View_Mobile\UI\UI_YCGL_LIST.html" />
     <Content Include="WX\Accomplish.aspx" />
+    <Content Include="WX\AUTH\Redirect.aspx" />
+    <Content Include="WX\AUTH\Reauth.aspx" />
     <Content Include="WX\BGXT\BranchZc_List.html" />
     <Content Include="WX\BGXT\GetLocation.html" />
     <Content Include="WX\BGXT\LocZc_List.html" />
@@ -1880,6 +1882,20 @@
     </Compile>
     <Compile Include="WX\Authrise.aspx.designer.cs">
       <DependentUpon>Authrise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WX\AUTH\Redirect.aspx.cs">
+      <DependentUpon>Redirect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WX\AUTH\Redirect.aspx.designer.cs">
+      <DependentUpon>Redirect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WX\AUTH\Reauth.aspx.cs">
+      <DependentUpon>Reauth.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WX\AUTH\Reauth.aspx.designer.cs">
+      <DependentUpon>Reauth.aspx</DependentUpon>
     </Compile>
     <Compile Include="WX\Message\GetMsg.ashx.cs">
       <DependentUpon>GetMsg.ashx</DependentUpon>

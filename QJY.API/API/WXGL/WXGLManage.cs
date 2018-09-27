@@ -407,7 +407,7 @@ namespace QJY.API
 
             TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1);
             long timestamp = Convert.ToInt64(ts.TotalSeconds);
-            string appId = CommonHelp.AppConfig("AppId");
+            string appId = CommonHelp.GetConfig("AppId");
             string jsapi_ticket = CommonHelp.AppConfig("jsapi_ticket");
             string nonceStr = CommonHelp.GetRandomString(15);
             string url = P1;

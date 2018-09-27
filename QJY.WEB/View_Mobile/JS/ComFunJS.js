@@ -1815,8 +1815,7 @@ var ComFunJS = {
                     //ComFunJS.winwarning("未登录或登录已过期");
                     var pagehistory = window.location.href;
                     ComFunJS.setCookieMinute("pagehistory", pagehistory, 10);
-                    var redirecturl = ComFunJS.getQueryString('redirecturl', '');
-                    window.location.href = '/wx/Authrise.aspx?commit=reauthrise&redirecturl=' + redirecturl;
+                    window.location.href = '/wx/Authrise.aspx?commit=reauthrise';
                 }
                 else if (data.ErrorMsg != "") {
                     ComFunJS.winwarning(data.ErrorMsg);

@@ -86,6 +86,9 @@ namespace QJY.API
             return strPCCode;
         }
 
+        /// <summary>
+        /// 创建GET方式的HTTP请求
+        /// </summary>
         public static HttpWebResponse CreateHttpResponse(string url, IDictionary<string, string> parameters, int timeout, string userAgent, CookieCollection cookies, string strType = "POST")
         {
             HttpWebRequest request = null;
@@ -209,10 +212,8 @@ namespace QJY.API
         }
 
         /// <summary>
-        /// 导出Excel
+        /// DataTable导出成Excel
         /// </summary>
-        /// <param name="table"></param>
-        /// <param name="fileName"></param>
         public static MemoryStream RenderToExcel(DataTable table)
         {
             MemoryStream ms = new MemoryStream();
@@ -259,10 +260,8 @@ namespace QJY.API
         }
 
         /// <summary>
-        /// excel转换为table
+        /// excel转换为DataTable
         /// </summary>
-        /// <param name="upfile"></param>
-        /// <returns></returns>
         public DataTable ExcelToTable(HttpPostedFile upfile, int headrow)
         {
             DataTable dt = new DataTable();
@@ -341,7 +340,9 @@ namespace QJY.API
             return false;
         }
 
-
+        /// <summary>
+        /// String强制转换成Int，默认为空字符串
+        /// </summary>
         public static int ParseInt(string p)
         {
             int result = 0;
@@ -356,6 +357,9 @@ namespace QJY.API
             return result;
         }
 
+        /// <summary>
+        /// 验证手机号码
+        /// </summary>
         public static bool MarchPhoneNumber(string phone)
         {
             Regex rx = new Regex(@"^0{0,1}(13[4-9]|15[7-9]|15[0-2]|18[7-8])[0-9]{8}$");
@@ -369,6 +373,9 @@ namespace QJY.API
             }
         }
 
+        /// <summary>
+        /// Post文件
+        /// </summary>
         public static string PostFile(string uploadUrl, string fileToUpload, string poststr = "")
         {
             string result = "";
@@ -552,10 +559,6 @@ namespace QJY.API
         /// <summary>
         /// 发送短信
         /// </summary>
-        /// <param name="Mobile"></param>
-        /// <param name="Content"></param>
-        /// <param name="SendTime"></param>
-        /// <returns></returns>
         public static string SendDX(string Mobile, string Content, string SendTime)
         {
             try
@@ -578,6 +581,9 @@ namespace QJY.API
             }
         }
 
+        /// <summary>
+        /// 通过新浪api生成短链接
+        /// </summary>
         public static string GetShortUrl(string long_url)
         {
             string short_url = "";
@@ -667,6 +673,9 @@ namespace QJY.API
             //return result;
         }
 
+        /// <summary>
+        /// 发送MAS短信使用的字符编码
+        /// </summary>
         public static string Base64Encode(Encoding encodeType, string source)
         {
             string encode = string.Empty;
@@ -797,6 +806,7 @@ namespace QJY.API
             }
             return str;
         }
+
         /// <summary>
         /// MD5加密
         /// </summary>
@@ -807,6 +817,9 @@ namespace QJY.API
             return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(content, "md5");
         }
 
+        /// <summary>
+        /// 获取url中参数
+        /// </summary>
         public static string GetQueryString(string QueryName)
         {
             string tmp = "";
@@ -821,6 +834,9 @@ namespace QJY.API
             return tmp;
         }
 
+        /// <summary>
+        /// 获取url中参数并转换成整数，默认为0
+        /// </summary>
         public static int GetQueryInt(string QueryName)
         {
             int tmp = 0;
@@ -835,6 +851,9 @@ namespace QJY.API
             return tmp;
         }
 
+        /// <summary>
+        /// 设置缓存，时间为永久
+        /// </summary>
         public static void SetCookie(string key, string value)
         {
             try
@@ -848,6 +867,9 @@ namespace QJY.API
             HttpCookie cookie = new HttpCookie(key, value);
         }
 
+        /// <summary>
+        /// 设置缓存以及过期时间
+        /// </summary>
         public static void SetCookie(string key, string value, DateTime expires)
         {
             try
@@ -863,6 +885,9 @@ namespace QJY.API
             HttpContext.Current.Response.SetCookie(cookie);
         }
 
+        /// <summary>
+        /// 获取缓存值
+        /// </summary>
         public static string GetCookieString(string key)
         {
             string tmp = "";
@@ -879,11 +904,17 @@ namespace QJY.API
             return tmp;
         }
 
+        /// <summary>
+        /// 获取szhlcode，即pccode
+        /// </summary>
         public static string Getszhlcode()
         {
             return GetCookieString("szhlcode");
         }
 
+        /// <summary>
+        /// 根据szhlcode/pccode返回用户名
+        /// </summary>
         public static string GetUserNameByszhlcode()
         {
             string _username = "System";
@@ -899,16 +930,17 @@ namespace QJY.API
             return _username;
         }
 
+        /// <summary>
+        /// 获取web.config中配置值
+        /// </summary>
         public static string GetConfig(string strKey, string strDefault = "")
         {
             return ConfigurationManager.AppSettings[strKey] ?? strDefault;
         }
 
         /// <summary>
-        /// 获取数据库配置
+        /// 获取数据库中APPConfig表的配置值
         /// </summary>
-        /// <param name="config"></param>
-        /// <returns></returns>
         public static string AppConfig(string ConfigName)
         {
             APPConfig model = new APPConfigB().GetEntity(d => d.ConfigName == ConfigName);
@@ -918,6 +950,9 @@ namespace QJY.API
                 return "";
         }
 
+        /// <summary>
+        /// 获取数据库中APPConfig表的配置值并转换成整型
+        /// </summary>
         public static int AppConfigInt(string ConfigName)
         {
             APPConfig model = new APPConfigB().GetEntity(d => d.ConfigName == ConfigName);
@@ -937,6 +972,9 @@ namespace QJY.API
             }
         }
 
+        /// <summary>
+        /// 更新数据库中APPConfig表的配置值
+        /// </summary>
         public static void UpdateAppConfig(string ConfigName, string ConfigValue)
         {
             string _username = GetUserNameByszhlcode();
@@ -957,6 +995,7 @@ namespace QJY.API
                 new APPConfigB().Insert(model);
             }
         }
+
         /// <summary>
         /// 所有取AccessToken值的地方都在这里
         /// </summary>
@@ -1005,6 +1044,7 @@ namespace QJY.API
             }
             return identifycode;
         }
+
         /// <summary>
         /// 登录验证码
         /// </summary>
@@ -1032,6 +1072,9 @@ namespace QJY.API
             return identifycode;
         }
 
+        /// <summary>
+        /// 获取IP地址
+        /// </summary>
         public static string getIPAddress()
         {
             string result = "";
@@ -1081,6 +1124,9 @@ namespace QJY.API
 
         }
 
+        /// <summary>
+        /// 验证IP地址格式
+        /// </summary>
         private static bool IsIPAddress(string str1)
         {
             if (str1 == null || str1 == string.Empty || str1.Length < 7 || str1.Length > 15) return false;
@@ -1091,6 +1137,11 @@ namespace QJY.API
             return regex.IsMatch(str1);
         }
 
+        /// <summary>
+        /// 生成IP信息
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <returns></returns>
         public static string getIpAddr(string ip = "")
         {
             string ipAddr = "";
@@ -1116,6 +1167,10 @@ namespace QJY.API
             return ipAddr;
         }
 
+        /// <summary>
+        /// 生成日志文件
+        /// </summary>
+        /// <param name="err"></param>
         public static void WriteLOG(string err)
         {
             try

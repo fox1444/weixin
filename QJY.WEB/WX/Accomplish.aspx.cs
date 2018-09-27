@@ -11,7 +11,6 @@ namespace QJY.WEB.WX
     {
         string szhlcode = CommonHelp.Getszhlcode();
         string code = CommonHelp.GetQueryString("code");
-        string redirecturl = CommonHelp.GetQueryString("redirecturl");
         protected void Page_Load(object sender, EventArgs e)
         {
             bool IsZiLvXiaoZu = false;
@@ -29,27 +28,20 @@ namespace QJY.WEB.WX
                 else//未绑定手机号和姓名
                 {
                     CommonHelp.SetCookie("openid", u.Openid, expires);
-                    //Response.Redirect("/WX/BindPhone.html?redirecturl=" + redirecturl);
+                    Response.Redirect("/WX/BindPhone.html");
                 }
             }
-            if (!string.IsNullOrWhiteSpace(redirecturl))
+            string redirect_uri = CommonHelp.GetCookieString("pagehistory");
+            if (redirect_uri.Trim().Length > 0)
             {
-                //Response.Redirect(redirecturl);
+                Response.Redirect(HttpUtility.UrlDecode(redirect_uri));
             }
-            else
+            else//默认返回页面
             {
-                string redirect_uri = CommonHelp.GetCookieString("pagehistory");
-                if (redirect_uri.Trim().Length > 0)
-                {
-                    //Response.Redirect(HttpUtility.UrlDecode(redirect_uri));
-                }
-                else//默认返回页面
-                {
-                    //if (IsZiLvXiaoZu)
-                        //Response.Redirect("/WX/zlxz/home.html");
-                    //else
-                        //Response.Redirect("/WX/bgxt/index.html");
-                }
+                if (IsZiLvXiaoZu)
+                    Response.Redirect("/WX/zlxz/home.html");
+                else
+                    Response.Redirect("/WX/bgxt/index.html");
             }
         }
     }
