@@ -18,7 +18,6 @@ namespace QJY.WEB.WX
             if (code.Length > 0)
             {
                 WX_User u = WXFWHelp.GetWXUserInfoWithUpdateLocal(code);
-                DateTime expires = DateTime.Now.AddMinutes(120);
                 JH_Auth_User userInfo = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.Openid && d.IsWX == 1);
                 if (userInfo != null)//已绑定手机号和姓名
                 {
@@ -27,6 +26,7 @@ namespace QJY.WEB.WX
                 }
                 else//未绑定手机号和姓名
                 {
+                    DateTime expires = DateTime.Now.AddMinutes(30);
                     CommonHelp.SetCookie("openid", u.Openid, expires);
                     Response.Redirect("/WX/BindPhone.html");
                 }
@@ -39,9 +39,9 @@ namespace QJY.WEB.WX
             else//默认返回页面
             {
                 if (IsZiLvXiaoZu)
-                    Response.Redirect("/WX/zlxz/home.html");
+                    Response.Redirect("/WX/ZLXZ/Home.html");
                 else
-                    Response.Redirect("/WX/bgxt/index.html");
+                    Response.Redirect("/WX/BGXT/Index.html");
             }
         }
     }

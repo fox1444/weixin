@@ -11,6 +11,8 @@ using Newtonsoft.Json;
 using Senparc.Weixin.QY.Entities;
 using System.Collections;
 using System.Text;
+using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace QJY.API
 {
@@ -78,15 +80,11 @@ namespace QJY.API
         /// </summary>
         public void GETMYGROUPTEAM(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            //我的自律小组名称
             JH_Auth_User thisuser = new JH_Auth_UserB().GetEntity(d => d.ID == UserInfo.User.ID);
-
             string viewname = "select U.* , wu.nickName from JH_Auth_User U LEFT JOIN WX_User wu on u.WxOpenid = wu.openid  " +
                 "where u.ZiLvXiaoZu is not null and u.ZiLvXiaoZu <> '' and  u.ZiLvXiaoZu = '" + thisuser.ZiLvXiaoZu + "' "
                 + "or  ('" + thisuser.ZiLvXiaoZu + "' like (select Items from dbo.Split(REPLACE(u.jianduxiaozu,' ',''),';') where items='" + thisuser.ZiLvXiaoZu + "'))"
                 + " order by u.UserOrder, u.IsZuZhang desc, u.UserRealName asc";
-
-            // DataTable dt = new JH_Auth_UserB().GetDataPager(viewname, " U.* , wu.nickName, ext.ExtendDataValue as XiaoZu, ext2.ExtendDataValue as IsZuZhang ", 999999, 1, " u.UserRealName asc ", strWhere, ref recordCount);
             DataTable dt = new JH_Auth_UserB().GetDTByCommand(viewname);
 
             msg.Result = dt;
@@ -98,15 +96,11 @@ namespace QJY.API
         public void GETGROUPTEAMBYCODE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             P1 = P1.Trim();
-            //JH_Auth_User ext = new JH_Auth_UserB().GetEntity(d => d.ID == UserInfo.User.ID);
             string viewname = "select U.* , wu.nickName from JH_Auth_User U LEFT JOIN WX_User wu on u.WxOpenid = wu.openid  " +
                 "where u.ZiLvXiaoZu is not null and u.ZiLvXiaoZu <> '' and  u.ZiLvXiaoZu = '" + P1 + "' "
                 + "or  ('" + P1 + "' like (select Items from dbo.Split(REPLACE(u.jianduxiaozu,' ',''),';') where items='" + P1 + "'))"
                 + " order by u.UserOrder, u.IsZuZhang desc, u.UserRealName asc";
-
-            // DataTable dt = new JH_Auth_UserB().GetDataPager(viewname, " U.* , wu.nickName, ext.ExtendDataValue as XiaoZu, ext2.ExtendDataValue as IsZuZhang ", 999999, 1, " u.UserRealName asc ", strWhere, ref recordCount);
             DataTable dt = new JH_Auth_UserB().GetDTByCommand(viewname);
-
             msg.Result = dt;
         }
         /// <summary>
@@ -150,33 +144,32 @@ namespace QJY.API
                 JH_Auth_User localuser = new JH_Auth_UserB().GetEntity(d => d.mobphone == j.mobphone.Trim());
                 if (localuser == null)
                 {
-                    //localuser = new JH_Auth_User();
-                    //localuser.UserName = "wx" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 16);
-                    ////新用户名随机生成
-                    ////localuser.UserRealName = u.Nickname;
-                    //localuser.UserRealName = j.mobphone;
-                    //localuser.UserPass = CommonHelp.GetMD5("a123456");
-                    //localuser.pccode = EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
-                    //localuser.ComId = 10334;
-                    //localuser.Sex = u.Sex;
-                    //localuser.mobphone = j.mobphone;
-                    //localuser.BranchCode = 0;
-                    //localuser.CRDate = DateTime.Now;
-                    //localuser.CRUser = "System";
-                    //localuser.logindate = DateTime.Now;
-                    //localuser.IsUse = "Y";
-                    //localuser.IsWX = 1;
-                    //localuser.WXopenid = _openid;
-                    //localuser.weixinCard = j.weixinCard;
-                    //new JH_Auth_UserB().Insert(localuser);
+                    //新用户，随机生成
+                    localuser = new JH_Auth_User();
+                    localuser.UserName = "wx" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 16);
+                    localuser.UserRealName = j.UserRealName;
+                    localuser.UserPass = CommonHelp.GetMD5("a123456");
+                    localuser.pccode = EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+                    localuser.ComId = 10334;
+                    localuser.Sex = u.Sex;
+                    localuser.mobphone = j.mobphone;
+                    localuser.BranchCode = 0;
+                    localuser.CRDate = DateTime.Now;
+                    localuser.CRUser = "System";
+                    localuser.logindate = DateTime.Now;
+                    localuser.IsUse = "Y";
+                    localuser.IsWX = 1;
+                    localuser.WXopenid = _openid;
+                    localuser.weixinCard = j.weixinCard;
+                    new JH_Auth_UserB().Insert(localuser);
 
-                    //CommonHelp.SetCookie("szhlcode", localuser.pccode, expires);
-                    //CommonHelp.SetCookie("username", localuser.UserName, expires);
-                    msg.ErrorMsg = "手机号不存在，请联系管理员";
+                    WXFWHelp.UpdateCookieAfterSignIn(localuser);
+                    //msg.ErrorMsg = "手机号不存在，请联系管理员";
                     return;
                 }
                 else
                 {
+                    //老用户
                     if (localuser.UserRealName == j.UserRealName)
                     {
                         new JH_Auth_UserB().ExsSql("update JH_Auth_User set WXopenid='', IsWX=0  where WXopenid='" + _openid + "'");//清除以前绑定的用户
@@ -205,6 +198,160 @@ namespace QJY.API
             }
         }
         /// <summary>
+        /// 绑定手机、姓名、身份证、专卖许可证
+        /// </summary>
+        public void BINDTOMONOLICENSE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            JH_Auth_User j = JsonConvert.DeserializeObject<JH_Auth_User>(P1);
+            if (j == null)
+            {
+                msg.ErrorMsg = "绑定失败";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(j.UserRealName.Trim()))
+            {
+                msg.ErrorMsg = "姓名不能为空";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(j.mobphone.Trim()))
+            {
+                msg.ErrorMsg = "手机号不能为空";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(j.IDCard.Trim()))
+            {
+                msg.ErrorMsg = "身份证号不能为空";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(j.ToMonoLicense.Trim()))
+            {
+                msg.ErrorMsg = "专卖许可证号不能为空";
+                return;
+            }
+            string _openid = CommonHelp.GetCookieString("openid");
+            WX_User u = new WX_UserB().GetEntity(d => d.Openid == _openid);
+            msg.Result = u;
+            if (u != null)
+            {
+                JH_Auth_User localuser = new JH_Auth_UserB().GetEntity(d => d.mobphone == j.mobphone.Trim());
+                if (localuser == null)
+                {
+                    //新用户，随机生成
+                    localuser = new JH_Auth_User();
+                    localuser.UserName = "wx" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 16);
+                    localuser.UserRealName = j.UserRealName;
+                    localuser.UserPass = CommonHelp.GetMD5("a123456");
+                    localuser.pccode = EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+                    localuser.ComId = 10334;
+                    localuser.Sex = u.Sex;
+                    localuser.mobphone = j.mobphone;
+                    localuser.BranchCode = 0;
+                    localuser.CRDate = localuser.logindate = DateTime.Now;
+                    localuser.CRUser = "System";
+                    localuser.IsUse = "Y";
+                    localuser.IsWX = 1;
+                    localuser.WXopenid = _openid;
+                    localuser.weixinCard = j.weixinCard;
+                    localuser.IDCard = j.IDCard;
+                    localuser.ToMonoLicense = j.ToMonoLicense;
+
+                    new JH_Auth_UserB().Insert(localuser);
+                    WXFWHelp.UpdateCookieAfterSignIn(localuser);
+                    msg.Result = localuser;
+                    //msg.ErrorMsg = "手机号不存在，请联系管理员";
+                    return;
+                }
+                else
+                {
+                    //老用户
+                    if (localuser.UserRealName == j.UserRealName)
+                    {
+                        new JH_Auth_UserB().ExsSql("update JH_Auth_User set WXopenid='', IsWX=0  where WXopenid='" + _openid + "'");//清除以前绑定的用户
+
+                        localuser.WXopenid = _openid;
+                        localuser.IsWX = 1;
+                        localuser.weixinCard = j.weixinCard;
+                        //localuser.pccode = EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+                        localuser.logindate = DateTime.Now;
+                        localuser.IDCard = j.IDCard;
+                        localuser.ToMonoLicense = j.ToMonoLicense;
+
+                        new JH_Auth_UserB().Update(localuser);//更新logindate，pccode不能更新
+                        WXFWHelp.UpdateCookieAfterSignIn(localuser);
+                        msg.Result = localuser;
+                    }
+                    else
+                    {
+                        msg.ErrorMsg = "姓名与手机号不匹配";
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                msg.ErrorMsg = "登录异常";
+                return;
+            }
+        }
+        public void VALIDATETOMONOLICENSE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            JH_Auth_User j = JsonConvert.DeserializeObject<JH_Auth_User>(P1);
+            if (j == null)
+            {
+                msg.ErrorMsg = "绑定失败";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(j.UserRealName.Trim()))
+            {
+                msg.ErrorMsg = "姓名不能为空";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(j.mobphone.Trim()))
+            {
+                msg.ErrorMsg = "手机号不能为空";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(j.IDCard.Trim()))
+            {
+                msg.ErrorMsg = "身份证号不能为空";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(j.ToMonoLicense.Trim()))
+            {
+                msg.ErrorMsg = "专卖许可证号不能为空";
+                return;
+            }
+            string url = "http://47.98.185.179:9999/tabacco/logistic/validateCustInfo";
+            Dictionary<String, String> DATA = new Dictionary<String, String>();
+            DATA.Add("licenseCode", j.ToMonoLicense);
+            DATA.Add("idCard", j.IDCard);
+            DATA.Add("userName", j.UserRealName);
+            try
+            {
+                HttpWebResponse ResponseData = CommonHelp.CreatePostHttpResponse(url, DATA, 0, "", null);
+                string Returndata = CommonHelp.GetResponseString(ResponseData);
+                JObject json = (JObject)JsonConvert.DeserializeObject(Returndata);
+                msg.Result = json;
+            }
+            catch(Exception e)
+            {
+                msg.ErrorMsg = e.Message;
+            }
+        }
+        public void GETUSERINFOBYOPENID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string _openid = CommonHelp.GetCookieString("openid");
+            WX_User u = new WX_UserB().GetEntity(d => d.Openid == _openid);
+            if (u != null)
+            {
+                JH_Auth_User localuser = new JH_Auth_UserB().GetEntity(d => d.WXopenid == _openid && d.IsWX == 1);
+                if (localuser != null)
+                {
+                    msg.Result = localuser;
+                }
+            }
+        }
+        /// <summary>
         /// 我的群，根据科室/职务来划分
         /// </summary>
         public void GETMYCROWD(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
@@ -222,7 +369,6 @@ namespace QJY.API
             msg.Result1 = thisuser.UserGW;
             msg.Result2 = thisuser.UserGW + "-" + dt.Rows[0]["DeptName"].ToString();
         }
-
         public void ADDRYMODELWX(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             WX_RY model = JsonConvert.DeserializeObject<WX_RY>(P2);

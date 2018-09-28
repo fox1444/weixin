@@ -112,6 +112,25 @@ namespace QJY.API
             return result;
         }
         /// <summary>
+        /// 根据code获取用户OAuth
+        /// </summary>
+        /// <param name="_code"></param>
+        /// <returns></returns>
+        public static OAuthAccessTokenResult GetWXUserOAuth(string _code)
+        {
+            try
+            {
+                OAuthAccessTokenResult _accresstoken = OAuthApi.GetAccessToken(AppId, AppSecret, _code);
+                return _accresstoken;
+            }
+            catch
+            {
+
+            }
+
+            return null;
+        }
+        /// <summary>
         /// 从公众号中进入获取用户信息
         /// </summary>
         public static UserInfoJson GetWXUserInfo(string _code)
