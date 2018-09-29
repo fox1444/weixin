@@ -266,7 +266,7 @@ namespace QJY.API
                     //老用户
                     if (localuser.UserRealName == j.UserRealName)
                     {
-                        new JH_Auth_UserB().ExsSql("update JH_Auth_User set WXopenid='', IsWX=0  where WXopenid='" + _openid + "'");//清除以前绑定的用户
+                        new JH_Auth_UserB().ExsSql("update JH_Auth_User set WXopenid='', IsWX=0, IDCard='',ToMonoLicense='' where WXopenid='" + _openid + "'");//清除以前绑定的用户
 
                         localuser.WXopenid = _openid;
                         localuser.IsWX = 1;
@@ -321,7 +321,7 @@ namespace QJY.API
                 msg.ErrorMsg = "专卖许可证号不能为空";
                 return;
             }
-            string url = "http://47.98.185.179:9999/tabacco/logistic/validateCustInfo";
+            string url = "http://order.lstobacco.com:5222/tabacco/logistic/validateCustInfo";
             Dictionary<String, String> DATA = new Dictionary<String, String>();
             DATA.Add("licenseCode", j.ToMonoLicense);
             DATA.Add("idCard", j.IDCard);
@@ -333,9 +333,9 @@ namespace QJY.API
                 JObject json = (JObject)JsonConvert.DeserializeObject(Returndata);
                 msg.Result = json;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                msg.ErrorMsg = e.Message;
+                msg.ErrorMsg = "验证失败，请检查您的信息！";
             }
         }
         public void GETUSERINFOBYOPENID(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
@@ -367,7 +367,8 @@ namespace QJY.API
 
             msg.Result = dt;
             msg.Result1 = thisuser.UserGW;
-            msg.Result2 = thisuser.UserGW + "-" + dt.Rows[0]["DeptName"].ToString();
+            if (dt.Rows.Count > 0)
+                msg.Result2 = thisuser.UserGW + "-" + dt.Rows[0]["DeptName"].ToString();
         }
         public void ADDRYMODELWX(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
@@ -581,17 +582,17 @@ namespace QJY.API
                 }
             }
             query = new StringBuilder(query.ToString().TrimStart('&'));
-
+            string querystring = HttpUtility.HtmlDecode(query.ToString());
             // 第2步：使用sha1加密
-            string signature = WXFWHelp.EnSha1(query.ToString());
+            string signature = WXFWHelp.EnSha1(querystring);
             msg.Result = new
             {
                 appId = appId,
-                jsapi_ticket = jsapi_ticket,
+                //jsapi_ticket = jsapi_ticket,
                 timestamp = timestamp,
                 noncestr = nonceStr,
                 url = url,
-                query = query.ToString(),
+                //query = querystring,
                 signature = signature
             };
         }

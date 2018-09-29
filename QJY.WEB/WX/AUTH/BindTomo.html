@@ -94,7 +94,7 @@
             opednid: "",
             inittemp: function () {
                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?Action=WXGL_GETUSERINFOBYOPENID", {}, function (r) {
-                    if (r.ErrorMsg == "") {
+                    if (r.ErrorMsg == "" && r.Result ) {
                         tempmodel.modelData = r.Result;
                     }
                 })
@@ -104,13 +104,20 @@
                 //远程验证专卖证号的有效性
                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?ACTION=WXGL_VALIDATETOMONOLICENSE&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (r) {
                     if (r.ErrorMsg == '') {
-                        //更新当前用户
-                        $.post("/API/VIEWAPINOLOGIN.ashx?ACTION=WXGL_BINDTOMONOLICENSE&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (r) {
-                            if (r.ErrorMsg == '') {
-                                ComFunJS.winsuccess("绑定成功，即将跳转到零售商页面...");
-                                window.location.href = "http://order.lstobacco.com:5222/tobacco_logist/login?license=" + tempmodel.modelData.ToMonoLicense;
-                            }
-                        });
+                        var validate = r.Result;
+                        if (validate.code == 0) {
+                            //验证成功，更新当前用户
+                            $.post("/API/VIEWAPINOLOGIN.ashx?ACTION=WXGL_BINDTOMONOLICENSE&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (resultdata) {
+                                if (resultdata.ErrorMsg == null || resultdata.ErrorMsg == "" || resultdata.ErrorMsg == "undefined") {
+                                    ComFunJS.winsuccess("绑定成功，即将跳转到零售商页面...");
+                                    window.location.href = "http://order.lstobacco.com:5222/tobacco_logist?licenseCode=" + tempmodel.modelData.ToMonoLicense;
+                                }
+                            });
+                        }
+                        else
+                        {
+                            ComFunJS.winwarning(validate.errorMsg);
+                        }
                     }
                     else
                     {

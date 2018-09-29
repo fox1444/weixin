@@ -16,26 +16,27 @@ namespace QJY.WEB.WX.AUTH
             //客户零售系统的授权页面
             if (!string.IsNullOrWhiteSpace(code))
             {
-                OAuthAccessTokenResult u = WXFWHelp.GetWXUserOAuth(code);
+                //OAuthAccessTokenResult u = WXFWHelp.GetWXUserOAuth(code);
+                WX_User u = WXFWHelp.GetWXUserInfoWithUpdateLocal(code);
                 if (u != null)
                 {
-                    JH_Auth_User userInfo = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.openid && d.IsWX == 1);
+                    JH_Auth_User userInfo = new JH_Auth_UserB().GetEntity(d => d.WXopenid == u.Openid && d.IsWX == 1);
                     if (userInfo != null)//已绑定手机号和姓名
                     {
                         //如果姓名、身份证、手机号、专卖证号其中一项为空，则跳转到绑定页面
                         if (string.IsNullOrEmpty(userInfo.IDCard) || string.IsNullOrEmpty(userInfo.UserRealName) || string.IsNullOrEmpty(userInfo.mobphone) || string.IsNullOrEmpty(userInfo.ToMonoLicense))
                         {
-                            RedirectTomo(u.openid);
+                            RedirectTomo(u.Openid);
                         }
                         else
                         {
-                            string redirectpage = "http://order.lstobacco.com:5222/tobacco_logist/login?license=" + userInfo.ToMonoLicense;
+                            string redirectpage = "http://order.lstobacco.com:5222/tobacco_logist?licenseCode=" + userInfo.ToMonoLicense;
                             Response.Redirect(redirectpage);
                         }
                     }
                     else
                     {
-                        RedirectTomo(u.openid);
+                        RedirectTomo(u.Openid);
                     }
                 }
                 else

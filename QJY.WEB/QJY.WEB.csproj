@@ -297,7 +297,7 @@
     <Content Include="WX\AUTH\LogistRedirect.aspx" />
     <Content Include="WX\AUTH\LogistReauth.aspx" />
     <Content Include="WX\BGXT\BranchZc_List.html" />
-    <Content Include="WX\BGXT\GetLocation.html" />
+    <Content Include="WX\GetLocation.html" />
     <Content Include="WX\BGXT\LocZc_List.html" />
     <Content Include="WX\BGXT\Zc_Detail.html" />
     <Content Include="WX\BGXT\Zc_List.html" />

@@ -16,10 +16,11 @@ namespace QJY.WEB.WX.AUTH
             //零售系统的消费者授权页面
             if (!string.IsNullOrWhiteSpace(code))
             {
-                OAuthAccessTokenResult u = WXFWHelp.GetWXUserOAuth(code);
+                //OAuthAccessTokenResult u = WXFWHelp.GetWXUserOAuth(code);
+                WX_User u = WXFWHelp.GetWXUserInfoWithUpdateLocal(code);
                 if (u != null)
                 {
-                    string redirectpage = "http://order.lstobacco.com:5222/tobacco_customer?openid=" + u.openid;
+                    string redirectpage = "http://order.lstobacco.com:5222/tobacco_customer?openId=" + u.Openid;
                     Response.Redirect(redirectpage);
                 }
                 else
