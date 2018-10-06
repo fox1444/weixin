@@ -1335,7 +1335,7 @@ namespace QJY.API
         /// </summary>
         public void GETHYSHORTURL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            string host = CommonHelp.AppConfig("Host");
+            string host = CommonHelp.GetConfig("HostUrl");
             msg.Result = CommonHelp.GetShortUrl(host + "/view_mobile/ui/hydetail_index_r.html?id=" + P1);
         }
 
