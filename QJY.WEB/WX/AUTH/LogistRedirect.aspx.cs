@@ -41,7 +41,7 @@ namespace QJY.WEB.WX.AUTH
                 }
                 else
                 {
-                    Response.Write("获取用户信息失败！"); 
+                    Response.Write("获取用户信息失败！");
                 }
             }
             else
