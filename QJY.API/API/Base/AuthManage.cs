@@ -1277,6 +1277,12 @@ namespace QJY.API
             msg.Result = UserInfo;
         }
 
+        public void GETUSERSIMPLE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            msg.Result = UserInfo.WXUserInfo;
+            msg.Result1 = new { ToMonoLicense = UserInfo.User.ToMonoLicense };
+        }
+
         public void UPDATEMOBPHONE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             string strSql = string.Format("UPDATE JH_Auth_User SET mobphone='{0}' WHERE ID={1} ", P2, UserInfo.User.ID);

@@ -19,10 +19,14 @@ namespace QJY.API
     /// </summary>
     public class WXFWHelp
     {
+        private static string AppId = CommonHelp.GetConfig("AppId");
+        private static string AppSecret = CommonHelp.GetConfig("AppSecret");
+        private static string HostUrl = CommonHelp.GetConfig("HostUrl");
+
         public WXFWHelp()
         {
         }
-    
+
         /// <summary>
         /// Global中定时更新AccessToken
         /// </summary>
@@ -37,12 +41,12 @@ namespace QJY.API
                 }
                 else
                 {
-                    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为空", "Global.asax", "System", "www.lstobacco.com", 0, strIp);
+                    new JH_Auth_LogB().InsertLog("Application_Start", "更新Access为空", "Global.asax", "System", HostUrl, 0, strIp);
                 }
             }
             catch (Exception ex)
             {
-                new JH_Auth_LogB().InsertLog("Application_Start", "更新Access错误" + ex.ToString(), "Global.asax", "System", "www.lstobacco.com", 0, strIp);
+                new JH_Auth_LogB().InsertLog("Application_Start", "更新Access错误" + ex.ToString(), "Global.asax", "System", HostUrl, 0, strIp);
             }
         }
         /// <summary>
@@ -50,7 +54,7 @@ namespace QJY.API
         /// </summary>
         public static string GetToken()
         {
-            AccessTokenResult r = CommonApi.GetToken(CommonHelp.AppConfig("AppId"), CommonHelp.AppConfig("AppSecret"), "client_credential");
+            AccessTokenResult r = CommonApi.GetToken(AppId, AppSecret, "client_credential");
             string _username = CommonHelp.GetUserNameByszhlcode();
             string strIp = CommonHelp.getIP(HttpContext.Current);
 
@@ -74,7 +78,7 @@ namespace QJY.API
             string strIp = CommonHelp.getIP(HttpContext.Current);
             string _username = CommonHelp.GetUserNameByszhlcode();
             var task1 = new Task<string>(() =>
-            AccessTokenContainer.TryGetAccessTokenAsync(CommonHelp.AppConfig("AppId"), CommonHelp.AppConfig("AppSecret"), getNewToken).Result
+            AccessTokenContainer.TryGetAccessTokenAsync(AppId, AppSecret, getNewToken).Result
             );
 
             task1.Start();
@@ -108,14 +112,49 @@ namespace QJY.API
             return result;
         }
         /// <summary>
-        /// 从公众号中进入获取用户信息并更新数据库中账号
+        /// 根据code获取用户OAuth
         /// </summary>
-        public static WX_User GetWXUserInfo(string _code)
+        /// <param name="_code"></param>
+        /// <returns></returns>
+        public static OAuthAccessTokenResult GetWXUserOAuth(string _code)
         {
             try
             {
-                OAuthAccessTokenResult _accresstoken = OAuthApi.GetAccessToken(CommonHelp.AppConfig("AppId"), CommonHelp.AppConfig("AppSecret"), _code);
-                //return GetUserInfoByOpenidWithUpdateLocal(_accresstoken.openid);
+                OAuthAccessTokenResult _accresstoken = OAuthApi.GetAccessToken(AppId, AppSecret, _code);
+                return _accresstoken;
+            }
+            catch
+            {
+
+            }
+
+            return null;
+        }
+        /// <summary>
+        /// 从公众号中进入获取用户信息
+        /// </summary>
+        public static UserInfoJson GetWXUserInfo(string _code)
+        {
+            try
+            {
+                OAuthAccessTokenResult _accresstoken = OAuthApi.GetAccessToken(AppId, AppSecret, _code);
+                return GetUserInfoByOpenid(_accresstoken.openid);
+            }
+            catch
+            {
+
+            }
+
+            return null;
+        }
+        /// <summary>
+        /// 从公众号中进入获取用户信息并更新数据库中账号
+        /// </summary>
+        public static WX_User GetWXUserInfoWithUpdateLocal(string _code)
+        {
+            try
+            {
+                OAuthAccessTokenResult _accresstoken = OAuthApi.GetAccessToken(AppId, AppSecret, _code);
                 return GetUserInfoByOpenidWithUpdateLocal(_accresstoken.openid, _accresstoken, _code);
             }
             catch
@@ -147,7 +186,7 @@ namespace QJY.API
             return wxuser;
         }
         /// <summary>
-        /// 更新本地数据库
+        /// 更新本地数据库中微信用户信息
         /// </summary>
         public static WX_User UpdateLocalUserInfo(UserInfoJson u, OAuthAccessTokenResult _accresstoken, string _code)
         {
@@ -233,12 +272,11 @@ namespace QJY.API
         /// </summary>
         public static void UpdateCookieAfterSignIn(JH_Auth_User userInfo)
         {
-            DateTime expires = DateTime.Now.AddMinutes(30);
+            DateTime expires = DateTime.Now.AddMinutes(120);
             CommonHelp.SetCookie("szhlcode", userInfo.pccode, expires);
             CommonHelp.SetCookie("username", userInfo.UserName, expires);
             CommonHelp.SetCookie("userphonenumber", userInfo.mobphone, expires);
         }
-
         /// <summary>
         /// 基于Sha1的自定义加密字符串方法：输入一个字符串，返回一个由40个字符组成的十六进制的哈希散列（字符串）。
         /// </summary>

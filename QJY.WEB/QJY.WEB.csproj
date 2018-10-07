@@ -290,8 +290,14 @@
     <Content Include="View_Mobile\UI\HyDetail.html" />
     <Content Include="View_Mobile\UI\UI_Login.html" />
     <Content Include="View_Mobile\UI\UI_YCGL_LIST.html" />
+    <Content Include="WX\Accomplish.aspx" />
+    <Content Include="WX\AUTH\BindTomo.html" />
+    <Content Include="WX\AUTH\CustomeReauth.aspx" />
+    <Content Include="WX\AUTH\CustomeRedirect.aspx" />
+    <Content Include="WX\AUTH\LogistRedirect.aspx" />
+    <Content Include="WX\AUTH\LogistReauth.aspx" />
     <Content Include="WX\BGXT\BranchZc_List.html" />
-    <Content Include="WX\BGXT\GetLocation.html" />
+    <Content Include="WX\GetLocation.html" />
     <Content Include="WX\BGXT\LocZc_List.html" />
     <Content Include="WX\BGXT\Zc_Detail.html" />
     <Content Include="WX\BGXT\Zc_List.html" />
@@ -299,6 +305,7 @@
     <Content Include="WX\BGXT\Hy_List.html" />
     <Content Include="WX\CSS\sm-extend.min.css" />
     <Content Include="WX\CSS\sm.min.css" />
+    <Content Include="WX\JS\WxGetLocation.js" />
     <Content Include="WX\Message\bgxtbox.html" />
     <Content Include="WX\Message\newMsg.html" />
     <Content Include="WX\ZLXZ\Satisfaction.html" />
@@ -509,9 +516,9 @@
     <Content Include="WX\CSS\fonts\icomoon.svg" />
     <Content Include="WX\CSS\wxstyle.css" />
     <Content Include="WX\Authrise.aspx" />
-    <Content Include="WX\images\plus-serch.png" />
-    <Content Include="WX\images\plus-zhankai.png" />
-    <Content Include="WX\images\plus-zhedie.png" />
+    <Content Include="WX\Images\plus-serch.png" />
+    <Content Include="WX\Images\plus-zhankai.png" />
+    <Content Include="WX\Images\plus-zhedie.png" />
     <Content Include="WX\BindPhone.html" />
     <Content Include="WX\ZLXZ\Home.html" />
     <Content Include="WX\JS\WxControl.js" />
@@ -1805,8 +1812,8 @@
     <Content Include="WX\CSS\fonts\icomoon.eot" />
     <Content Include="WX\CSS\fonts\icomoon.ttf" />
     <Content Include="WX\CSS\fonts\icomoon.woff" />
-    <Content Include="WX\images\1111.xlsx" />
-    <Content Include="WX\images\会理自律小组现场会组员名单20180418--%282%29.xlsx" />
+    <Content Include="WX\Images\1111.xlsx" />
+    <Content Include="WX\Images\会理自律小组现场会组员名单20180418--%282%29.xlsx" />
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\file_manager_json.ashx" />
     <Content Include="WX\JS\kindeditor-4.1.4\asp.net\upload_json.ashx" />
     <Content Include="WX\Message\GetMsg.ashx" />
@@ -1865,12 +1872,47 @@
     <Compile Include="ViewV5\test.aspx.designer.cs">
       <DependentUpon>test.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WX\Accomplish.aspx.cs">
+      <DependentUpon>Accomplish.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WX\Accomplish.aspx.designer.cs">
+      <DependentUpon>Accomplish.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WX\Authrise.aspx.cs">
       <DependentUpon>Authrise.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="WX\Authrise.aspx.designer.cs">
       <DependentUpon>Authrise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WX\AUTH\CustomeReauth.aspx.cs">
+      <DependentUpon>CustomeReauth.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WX\AUTH\CustomeReauth.aspx.designer.cs">
+      <DependentUpon>CustomeReauth.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WX\AUTH\CustomeRedirect.aspx.cs">
+      <DependentUpon>CustomeRedirect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WX\AUTH\CustomeRedirect.aspx.designer.cs">
+      <DependentUpon>CustomeRedirect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WX\AUTH\LogistRedirect.aspx.cs">
+      <DependentUpon>LogistRedirect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WX\AUTH\LogistRedirect.aspx.designer.cs">
+      <DependentUpon>LogistRedirect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WX\AUTH\LogistReauth.aspx.cs">
+      <DependentUpon>LogistReauth.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WX\AUTH\LogistReauth.aspx.designer.cs">
+      <DependentUpon>LogistReauth.aspx</DependentUpon>
     </Compile>
     <Compile Include="WX\Message\GetMsg.ashx.cs">
       <DependentUpon>GetMsg.ashx</DependentUpon>
