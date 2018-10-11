@@ -105,6 +105,7 @@
     <Compile Include="API\DBGL\DBGLManage.cs" />
     <Compile Include="API\DDGL\DDGLManage.cs" />
     <Compile Include="API\DXGL\DXGLManage.cs" />
+    <Compile Include="API\FSGL\FSGLManage.cs" />
     <Compile Include="API\GZBG\GZBGManage.cs" />
     <Compile Include="API\HYGL\HYGLManage.cs" />
     <Compile Include="API\WXGL\WXGLManage.cs" />

@@ -91,17 +91,22 @@
             $id: "BindToMonoLicense",
             userData: {},
             name: "绑定专卖证信息",
-            opednid: "",
+            openid: "",
             inittemp: function () {
                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?Action=WXGL_GETUSERINFOBYOPENID", {}, function (r) {
-                    if (r.ErrorMsg == "" && r.Result ) {
-                        tempmodel.modelData = r.Result;
+                    if (r.ErrorMsg == "" && r.Result) {
+                        //tempmodel.modelData = r.Result;   //不能这样绑定  不然VALIDATETOMONOLICENSE会报错
+                        tempmodel.modelData.UserRealName = r.Result.UserRealName;
+                        tempmodel.modelData.mobphone = r.Result.mobphone;
+                        tempmodel.modelData.weixinCard = r.Result.weixinCard;
+                        tempmodel.modelData.IDCard = r.Result.IDCard;
+                        tempmodel.modelData.ToMonoLicense = r.Result.ToMonoLicense;
                     }
                 })
             },//初始化
             modelData: { "UserRealName": "", "mobphone": "", "weixinCard": "", "IDCard": "", "ToMonoLicense": "" },
             SaveData: function () {
-                //远程验证专卖证号的有效性
+                //远程验证专卖证号的有效性               
                 $.getJSON("/API/VIEWAPINOLOGIN.ashx?ACTION=WXGL_VALIDATETOMONOLICENSE&r=" + Math.random(), { P1: JSON.stringify(tempmodel.modelData.$model) }, function (r) {
                     if (r.ErrorMsg == '') {
                         var validate = r.Result;
