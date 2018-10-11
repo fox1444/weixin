@@ -65,6 +65,8 @@ namespace QJY.API
 
             container.RegisterType<IWsService, ZCGLManage>("ZCGL");//资产管理
 
+            container.RegisterType<IWsService, FSGLManage>("FSGL");//微信粉丝管理
+
             return container;
         }
 

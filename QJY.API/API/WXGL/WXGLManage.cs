@@ -236,24 +236,25 @@ namespace QJY.API
                 JH_Auth_User localuser = new JH_Auth_UserB().GetEntity(d => d.mobphone == j.mobphone.Trim());
                 if (localuser == null)
                 {
+                    new JH_Auth_UserB().ExsSql("update JH_Auth_User set WXopenid='', IsWX=0, IDCard='',ToMonoLicense='' where WXopenid='" + _openid + "'");//清除以前绑定的用户
                     //新用户，随机生成
                     localuser = new JH_Auth_User();
                     localuser.UserName = "wx" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 16);
-                    localuser.UserRealName = j.UserRealName;
+                    localuser.UserRealName = j.UserRealName.Trim();
                     localuser.UserPass = CommonHelp.GetMD5("a123456");
                     localuser.pccode = EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
                     localuser.ComId = 10334;
                     localuser.Sex = u.Sex;
-                    localuser.mobphone = j.mobphone;
+                    localuser.mobphone = j.mobphone.Trim();
                     localuser.BranchCode = 0;
                     localuser.CRDate = localuser.logindate = DateTime.Now;
                     localuser.CRUser = "System";
                     localuser.IsUse = "Y";
                     localuser.IsWX = 1;
                     localuser.WXopenid = _openid;
-                    localuser.weixinCard = j.weixinCard;
-                    localuser.IDCard = j.IDCard;
-                    localuser.ToMonoLicense = j.ToMonoLicense;
+                    localuser.weixinCard = j.weixinCard.Trim();
+                    localuser.IDCard = j.IDCard.Trim();
+                    localuser.ToMonoLicense = j.ToMonoLicense.Trim();
 
                     new JH_Auth_UserB().Insert(localuser);
                     WXFWHelp.UpdateCookieAfterSignIn(localuser);
@@ -264,17 +265,17 @@ namespace QJY.API
                 else
                 {
                     //老用户
-                    if (localuser.UserRealName == j.UserRealName)
+                    if (localuser.UserRealName == j.UserRealName.Trim())
                     {
                         new JH_Auth_UserB().ExsSql("update JH_Auth_User set WXopenid='', IsWX=0, IDCard='',ToMonoLicense='' where WXopenid='" + _openid + "'");//清除以前绑定的用户
 
                         localuser.WXopenid = _openid;
                         localuser.IsWX = 1;
-                        localuser.weixinCard = j.weixinCard;
+                        localuser.weixinCard = j.weixinCard.Trim();
                         //localuser.pccode = EncrpytHelper.Encrypt(localuser.UserName + "@" + localuser.UserPass + "@" + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
                         localuser.logindate = DateTime.Now;
-                        localuser.IDCard = j.IDCard;
-                        localuser.ToMonoLicense = j.ToMonoLicense;
+                        localuser.IDCard = j.IDCard.Trim();
+                        localuser.ToMonoLicense = j.ToMonoLicense.Trim();
 
                         new JH_Auth_UserB().Update(localuser);//更新logindate，pccode不能更新
                         WXFWHelp.UpdateCookieAfterSignIn(localuser);
@@ -289,7 +290,7 @@ namespace QJY.API
             }
             else
             {
-                msg.ErrorMsg = "登录异常";
+                msg.ErrorMsg = "微信登录异常";
                 return;
             }
         }
@@ -323,9 +324,9 @@ namespace QJY.API
             }
             string url = "http://order.lstobacco.com:5222/tabacco/logistic/validateCustInfo";
             Dictionary<String, String> DATA = new Dictionary<String, String>();
-            DATA.Add("licenseCode", j.ToMonoLicense);
-            DATA.Add("idCard", j.IDCard);
-            DATA.Add("userName", j.UserRealName);
+            DATA.Add("licenseCode", j.ToMonoLicense.Trim());
+            DATA.Add("idCard", j.IDCard.Trim());
+            DATA.Add("userName", j.UserRealName.Trim());
             try
             {
                 HttpWebResponse ResponseData = CommonHelp.CreatePostHttpResponse(url, DATA, 0, "", null);

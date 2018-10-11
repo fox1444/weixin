@@ -550,7 +550,7 @@
             });
         }
         $('#' + id + ' canvas').css("height", (height + len - 5) + 'px');
-       
+
         $("#" + id).qrcode({
             render: "canvas",
             text: url,                //扫描二维码后显示的内容,可以直接填一个网址，扫描二维码后自动跳向该链接
@@ -1472,7 +1472,20 @@
             case "text":
                 {
                     var len = fmt.len || 22;
-                    return ComFunJS.convstr(str + "", len);
+                    return  ComFunJS.convstr(str + "", len);
+                }
+                break;
+            case "headimg":      //微信粉丝头像
+                {
+                    return '<img src="' + str + '" class="headimg"/>';
+                }
+                break;
+            case "isornot":      //1/0转换成是/否
+                {
+                    if (str == 1)
+                        return '是';
+                    else
+                        return '否';
                 }
                 break;
             default: {
