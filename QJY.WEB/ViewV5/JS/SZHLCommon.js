@@ -597,7 +597,6 @@
                         top.$("body").data("usersarr", usersarr);
                     }
                 })
-
             }
         }
         if (returnmsg.length > 1) {

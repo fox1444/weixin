@@ -52,7 +52,7 @@
                     <td class="tc">
                         {{$index+1+page.pagecount*(page.pageindex-1)}}
                     </td>
-                    <td ms-repeat-im="ShowColumns" ms-class-1="lk:im.type=='link'" ms-visible="im.IsSel" ms-click="View(el.ID,this)">
+                    <td ms-repeat-im="ShowColumns" ms-class-1="lk:im.type=='link'" ms-visible="im.IsSel" ms-click="ViewZC(el,this)">
                         {{ComFunJS.FnFormat(el[im.ColName],im.format)|html}}
                     </td>
                     <td>
@@ -64,7 +64,7 @@
                                 <i class="iconfont icon-shanchu"></i>
                             </a>
                             <a title="生命周期" class="lk" ms-if="el.AllowLifeCycle==1" ms-click="LifeCycle(el.UserGW + el.UserRealName + el.Name + '生命周期管理',el.ID,$event)">
-                                生命周期 
+                                生命周期
                             </a>
                         </span>
                     </td>
@@ -187,8 +187,8 @@
                 }
             })
         },
-        View: function (id, event) {
-            ComFunJS.winviewform("/ViewV5/AppPage/ZCGL/ZCGLView.html?ID=" + id + "&r=" + Math.random(), "资产详细信息");
+        ViewZC: function (el, event) {
+            ComFunJS.winviewform("/ViewV5/AppPage/ZCGL/ZCGLView.html?ID=" + el.ID + "&r=" + Math.random(), "资产" + el.Name + "详细信息");
         },
         Del: function (el, event) {
             if (event) {

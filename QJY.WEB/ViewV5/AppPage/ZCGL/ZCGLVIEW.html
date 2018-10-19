@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--<link rel="stylesheet" href="//at.alicdn.com/t/font_1473753044_842232.css">-->
     <link rel="stylesheet" type="text/css" href="/ViewV5/CSS/bootstrap3.3.5/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/ViewV5/CSS/animate.css">
     <link rel="stylesheet" type="text/css" href="/ViewV5/CSS/index.css">
@@ -33,16 +32,15 @@
                 </div>
                 <div class="detail-item">
                     <span class="item-tit">二维码</span>
-                    <canvas id="cvs" class="fj clearfix mt10">
-                        当前浏览器不支持canvas
-                        <!-- 如果浏览器支持canvas，则canvas标签里的内容不会显示出来 -->
-                    </canvas>
+                    <div id="qrcode"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="/ViewV5/JS/jquery-1.11.2.min.js"></script>
+    <script src="/ViewV5/JS/Utf.js"></script>
+    <script src="/ViewV5/JS/jquery.qrcode.min.js"></script>
     <script src="/ViewV5/JS/layer/layer.js"></script>
     <script src="/ViewV5/CSS/bootstrap3.3.5/js/bootstrap.js"></script>
     <script src="/ViewV5/JS/avalon1.47.js"></script>
@@ -64,11 +62,10 @@
                         if (resultData.ErrorMsg == "") {
                             if (resultData.Result.length > 0) {
                                 model.modelData = resultData.Result[0];
-                                model.EWMcode = "http://qr.liantu.com/api.php?text=" + ComFunJS.yuming + "/WX/bgxt/zc_Detail.html?id=" + model.modelData.ID + "&bg=ffffff&fg=007457&w=600&logo=" + ComFunJS.yuming + "/View_Mobile/images/tobacco-logo-icon.png";
 
-                                ComFunJS.DrawEWMcancas('cvs', model.EWMcode, model.modelData.Name);
+                                var url = ComFunJS.yuming + "/WX/bgxt/zc_Detail.html?id=" + model.modelData.ID;
+                                ComFunJS.DrawQrcode("qrcode", url, model.modelData.Name, "icon");
                             }
-                            setTimeout(" ComFunJS.initForm()", 500)
                         }
                     })
                 }
@@ -76,7 +73,7 @@
             Edit: function (ID) {
                 window.location.href = "/ViewV5/AppPage/APP_ADD_WF.html?FormCode=ZCGL&id=" + model.modelData.ID;
             },
-            
+
         });
 
         avalon.ready(function () {

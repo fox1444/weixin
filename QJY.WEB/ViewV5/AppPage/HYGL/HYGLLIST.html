@@ -1,4 +1,9 @@
-﻿<div ms-controller="HYGLLIST">
+﻿<style>
+    .jinyong {
+        color: orangered;
+    }
+</style>
+<div ms-controller="HYGLLIST">
     <!-- 添加按钮 -->
     <div class="btn-add">
         <button type="button" class="btn btn-info btn-lg" ms-click="AddView('HYGL','添加会议')"><i class="iconfont icon-jiahao ft12 mr5"></i>添加会议</button>
@@ -65,17 +70,18 @@
 
                     </td>
                     <td>
-                        <span class="btn-click">
+                        <div class="btn-click bg-fun">
                             <a class="cz-btn ft18 bj-color tip" data-toggle="tooltip" title="编辑" ms-if="el.CRUser==userName" ms-click="AddView('HYGL','修改会议',el.ID,$event)">
                                 <i class="iconfont icon-bianji"></i>
                             </a>
                             <a class="cz-btn ft18 sc-color tip" data-toggle="tooltip" title="删除" ms-if="el.CRUser==userName" ms-click="Del(el,$event)">
                                 <i class="iconfont icon-shanchu"></i>
                             </a>
+                            <span class="iconfont icon-qidong cursor mr5" ms-class-1="jinyong:el.IsOff=='1'" ms-click="EditIsOff(el,$event);" ms-attr-title="el.IsOff=='1'?'关闭':'开启'"></span>
                             <a class="" data-toggle="" title="座次表" ms-if="el.CRUser==userName" ms-click="AddzcbView(el.Title+'座次表',el.ID,$event)">
                                 座次表
                             </a>
-                        </span>
+                        </div>
                     </td>
                 </tr>
 
@@ -237,5 +243,17 @@
             }
             ComFunJS.winviewform("/ViewV5/AppPage/SEAT/SEAT_2.html?id=" + ID + "&r=" + Math.random(), Name, "1000");
         },
+        EditIsOff: function(el, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            $.post("/API/VIEWAPI.ashx", { Action: "HYGL_UPDATEISOFF", P1: el.ID, P2: (el.IsOff == "1" ? "0" : "1") },
+                function (result) {
+                    if ($.trim(result.ErrorMsg) == "") {
+                        top.ComFunJS.winsuccess(el.IsOff == "1" ? "关闭成功" : "启用成功");
+                        tempindex.GetLIST();
+                    }
+                });
+        }
     })
 </script>
