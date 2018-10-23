@@ -40,8 +40,8 @@ namespace QJY.API
 
             int page = 0;
             int pagecount = 10;
-            int.TryParse(context.Request.QueryString["p"] ?? "1", out page);
-            int.TryParse(context.Request.QueryString["pagecount"] ?? "10", out pagecount);//页数
+            int.TryParse(context.Request["p"] ?? "1", out page);
+            int.TryParse(context.Request["pagecount"] ?? "10", out pagecount);//页数
             page = page == 0 ? 1 : page;
             int total = 0;
             DataTable dt = new WX_UserB().GetDataPager(tableName, colNme, pagecount, page, " wu.CRDate desc", strWhere, ref total);

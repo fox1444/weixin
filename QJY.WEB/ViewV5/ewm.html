@@ -30,9 +30,10 @@
             $id: "EWM",
             GetEWM: function (size) {
                 var url = ComFunJS.getCookie('ewm_url');
+                var type = ComFunJS.getCookie('ewm_type');
                 var text = ComFunJS.getCookie('ewm_text');
                 $('#qrcode').html('');
-                ComFunJS.DrawQrcode("qrcode", url, text, size);
+                ComFunJS.DrawQrcode("qrcode", url, text, size, type);
             },
             Print: function () {
                 $(".btn-print").hide();
