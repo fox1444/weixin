@@ -1493,10 +1493,10 @@
                 break;
             case "isornot":      //1/0转换成是/否
                 {
-                    if (str == 1)
-                        return '是';
-                    else
-                        return '否';
+                    switch (str) {
+                        case "0": str = '否'; break;
+                        case "1": str = '是'; break;
+                    }
                 }
                 break;
             default: {
@@ -1508,6 +1508,10 @@
         { "ID": "10", "TypeName": "飞机" },
         { "ID": "20", "TypeName": "火车" },
         { "ID": "30", "TypeName": "汽车" },
+    ],
+    TemplateData: [
+        { "TemplateName": "凉山烟草红", "TemplatePage":"_r" },
+        { "TemplateName": "蓝", "TemplatePage": "_b" },
     ]
 });
 

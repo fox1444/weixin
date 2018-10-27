@@ -64,7 +64,7 @@
                     <li class="add-item add-width fl-left">
                         <label class="add-item-label"><i>*</i>会议室</label>
                         <div class="add-ic">
-                            <select name="conType" id="conType" ms-duplex="modelData.RoomID" class="form-control szhl_require">
+                            <select name="conRoom" id="conRoom" ms-duplex="modelData.RoomID" class="form-control szhl_require">
                                 <option ms-repeat-item="HYSData" ms-attr-value="item.ID">{{item.Name}}</option>
                             </select>
                         </div>
@@ -113,6 +113,15 @@
                             <input type="text" class="form-control szhl_getPeoples" ms-duplex="modelData.SXUser" />
                         </div>
                     </li>-->
+
+                    <li class="add-item add-width fl-left">
+                        <label class="add-item-label"><i>*</i>前端页面模板</label>
+                        <div class="add-ic">
+                            <select name="conTemplate" id="conTemplate" ms-duplex="modelData.Template" class="form-control szhl_require">
+                                <option ms-repeat-item="ComFunJS.TemplateData" ms-attr-value="item.TemplatePage">{{item.TemplateName}}</option>
+                            </select>
+                        </div>
+                    </li>
                     <li class="add-item add-widthall">
                         <label class="add-item-label">附件</label>
                         <div class="add-ic">
@@ -376,7 +385,7 @@
         CYUserStr: "",
         TypeId: ComFunJS.getQueryString("typeId"),
         HYGLID: ComFunJS.getQueryString("ID"),//会议ID
-        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "Summary": "", "SummaryTitle": "", "SummarySubTitle": "", "Comment": "", "CommentTitle": "", "CommentSubTitle": "", "Security": "", "Organization": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "BoardingTime": "", "CarNumber": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "LocationImg": "","IsOff": false},
+        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "Summary": "", "SummaryTitle": "", "SummarySubTitle": "", "Comment": "", "CommentTitle": "", "CommentSubTitle": "", "Security": "", "Organization": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "BoardingTime": "", "CarNumber": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "LocationImg": "", "IsOff": false, "Template":"" },
         iswf: true,//是否属于流程表单
         inittemp: function (strId) {
             $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETKYHYSLIST', {}, function (resultData) {

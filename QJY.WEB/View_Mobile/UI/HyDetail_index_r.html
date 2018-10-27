@@ -88,7 +88,7 @@
             tpData: [],
             userpl: 0,
             usertype: "",
-            modelData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "IsOff": false },
+            modelData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "IsOff": false, "Template": "" },
             currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "Zhiwu": "", "DisplayOrder": 0, "Zhiwu": "", "ServiceUserName": "", "ServiceUserMobphone": "" },
             currentuserlist: [],
             logdata: { "ComId": 0, "UserID": 0, "Name": "", "Mobphone": "", "HYGLID": 0 },
@@ -102,7 +102,7 @@
                     $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELBYOUTERUSERID', { P1: tempmodel.dataid, P2: pnum }, function (resultData) {
                         if (resultData.ErrorMsg == "") {
                             if (resultData.Result[0]) {
-                                location.href = "/View_Mobile/UI/HyDetail_step_r.html?id=" + tempmodel.dataid + "&r=" + Math.random();
+                                location.href = "/View_Mobile/UI/HyDetail_step" + tempmodel.modelData.Template + ".html?id=" + tempmodel.dataid + "&r=" + Math.random();
                             }
                             else {
                                 $('.input_block').show();
