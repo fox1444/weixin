@@ -30,7 +30,7 @@ namespace QJY.WEB.WX.AUTH
                         }
                         else
                         {
-                            string redirectpage = "http://order.lstobacco.com:5222/tobacco_logist?licenseCode=" + userInfo.ToMonoLicense;
+                            string redirectpage = "http://order.lstobacco.com:5222/tobacco_logist?licenseCode=" + userInfo.ToMonoLicense; 
                             Response.Redirect(redirectpage);
                         }
                     }
