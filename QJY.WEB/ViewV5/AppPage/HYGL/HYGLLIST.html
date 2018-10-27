@@ -1,4 +1,9 @@
-﻿<div ms-controller="HYGLLIST">
+﻿<style>
+    .jinyong {
+        color: orangered;
+    }
+</style>
+<div ms-controller="HYGLLIST">
     <!-- 添加按钮 -->
     <div class="btn-add">
         <button type="button" class="btn btn-info btn-lg" ms-click="AddView('HYGL','添加会议')"><i class="iconfont icon-jiahao ft12 mr5"></i>添加会议</button>
@@ -17,7 +22,7 @@
         </div>
         <div class="oh" style="margin-bottom:15px;">
             <h5 class="pull-left tr">会议室：</h5>
-            <select name="conGWs" id="conGWs" ms-change="SelectHYS(this.value)" class="narrow-select">
+            <select name="conHYS" id="conHYS" ms-change="SelectHYS(this.value)" class="narrow-select">
                 <option value="">所有</option>
                 <option ms-repeat-item="TypeData" ms-attr-value="item.ID">{{item.Name}}</option>
             </select>
@@ -65,17 +70,18 @@
 
                     </td>
                     <td>
-                        <span class="btn-click">
+                        <div class="btn-click bg-fun">
                             <a class="cz-btn ft18 bj-color tip" data-toggle="tooltip" title="编辑" ms-if="el.CRUser==userName" ms-click="AddView('HYGL','修改会议',el.ID,$event)">
                                 <i class="iconfont icon-bianji"></i>
                             </a>
                             <a class="cz-btn ft18 sc-color tip" data-toggle="tooltip" title="删除" ms-if="el.CRUser==userName" ms-click="Del(el,$event)">
                                 <i class="iconfont icon-shanchu"></i>
                             </a>
+                            <span class="iconfont icon-qidong cursor mr5" ms-class-1="jinyong:el.IsOff=='0'" ms-click="EditIsOff(el,$event);" ms-attr-title="el.IsOff=='0'?'关闭':'开启'"></span>
                             <a class="" data-toggle="" title="座次表" ms-if="el.CRUser==userName" ms-click="AddzcbView(el.Title+'座次表',el.ID,$event)">
                                 座次表
                             </a>
-                        </span>
+                        </div>
                     </td>
                 </tr>
 
@@ -107,7 +113,7 @@
     var tempindex = avalon.define({
         $id: "HYGLLIST",
         curHYS: "",
-        TypeData:[],
+        TypeData: [],
         tmpListData: [],
         SelectType: function (type) {
             model.search.seartype = type;
@@ -128,7 +134,7 @@
                 { "ColName": "Title", "ColText": "会议主题", "IsSel": true, "format": "text", "type": "link" },
                 { "ColName": "StartTime", "ColText": "开始时间", "IsSel": true, "format": "timeformat" },
                 { "ColName": "EndTime", "ColText": "结束时间", "IsSel": true, "format": "timeformat" },
-                { "ColName": "IsOff", "ColText": "已关闭", "IsSel": true, "format": "allowed" },
+                { "ColName": "IsOff", "ColText": "已关闭", "IsSel": true, "format": "isornot" },
                 { "ColName": "CYUser", "ColText": "参与人", "IsSel": false, "format": "username", "len": 10 },
                 { "ColName": "Name", "ColText": "会议室", "width": "10%", "IsSel": true, "format": "text" },
                 { "ColName": "Details", "ColText": "会议内容", "IsSel": false, "format": "text" },
@@ -237,5 +243,17 @@
             }
             ComFunJS.winviewform("/ViewV5/AppPage/SEAT/SEAT_2.html?id=" + ID + "&r=" + Math.random(), Name, "1000");
         },
+        EditIsOff: function (el, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            $.post("/API/VIEWAPI.ashx", { Action: "HYGL_UPDATEISOFF", P1: el.ID, P2: (el.IsOff == "1" ? "0" : "1") },
+                function (result) {
+                    if ($.trim(result.ErrorMsg) == "") {
+                        top.ComFunJS.winsuccess(el.IsOff == "1" ? "关闭成功" : "启用成功");
+                        tempindex.GetLIST();
+                    }
+                });
+        }
     })
 </script>

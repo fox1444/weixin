@@ -511,13 +511,13 @@
             //ctx.drawImage(this, 0, 0,1024,768);//改变图片的大小到1024*768
         }
     },//外链有文字的二维码，现已不用
-    DrawQrcode: function (id, url, content, size, title) {
+    DrawQrcode: function (id, url, content, size, type, title) {
         var width = 200;
         var height = 200;
         var imgwidth = 100;
         var imgheight = 30;
         var len = 30;
-        var str = ComFunJS.convstr(content, 11);
+        var charlen;
 
         if (size == 'medium') {
             width = 400;
@@ -525,7 +525,10 @@
             imgwidth = 200;
             imgheight = 60;
             len = 40;
-            str = ComFunJS.convstr(content, 17);
+            if (type == 'zm')
+                charlen = 30;
+            else
+                charlen = 17;
             $("#large-link").remove();
         }
         else if (size == 'large') {
@@ -534,7 +537,10 @@
             imgwidth = 300;
             imgheight = 90;
             len = 60;
-            str = ComFunJS.convstr(content, 17);
+            if (type == 'zm')
+                charlen = 30;
+            else
+                charlen = 17;
             $("#large-link").remove();
         }
         else {
@@ -542,15 +548,21 @@
             if (!title || title == '') {
                 title = "点击查看高清大图";
             }
+            if (type == 'zm')
+                charlen = 17;
+            else
+                charlen = 11;
             $('#' + id).after("<a id='large-link'>" + title + "</a>");
             $('#large-link').click(function () {
                 ComFunJS.setCookie('ewm_url', url);
+                ComFunJS.setCookie('ewm_type', type);
                 ComFunJS.setCookie('ewm_text', content);
                 window.open("/ViewV5/ewm.html");
             });
         }
+        var str = ComFunJS.convstr(content, charlen);
         $('#' + id + ' canvas').css("height", (height + len - 5) + 'px');
-       
+
         $("#" + id).qrcode({
             render: "canvas",
             text: url,                //扫描二维码后显示的内容,可以直接填一个网址，扫描二维码后自动跳向该链接
@@ -597,7 +609,6 @@
                         top.$("body").data("usersarr", usersarr);
                     }
                 })
-
             }
         }
         if (returnmsg.length > 1) {
@@ -1409,7 +1420,7 @@
                 break;
             case 20://维修
                 {
-                    return "从" + ComFunJS.FnFormat(el.FromDate, "dateformat") + "至" + ComFunJS.FnFormat(el.ToDate, "dateformat") + "进行维修";
+                    return ComFunJS.FnFormat(el.FromDate, "dateformat") + "至" + ComFunJS.FnFormat(el.ToDate, "dateformat") + "进行维修";
                 }
                 break;
             case 30://变更
@@ -1475,6 +1486,19 @@
                     return ComFunJS.convstr(str + "", len);
                 }
                 break;
+            case "headimg":      //微信粉丝头像
+                {
+                    return '<img src="' + str + '" class="headimg"/>';
+                }
+                break;
+            case "isornot":      //1/0转换成是/否
+                {
+                    switch (str) {
+                        case "0": str = '否'; break;
+                        case "1": str = '是'; break;
+                    }
+                }
+                break;
             default: {
                 return str;
             }
@@ -1484,6 +1508,10 @@
         { "ID": "10", "TypeName": "飞机" },
         { "ID": "20", "TypeName": "火车" },
         { "ID": "30", "TypeName": "汽车" },
+    ],
+    TemplateData: [
+        { "TemplateName": "凉山烟草红", "TemplatePage":"_r" },
+        { "TemplateName": "蓝", "TemplatePage": "_b" },
     ]
 });
 

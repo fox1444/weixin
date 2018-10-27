@@ -584,7 +584,7 @@
                         }
                     }
                     break;
-                case "allowed":
+                case "isornot":
                     {
                         switch (str) {
                             case "0": str = '否'; break;
@@ -675,7 +675,8 @@
 
         })
 
-    }, OpenSet: function (event) {
+    },
+    OpenSet: function (event) {
         if (event) {
             event.stopPropagation();
         }

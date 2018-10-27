@@ -68,7 +68,7 @@ namespace QJY.API
             }
             if (!string.IsNullOrEmpty(lifecycleid))
             {
-                 strWhere += string.Format("  and z.ID in ( select ZCGLID from SZHL_ZCGL_LifeCycle where TypeID= '{0}' and IsDel=0 )", lifecycleid);
+                strWhere += string.Format("  and z.ID in ( select ZCGLID from SZHL_ZCGL_LifeCycle where TypeID= '{0}' and IsDel=0 )", lifecycleid);
             }
             //int DataID = -1;
             //int.TryParse(context.Request.QueryString["ID"] ?? "-1", out DataID);//记录Id
@@ -635,16 +635,51 @@ namespace QJY.API
                 ZCLC.CRUser = UserInfo.User.UserName;
                 ZCLC.ComId = UserInfo.User.ComId.Value;
                 ZCLC.IsDel = 0;
-                new SZHL_ZCGL_LifeCycleB().Insert(ZCLC);
+                if (new SZHL_ZCGL_LifeCycleB().Insert(ZCLC))
+                {
+                    SENDZCGLMSG(ZCGLid);
+                }
             }
             else
             {
                 ZCLC.UpdateDate = DateTime.Now;
                 ZCLC.UpdateUser = UserInfo.User.UserName;
-                new SZHL_ZCGL_LifeCycleB().Update(ZCLC);
+                if (new SZHL_ZCGL_LifeCycleB().Update(ZCLC))
+                {
+                    SENDZCGLMSG(ZCGLid);
+                }
             }
             msg.Result = ZCLC;
         }
+
+        /// <summary>
+        /// 生命周期新加或者修改后给使用人发送短信
+        /// </summary>
+        /// <param name="ZCGLID"></param>
+        public void SENDZCGLMSG(int ZCGLID)
+        {
+            SZHL_ZCGL ZC = new SZHL_ZCGLB().GetEntity(d => d.ID == ZCGLID);
+            if (ZC != null)
+            {
+                JH_Auth_User USER = new JH_Auth_UserB().GetEntity(d => d.UserName == ZC.UserName);
+                if (USER != null)
+                {
+                    string phone = "13980444473";
+                    string host = CommonHelp.GetConfig("HostUrl");
+                    string url = CommonHelp.GetShortUrl(host + "/WX/bgxt/zc_Detail.html?id=" + ZCGLID);
+                    string content = ZC.Name + "的生命周期发生变动，请查看" + url;
+                    if (phone.Trim().Length > 0)
+                    {
+                        string message = "尊敬的" + USER.UserRealName.Trim() + "，" + content;
+                        if (CommonHelp.MarchPhoneNumber(phone))
+                        {
+                            string MASresult = CommonHelp.SendMAS(phone, message);
+                        }
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// 生命周期分类列表，并展示资产数量
         /// </summary>

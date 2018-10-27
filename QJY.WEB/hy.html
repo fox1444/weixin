@@ -10,14 +10,19 @@
             if (url.indexOf("?") != -1) {
                 var str = url.substr(1);
                 strs = str.split("&");
+                var id = "";
+                var tpl = "";
                 for (var i = 0; i < strs.length; i++) {
                     var name = strs[i].split("=")[0].toLowerCase();
-                    var val = strs[i].split("=")[1];
                     if (name == "id") {
-                        window.location = "/View_Mobile/UI/HyDetail_index_r.html?id=" + val + "&r=" + Math.random();
-                        break;
+                        id = strs[i].split("=")[1];
+                    }
+                    if (name == "tpl") {
+                        tpl = strs[i].split("=")[1];
                     }
                 }
+
+                window.location = "/View_Mobile/UI/HyDetail_index" + tpl + ".html?id=" + id + "&r=" + Math.random();
             }
         }
 
