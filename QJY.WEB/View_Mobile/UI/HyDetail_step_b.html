@@ -829,12 +829,6 @@
                 else {
                     $('#' + cla).val('');
                     $('.' + cla).addClass('hide');
-                    //if (label =='PickupTitle' && tempmodel.currentuser.PickupUser == '' && tempmodel.currentuser.PickupUserMob == '' && tempmodel.currentuser.PickupCarNumber == '' && tempmodel.currentuser.PickupLocation == '') {
-                    //    $('#PickupList li').css('border-bottom', 'none');
-                    //}
-                    //if (label == 'SendoffTitle' &&tempmodel.currentuser.SendoffUser == '' && tempmodel.currentuser.SendoffUserMob == '' && tempmodel.currentuser.SendoffCarNumber == '' && tempmodel.currentuser.SendoffLocation == '') {
-                    //    $('#SendoffList li').css('border-bottom', 'none');
-                    //}
                 }
             },
             //接送服务按钮
@@ -904,7 +898,6 @@
                         minute = '0' + minute;
                     }
                     var r = d.getFullYear() + '-' + month + '-' + day + ' ' + hour + ":" + minute;
-                    //var r = day + '/' + month + '/' + d.getFullYear() + ' ' + hour + ":" + minute;
                     return r;
                 }
                 return date;
@@ -985,7 +978,6 @@
                         map.panTo(r.point);
                         tempmodel.Mapsrc = 'http://api.map.baidu.com/direction?origin=latlng:' + r.point.lat + ',' + r.point.lng + '|name:&destination=' + destination + '&mode=driving&region=' + region + '&output=html&ak=rIHnNifrMRwoxGjoChaiClXQqt96IRiw';
                         setTimeout(" tempmodel.ReLoadMap()", 1000);
-                        //$('#mapping').attr('src', tempmodel.Mapsrc);
                     }
                 });
 
@@ -1026,9 +1018,6 @@
         }
 
         function initVideo() {
-            //var src1 = "http://mp.lstobacco.com/0758169485b1427abb8344acc5af7e98/09870ca0286948d5b04936065c738b08-8b0c19f6232be74a000c9cb9c108d64b-fd.mp4";
-            //var src2 = "http://mp.lstobacco.com/b9936875b2b7411fa328caaa3efcf3b1/092fed4bc79c4036afeff79a105f14b8-481db03d499e5d7a26577bd6e98f2d5d-fd.mp4";
-            //var src3 = "http://mp.lstobacco.com/b9936875b2b7411fa328caaa3efcf3b1/092fed4bc79c4036afeff79a105f14b8-481db03d499e5d7a26577bd6e98f2d5d-fd.mp4";
             src1 = tempmodel.modelData.Video1Url;
             src2 = tempmodel.modelData.Video2Url;
             src3 = tempmodel.modelData.Video3Url;
