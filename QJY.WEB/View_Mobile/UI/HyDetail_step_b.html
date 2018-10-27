@@ -529,35 +529,46 @@
                 <i></i>影像纪实
             </div>
             <div class="content-bg video-body">
-                <div class="">
+                <div ms-if="modelData.Video1Title!=''&&modelData.Video1Url!=''">
                     <div class="video-title video-title-small">
-                        遥望幸福 — 走进特补乃乌村
+                        {{modelData.Video1Title}}
+                    </div>
+                    <div class="video-content v-medium">
+                        <video id="video1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" style="width:100%; height:100%;"
+                               poster="/view_mobile/images/video2.jpg" data-setup="{}">
+                            <source src="" type='video/mp4' />
+                            <!--<source src="http://视频地址格式2.webm" type='video/webm' />
+                            <source src="http://视频地址格式3.ogv" type='video/ogg' />-->
+                            <track kind="captions" src="demo.captions.vtt" srclang="en" label="English" /><!-- Tracks need an ending tag thanks to IE9 -->
+                            <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English" /><!-- Tracks need an ending tag thanks to IE9 -->
+                        </video>
+                    </div>
+                </div>
+                <div ms-if="modelData.Video2Title!=''&&modelData.Video2Url!=''">
+                    <div class="video-title video-title-small">
+                        {{modelData.Video2Title}}
                     </div>
                     <div class="video-content v-medium">
                         <video id="video2" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" style="width:100%; height:100%;"
-                               poster="/view_mobile/images/video2.jpg" data-setup="{}">
-                            <source src="http://mp.lstobacco.com/0758169485b1427abb8344acc5af7e98/09870ca0286948d5b04936065c738b08-8b0c19f6232be74a000c9cb9c108d64b-fd.mp4" type='video/mp4' />
-                            <!--<source src="http://视频地址格式2.webm" type='video/webm' />
-                            <source src="http://视频地址格式3.ogv" type='video/ogg' />-->
-                            <track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
-                            <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+                               poster="/view_mobile/images/video3.jpg" data-setup="{}">
+                            <source src="" type='video/mp4' />
+                            <track kind="captions" src="demo.captions.vtt" srclang="en" label="English" /><!-- Tracks need an ending tag thanks to IE9 -->
+                            <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English" /><!-- Tracks need an ending tag thanks to IE9 -->
                         </video>
                     </div>
-
                 </div>
-                <div class="">
+                <div ms-if="modelData.Video3Title!=''&&modelData.Video3Url!=''">
                     <div class="video-title video-title-small">
-                        追梦幸福 — 再进普格县特补乃乌村
+                        {{modelData.Video3Title}}
                     </div>
                     <div class="video-content v-medium">
                         <video id="video3" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" style="width:100%; height:100%;"
-                               poster="/view_mobile/images/video3.jpg" data-setup="{}">
-                            <source src="http://mp.lstobacco.com/b9936875b2b7411fa328caaa3efcf3b1/092fed4bc79c4036afeff79a105f14b8-481db03d499e5d7a26577bd6e98f2d5d-fd.mp4" type='video/mp4' />
-                            <track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
-                            <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+                               poster="/view_mobile/images/video1.jpg" data-setup="{}">
+                            <source src="" type='video/mp4' />
+                            <track kind="captions" src="demo.captions.vtt" srclang="en" label="English" /><!-- Tracks need an ending tag thanks to IE9 -->
+                            <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English" /><!-- Tracks need an ending tag thanks to IE9 -->
                         </video>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -591,26 +602,12 @@
 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=rIHnNifrMRwoxGjoChaiClXQqt96IRiw"></script>
     <script>
-
-        var src2 = "http://mp.lstobacco.com/0758169485b1427abb8344acc5af7e98/09870ca0286948d5b04936065c738b08-8b0c19f6232be74a000c9cb9c108d64b-fd.mp4";
-        var src3 = "http://mp.lstobacco.com/b9936875b2b7411fa328caaa3efcf3b1/092fed4bc79c4036afeff79a105f14b8-481db03d499e5d7a26577bd6e98f2d5d-fd.mp4";
+        var myPlayer1 = videojs('video1');
         var myPlayer2 = videojs('video2');
         var myPlayer3 = videojs('video3');
-
-        videojs("video2").ready(function () {
-            var myPlayer2 = this;
-            this.on('play', function () {
-                myPlayer3.pause();
-                myPlayer3.src(src3);
-            });
-        });
-        videojs("video3").ready(function () {
-            var myPlayer3 = this;
-            this.on('play', function () {
-                myPlayer2.pause();
-                myPlayer2.src(src2);
-            });
-        });
+        var src1 = "";
+        var src2 = "";
+        var src3 = "";
 
         var tempmodel = avalon.define({
             $id: "Hydetail",
@@ -621,7 +618,7 @@
             CYUserStr: "",
             Mapsrc: "",
             seats: [],
-            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "BoardingTime": "", "CarNumber": "", "HotelName": "", "HotelLocation": "", "LbsRegion": "", "LbsLocation": "", "Security": "", "Organization": "", "Summary": "", "SummaryTitle": "", "SummarySubTitle": "", "Comment": "", "CommentTitle": "", "CommentSubTitle": "", "LocationImg": "", "IsOff": false },
+            modelData: { "RoomID": "", "RoomWidth": "", "RoomLength": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "CXQK": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "BoardingTime": "", "CarNumber": "", "HotelName": "", "HotelLocation": "", "LbsRegion": "", "LbsLocation": "", "Security": "", "Organization": "", "Summary": "", "SummaryTitle": "", "SummarySubTitle": "", "Comment": "", "CommentTitle": "", "CommentSubTitle": "", "LocationImg": "", "IsOff": false, "Template": "", "Video1Title": "", "Video2Title": "", "Video3Title": "", "Video1Url": "", "Video2Url": "", "Video3Url": "" },
             currentuser: { "ID": 0, "Name": "", "Mobphone": "", "OutDeptName": "", "Type": 1, "Zhiwu": "", "RoomNumber": "", "BoardingTime": "", "CarNumber": "", "YCTIME": "", "YCLOCATION": "", "ServiceUserName": "", "ServiceUserMobphone": "", "PickupType": 0, "PickupNumber": "", "PickupDate": "", "PickupUser": "", "PickupUserMob": "", "PickupCarNumber": "", "PickupLocation": "", "SendoffUser": "", "SendoffUserMob": "", "SendoffCarNumber": "", "SendoffLocation": "", "SendoffType": 0, "SendoffNumber": "", "SendoffDate": "", "HotelName": "", "HotelLocation": "" },
             dataid: ComFunJS.getQueryString('id'),
             stepindex: "",
@@ -665,6 +662,7 @@
 
                     //视频页特殊处理
                     if (index != 17) {
+                        myPlayer1.pause();
                         myPlayer2.pause();
                         myPlayer3.pause();
                     }
@@ -701,7 +699,7 @@
                             }
                             else {
                                 tempmodel.modelData = resultData.Result[0];
-                                document.title = tempmodel.modelData.Title.replace('<br/>', '') + "详情" ;
+                                document.title = tempmodel.modelData.Title.replace('<br/>', '') + "详情";
                                 if (tempmodel.modelData.Seats)
                                     tempmodel.seats = JSON.parse(tempmodel.modelData.Seats);
                                 tempmodel.tpData = resultData.Result1;
@@ -709,6 +707,7 @@
                                 tempmodel.LoadAllUser();//参会人
                                 tempmodel.LoadRoom();//座次表
                                 ComFunJS.viewimg_for_view(tempmodel.tpData, '1');//文件下载
+                                initVideo();
                                 //setTimeout(" ComFunJS.initForm()", 500);
                             }
                         }
@@ -1011,7 +1010,6 @@
             $('.hy_menu').hide();
             $('.up-and-down').hide();
             tempmodel.inittemp();
-
         })
 
         $(window).on("load resize", function () {
@@ -1022,8 +1020,48 @@
         });
 
         function LoadVideo() {
+            $("#video1").css("height", ($("#video1").width() * 9 / 16) + "px");
             $("#video2").css("height", ($("#video2").width() * 9 / 16) + "px");
             $("#video3").css("height", ($("#video3").width() * 9 / 16) + "px");
+        }
+
+        function initVideo() {
+            //var src1 = "http://mp.lstobacco.com/0758169485b1427abb8344acc5af7e98/09870ca0286948d5b04936065c738b08-8b0c19f6232be74a000c9cb9c108d64b-fd.mp4";
+            //var src2 = "http://mp.lstobacco.com/b9936875b2b7411fa328caaa3efcf3b1/092fed4bc79c4036afeff79a105f14b8-481db03d499e5d7a26577bd6e98f2d5d-fd.mp4";
+            //var src3 = "http://mp.lstobacco.com/b9936875b2b7411fa328caaa3efcf3b1/092fed4bc79c4036afeff79a105f14b8-481db03d499e5d7a26577bd6e98f2d5d-fd.mp4";
+            src1 = tempmodel.modelData.Video1Url;
+            src2 = tempmodel.modelData.Video2Url;
+            src3 = tempmodel.modelData.Video3Url;
+            myPlayer1.src(src1);
+            myPlayer2.src(src2);
+            myPlayer3.src(src3);
+            videojs("video1").ready(function () {
+                var myPlayer1 = this;
+                this.on('play', function () {
+                    myPlayer2.pause();
+                    myPlayer3.pause();
+                    myPlayer2.src(src2);
+                    myPlayer3.src(src3);
+                });
+            });
+            videojs("video2").ready(function () {
+                var myPlayer2 = this;
+                this.on('play', function () {
+                    myPlayer1.pause();
+                    myPlayer3.pause();
+                    myPlayer1.src(src1);
+                    myPlayer3.src(src3);
+                });
+            });
+            videojs("video3").ready(function () {
+                var myPlayer3 = this;
+                this.on('play', function () {
+                    myPlayer1.pause();
+                    myPlayer2.pause();
+                    myPlayer1.src(src1);
+                    myPlayer2.src(src2);
+                });
+            });
         }
     </script>
 </body>
