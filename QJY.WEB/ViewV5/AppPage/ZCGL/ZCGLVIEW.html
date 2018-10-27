@@ -64,7 +64,7 @@
                                 model.modelData = resultData.Result[0];
 
                                 var url = ComFunJS.yuming + "/WX/bgxt/zc_Detail.html?id=" + model.modelData.ID;
-                                ComFunJS.DrawQrcode("qrcode", url, model.modelData.Name, "icon");
+                                ComFunJS.DrawQrcode("qrcode", url, model.modelData.Code, "icon", 'zm');
                             }
                         }
                     })

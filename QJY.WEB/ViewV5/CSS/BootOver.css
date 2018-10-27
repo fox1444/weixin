@@ -1926,7 +1926,7 @@ button.toast-close-button {
 
 /*.detail-nav{padding: 10px 0px 0 10px;}*/
 .tab-kh{width:100%;font-size:14px;height:32px;/*border-bottom:1px solid rgba(0,0,0,.1);*/color:#939aab}
-.detail-nav span{font-size:14px;padding:0 10px;margin-right:12px;cursor:pointer;height:30px;display:inline-block}
+.detail-nav span{font-size:14px;padding:0 5px 0 0;margin-right:12px;cursor:pointer;height:30px;display:inline-block}
 .detail-nav span.cur{border-bottom:2px solid #12b8f6;color:#12b8f6}
 .detail-nav span.cur i{color:#12b8f6}
 /*.detail-nav .nav-bt span.cur{border:none;color:#333;font-size:16px}*/

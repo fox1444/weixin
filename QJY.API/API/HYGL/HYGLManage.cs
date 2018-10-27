@@ -273,9 +273,9 @@ namespace QJY.API
         #endregion
 
         #region 会议管理
-        #region 会议列表
+        #region 会议列表分页
         /// <summary>
-        /// 会议列表
+        /// 会议列表分页
         /// </summary>
         public void GETHYGLLIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
@@ -767,11 +767,6 @@ namespace QJY.API
         /// <summary>
         /// 更新会议情况
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void UPDATEHYQK(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int Id = int.Parse(P1);
@@ -820,15 +815,28 @@ namespace QJY.API
         }
         #endregion
 
+        #region 关闭开启会议
+        public void UPDATEISOFF(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            int Id = int.Parse(P1);
+            int ISOFF = int.Parse(P2);
+            var hy = new SZHL_HYGLB().GetEntity(p => p.ID == Id);
+            if (hy != null)
+            {
+                hy.IsOff = ISOFF;
+                new SZHL_HYGLB().Update(hy);
+            }
+            else
+            {
+                msg.ErrorMsg = "会议不存在";
+            }
+        }
+        #endregion
+
         #region 更新会议记录
         /// <summary>
         /// 更新会议记录
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="msg"></param>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <param name="UserInfo"></param>
         public void UPDATEHYJL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             int Id = int.Parse(P1);

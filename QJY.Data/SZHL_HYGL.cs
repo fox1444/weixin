@@ -68,5 +68,12 @@ namespace QJY.Data
         public string CommentSubTitle { get; set; }
         public string LocationImg { get; set; }
         public Nullable<int> IsOff { get; set; }
+        public string Template { get; set; }
+        public string Video1Title { get; set; }
+        public string Video1Url { get; set; }
+        public string Video2Title { get; set; }
+        public string Video2Url { get; set; }
+        public string Video3Title { get; set; }
+        public string Video3Url { get; set; }
     }
 }

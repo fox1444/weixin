@@ -25,7 +25,7 @@ namespace QJY.API
         /// </summary>
         /// <param name="strHtml"></param>
         /// <returns></returns>
-        public string StripHT(string strHtml)  //从html中提取纯文本
+        public string StripHT(string strHtml)
         {
             Regex regex = new Regex("<.+?>", RegexOptions.IgnoreCase);
             string strOutput = regex.Replace(strHtml, "");//替换掉"<"和">"之间的内容
@@ -621,7 +621,7 @@ namespace QJY.API
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
             string mac = BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(ConvertString)));
             mac = mac.Replace("-", "").ToLower();
-            //26c695f6c8fc4a7e2a743879990eda3f
+            
             var authRequest = new
             {
                 ecName = ecName,
@@ -640,37 +640,6 @@ namespace QJY.API
             byte[] responseData = WC.UploadData(authurl, "POST", postData);
             string returnData = Encoding.UTF8.GetString(responseData);
             return returnData;
-
-            //string result = "";
-            //HttpWebRequest req = (HttpWebRequest)WebRequest.Create(authurl);
-            //req.Method = "POST";
-            //req.Timeout = 800;//设置请求超时时间，单位为毫秒
-            //req.ContentType = "application/json";
-            //byte[] data = Encoding.UTF8.GetBytes(sData);           
-
-            //req.ContentLength = data.Length;
-
-            //using (Stream reqStream = req.GetRequestStream())
-            //{
-            //    reqStream.Write(data, 0, data.Length);
-            //    reqStream.Close();
-            //}
-
-            //try
-            //{
-            //    HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
-            //    Stream stream = resp.GetResponseStream();
-            //    //获取响应内容
-            //    using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
-            //    {
-            //        result = reader.ReadToEnd();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    return ex.ToString();
-            //}
-            //return result;
         }
 
         /// <summary>
