@@ -88,7 +88,7 @@
             tpData: [],
             userpl: 0,
             usertype: "",
-            modelData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "IsOff": false, "Template": "" },
+            modelData: { "RoomID": "", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "CYUser": "", "FQUser": "", "TXSJ": "-1", "HYJL": "", "Remark": "", "JLFiles": "", "Files": "", "JLUser": "", "ZCUser": "", "SXUser": "", "HYFW": "", "IsOff": false, "Template": "", "Video1Title": "", "Video2Title": "", "Video3Title": "", "Video1Url": "", "Video2Url": "", "Video3Url": "" },
             currentuser: { "ID": "", "Name": "", "Mobphone": "", "OutDeptName": "", "Zhiwu": "", "DisplayOrder": 0, "Zhiwu": "", "ServiceUserName": "", "ServiceUserMobphone": "" },
             currentuserlist: [],
             logdata: { "ComId": 0, "UserID": 0, "Name": "", "Mobphone": "", "HYGLID": 0 },
@@ -177,7 +177,7 @@
                 strId = tempmodel.dataid;
                 if (strId) {
                     $.getJSON('/API/VIEWAPINOLOGIN.ashx?Action=HYGL_GETHYGLMODELNOLOGIN', { P1: strId }, function (resultData) {
-                        if (resultData.ErrorMsg == "") {
+                        if (resultData.ErrorMsg == "" && resultData.Result[0]) {
                             resultData.Result[0].IsOff = resultData.Result[0].IsOff == 0 ? false : true;
                             if (resultData.Result[0].IsOff) {
                                 //location.href = "/ViewV5/index.html";

@@ -10,7 +10,8 @@
                 <span ms-class-1="cur:seltype==6" ms-if="HYGLID>0" ms-click="selecttype(6)"><i class="iconfont icon-bookmark"></i>一键服务</span>
                 <span ms-class-1="cur:seltype==7" ms-if="HYGLID>0" ms-click="selecttype(7)"><i class="iconfont icon-bookmark"></i>单位&主持人</span>
                 <span ms-class-1="cur:seltype==8" ms-if="HYGLID>0" ms-click="selecttype(8)"><i class="iconfont icon-bookmark"></i>参会人</span>
-                <span ms-class-1="cur:seltype==9" ms-click="selecttype(9)"><i class="iconfont icon-bookmark"></i>其他</span>
+                <span ms-class-1="cur:seltype==9" ms-click="selecttype(9)"><i class="iconfont icon-bookmark"></i>视频影像</span>
+                <span ms-class-1="cur:seltype==10" ms-click="selecttype(10)"><i class="iconfont icon-bookmark"></i>其他</span>
             </div>
         </div>
         <!--基本信息-->
@@ -160,12 +161,6 @@
                     <textarea class="szhl_UEEDIT" id="hychuxing" umheight="120" ms-duplex="modelData.CXQK"></textarea>
                 </div>
             </div>
-            <!--<div class="fg-item"><span>分组情况</span><i></i></div>
-            <div class="add-item add-widthall">
-                <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hygroup" umheight="150" ms-duplex="modelData.FZQK"></textarea>
-                </div>
-            </div>-->
             <div class="add-item add-widthall">
                 <label class="add-item-label">上车时间</label>
                 <div class="add-ic">
@@ -209,12 +204,6 @@
         </div>
         <!--用餐安排-->
         <div ms-visible="seltype==5">
-            <!--<div class="fg-item"><span>用餐安排</span><i></i></div>
-            <div class="add-item add-widthall">
-                <div class="add-ic">
-                    <textarea class="szhl_UEEDIT" id="hyyongcan" umheight="280" ms-duplex="modelData.YCQK"></textarea>
-                </div>
-            </div>-->
             <div class="fg-item"><span>用餐时间</span><i></i></div>
             <div class="add-item add-widthall">
                 <div class="add-ic">
@@ -317,8 +306,47 @@
                 </div>
             </div>
         </div>
-        <!--其他-->
         <div ms-visible="seltype==9">
+            <div class="fg-item"><span>视频影像</span><i></i></div>
+            <div class="add-item add-width fl-left">
+                <label class="add-item-label">视频1标题</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.Video1Title" />
+                </div>
+            </div>
+            <div class="add-item add-width fl-right">
+                <label class="add-item-label">视频1地址</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.Video1Url" />
+                </div>
+            </div>
+            <div class="add-item add-width fl-left">
+                <label class="add-item-label">视频2标题</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.Video2Title" />
+                </div>
+            </div>
+            <div class="add-item add-width fl-right">
+                <label class="add-item-label">视频2地址</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.Video2Url" />
+                </div>
+            </div>
+            <div class="add-item add-width fl-left">
+                <label class="add-item-label">视频3标题</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.Video3Title" />
+                </div>
+            </div>
+            <div class="add-item add-width fl-right">
+                <label class="add-item-label">视频3地址</label>
+                <div class="add-ic">
+                    <input type="text" autofocus="autofocus" class="form-control" ms-duplex="modelData.Video3Url" />
+                </div>
+            </div>
+        </div>
+        <!--其他-->
+        <div ms-visible="seltype==10">
             <div class="fg-item"><span>简介</span><i></i></div>
             <div class="add-item add-width fl-left">
                 <label class="add-item-label">简介标题</label>
@@ -385,7 +413,7 @@
         CYUserStr: "",
         TypeId: ComFunJS.getQueryString("typeId"),
         HYGLID: ComFunJS.getQueryString("ID"),//会议ID
-        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "Summary": "", "SummaryTitle": "", "SummarySubTitle": "", "Comment": "", "CommentTitle": "", "CommentSubTitle": "", "Security": "", "Organization": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "BoardingTime": "", "CarNumber": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "LocationImg": "", "IsOff": false, "Template":"" },
+        modelData: { "ID": "0", "Title": "", "Details": "", "StartTime": "", "EndTime": "", "RoomID": "", "RoomWidth": "", "RoomLength": "", "Summary": "", "SummaryTitle": "", "SummarySubTitle": "", "Comment": "", "CommentTitle": "", "CommentSubTitle": "", "Security": "", "Organization": "", "TXSJ": "-1", "FQUser": ComFunJS.getnowuser(), "CYUser": "", "JLUser": "", "Files": "", "ZCUser": "", "SXUser": "", "HYFW": "", "HYXZ": "", "ZCB": "", "ZSAP": "", "FZQK": "", "BoardingTime": "", "CarNumber": "", "YCQK": "", "YCTIME": "", "YCLOCATION": "", "LocationImg": "", "IsOff": false, "Template": "", "Video1Title": "", "Video2Title": "", "Video3Title": "", "Video1Url": "", "Video2Url": "", "Video3Url": ""},
         iswf: true,//是否属于流程表单
         inittemp: function (strId) {
             $.getJSON('/API/VIEWAPI.ashx?Action=HYGL_GETKYHYSLIST', {}, function (resultData) {
