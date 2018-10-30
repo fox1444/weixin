@@ -1339,6 +1339,39 @@ namespace QJY.API
         }
 
         /// <summary>
+        /// 短信接口，给特殊客户使用
+        /// </summary>
+        public void SENDSMS(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
+        {
+            string phone = context.Request.Form["phone"] ?? "";
+            string content = context.Request.Form["content"] ?? "";
+            string key = context.Request.Form["key"] ?? "";
+
+            if (key != "86ug87ui787Ut02379tuiZO244ds8f6sd8f7kj4598sd894ISD87ugu675710HtSD")
+            {
+                msg.ErrorMsg = "key值错误！";
+                return;
+            }
+            if (phone.Trim().Length <= 0)
+            {
+                msg.ErrorMsg = "手机号码为空！";
+                return;
+            }
+            if (content.Trim().Length <= 0)
+            {
+                msg.ErrorMsg = "短信内容为空！";
+                return;
+            }
+
+            if (phone.Trim().Length > 0)
+            {
+                string MASresult = CommonHelp.SendMAS(phone, content);
+                Msg_SMSendResult sendResult = JsonConvert.DeserializeObject<Msg_SMSendResult>(MASresult);
+                msg.Result = sendResult;
+            }
+        }
+
+        /// <summary>
         /// 获取会议的短链接
         /// </summary>
         public void GETHYSHORTURL(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
