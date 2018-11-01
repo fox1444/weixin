@@ -98,6 +98,8 @@
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_HYGL_OUTUSER_DEPT" Width="1.5" PointX="0.75" PointY="33.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_HYGL_OUTUSER_Log" Width="1.5" PointX="31.375" PointY="22.75" />
         <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_HYGL" Width="1.5" PointX="33.375" PointY="4.75" />
+        <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_ZCGL_Building" Width="1.5" PointX="31.375" PointY="26.75" />
+        <EntityTypeShape EntityType="QJY_SaaSModel.SZHL_ZCGL_Floor" Width="1.5" PointX="9.375" PointY="33.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

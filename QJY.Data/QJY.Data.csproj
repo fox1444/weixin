@@ -306,6 +306,12 @@
     <Compile Include="SZHL_ZCGL.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>
+    <Compile Include="SZHL_ZCGL_Building.cs">
+      <DependentUpon>QJY.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SZHL_ZCGL_Floor.cs">
+      <DependentUpon>QJY.tt</DependentUpon>
+    </Compile>
     <Compile Include="SZHL_ZCGL_LifeCycle.cs">
       <DependentUpon>QJY.tt</DependentUpon>
     </Compile>

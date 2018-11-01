@@ -1646,6 +1646,36 @@
           <Property Name="Verify" Type="varchar(max)" />
           <Property Name="IndexID" Type="int" />
         </EntityType>
+        <EntityType Name="SZHL_ZCGL_Building">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="nchar" MaxLength="10" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="BranchCode" Type="int" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="STATUS" Type="varchar" MaxLength="10" />
+          <Property Name="CRUser" Type="varchar" MaxLength="50" />
+          <Property Name="CRDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SZHL_ZCGL_Floor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="BuildingID" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="STATUS" Type="varchar" MaxLength="10" />
+          <Property Name="IsDel" Type="int" Nullable="false" />
+          <Property Name="CRUser" Type="varchar" MaxLength="50" />
+          <Property Name="CRDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="SZHL_ZCGL_LifeCycle">
           <Key>
             <PropertyRef Name="ID" />
@@ -1680,6 +1710,8 @@
           <Property Name="CRDate" Type="datetime" Nullable="false" />
           <Property Name="IsDel" Type="int" Nullable="false" />
           <Property Name="BranchCode" Type="int" />
+          <Property Name="FloorID" Type="int" />
+          <Property Name="STATUS" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="SZHL_ZCGL_Type">
           <Key>
@@ -1977,6 +2009,8 @@
           <EntitySet Name="SZHL_YCGL" EntityType="Self.SZHL_YCGL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_YCGL_CAR" EntityType="Self.SZHL_YCGL_CAR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_ZCGL" EntityType="Self.SZHL_ZCGL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SZHL_ZCGL_Building" EntityType="Self.SZHL_ZCGL_Building" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SZHL_ZCGL_Floor" EntityType="Self.SZHL_ZCGL_Floor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_ZCGL_LifeCycle" EntityType="Self.SZHL_ZCGL_LifeCycle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_ZCGL_Location" EntityType="Self.SZHL_ZCGL_Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SZHL_ZCGL_Type" EntityType="Self.SZHL_ZCGL_Type" Schema="dbo" store:Type="Tables" />
@@ -2090,6 +2124,8 @@
           <EntitySet Name="SZHL_HYGL_OUTUSER_DEPT" EntityType="QJY_SaaSModel.SZHL_HYGL_OUTUSER_DEPT" />
           <EntitySet Name="SZHL_HYGL_OUTUSER_Log" EntityType="QJY_SaaSModel.SZHL_HYGL_OUTUSER_Log" />
           <EntitySet Name="SZHL_HYGL" EntityType="QJY_SaaSModel.SZHL_HYGL" />
+          <EntitySet Name="SZHL_ZCGL_Building" EntityType="QJY_SaaSModel.SZHL_ZCGL_Building" />
+          <EntitySet Name="SZHL_ZCGL_Floor" EntityType="QJY_SaaSModel.SZHL_ZCGL_Floor" />
         </EntityContainer>
         <EntityType Name="FT_File">
           <Key>
@@ -3786,6 +3822,8 @@
           <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDel" Type="Int32" Nullable="false" />
           <Property Name="BranchCode" Type="Int32" />
+          <Property Name="FloorID" Type="Int32" />
+          <Property Name="STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SZHL_ZCGL_LifeCycle">
           <Key>
@@ -3982,6 +4020,36 @@
           <Property Name="Video2Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Video3Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Video3Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SZHL_ZCGL_Building">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BranchCode" Type="Int32" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDel" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SZHL_ZCGL_Floor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ComId" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="BuildingID" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IsDel" Type="Int32" Nullable="false" />
+          <Property Name="CRUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5757,6 +5825,8 @@
           <EntitySetMapping Name="SZHL_ZCGL_Location">
             <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL_Location">
               <MappingFragment StoreEntitySet="SZHL_ZCGL_Location">
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="FloorID" ColumnName="FloorID" />
                 <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
                 <ScalarProperty Name="IsDel" ColumnName="IsDel" />
                 <ScalarProperty Name="CRDate" ColumnName="CRDate" />
@@ -5968,6 +6038,38 @@
                 <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SZHL_ZCGL_Building">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL_Building">
+              <MappingFragment StoreEntitySet="SZHL_ZCGL_Building">
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SZHL_ZCGL_Floor">
+            <EntityTypeMapping TypeName="QJY_SaaSModel.SZHL_ZCGL_Floor">
+              <MappingFragment StoreEntitySet="SZHL_ZCGL_Floor">
+                <ScalarProperty Name="CRDate" ColumnName="CRDate" />
+                <ScalarProperty Name="CRUser" ColumnName="CRUser" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ComId" ColumnName="ComId" />
               </MappingFragment>
