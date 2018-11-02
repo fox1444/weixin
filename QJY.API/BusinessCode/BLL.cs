@@ -302,7 +302,6 @@ namespace QJY.API
             return dtList;
         }
     }
-   
     public class SZHL_XXFBTypeB : BaseEFDao<SZHL_XXFBType> { }
     public class SZHL_XXFBB : BaseEFDao<SZHL_XXFB> { }
     public class SZHL_XXFB_ITEMB : BaseEFDao<SZHL_XXFB_ITEM> { }
@@ -366,6 +365,8 @@ namespace QJY.API
     public class SZHL_ZCGL_LifeCycleB : BaseEFDao<SZHL_ZCGL_LifeCycle> { }
     public class SZHL_ZCGL_TypeB : BaseEFDao<SZHL_ZCGL_Type> { }
     public class SZHL_ZCGL_LocationB : BaseEFDao<SZHL_ZCGL_Location> { }
+    public class SZHL_ZCGL_FloorB : BaseEFDao<SZHL_ZCGL_Floor> { }
+    public class SZHL_ZCGL_BuildingB : BaseEFDao<SZHL_ZCGL_Building> { }
     public class WX_RYB : BaseEFDao<WX_RY> { }
     public class WX_HDB : BaseEFDao<WX_HD> { }
     public class WX_GroupB : BaseEFDao<WX_Group> { }
