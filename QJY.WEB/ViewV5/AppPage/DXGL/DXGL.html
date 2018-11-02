@@ -29,12 +29,11 @@
                 </td>
                 <td style="width:400px">
                     <input type="text" value="" ms-if="isLJ" ms-duplex="modelData.SendTime" class="form-control szhl_form_date_time szhl_require" placeholder="请输入发送时间" />
-
                 </td>
             </tr>
         </table>
         <button class='btn btn-success btnfb' style='width:120px;height:40px;' ms-click="SaveOpenUserList()"> 确 定 </button>
-     
+
     </div>
 
     <div class="modal fade" id="UserListModal" role="dialog">
@@ -113,7 +112,7 @@
             }
             tempindex.dxqz = model.CompanyData.DXQZ;
             $(".toolfootbar tbody").empty(); //清除底部按钮
-            tempindex.getList()
+            //tempindex.getList()
             if (localStorage.getItem(model.SelModel.ModelCode)) {//判断有没有未保存的表单
                 var tempdata = localStorage.getItem(model.SelModel.ModelCode);//缓存表单数据
                 ComFunJS.winconfirm("系统检测到您未保存的数据,是否加载?", function () {
@@ -128,13 +127,13 @@
             }
 
         },//初始化
-        getList: function () {
-            $.getJSON('/API/VIEWAPI.ashx?ACTION=DXGL_GETDXQTY',{}, function (r) {
-                if (r.ErrorMsg == "") {
-                    tempindex.dxQty = r.Result;
-                }
-            })
-        },
+        //getList: function () {
+        //    $.getJSON('/API/VIEWAPI.ashx?ACTION=DXGL_GETDXQTY',{}, function (r) {
+        //        if (r.ErrorMsg == "") {
+        //            tempindex.dxQty = r.Result;
+        //        }
+        //    })
+        //},
         modelData: { "dxContent": "", "dxnums": "", "SendTime": "" },
         SaveData: function (callback) {
             if (!tempindex.modelData.dxnums) {
@@ -152,21 +151,23 @@
             if (!$("#tx").hasClass("checked")) {
                 tempindex.modelData.SendTime = "";
             }
-            $.post("/API/VIEWAPI.ashx?ACTION=DXGL_ADDDXGL", { P1: JSON.stringify(tempindex.modelData.$model) }, function (result) {
+
+            $.post("/API/VIEWAPI.ashx?ACTION=DXGL_ADDDXGL", { P1: JSON.stringify(tempindex.modelData.$model), P2: tempindex.isLJ }, function (result) {
                 if (result.ErrorMsg == "") {
                     ComFunJS.winsuccess("发送成功");
                     $("#UserListModal").modal("hide");
                 }
-
             });
-        }, GetUserPhone: function () {
+        },
+        GetUserPhone: function () {
             top.ComFunJS.winbtnwin("/ViewV5/Base/UserSelect.html", "选择用户手机", 900, 540, {}, function (layero, index) {
                 var frameid = $("iframe", $(layero)).attr('id');
                 var people = ComFunJS.isIE() ? top.window.frames[frameid].getqiandaopeople() : top.window.frames[frameid].contentWindow.getqiandaopeople();
                 $("#dxphone").val(people.phone);
                 top.layer.close(index)
             })
-        }, isDSFS: function (dom) {
+        },
+        isDSFS: function (dom) {
             tempindex.isLJ = $(dom).prop("checked");
         },
         SelDXTemplate: function () {
@@ -180,10 +181,12 @@
                     top.ComFunJS.winwarning("请选择模板");
                 }
             })
-        }, SaveDXGL: function () {
+        },
+        SaveDXGL: function () {
             tempindex.SaveData(this, false);
             $("#UserListModal").modal("hide");
-        }, SaveOpenUserList: function () {
+        },
+        SaveOpenUserList: function () {
             if (!tempindex.modelData.dxnums) {
                 top.ComFunJS.winwarning("短信接收号码不能为空");
                 return;
@@ -196,10 +199,10 @@
                 top.ComFunJS.winwarning("发送时间不能为空");
                 return;
             }
-            if (tempindex.modelData.dxnums.split(',').length > tempindex.dxQty) {
-                top.ComFunJS.winwarning("短信条数不够，请先充值");
-                return;
-            }
+            //if (tempindex.modelData.dxnums.split(',').length > tempindex.dxQty) {
+            //    top.ComFunJS.winwarning("短信条数不够，请先充值");
+            //    return;
+            //}
             var numLins = tempindex.modelData.dxnums.replace(/[，]/g, ',').split(',');
             var phonenumStr = "";
             for (var i = 0; i < numLins.length; i++) {
@@ -218,11 +221,11 @@
         SaveQZ: function () {
             if (!tempindex.dxqz) {
                 top.ComFunJS.winwarning("前缀不能为");
-                return; 
+                return;
             }
             $.post('/API/VIEWAPI.ashx?Action=XTGL_SAVECOMPANYQZ', { P1: tempindex.dxqz }, function (result) {
                 if ($.trim(result.ErrorMsg) == "") {
-                   
+
                     top.ComFunJS.winsuccess("修改成功");
                     model.CompanyData.DXQZ = tempindex.dxqz;
                     $("#ManageUserModal").modal("hide");

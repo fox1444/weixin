@@ -621,7 +621,7 @@ namespace QJY.API
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
             string mac = BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(ConvertString)));
             mac = mac.Replace("-", "").ToLower();
-            
+
             var authRequest = new
             {
                 ecName = ecName,
@@ -783,7 +783,15 @@ namespace QJY.API
         /// <returns></returns>
         public static string GetMD5(string content)
         {
-            return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(content, "md5");
+            //return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(content, "md5");
+            MD5CryptoServiceProvider md5Hasher = new MD5CryptoServiceProvider();
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(content));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
         }
 
         /// <summary>
