@@ -73,8 +73,6 @@ namespace QJY.API
         /// </summary>
         public void DELBRANCH(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-
-
             int deptCode = int.Parse(P1);
             JH_Auth_Branch branch = new JH_Auth_BranchB().GetEntity(d => d.DeptCode == deptCode);
             if (branch != null)
