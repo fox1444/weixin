@@ -31,7 +31,7 @@ namespace QJY.API
         public void GETDXGLLIST(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
             string userName = UserInfo.User.UserName;
-            string strWhere = " ComId=" + UserInfo.User.ComId + " And CRUser='"+userName+"'";
+            string strWhere = " ComId=" + UserInfo.User.ComId + " And CRUser='" + userName + "'";
             if (P1 != "")
             {
                 strWhere += string.Format(" And  dxContent like '%{0}%'", P1);
@@ -39,8 +39,12 @@ namespace QJY.API
             string status = context.Request["status"] ?? "";
             if (status != "")
             {
-                strWhere += string.Format(" And  SendTime{0}getdate()", status=="0"?"<":">");
-            }           
+                //strWhere += string.Format(" And  SendTime{0}getdate()", status == "0" ? "<" : ">");
+                if (status == "0")
+                    strWhere += " And  isSend='Y'";
+                else
+                    strWhere += " And  isSend='N'";
+            }
             int page = 0;
             int pagecount = 8;
             int.TryParse(context.Request["p"] ?? "1", out page);
@@ -73,14 +77,25 @@ namespace QJY.API
             try
             {
                 SZHL_DXGL dxgl = JsonConvert.DeserializeObject<SZHL_DXGL>(P1);
+                bool isLJ = bool.Parse(P2);//是否定时发送，如果否，则立即发送
                 if (dxgl.dxContent.Trim() != "")
                 {
                     dxgl.CRUser = UserInfo.User.UserName;
                     dxgl.CRDate = DateTime.Now;
                     dxgl.SendTime = dxgl.SendTime == null ? DateTime.Now : dxgl.SendTime;
                     dxgl.ComId = UserInfo.User.ComId.Value;
+                    if (!isLJ)                    
+                        dxgl.isSend = "Y";
+                    else
+                        dxgl.isSend = "N";
                     //发送短信
-                    new SZHL_DXGLB().Insert(dxgl);
+                    if (new SZHL_DXGLB().Insert(dxgl))
+                    {
+                        if (!isLJ)
+                        {
+                            string MASresult = CommonHelp.SendMAS(dxgl.dxnums, dxgl.dxContent);
+                        }
+                    }
 
                     //消息提醒
                     SZHL_TXSX TX = new SZHL_TXSX();
@@ -105,7 +120,6 @@ namespace QJY.API
                 msg.ErrorMsg = ex.Message;
             }
         }
-
 
         /// <summary>
         /// 删除短信信息
@@ -139,7 +153,7 @@ namespace QJY.API
             SZHL_TXSX TX = JsonConvert.DeserializeObject<SZHL_TXSX>(P1);
             if (!string.IsNullOrEmpty(TX.TXUser))
             {
-               // UserInfo = new JH_Auth_UserB().GetUserInfo(TX.ComId.Value,TX.CRUser);
+                // UserInfo = new JH_Auth_UserB().GetUserInfo(TX.ComId.Value,TX.CRUser);
                 //发送微信消息
                 CommonHelp.SendSMS(TX.TXUser, TX.TXContent, TX.ComId.Value);
             }
