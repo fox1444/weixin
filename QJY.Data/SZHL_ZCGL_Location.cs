@@ -24,5 +24,7 @@ namespace QJY.Data
         public System.DateTime CRDate { get; set; }
         public int IsDel { get; set; }
         public Nullable<int> BranchCode { get; set; }
+        public Nullable<int> FloorID { get; set; }
+        public string STATUS { get; set; }
     }
 }

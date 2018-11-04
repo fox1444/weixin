@@ -73,8 +73,6 @@ namespace QJY.API
         /// </summary>
         public void DELBRANCH(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-
-
             int deptCode = int.Parse(P1);
             JH_Auth_Branch branch = new JH_Auth_BranchB().GetEntity(d => d.DeptCode == deptCode);
             if (branch != null)
@@ -2447,11 +2445,13 @@ namespace QJY.API
         #region 获取已发送短信数及容量使用情况
         public void GETDXANDSPACE(HttpContext context, Msg_Result msg, string P1, string P2, JH_Auth_UserB.UserInfo UserInfo)
         {
-            decimal DXCost = decimal.Parse(CommonHelp.GetConfig("DXCost"));
+            //decimal DXCost = decimal.Parse(CommonHelp.GetConfig("DXCost"));
             //已发送短信总数量
             msg.Result = new SZHL_DXGLB().GetEntities(d => d.ComId == UserInfo.User.ComId.Value).Count();
-            msg.Result1 = (int)(UserInfo.QYinfo.AccountMoney.Value / DXCost);
-            msg.Result2 = UserInfo.QYinfo.QySpace / 10000000000;
+            //msg.Result1 = (int)(UserInfo.QYinfo.AccountMoney.Value / DXCost);
+            //msg.Result2 = UserInfo.QYinfo.QySpace / 10000000000;
+            msg.Result1 = 0;
+            msg.Result2 = 0;
             string strSql = string.Format("SELECT isnull(sum(CAST( FileSize  as DECIMAL(18,2))),0) from  FT_File where ComId=" + UserInfo.User.ComId);
             object obj = new FT_FileB().ExsSclarSql(strSql);
             decimal Size = 0;

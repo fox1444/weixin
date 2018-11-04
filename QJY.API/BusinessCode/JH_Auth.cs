@@ -48,7 +48,6 @@ namespace QJY.API
             UserInfo.BranchInfo = new JH_Auth_BranchB().GetBMByDeptCode(UserInfo.QYinfo.ComId, UserInfo.User.BranchCode);
             return UserInfo;
         }
-
         public JH_Auth_User GetUserByUserName(int ComID, string UserName)
         {
             JH_Auth_User branchmodel = new JH_Auth_User();
@@ -84,7 +83,6 @@ namespace QJY.API
             string strSql = string.Format("UPDATE JH_Auth_User SET logindate='{0}' WHERE ComId={1} and UserName = '{2}'", DateTime.Now, ComId, strUser.ToFormatLike());
             new JH_Auth_UserB().ExsSql(strSql);
         }
-
         public void UpdatePassWord(int ComId, string strUser, string strNewPassWord)
         {
             string strSql = string.Format("UPDATE JH_Auth_User SET UserPass='{0}' WHERE ComId={1} and UserName in ('{2}')", strNewPassWord, ComId, strUser.ToFormatLike());
@@ -177,8 +175,6 @@ namespace QJY.API
 
             return dt;
         }
-
-
         /// <summary>
         /// 找到用户的直属上级,先找用户表leader,再找部门leader
         /// </summary>
@@ -231,7 +227,6 @@ namespace QJY.API
         /// <param name="ComId">公司Id</param>
         /// <param name="userName">当前用户名</param>
         /// <returns></returns>
-
         public List<JH_Auth_User> GetUserBranchUsers(int ComId, string userName)
         {
             //当前负责人的下属列表
@@ -374,10 +369,8 @@ namespace QJY.API
     //部门表
     public class JH_Auth_BranchB : BaseEFDao<JH_Auth_Branch>
     {
-
         public void AddBranch(JH_Auth_UserB.UserInfo UserInfo, JH_Auth_Branch branch, Msg_Result msg)
         {
-
             if (branch.DeptCode == 0)//DeptCode==0为添加部门
             {
                 //获取要添加的部门名称是否存在，存在提示用户，不存在添加
@@ -406,9 +399,6 @@ namespace QJY.API
                     int branid = bm.WX_CreateBranch(branch);
                     branch.WXBMCode = branid;
                     new JH_Auth_BranchB().Update(branch);
-
-
-
                 }
                 msg.Result = branch;
             }
@@ -429,9 +419,7 @@ namespace QJY.API
                     return;
                 }
             }
-
         }
-
         public JH_Auth_Branch GetBMByDeptCode(int ComID, int DeptCode)
         {
             JH_Auth_Branch branchmodel = new JH_Auth_Branch();
@@ -440,11 +428,8 @@ namespace QJY.API
 
             return branchmodel;
         }
-
-
         public override bool Update(JH_Auth_Branch entity)
         {
-
             if (base.Update(entity))
             {
                 return true;
@@ -459,9 +444,6 @@ namespace QJY.API
 
             return base.Delete(entity);
         }
-
-
-
         /// <summary>
         /// 根据部门代码删除部门及部门人员
         /// </summary>
@@ -471,7 +453,6 @@ namespace QJY.API
             new JH_Auth_BranchB().Delete(d => d.DeptCode == intBranchCode);
             new JH_Auth_UserB().Delete(d => d.BranchCode == intBranchCode);
         }
-
         /// <summary>
         /// 获取机构数用在assginuser.ASPX中
         /// </summary>
@@ -490,7 +471,6 @@ namespace QJY.API
             }
             return strTree.Length > 0 ? strTree.ToString() : "";
         }
-
         public string GetUserByBranch(string CheckNodes, int intBranchCode)
         {
             StringBuilder strTree = new StringBuilder();
@@ -501,8 +481,6 @@ namespace QJY.API
             }
             return strTree.Length > 0 ? strTree.ToString() : "";
         }
-
-
         /// <summary>
         /// 获取组织机构树
         /// </summary>
@@ -514,7 +492,6 @@ namespace QJY.API
             var q = new JH_Auth_BranchB().GetEntities(d => d.DeptRoot == intDeptCode && d.ComId == comId);
             foreach (var item in q)
             {
-
                 index++;
                 if (branchQX == "" || index == 1)
                 {
@@ -624,7 +601,6 @@ namespace QJY.API
         /// <returns></returns>
         public string GetBranchTreeNew(int intDeptCode, int comId, int index = 0)
         {
-
             StringBuilder strTree = new StringBuilder();
             if (index == 0)
             {
@@ -641,12 +617,6 @@ namespace QJY.API
             }
             return strTree.Length > 0 ? strTree.ToString() : "";
         }
-
-
-
-
-        //获取JSON用户信息
-
         /// <summary>
         /// 获取部门级别编号
         /// </summary>
@@ -668,7 +638,6 @@ namespace QJY.API
             }
             return BranchNo;
         }
-
         public class BranchUser
         {
             public int BranchID { get; set; }
@@ -709,7 +678,6 @@ namespace QJY.API
         /// <returns></returns>
         public string GetRoleQX(JH_Auth_UserB.UserInfo userInfo)
         {
-
             string strSql = string.Format("SELECT RoleCode from  JH_Auth_Role where ComId={0}  and IsHasQX='Y' And ','+RoleQX+',' NOT LIKE '%,{1},%'", userInfo.User.ComId, userInfo.User.BranchCode);
             DataTable dt = new JH_Auth_BranchB().GetDTByCommand(strSql);
             string qxrole = "";
@@ -720,7 +688,6 @@ namespace QJY.API
             qxrole = qxrole.Length > 0 ? qxrole.Substring(0, qxrole.Length - 1) : "";
             return qxrole;
         }
-
         /// <summary>
         /// 获取角色树
         /// </summary>
@@ -737,7 +704,6 @@ namespace QJY.API
             }
             return strTree.Length > 0 ? strTree.ToString() : "";
         }
-
         /// <summary>
         /// 删除角色
         /// </summary>
@@ -750,21 +716,16 @@ namespace QJY.API
             new JH_Auth_RoleFunB().Delete(d => d.RoleCode == intRoleCode && d.ComId == ComId);
             return "Success";
         }
-
         public DataTable GetModelFun(int ComId, string RoleCode, string strModeID)
         {
             DataTable dt = new JH_Auth_UserRoleB().GetDTByCommand("SELECT  DISTINCT JH_Auth_Function.ID, JH_Auth_Function.ModelID,JH_Auth_Function.PageName,JH_Auth_Function.ExtData,JH_Auth_Function.PageUrl,JH_Auth_Function.FunOrder,JH_Auth_Function.PageCode,JH_Auth_Function.isiframe FROM JH_Auth_RoleFun INNER JOIN JH_Auth_Function ON JH_Auth_RoleFun.FunCode=JH_Auth_Function.ID WHERE RoleCode IN (" + RoleCode + ")  AND ModelID='" + strModeID + "' AND  JH_Auth_RoleFun.ComId=" + ComId + " and (JH_Auth_Function.ComId=" + ComId + " or JH_Auth_Function.ComId=0)  order by JH_Auth_Function.FunOrder");
             return dt;
         }
-
-
     }
 
     //用户角色表
     public class JH_Auth_UserRoleB : BaseEFDao<JH_Auth_UserRole>
     {
-
-
         /// <summary>
         /// 获取用户的角色代码
         /// </summary>
@@ -780,8 +741,6 @@ namespace QJY.API
             }
             return strRoleCode.TrimEnd(','); ;
         }
-
-
         /// <summary>
         /// 根据角色获取相应用户
         /// </summary>
@@ -791,18 +750,15 @@ namespace QJY.API
         {
             return new JH_Auth_UserRoleB().GetEntities(d => d.RoleCode == intRoleCode).Select(d => d.UserName).ToList().ListTOString(',');
         }
-
         public DataTable GetUserDTByRoleCode(int intRoleCode, int ComId)
         {
             DataTable dt = new JH_Auth_UserRoleB().GetDTByCommand(" SELECT JH_Auth_User.* FROM dbo.JH_Auth_UserRole ur inner join dbo.JH_Auth_User on ur.username=JH_Auth_User.username where  JH_Auth_User.IsUse='Y' And JH_Auth_User.ComId=" + ComId + " And  ur.rolecode= " + intRoleCode);
             return dt;
         }
-
     }
 
     public class JH_Auth_ZiDianB : BaseEFDao<JH_Auth_ZiDian>
     {
-
         private List<JH_Auth_ZiDian> GetZDList()
         {
             List<JH_Auth_ZiDian> ListData = CacheHelp.Get("zidian") as List<JH_Auth_ZiDian>;
@@ -817,15 +773,12 @@ namespace QJY.API
                 return ListData;
             }
         }
-
         public override IEnumerable<JH_Auth_ZiDian> GetEntities(Expression<Func<JH_Auth_ZiDian, bool>> exp)
         {
-
             List<JH_Auth_ZiDian> ListData = this.GetZDList();
             return ListData.Where(exp.Compile());
 
         }
-
         /// <summary>
         /// 重写字典修改方法,先清除缓存再删除
         /// </summary>
@@ -852,7 +805,6 @@ namespace QJY.API
 
     public class JH_Auth_LogB : BaseEFDao<JH_Auth_Log>
     {
-
         public void InsertLog(string Action, string LogContent, string ReMark, string strUser, string strUserName, int ComID, string strIP)
         {
             Task<string> TaskCover = Task.Factory.StartNew<string>(() =>
@@ -871,7 +823,6 @@ namespace QJY.API
                 return "";
             });
         }
-
     }
 
     public class JH_Auth_VersionB : BaseEFDao<JH_Auth_Version>
@@ -884,7 +835,6 @@ namespace QJY.API
 
         public void SetUserVerSion(string strUserCode, string strVerID)
         {
-
             JH_Auth_Version Model = this.GetEntity(d => d.ID.ToString() == strVerID);
             Model.ReadUsers = Model.ReadUsers + "," + strUserCode;
             this.Update(Model);
@@ -929,9 +879,7 @@ namespace QJY.API
     }
 
     public class JH_Auth_UserCustomDataB : BaseEFDao<JH_Auth_UserCustomData>
-    {
-
-    }
+    { }
 
     public class JH_Auth_RoleFunB : BaseEFDao<JH_Auth_RoleFun>
     { }
