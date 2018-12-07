@@ -278,7 +278,9 @@
     <Content Include="View_Mobile\JS\sm.min.js" />
     <Content Include="View_Mobile\JS\video.js" />
     <Content Include="View_Mobile\UI\HyDetail_index_b.html" />
+    <Content Include="View_Mobile\UI\HyDetail_index_rs.html" />
     <Content Include="View_Mobile\UI\HyDetail_index_r.html" />
+    <Content Include="View_Mobile\UI\HyDetail_step_rs.html" />
     <Content Include="View_Mobile\UI\HyDetail_step_r.html" />
     <Content Include="View_Mobile\UI\HyDetail_step_b.html" />
     <Content Include="View_Mobile\JS\avalon1.47.js" />

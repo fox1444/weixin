@@ -1510,7 +1510,8 @@
         { "ID": "30", "TypeName": "汽车" },
     ],
     TemplateData: [
-        { "TemplateName": "凉山烟草红", "TemplatePage":"_r" },
+        { "TemplateName": "凉山烟草红", "TemplatePage": "_r" },
+        { "TemplateName": "凉山烟草红（培训简化版）", "TemplatePage": "_rs" },
         { "TemplateName": "蓝", "TemplatePage": "_b" },
     ]
 });
